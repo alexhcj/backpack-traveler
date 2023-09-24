@@ -1,0 +1,279 @@
+---
+import InstagramSVG from "../../public/header/instagram.svg";
+import TwitterSVG from "../../public/header/twitter.svg";
+import FacebookSVG from "../../public/header/facebook.svg";
+import PinterestSVG from "../../public/header/pinterest.svg";
+import YoutubeSVG from "../../public/header/youtube.svg";
+
+// TODO: refactor: add type field for cursor pointer: if link pointer (route link), else default (popover menu)
+const navList = [
+    { url: "/", text: "Home" },
+    { url: "/pages", text: "Pages" },
+    { url: "/travel", text: "Travel" },
+    { url: "/blog", text: "Blog" },
+    { url: "/shop", text: "Shop" },
+];
+const destinationsList = [
+    { url: "united-kingdom", text: "UK" },
+    { url: "australia", text: "Australia" },
+    { url: "italy", text: "Italy" },
+    { url: "spain", text: "Spain" },
+    { url: "serbia", text: "Serbia" },
+    { url: "brazil", text: "Brazil" },
+    { url: "peru", text: "Peru" },
+    { url: "india", text: "India" },
+];
+const socialsList = [
+    { url: "/", icon: InstagramSVG, alt: "Instagram link" },
+    { url: "/", icon: TwitterSVG, alt: "Twitter link" },
+    { url: "/", icon: FacebookSVG, alt: "Facebook link" },
+    { url: "/", icon: PinterestSVG, alt: "Pinterest link" },
+    { url: "/", icon: YoutubeSVG, alt: "Youtube link" },
+];
+
+interface ISocial {
+    url: string;
+    icon: ImageMetadata;
+    alt: string;
+}
+---
+
+<header class="header">
+    <div class="container">
+        <div class="box">
+            <div class="destinations">
+                <ul class="destination-list">
+                    <li class="destination-item">
+                        <img src="/header/earth-marker.png" alt="" />
+                        <span class="text">Destinations</span>
+                    </li>
+                </ul>
+                <ul class="popup-list">
+                    {
+                        destinationsList.map((dest) => (
+                            <li class="dest-item">
+                                <a
+                                    class="dest-link"
+                                    href={`destination-map/${dest.url}`}
+                                >
+                                    {dest.text}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    {
+                        navList.map((item) => (
+                            <li class="nav-item">
+                                <a class="nav-link" href={item.url}>
+                                    {item.text}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+            <div class="right-column">
+                <ul class="socials">
+                    {
+                        socialsList.map((social: ISocial) => (
+                            <li>
+                                <a href={social.url}>
+                                    <img
+                                        class="social-icon"
+                                        src={social.icon.src}
+                                        alt={social.alt}
+                                    />
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div class="search">
+                    <span class="search-divider"></span>
+                    <input
+                        class="search-input"
+                        id="search-input"
+                        placeholder="Search..."
+                        type="text"
+                        id="search"
+                    />
+                    <img
+                        class="search-magnifier"
+                        id="search-magnifier"
+                        src="header/magnifier.svg"
+                        width="19px"
+                        height="20px"
+                        alt="Search for posts"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .header {
+        background-color: var(--color-primary);
+        height: 60px;
+    }
+    .container {
+        height: 100%;
+    }
+    .box {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+    .destinations {
+        position: relative;
+        display: grid;
+        align-items: center;
+        height: 100%;
+
+        &:hover .popup-list {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        & .text {
+            margin-top: 2px;
+        }
+
+        & .popup-list {
+            position: absolute;
+            top: calc(100% - 1px);
+            left: 0;
+            padding: 10px 30px;
+            min-width: 142px;
+            opacity: 0;
+            visibility: hidden;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            z-index: var(--z-index-10);
+            transition: var(--transition-default);
+        }
+    }
+    .dest-link {
+        text-transform: capitalize;
+        letter-spacing: var(--letter-spacing-xs);
+        font-size: 15px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+    .destination-item {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        font-weight: var(--weight-medium);
+        cursor: pointer;
+    }
+    .nav {
+        height: 100%;
+    }
+    .nav-list {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        height: 100%;
+    }
+    .nav-item {
+        display: grid;
+        align-items: center;
+        padding: 0 14px;
+        height: 100%;
+
+        &:hover .nav-link {
+            color: var(--color-grey);
+        }
+    }
+    .nav-link {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        line-height: 23px;
+        font-size: 11px;
+        font-weight: var(--weight-medium);
+    }
+    .right-column {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 18px;
+    }
+    .socials {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 13px;
+    }
+    .social-icon {
+        width: 13px;
+        height: 13px;
+    }
+    .search {
+        position: relative;
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+    }
+    .search-divider {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        content: "";
+        width: 1px;
+        height: 15px;
+        background-color: var(--color-grey-2);
+        transform: translateY(-50%);
+    }
+    .search-input {
+        padding-left: 7px;
+        max-width: 164px;
+        width: 0;
+        line-height: 43px;
+        font-size: 14px;
+        color: var(--color-grey-3);
+        font-family: var(--family-lora);
+        font-weight: 400;
+        font-style: italic;
+
+        &::placeholder {
+            color: var(--color-grey-3);
+            font-family: var(--family-lora);
+        }
+
+        &.active {
+            width: 100%;
+        }
+    }
+    .search-magnifier {
+        margin: 10px 7px;
+        transform: scaleX(-1);
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    const searchIcon = document.getElementById("search-magnifier");
+    const searchInput = document.getElementById("search-input");
+
+    searchIcon?.addEventListener("click", (e: any) => {
+        e.target?.id === "search-magnifier" &&
+            searchInput?.classList.add("active");
+    });
+
+    document.addEventListener("click", (e: any) => {
+        if (e.target?.id === "search-input") return;
+
+        e.target?.id !== "search-magnifier" &&
+            searchInput?.classList.remove("active");
+    });
+</script>

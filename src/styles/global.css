@@ -1,0 +1,38 @@
+:root {
+    --family-montserrat: 'Montserrat', sans-serif;
+    --family-lora: 'Lora', serif;
+
+    --letter-spacing-default: .33em;
+    --letter-spacing-xs: .2em;
+    
+    --color-primary: #f7f2ee;
+    --color-black: #000000;
+    --color-dark: #565050;
+    --color-white: #ffffff;
+    --color-grey: #aaaaaa;
+    --color-grey-2: #959595;
+    --color-grey-3: #888888;
+    --color-border: #f3f3f3;
+
+    --font-size-base: 16px;
+
+    --weight-medium: 500;
+    --weight-semi-bold: 600;
+    --weight-bold: 700;
+
+    --z-index--1: -1;
+    --z-index-10: 10;
+
+    --transition-default: all .2s ease-out;
+}
+
+html {
+    font-family: var(--family-montserrat);
+    font-size: var(--font-size-base);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-black);
+    transition: var(--transition-default);
+}
