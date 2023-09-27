@@ -23,6 +23,13 @@ const destinationsList = [
     { url: "peru", text: "Peru" },
     { url: "india", text: "India" },
 ];
+const pagesList = [
+    { url: "who-we-are", text: "Who we are" },
+    { url: "about-me", text: "About me" },
+    { url: "destination-map", text: "Destination map" },
+    { url: "get-in-touch", text: "Get in touch" },
+    { url: "faq", text: "FAQ page" },
+];
 const socialsList = [
     { url: "/", icon: InstagramSVG, alt: "Instagram link" },
     { url: "/", icon: TwitterSVG, alt: "Twitter link" },
@@ -51,9 +58,9 @@ interface ISocial {
                 <ul class="popup-list">
                     {
                         destinationsList.map((dest) => (
-                            <li class="dest-item">
+                            <li class="popup-item">
                                 <a
-                                    class="dest-link"
+                                    class="popup-link"
                                     href={`destination-map/${dest.url}`}
                                 >
                                     {dest.text}
@@ -71,6 +78,20 @@ interface ISocial {
                                 <a class="nav-link" href={item.url}>
                                     {item.text}
                                 </a>
+                                {item.url === "/pages" && (
+                                    <ul class="popup-list">
+                                        {pagesList.map((item) => (
+                                            <li class="popup-item">
+                                                <a
+                                                    class="popup-link"
+                                                    href={`destination-map/${item.url}`}
+                                                >
+                                                    {item.text}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </li>
                         ))
                     }
@@ -144,27 +165,55 @@ interface ISocial {
         & .text {
             margin-top: 2px;
         }
-
-        & .popup-list {
-            position: absolute;
-            top: calc(100% - 1px);
-            left: 0;
-            padding: 10px 30px;
-            min-width: 142px;
-            opacity: 0;
-            visibility: hidden;
-            background-color: var(--color-white);
-            border: 1px solid var(--color-border);
-            z-index: var(--z-index-10);
-            transition: var(--transition-default);
-        }
     }
-    .dest-link {
+    .popup-list {
+        position: absolute;
+        top: calc(100% - 1px);
+        left: 0;
+        padding: 10px 30px;
+        min-width: 142px;
+        width: auto;
+        opacity: 0;
+        visibility: hidden;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-border);
+        z-index: var(--z-index-10);
+        transition: var(--transition-default);
+    }
+    .popup-item {
+        /* display: block; */
+    }
+    .popup-link {
+        position: relative;
         text-transform: capitalize;
         letter-spacing: var(--letter-spacing-xs);
         font-size: 15px;
         color: var(--color-dark);
         font-family: var(--family-lora);
+
+        &::before {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            content: "";
+            width: 6px;
+            height: 6px;
+            background-color: var(--color-secondary);
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(-50%) translateX(-4px);
+            transition: var(--transition-default);
+        }
+
+        &:hover {
+            color: var(--color-grey);
+            padding-left: 13px;
+
+            &::before {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
     }
     .destination-item {
         display: grid;
@@ -187,13 +236,27 @@ interface ISocial {
         height: 100%;
     }
     .nav-item {
+        position: relative;
         display: grid;
         align-items: center;
         padding: 0 14px;
         height: 100%;
 
-        &:hover .nav-link {
-            color: var(--color-grey);
+        &:has(.popup-list) {
+            .popup-list {
+                min-width: 210px;
+            }
+        }
+
+        &:hover {
+            & .nav-link {
+                color: var(--color-grey);
+            }
+
+            .popup-list {
+                opacity: 1;
+                visibility: visible;
+            }
         }
     }
     .nav-link {
@@ -244,6 +307,7 @@ interface ISocial {
         font-family: var(--family-lora);
         font-weight: 400;
         font-style: italic;
+        transition: var(--transition-input);
 
         &::placeholder {
             color: var(--color-grey-3);

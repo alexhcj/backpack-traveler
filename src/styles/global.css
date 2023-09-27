@@ -3,9 +3,10 @@
     --family-lora: 'Lora', serif;
 
     --letter-spacing-default: .33em;
-    --letter-spacing-xs: .2em;
+    --letter-spacing-xs: .02em;
     
     --color-primary: #f7f2ee;
+    --color-secondary: #f7775e;
     --color-black: #000000;
     --color-dark: #565050;
     --color-white: #ffffff;
@@ -15,6 +16,7 @@
     --color-border: #f3f3f3;
 
     --font-size-base: 16px;
+    --line-height-base: 1.69em;
 
     --weight-medium: 500;
     --weight-semi-bold: 600;
@@ -24,11 +26,15 @@
     --z-index-10: 10;
 
     --transition-default: all .2s ease-out;
+    --transition-input: width .2s;
 }
 
 html {
     font-family: var(--family-montserrat);
     font-size: var(--font-size-base);
+}
+body {
+    line-height: var(--line-height-base);
 }
 
 a {
