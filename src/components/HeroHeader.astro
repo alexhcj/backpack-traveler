@@ -1,0 +1,81 @@
+---
+import CupHeart from "../../public/hero-header/cup-heart.png";
+import TodoList from "../../public/hero-header/todo-list.png";
+import LogoDark from "../../public/hero-header/logo-dark.png";
+import MapMarker from "../../public/hero-header/map-marker.png";
+import LoveMessage from "../../public/hero-header/love-message.png";
+
+const navList = [
+    { url: "/blog", type: "icon", text: "Get inspired", img: CupHeart },
+    { url: "/shop", type: "icon", text: "My books", img: TodoList },
+    { url: "/", type: "logo", img: LogoDark },
+    { url: "/blog", type: "icon", text: "Travel guides", img: MapMarker },
+    { url: "/about", type: "icon", text: "About me", img: LoveMessage },
+];
+---
+
+<div class="container">
+    <div class="hero-header">
+        <ul class="nav-list">
+            {
+                navList.map((item) => (
+                    <li class="nav-item">
+                        <a class="nav-link" href={item.url}>
+                            <img class="nav-img" src={item.img.src} alt="" />
+                        </a>
+                        <span class="text">{item.text}</span>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+    .hero-header {
+        display: grid;
+        align-items: center;
+        height: 240px;
+    }
+    .nav-list {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: center;
+    }
+    .nav-item {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        margin: 25px;
+
+        &:not(:nth-child(3)):hover > .nav-link {
+            transform: translateY(-6px);
+        }
+
+        &:nth-child(3) {
+            margin: 0 35px;
+            min-width: 530px;
+
+            > span {
+                display: none;
+                visibility: hidden;
+            }
+
+            .nav-img {
+                height: 92px;
+            }
+        }
+    }
+    .nav-link {
+        text-align: center;
+    }
+    .text {
+        margin-top: 3px;
+        color: var(--color-dark-2);
+        font-family: var(--family-lora);
+    }
+</style>
