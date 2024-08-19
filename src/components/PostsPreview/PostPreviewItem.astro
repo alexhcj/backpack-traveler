@@ -1,9 +1,9 @@
 ---
-const { title, url, alt, country, category } = Astro.props;
+const { title, slug, url, alt, country, category } = Astro.props;
 ---
 
 <div class="post">
-    <a class="img-box" href="/">
+    <a class="img-box" href={title.slug}>
         <img class="img" src={url} alt={alt} />
     </a>
     <div class="box">

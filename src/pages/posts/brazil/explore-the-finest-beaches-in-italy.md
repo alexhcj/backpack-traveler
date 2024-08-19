@@ -1,5 +1,6 @@
 ---
 title: 'Explore the Finest Beaches in Italy'
+slug: 'explore-the-finest-beaches-in-italy'
 pubDate: 2024-08-13
 country: 'Brazil'
 category: 'adventure'

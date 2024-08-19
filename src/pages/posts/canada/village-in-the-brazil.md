@@ -1,5 +1,6 @@
 ---
 title: 'Villages in the Brazil'
+slug: 'village-in-the-brazil'
 pubDate: 2023-06-15
 country: 'Canada'
 category: 'adventure'

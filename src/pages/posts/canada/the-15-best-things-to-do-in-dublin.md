@@ -1,5 +1,6 @@
 ---
 title: 'The 15 best Things to Do in Dublin'
+slug: 'the-15-best-things-to-do-in-dublin'
 pubDate: 2024-08-16
 country: 'Canada'
 category: 'adventure'

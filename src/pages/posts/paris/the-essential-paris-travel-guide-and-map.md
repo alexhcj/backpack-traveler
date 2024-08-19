@@ -1,5 +1,6 @@
 ---
 title: 'The Essential Paris Travel Guide & Map'
+slug: 'the-essential-paris-travel-guide-and-map'
 pubDate: 2024-04-21
 country: 'Paris'
 category: 'adventure'
