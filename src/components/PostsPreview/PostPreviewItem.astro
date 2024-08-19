@@ -3,7 +3,7 @@ const { title, slug, url, alt, country, category } = Astro.props;
 ---
 
 <div class="post">
-    <a class="img-box" href={title.slug}>
+    <a class="img-box" href={`/posts/${slug}`}>
         <img class="img" src={url} alt={alt} />
     </a>
     <div class="box">
@@ -14,8 +14,6 @@ const { title, slug, url, alt, country, category } = Astro.props;
 </div>
 
 <style>
-    .post {
-    }
     .img-box {
         max-height: 380px;
         overflow: hidden;
