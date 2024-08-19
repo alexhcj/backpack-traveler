@@ -1,0 +1,32 @@
+[
+  {
+    "name": "John Doe",
+    "avatar":  "../../public/posts/paris.jpg",
+    "content": "This is the simplest comment of user",
+    "active": true
+  },
+  {
+    "name": "John Doe",
+    "avatar":  "../../public/posts/perth.jpg",
+    "content": "This is the simplest comment of user",
+    "active": true
+  },
+  {
+    "name": "John Doe",
+    "avatar":  "../../public/posts/venice.jpg",
+    "content": "This is the simplest comment of user",
+    "active": true
+  },
+  {
+    "name": "John Doe",
+    "avatar":  "../../public/posts/venice.jpg",
+    "content": "This is the simplest comment of user",
+    "active": true
+  },
+  {
+    "name": "John Doe",
+    "avatar":  "../../public/posts/venice.jpg",
+    "content": "This is the simplest comment of user",
+    "active": true
+  }
+]

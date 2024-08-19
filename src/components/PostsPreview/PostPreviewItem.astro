@@ -1,0 +1,59 @@
+---
+const { title, url, alt, country, category } = Astro.props;
+---
+
+<div class="post">
+    <a class="img-box" href="/">
+        <img class="img" src={url} alt={alt} />
+    </a>
+    <div class="box">
+        <a class="country" href="/">{country}</a>
+        <h4 class="title">{title}</h4>
+        <a class="category" href="/">{category}</a>
+    </div>
+</div>
+
+<style>
+    .post {
+    }
+    .img-box {
+        max-height: 380px;
+        overflow: hidden;
+        cursor: pointer;
+
+        &:hover .img {
+            transform: scale(1.04);
+        }
+    }
+    .box {
+        text-align: center;
+        min-height: 200px;
+        border: 1px solid var(--color-border-2);
+        border-top: none;
+    }
+    .country {
+        display: inline-block;
+        margin-top: 25px;
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+    .title {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        padding: 5px 12% 0px;
+        line-height: 1.57em;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+    }
+    .category {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        margin: 11px 0 35px;
+        line-height: 1.8em;
+        font-size: 10px;
+        color: var(--color-grey);
+    }
+</style>

@@ -1,10 +1,12 @@
 :root {
-    --family-montserrat: 'Montserrat', sans-serif;
-    --family-lora: 'Lora', serif;
+    --family-montserrat: "Montserrat", sans-serif;
+    --family-lora: "Lora", serif;
+    --family-epic-ride: "EpicRide", serif;
 
-    --letter-spacing-default: .33em;
-    --letter-spacing-xs: .02em;
-    
+    --letter-spacing-default: 0.33em;
+    --letter-spacing-m: 0.2em;
+    --letter-spacing-xs: 0.02em;
+
     --color-primary: #f7f2ee;
     --color-secondary: #f7775e;
     --color-black: #000000;
@@ -15,6 +17,7 @@
     --color-grey-2: #959595;
     --color-grey-3: #888888;
     --color-border: #f3f3f3;
+    --color-border-2: #f2f2f2;
 
     --font-size-base: 16px;
     --line-height-base: 1.69em;
@@ -26,8 +29,31 @@
     --z-index--1: -1;
     --z-index-10: 10;
 
-    --transition-default: all .2s ease-out;
-    --transition-input: width .2s;
+    --transition-default: all 0.2s ease-out;
+    --transition-input: width 0.2s;
+
+    --bkg: 222 47.4% 11.2%;
+    --bkg-alt: 226 58.3% 18.8%;
+    --text: 226 100% 93.9%;
+    --text-alt: 226 22.1% 73.3%;
+    --muted: 230 39% 67.8%;
+    --white: 255 100% 100%;
+    --accent1: 241 76.8% 62.7%;
+    --accent2: 330 85.2% 60.4%;
+    --accent3: 0 90.6% 70.8%;
+    --gradient: linear-gradient(
+        94.55deg,
+        hsl(var(--accent2)) -4.6%,
+        hsl(var(--accent3)) 99.9%
+    );
+}
+
+@font-face {
+    font-family: "EpicRide";
+    src: url("/fonts/epicRide.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 html {
@@ -39,7 +65,16 @@ body {
 }
 
 a {
+    display: block;
     text-decoration: none;
     color: var(--color-black);
+    transition: var(--transition-default);
+}
+
+.img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
     transition: var(--transition-default);
 }
