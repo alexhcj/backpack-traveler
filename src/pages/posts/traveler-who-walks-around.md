@@ -1,4 +1,5 @@
 ---
+layout: '../../layouts/PostLayout.astro'
 title: 'Traveler who walks around'
 slug: 'traveler-who-walks-around'
 pubDate: 2024-03-15

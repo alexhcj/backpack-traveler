@@ -1,4 +1,5 @@
 ---
+layout: '../../layouts/PostLayout.astro'
 title: 'Top 10 popular sports on the world'
 slug: 'top-10-popular-sports-on-the-world'
 pubDate: 2023-06-24

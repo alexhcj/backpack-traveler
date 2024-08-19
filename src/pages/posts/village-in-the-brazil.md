@@ -1,4 +1,5 @@
 ---
+layout: '../../layouts/PostLayout.astro'
 title: 'Villages in the Brazil'
 slug: 'village-in-the-brazil'
 pubDate: 2023-06-15

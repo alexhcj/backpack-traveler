@@ -1,4 +1,5 @@
 ---
+layout: '../../layouts/PostLayout.astro'
 title: 'Eating Food Tour! 😍'
 slug: 'eating-food-tour'
 pubDate: 2024-07-28
