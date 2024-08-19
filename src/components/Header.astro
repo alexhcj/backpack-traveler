@@ -1,4 +1,14 @@
 ---
+const postsList = await Astro.glob("../pages/posts/*.md");
+const uniqueDestinationsList = [
+    ...new Set(postsList.map((post: any) => post.frontmatter.country)),
+];
+const destinationsList = uniqueDestinationsList.map((desination) => {
+    return {
+        url: [desination.toLowerCase()].join("-"),
+        text: desination === "United Kingdom" ? "UK" : desination, // TODO refactor to list if too much shorcut countries
+    };
+});
 import InstagramSVG from "../../public/header/instagram.svg";
 import TwitterSVG from "../../public/header/twitter.svg";
 import FacebookSVG from "../../public/header/facebook.svg";
@@ -12,16 +22,6 @@ const navList = [
     { url: "/travel", text: "Travel" },
     { url: "/blog", text: "Blog" },
     { url: "/shop", text: "Shop" },
-];
-const destinationsList = [
-    { url: "united-kingdom", text: "UK" },
-    { url: "australia", text: "Australia" },
-    { url: "italy", text: "Italy" },
-    { url: "spain", text: "Spain" },
-    { url: "serbia", text: "Serbia" },
-    { url: "brazil", text: "Brazil" },
-    { url: "peru", text: "Peru" },
-    { url: "india", text: "India" },
 ];
 const pagesList = [
     { url: "who-we-are", text: "Who we are" },
@@ -46,6 +46,9 @@ interface ISocial {
 ---
 
 <header class="header">
+    <ul>
+        {postsList.map((post: any) => <li>{post.slug}</li>)}
+    </ul>
     <div class="container">
         <div class="box">
             <div class="destinations">
