@@ -36,17 +36,17 @@ const { frontmatter } = Astro.props;
                     </div>
                     <div class="footer">
                         <div class="meta-top">
-                            <div class="tags">
-                                <Image
-                                    src={BookmarkSVG}
-                                    alt="Bookmark icon"
-                                    width="15"
-                                    height="15"
-                                />
-                                <ul class="tags-list">
-                                    {
-                                        frontmatter.tags &&
-                                            frontmatter.tags.map(
+                            {
+                                frontmatter.tags && (
+                                    <div class="tags">
+                                        <Image
+                                            src={BookmarkSVG}
+                                            alt="Bookmark icon"
+                                            width="15"
+                                            height="15"
+                                        />
+                                        <ul class="tags-list">
+                                            {frontmatter.tags.map(
                                                 (tag: string) => (
                                                     <li class="tag">
                                                         <a
@@ -57,10 +57,11 @@ const { frontmatter } = Astro.props;
                                                         </a>
                                                     </li>
                                                 ),
-                                            )
-                                    }
-                                </ul>
-                            </div>
+                                            )}
+                                        </ul>
+                                    </div>
+                                )
+                            }
                             <div class="likes">
                                 <Image
                                     src={HeartSVG}
