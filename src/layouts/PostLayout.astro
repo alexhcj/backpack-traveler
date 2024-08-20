@@ -1,44 +1,261 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
+import HeroHeader from "../components/HeroHeader.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import BookmarkSVG from "../../public/svg/bookmark.svg";
+import HeartSVG from "../../public/svg/heart.svg";
+import CommentSVG from "../../public/svg/comment.svg";
+import FacebookCircleSVG from "../../public/svg/facebook-circle.svg";
+import PinterestCircleSVG from "../../public/svg/pinterest-circle.svg";
+import TwitterCircleSVG from "../../public/svg/twitter-circle.svg";
 
 const { frontmatter } = Astro.props;
 ---
 
 <BaseLayout title={frontmatter.title}>
-    <p>Published on: {frontmatter.pubDate.slice(0, 10)}</p>
-    <p>Written by {frontmatter.author}</p>
-    <p><em>{frontmatter.description}</em></p>
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+    <HeroHeader type="home" />
+    <div class="container">
+        <div class="row">
+            <div class="col-post">
+                <article class="article">
+                    <Image
+                        class="img"
+                        src={`/${frontmatter.image.url}`}
+                        alt={frontmatter.image.alt}
+                        width="957"
+                        height="638"
+                    />
+                    <div class="post-header">
+                        <a class="country" href="/">{frontmatter.country}</a>
+                        <h3 class="title">{frontmatter.title}</h3>
+                        <a class="category" href="/">{frontmatter.category}</a>
+                    </div>
+                    <div class="post-body">
+                        <slot />
+                    </div>
+                    <div class="footer">
+                        <div class="meta-top">
+                            <div class="tags">
+                                <Image
+                                    src={BookmarkSVG}
+                                    alt="Bookmark icon"
+                                    width="15"
+                                    height="15"
+                                />
+                                <ul class="tags-list">
+                                    {
+                                        frontmatter.tags &&
+                                            frontmatter.tags.map(
+                                                (tag: string) => (
+                                                    <li class="tag">
+                                                        <a
+                                                            class="tag-link"
+                                                            href="/"
+                                                        >
+                                                            {tag}
+                                                        </a>
+                                                    </li>
+                                                ),
+                                            )
+                                    }
+                                </ul>
+                            </div>
+                            <div class="likes">
+                                <Image
+                                    src={HeartSVG}
+                                    alt="Heart icon"
+                                    width="15"
+                                    height="15"
+                                />
+                                <span class="count">5</span>
+                            </div>
+                            <div class="comments">
+                                <Image
+                                    src={CommentSVG}
+                                    alt="Comment icon"
+                                    width="13"
+                                    height="13"
+                                />
+                                <span class="count">0</span>
+                            </div>
+                        </div>
+                        <div class="meta-bottom">
+                            <a class="author" href="/">{frontmatter.author}</a>
+                            <ul class="socials">
+                                <li class="social">
+                                    <a href="/">
+                                        <Image
+                                            src={FacebookCircleSVG}
+                                            alt="Facebook social"
+                                            width="24"
+                                            height="24"
+                                        />
+                                    </a>
+                                </li>
+                                <li class="social">
+                                    <a href="/">
+                                        <Image
+                                            src={PinterestCircleSVG}
+                                            alt="Pinterest social"
+                                            width="24"
+                                            height="24"
+                                        />
+                                    </a>
+                                </li>
+                                <li class="social">
+                                    <a href="/">
+                                        <Image
+                                            src={TwitterCircleSVG}
+                                            alt="Twitter social"
+                                            width="24"
+                                            height="24"
+                                        />
+                                    </a>
+                                </li>
+                            </ul>
+                            <FormattedDate
+                                class="date"
+                                date={frontmatter.pubDate}
+                            />
+                        </div>
+                    </div>
+                </article>
+                <!-- <div class="pagination">
+                    <div class="prev-post">Prev</div>
+                    <div class="next-post">Next</div>
+                </div> -->
+            </div>
+            <div class="col-aside">
+                <aside>Aside</aside>
+            </div>
 
-    <!-- <div class="tags">
-        {
-            frontmatter.tags.map((tag: any) => (
-                <p class="tag">
-                    <a href={`/tags/${tag}`}>{tag}</a>
-                </p>
-            ))
-        }
-    </div> -->
+            <style>
+                .row {
+                    display: flex;
+                    gap: 70px;
+                }
+                .col-post {
+                    width: 75%;
+                }
+                .col-aside {
+                    width: 25%;
+                }
+                .article {
+                    margin-bottom: 30px;
+                    padding-bottom: 14px;
+                    border-bottom: 1px solid var(--color-border-2);
+                }
+                .img {
+                    margin-bottom: 40px;
+                    object-fit: cover;
+                }
+                .post-header {
+                    text-align: center;
+                }
+                .country {
+                    margin-bottom: 16px;
+                    line-height: 1em;
+                    font-size: 44px;
+                    font-family: var(--family-epic-ride);
+                    color: var(--color-dark);
+                    font-weight: var(--weight-regular);
+                }
+                .title {
+                    text-transform: uppercase;
+                    margin-bottom: 13px;
+                    letter-spacing: 0.2em;
+                    line-height: 1.33em;
+                    font-size: 24px;
+                    font-family: var(--family-montserrat);
+                    font-weight: var(--weight-regular);
+                }
+                .category {
+                    display: inline-block;
+                    text-transform: uppercase;
+                    letter-spacing: var(--letter-spacing-default-2);
+                    font-size: 10px;
+                    line-height: 1.8em;
+                    color: var(--color-grey-2);
+                    cursor: pointer;
+                    transition: var(--transition-default);
 
-    <slot />
-    <p>{frontmatter.conclusion}</p>
+                    &:hover {
+                        color: var(--color-black-0);
+                    }
+                }
+                .meta-top,
+                .meta-bottom,
+                .tags,
+                .likes,
+                .comments {
+                    display: flex;
+                    align-items: center;
+                }
+                .meta-top {
+                    gap: 20px;
+                }
+                .comments,
+                .likes {
+                    gap: 3px;
+
+                    .count {
+                        font-size: 15px;
+                        color: var(--color-grey-2);
+                        font-family: var(--family-lora);
+                        font-style: italic;
+                    }
+                }
+                .meta-bottom {
+                    justify-content: space-between;
+                    margin-top: 43px;
+                    padding-top: 19px;
+                    border-top: 1px solid var(--color-border-2);
+                }
+                .footer {
+                    margin-top: 32px;
+                }
+                .tags {
+                    display: flex;
+                    gap: 5px;
+                }
+                .tags-list {
+                    display: flex;
+                    gap: 3px;
+                }
+                .tag {
+                    .tag-link {
+                        font-size: 15px;
+                        font-family: var(--family-lora);
+                        font-style: italic;
+                        color: var(--color-grey-2);
+                    }
+
+                    &:hover .tag-link {
+                        color: var(--color-dark);
+                    }
+                }
+                .author {
+                    text-transform: uppercase;
+                    font-size: 10px;
+                    letter-spacing: var(--letter-spacing-default);
+                    color: var(--color-grey-2);
+
+                    &:hover {
+                        color: var(--color-black);
+                    }
+                }
+                .socials {
+                    display: flex;
+                    gap: 18px;
+                }
+                .date {
+                    font-size: 15px;
+                    font-family: var(--family-lora);
+                    font-style: italic;
+                    color: var(--color-grey-2);
+                }
+            </style>
+        </div>
+    </div>
 </BaseLayout>
-<style>
-    a {
-        color: #00539f;
-    }
-
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tag {
-        margin: 0.25em;
-        border: dotted 1px #a1a1a1;
-        border-radius: 0.5em;
-        padding: 0.5em 1em;
-        font-size: 1.15em;
-        background-color: #f8fcfd;
-    }
-</style>

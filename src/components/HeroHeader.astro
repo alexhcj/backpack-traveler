@@ -1,4 +1,5 @@
 ---
+const { type } = Astro.props;
 import CupHeart from "../../public/hero-header/cup-heart.png";
 import TodoList from "../../public/hero-header/todo-list.png";
 import LogoDark from "../../public/hero-header/logo-dark.png";
@@ -18,14 +19,31 @@ const navList = [
     <div class="hero-header">
         <ul class="nav-list">
             {
-                navList.map((item) => (
-                    <li class="nav-item">
-                        <a class="nav-link" href={item.url}>
-                            <img class="nav-img" src={item.img.src} alt="" />
+                type === "home" ? (
+                    <li class="nav-item" data-type="logo">
+                        <a class="nav-link" href={navList[2].url}>
+                            <img
+                                class="nav-img"
+                                src={navList[2].img.src}
+                                alt=""
+                            />
                         </a>
-                        <span class="text">{item.text}</span>
+                        <span class="text">{navList[2].text}</span>
                     </li>
-                ))
+                ) : (
+                    navList.map((item) => (
+                        <li class="nav-item" data-type={item.type}>
+                            <a class="nav-link" href={item.url}>
+                                <img
+                                    class="nav-img"
+                                    src={item.img.src}
+                                    alt=""
+                                />
+                            </a>
+                            <span class="text">{item.text}</span>
+                        </li>
+                    ))
+                )
             }
         </ul>
     </div>
@@ -52,22 +70,21 @@ const navList = [
         align-items: center;
         margin: 25px;
 
-        &:not(:nth-child(3)):hover > .nav-link {
+        [data-type="icon"]&:hover > .nav-link {
             transform: translateY(-6px);
         }
 
-        &:nth-child(3) {
-            margin: 0 35px;
-            min-width: 530px;
+        .nav-img {
+            max-height: 92px;
+        }
+    }
+    .nav-item[data-type="logo"] {
+        margin: 0 35px;
+        min-width: 530px;
 
-            > span {
-                display: none;
-                visibility: hidden;
-            }
-
-            .nav-img {
-                height: 92px;
-            }
+        > span {
+            display: none;
+            visibility: hidden;
         }
     }
     .nav-link {

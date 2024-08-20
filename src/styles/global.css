@@ -3,12 +3,15 @@
     --family-lora: "Lora", serif;
     --family-epic-ride: "EpicRide", serif;
 
+    --letter-spacing-minus: -1px;
     --letter-spacing-default: 0.33em;
+    --letter-spacing-default-2: 0.3em;
     --letter-spacing-m: 0.2em;
     --letter-spacing-xs: 0.02em;
 
     --color-primary: #f7f2ee;
     --color-secondary: #f7775e;
+    --color-black-0: #000000e6;
     --color-black: #000000;
     --color-dark: #565050;
     --color-dark-2: #232323;
@@ -22,6 +25,8 @@
     --font-size-base: 16px;
     --line-height-base: 1.69em;
 
+    --weight-light: 300;
+    --weight-regular: 400;
     --weight-medium: 500;
     --weight-semi-bold: 600;
     --weight-bold: 700;
@@ -65,7 +70,7 @@ body {
 }
 
 a {
-    display: block;
+    display: inline-block;
     text-decoration: none;
     color: var(--color-black);
     transition: var(--transition-default);

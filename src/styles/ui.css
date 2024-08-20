@@ -1,7 +1,60 @@
+/* grid */
 .container {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+/* posts */
+.first-letter {
+    float: left;
+    margin-right: 13px;
+    line-height: 50px;
+    font-size: 50px;
+    font-weight: var(--weight-light);
+    color: var(--color-black);
+}
+.paragraph {
+    margin-top: 10px;
+    font-family: var(--family-lora);
+    color: var(--color-dark);
+}
+.link {
+    color: var(--color-secondary);
+}
+.link-dark {
+    color: var(--color-black);
+}
+.space {
+    height: 9px;
+}
+.blockquote {
+    margin-top: 10px;
+    text-align: center;
+    padding-top: 38px;
+    padding-bottom: 36px;
+    line-height: 33px;
+    font-size: 44px;
+    font-family: var(--family-epic-ride);
+    font-style: italic;
+    font-weight: var(--weight-regular);
+    color: var(--color-dark);
+}
+.images {
+    display: flex;
+    gap: 12px;
+    padding-top: 58px;
+}
+.img-description {
+    text-align: center;
+    margin-top: -15px;
+    letter-spacing: var(--letter-spacing-minus);
+    line-height: 63px;
+    font-size: 15px;
+    font-family: var(--family-lora);
+    font-style: italic;
+    font-weight: var(--weight-regular);
+    color: var(--color-grey-2);
 }
