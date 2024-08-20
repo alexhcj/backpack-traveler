@@ -9,11 +9,11 @@ const destinationsList = uniqueDestinationsList.map((desination) => {
         text: desination === "United Kingdom" ? "UK" : desination, // TODO refactor to list if too much shorcut countries
     };
 });
-import InstagramSVG from "../../public/header/instagram.svg";
-import TwitterSVG from "../../public/header/twitter.svg";
-import FacebookSVG from "../../public/header/facebook.svg";
-import PinterestSVG from "../../public/header/pinterest.svg";
-import YoutubeSVG from "../../public/header/youtube.svg";
+import InstagramSVG from "../../public/svg/instagram.svg";
+import TwitterSVG from "../../public/svg/twitter.svg";
+import FacebookSVG from "../../public/svg/facebook.svg";
+import PinterestSVG from "../../public/svg/pinterest.svg";
+import YoutubeSVG from "../../public/svg/youtube.svg";
 
 // TODO: refactor: add type field for cursor pointer: if link pointer (route link), else default (popover menu)
 const navList = [
@@ -128,7 +128,7 @@ interface ISocial {
                     <img
                         class="search-magnifier"
                         id="search-magnifier"
-                        src="header/magnifier.svg"
+                        src="svg/magnifier.svg"
                         width="19px"
                         height="20px"
                         alt="Search for posts"
