@@ -1,5 +1,5 @@
 ---
-const { title, slug, url, alt, country, category } = Astro.props;
+const { title, slug, url, alt, place, category } = Astro.props;
 ---
 
 <div class="post">
@@ -7,7 +7,7 @@ const { title, slug, url, alt, country, category } = Astro.props;
         <img class="img" src={url} alt={alt} />
     </a>
     <div class="box">
-        <a class="country" href="/">{country}</a>
+        <a class="place" href="/">{place}</a>
         <h4 class="title">{title}</h4>
         <a class="category" href="/">{category}</a>
     </div>
@@ -29,7 +29,7 @@ const { title, slug, url, alt, country, category } = Astro.props;
         border: 1px solid var(--color-border-2);
         border-top: none;
     }
-    .country {
+    .place {
         display: inline-block;
         margin-top: 25px;
         line-height: 1em;

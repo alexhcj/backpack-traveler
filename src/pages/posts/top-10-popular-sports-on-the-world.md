@@ -3,7 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'Top 10 popular sports on the world'
 slug: 'top-10-popular-sports-on-the-world'
 pubDate: 2023-06-24
-country: 'Perth'
+place: 'Perth'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'

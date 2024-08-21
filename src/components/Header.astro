@@ -1,7 +1,7 @@
 ---
 const postsList = await Astro.glob("../pages/posts/*.md");
 const uniqueDestinationsList = [
-    ...new Set(postsList.map((post: any) => post.frontmatter.country)),
+    ...new Set(postsList.map((post: any) => post.frontmatter.place)),
 ];
 const destinationsList = uniqueDestinationsList.map((desination) => {
     return {

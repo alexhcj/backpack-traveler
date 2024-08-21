@@ -3,7 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'Venice city tour with river cruise'
 slug: 'venice-city-tour-with-river-cruise'
 pubDate: 2024-08-09
-country: 'Marano di Napoli'
+place: 'Marano di Napoli'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'

@@ -3,7 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'Explore the Finest Beaches in Italy'
 slug: 'explore-the-finest-beaches-in-italy'
 pubDate: 2024-08-13
-country: 'Brazil'
+place: 'Brazil'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'
