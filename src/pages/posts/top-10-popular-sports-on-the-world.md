@@ -8,6 +8,6 @@ category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'
 image:
-    url: '/posts/top-10-popular-sports-on-the-world.jpg'
+    url: 'posts/top-10-popular-sports-on-the-world.jpg'
     alt: 'Big baloons in the sky'
 ---
