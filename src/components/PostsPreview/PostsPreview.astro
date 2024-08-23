@@ -1,32 +1,41 @@
 ---
 import PostPreviewItem from "./PostPreviewItem.astro";
-const postsList = await Astro.glob("../../pages/posts/*.md");
+import type { Post } from "../../types/post";
+const posts = await Astro.glob<Post>("../../pages/posts/*.md");
+const postsPreview = [
+    "village-in-the-brazil",
+    "top-10-popular-sports-on-the-world",
+    "eating-food-tour",
+    "venice-city-tour-with-river-cruise",
+    "the-15-best-things-to-do-in-dublin",
+    "the-world’s-best-drinking",
+    "explore-the-finest-beaches-in-italy",
+    "the-essential-paris-travel-guide-and-map",
+    "traveler-who-walks-around",
+    "a-guide-for-budget-travel-with-pets",
+];
+const postsList = posts.filter((post) =>
+    postsPreview.some((slug: string) => post.frontmatter.slug === slug),
+);
 import ArrowSVG from "../../../public/svg/arrow.svg";
-
-// TODO: markdown types?...
-interface PostPreview {
-    title: string;
-}
 ---
 
 <section>
     <div class="wrapper">
         <ul id="hero-slider" class="keen-slider">
             {
-                postsList.map(
-                    (post, index): PostPreview => (
-                        <li class={`keen-slider__slide number-slide${index}`}>
-                            <PostPreviewItem
-                                title={post.frontmatter.title}
-                                url={post.frontmatter.image.url}
-                                alt={post.frontmatter.image.alt}
-                                place={post.frontmatter.place}
-                                category={post.frontmatter.category}
-                                slug={post.frontmatter.slug}
-                            />
-                        </li>
-                    ),
-                )
+                postsList.map((post, index) => (
+                    <li class={`keen-slider__slide number-slide${index}`}>
+                        <PostPreviewItem
+                            title={post.frontmatter.title}
+                            url={post.frontmatter.image.url}
+                            alt={post.frontmatter.image.alt}
+                            place={post.frontmatter.place}
+                            category={post.frontmatter.category}
+                            slug={post.frontmatter.slug}
+                        />
+                    </li>
+                ))
             }
         </ul>
         <div class="controls" data-controls>
