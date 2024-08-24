@@ -4,6 +4,7 @@ export interface Post {
     url: string;
     alt: string;
   };
+  country: string;
   place: string;
   category: string;
   slug: string;

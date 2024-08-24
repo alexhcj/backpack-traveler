@@ -3,6 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'Villages in the Brazil'
 slug: 'village-in-the-brazil'
 pubDate: 2023-06-15
+country: 'Canada'
 place: 'Canada'
 category: 'adventure'
 description: 'Some post description'

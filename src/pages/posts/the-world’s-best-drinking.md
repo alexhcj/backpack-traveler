@@ -3,6 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'The World’s Best Drinking'
 slug: 'the-world’s-best-drinking'
 pubDate: 2024-07-03
+country: 'Brazil'
 place: 'Brazil'
 category: 'travel guides'
 description: 'Some post description'
