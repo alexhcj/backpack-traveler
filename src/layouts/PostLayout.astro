@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
 import HeroHeader from "../components/HeroHeader.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import Categories from "../components/Categories.astro";
 import BookmarkSVG from "../../public/svg/bookmark.svg";
 import HeartSVG from "../../public/svg/heart.svg";
 import CommentSVG from "../../public/svg/comment.svg";
@@ -128,7 +129,9 @@ const { frontmatter } = Astro.props;
                 </div> -->
             </div>
             <div class="col-aside">
-                <aside>Aside</aside>
+                <aside>
+                    <Categories />
+                </aside>
             </div>
 
             <style>
