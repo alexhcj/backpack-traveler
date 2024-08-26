@@ -1,3 +1,5 @@
+import type { ISocial } from "./social";
+
 export interface Post {
   title: string;
   image: {
@@ -12,4 +14,5 @@ export interface Post {
   description: string;
   author: string;
   tags?: string[];
+  socials?: ISocial[];
 }

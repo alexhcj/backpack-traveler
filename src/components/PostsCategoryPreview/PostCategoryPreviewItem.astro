@@ -1,0 +1,81 @@
+---
+interface Props {
+    title: string;
+    slug: string;
+    image: {
+        url: string;
+        alt: string;
+    };
+    place: string;
+    category: string;
+    author: string;
+    pubDate: Date;
+    socials: ISocial[];
+}
+const {
+    title,
+    slug,
+    image: { url, alt },
+    place,
+    category,
+    author,
+    pubDate,
+    socials,
+} = Astro.props;
+import { Image } from "astro:assets";
+import PostMeta from "../PostMeta.astro";
+import type { ISocial } from "../../types/social";
+---
+
+<article class="article">
+    <div class="post-header">
+        <a class="ui-post-place" href="/destinations/brazil">{place}</a>
+        <h3 class="ui-post-title m-l">
+            <a href={`/posts/${slug}`}>{title}</a>
+        </h3>
+        <a href={`/category/${category}`} class="ui-post-category">{category}</a
+        >
+    </div>
+    <a href={`/posts/${slug}`}>
+        <Image
+            class="img"
+            src={`/${url}`}
+            width="800"
+            height="1157"
+            alt={alt}
+        />
+    </a>
+    <div class="reading-link">
+        <a href={`/posts/${slug}`} class="link">Keep reading...</a>
+    </div>
+    <PostMeta author={author} socials={socials} pubDate={pubDate} />
+</article>
+
+<style>
+    .article {
+        text-align: center;
+    }
+    .post-header {
+        margin-bottom: 30px;
+    }
+    .img {
+        object-fit: cover;
+    }
+    .reading-link {
+        margin-top: 45px;
+
+        .link {
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-default);
+            line-height: 2em;
+            font-size: 12px;
+            font-family: var(--family-montserrat);
+            font-weight: var(--weight-medium);
+            color: var(--color-black);
+
+            &:hover {
+                color: var(--color-black-0);
+            }
+        }
+    }
+</style>

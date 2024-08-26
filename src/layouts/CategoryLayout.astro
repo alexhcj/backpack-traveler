@@ -1,0 +1,40 @@
+---
+const { category } = Astro.params;
+
+import BaseLayout from "./Layout.astro";
+import PostsCategoryPreview from "../components/PostsCategoryPreview/PostsCategoryPreview.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Sidebar from "../components/Sidebar.astro";
+---
+
+<BaseLayout title={category || "post category"} headerType="short">
+    <Breadcrumbs secondLvl={category || "category"} />
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-posts">
+                    <PostsCategoryPreview category={category || "category"} />
+                </div>
+                <div class="col-aside">
+                    <Sidebar />
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding: 70px 0 40px;
+    }
+    .row {
+        display: flex;
+        gap: 70px;
+    }
+    .col-posts {
+        width: 75%;
+    }
+    .col-aside {
+        width: 25%;
+    }
+</style>

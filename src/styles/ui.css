@@ -1,14 +1,21 @@
 /* grid */
 .container {
-    width: 100%;
-    max-width: 1300px;
     margin: 0 auto;
     padding-left: 15px;
     padding-right: 15px;
+    max-width: 1300px;
+    width: 100%;
+    height: 100%;
+
+    &.xl {
+        max-width: 1440px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
 }
 
-/* posts */
-.first-letter {
+/* posts md */
+.md-first-letter {
     float: left;
     margin-right: 13px;
     line-height: 50px;
@@ -21,16 +28,16 @@
     font-family: var(--family-lora);
     color: var(--color-dark);
 }
-.link {
+.md-link {
     color: var(--color-secondary);
 }
-.link-dark {
+.md-link-dark {
     color: var(--color-black);
 }
-.space {
+.md-space {
     height: 9px;
 }
-.blockquote {
+.md-blockquote {
     margin-top: 10px;
     text-align: center;
     padding-top: 38px;
@@ -42,12 +49,12 @@
     font-weight: var(--weight-regular);
     color: var(--color-dark);
 }
-.images {
+.md-images {
     display: flex;
     gap: 12px;
     padding-top: 58px;
 }
-.img-description {
+.md-img-description {
     text-align: center;
     margin-top: -15px;
     letter-spacing: var(--letter-spacing-minus);
@@ -57,4 +64,53 @@
     font-style: italic;
     font-weight: var(--weight-regular);
     color: var(--color-grey-2);
+}
+
+/* posts ui */
+.ui-post-place {
+    line-height: 1em;
+    font-size: 44px;
+    font-family: var(--family-epic-ride);
+    font-weight: var(--weight-regular);
+    color: var(--color-dark);
+
+    &:hover {
+        color: var(--color-black);
+    }
+
+    & > a {
+        color: inherit;
+    }
+}
+.ui-post-title {
+    text-transform: uppercase;
+    margin-bottom: 13px;
+    letter-spacing: 0.2em;
+    line-height: 1.33em;
+    font-size: 24px;
+    font-family: var(--family-montserrat);
+    font-weight: var(--weight-regular);
+    color: var(--color-black);
+
+    &.m-l {
+        margin: 21px 0 11px;
+    }
+
+    &.m-m {
+        margin: 16px 0 13px;
+    }
+}
+.ui-post-category {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-default-2);
+    font-size: 10px;
+    line-height: 1.8em;
+    color: var(--color-grey-2);
+    cursor: pointer;
+    transition: var(--transition-default);
+
+    &:hover {
+        color: var(--color-black-0);
+    }
 }

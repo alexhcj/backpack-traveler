@@ -2,19 +2,17 @@
 import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
 import HeroHeader from "../components/HeroHeader.astro";
-import FormattedDate from "../components/FormattedDate.astro";
 import Categories from "../components/Categories.astro";
+import PostMeta from "../components/PostMeta.astro";
+
 import BookmarkSVG from "../../public/svg/bookmark.svg";
 import HeartSVG from "../../public/svg/heart.svg";
 import CommentSVG from "../../public/svg/comment.svg";
-import FacebookCircleSVG from "../../public/svg/facebook-circle.svg";
-import PinterestCircleSVG from "../../public/svg/pinterest-circle.svg";
-import TwitterCircleSVG from "../../public/svg/twitter-circle.svg";
 
 const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout title={frontmatter.title}>
+<BaseLayout title={frontmatter.title} headerType="long">
     <HeroHeader type="home" />
     <div class="container">
         <div class="row">
@@ -82,45 +80,11 @@ const { frontmatter } = Astro.props;
                                 <span class="count">0</span>
                             </div>
                         </div>
-                        <div class="meta-bottom">
-                            <a class="author" href="/">{frontmatter.author}</a>
-                            <ul class="socials">
-                                <li class="social">
-                                    <a href="/">
-                                        <Image
-                                            src={FacebookCircleSVG}
-                                            alt="Facebook social"
-                                            width="24"
-                                            height="24"
-                                        />
-                                    </a>
-                                </li>
-                                <li class="social">
-                                    <a href="/">
-                                        <Image
-                                            src={PinterestCircleSVG}
-                                            alt="Pinterest social"
-                                            width="24"
-                                            height="24"
-                                        />
-                                    </a>
-                                </li>
-                                <li class="social">
-                                    <a href="/">
-                                        <Image
-                                            src={TwitterCircleSVG}
-                                            alt="Twitter social"
-                                            width="24"
-                                            height="24"
-                                        />
-                                    </a>
-                                </li>
-                            </ul>
-                            <FormattedDate
-                                class="date"
-                                date={frontmatter.pubDate}
-                            />
-                        </div>
+                        <PostMeta
+                            author={frontmatter.author}
+                            socials={frontmatter.socials}
+                            pubDate={frontmatter.pubDate}
+                        />
                     </div>
                 </article>
                 <!-- <div class="pagination">
@@ -147,8 +111,6 @@ const { frontmatter } = Astro.props;
                 }
                 .article {
                     margin-bottom: 30px;
-                    padding-bottom: 14px;
-                    border-bottom: 1px solid var(--color-border-2);
                 }
                 .img {
                     margin-bottom: 40px;
@@ -189,7 +151,6 @@ const { frontmatter } = Astro.props;
                     }
                 }
                 .meta-top,
-                .meta-bottom,
                 .tags,
                 .likes,
                 .comments {
@@ -209,12 +170,6 @@ const { frontmatter } = Astro.props;
                         font-family: var(--family-lora);
                         font-style: italic;
                     }
-                }
-                .meta-bottom {
-                    justify-content: space-between;
-                    margin-top: 43px;
-                    padding-top: 19px;
-                    border-top: 1px solid var(--color-border-2);
                 }
                 .footer {
                     margin-top: 32px;
@@ -238,26 +193,6 @@ const { frontmatter } = Astro.props;
                     &:hover .tag-link {
                         color: var(--color-dark);
                     }
-                }
-                .author {
-                    text-transform: uppercase;
-                    font-size: 10px;
-                    letter-spacing: var(--letter-spacing-default);
-                    color: var(--color-grey-2);
-
-                    &:hover {
-                        color: var(--color-black);
-                    }
-                }
-                .socials {
-                    display: flex;
-                    gap: 18px;
-                }
-                .date {
-                    font-size: 15px;
-                    font-family: var(--family-lora);
-                    font-style: italic;
-                    color: var(--color-grey-2);
                 }
             </style>
         </div>

@@ -1,4 +1,10 @@
 ---
+interface Props {
+    type: "long" | "short";
+}
+
+const { type } = Astro.props;
+import { Image } from "astro:assets";
 const postsList = await Astro.glob("../pages/posts/*.md");
 const uniqueDestinationsList = [
     ...new Set(postsList.map((post: any) => post.frontmatter.country)),
@@ -45,40 +51,58 @@ interface ISocial {
 }
 ---
 
-<header class="header">
-    <ul>
-        {postsList.map((post: any) => <li>{post.slug}</li>)}
-    </ul>
-    <div class="container">
+<header
+    class:list={[
+        "header",
+        { long: type === "long" },
+        { short: type === "short" },
+    ]}
+>
+    <div class:list={["container", { xl: type === "short" }]}>
         <div class="box">
-            <div class="destinations">
-                <ul class="destination-list">
-                    <li class="destination-item">
-                        <img src="/images/earth-marker.png" alt="" />
-                        <span class="text">Destinations</span>
-                    </li>
-                </ul>
-                <ul class="popup-list">
-                    {
-                        destinationsList.map((dest) => (
-                            <li class="popup-item">
-                                <a
-                                    class="popup-link"
-                                    href={`destination-map/${dest.url}`}
-                                >
-                                    {dest.text}
-                                </a>
+            {
+                type === "long" ? (
+                    <div class="destinations">
+                        <ul class="destination-list">
+                            <li class="destination-item">
+                                <img src="/images/earth-marker.png" alt="" />
+                                <span class="text">Destinations</span>
                             </li>
-                        ))
-                    }
-                </ul>
-            </div>
+                        </ul>
+                        <ul class="popup-list">
+                            {destinationsList.map((dest) => (
+                                <li class="popup-item">
+                                    <a
+                                        class="popup-link"
+                                        href={`destination-map/${dest.url}`}
+                                    >
+                                        {dest.text}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ) : (
+                    <Image
+                        src="/images/logo-short-dark.webp"
+                        width="209"
+                        height="45"
+                        alt="Logo image"
+                    />
+                )
+            }
             <nav class="nav">
                 <ul class="nav-list">
                     {
                         navList.map((item) => (
                             <li class="nav-item">
-                                <a class="nav-link" href={item.url}>
+                                <a
+                                    class:list={[
+                                        "nav-link",
+                                        { "size-sm": type === "short" },
+                                    ]}
+                                    href={item.url}
+                                >
                                     {item.text}
                                 </a>
                                 {item.url === "/pages" && (
@@ -100,41 +124,43 @@ interface ISocial {
                     }
                 </ul>
             </nav>
-            <div class="right-column">
-                <ul class="socials">
-                    {
-                        socialsList.map((social: ISocial) => (
-                            <li>
-                                <a href={social.url}>
-                                    <img
-                                        class="social-icon"
-                                        src={social.icon.src}
-                                        alt={social.alt}
-                                    />
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
-                <div class="search">
-                    <span class="search-divider"></span>
-                    <input
-                        class="search-input"
-                        id="search-input"
-                        placeholder="Search..."
-                        type="text"
-                        id="search"
-                    />
-                    <img
-                        class="search-magnifier"
-                        id="search-magnifier"
-                        src="/svg/magnifier.svg"
-                        width="19px"
-                        height="20px"
-                        alt="Search for posts"
-                    />
-                </div>
-            </div>
+            {
+                type === "long" && (
+                    <div class="right-column">
+                        <ul class="socials">
+                            {socialsList.map((social: ISocial) => (
+                                <li>
+                                    <a href={social.url}>
+                                        <img
+                                            class="social-icon"
+                                            src={social.icon.src}
+                                            alt={social.alt}
+                                        />
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                        <div class="search">
+                            <span class="search-divider" />
+                            <input
+                                class="search-input"
+                                id="search-input"
+                                placeholder="Search..."
+                                type="text"
+                                id="search"
+                            />
+                            <img
+                                class="search-magnifier"
+                                id="search-magnifier"
+                                src="/svg/magnifier.svg"
+                                width="19px"
+                                height="20px"
+                                alt="Search for posts"
+                            />
+                        </div>
+                    </div>
+                )
+            }
         </div>
     </div>
 </header>
@@ -143,9 +169,11 @@ interface ISocial {
     .header {
         background-color: var(--color-primary);
         height: 60px;
-    }
-    .container {
-        height: 100%;
+
+        &.short {
+            background-color: var(--color-white);
+            height: 95px;
+        }
     }
     .box {
         display: grid;
@@ -252,10 +280,6 @@ interface ISocial {
         }
 
         &:hover {
-            & .nav-link {
-                color: var(--color-grey);
-            }
-
             .popup-list {
                 opacity: 1;
                 visibility: visible;
@@ -268,6 +292,14 @@ interface ISocial {
         line-height: 23px;
         font-size: 11px;
         font-weight: var(--weight-medium);
+
+        &:hover {
+            color: var(--color-grey);
+        }
+
+        &.size-sm {
+            font-size: 10px;
+        }
     }
     .right-column {
         display: grid;

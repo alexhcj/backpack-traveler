@@ -1,0 +1,39 @@
+---
+interface Props {
+    category: string;
+}
+const { category } = Astro.props;
+
+import type { Post } from "../../types/post";
+import PostCategoryPreviewItem from "./PostCategoryPreviewItem.astro";
+
+const postsList = await Astro.glob<Post>("../../pages/posts/*.md");
+const postsByCategory = postsList.filter(
+    (post) => post.frontmatter.category === category,
+);
+---
+
+<ul class="list">
+    {
+        postsByCategory.map(({ frontmatter }) => (
+            <PostCategoryPreviewItem
+                title={frontmatter.title}
+                slug={frontmatter.slug}
+                category={frontmatter.category}
+                image={frontmatter.image}
+                place={frontmatter.place}
+                author={frontmatter.author}
+                pubDate={frontmatter.pubDate}
+                socials={frontmatter.socials ?? []}
+            />
+        ))
+    }
+</ul>
+
+<style>
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+</style>

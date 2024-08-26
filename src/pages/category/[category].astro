@@ -1,0 +1,23 @@
+---
+import CategoryLayout from "../../layouts/CategoryLayout.astro";
+import type { Post } from "../../types/post";
+
+export async function getStaticPaths() {
+    const postsList = await Astro.glob<Post>("../posts/*.md");
+    const categoriesList: string[] = [
+        ...new Set(postsList.map((post) => post.frontmatter.category)),
+    ];
+
+    return categoriesList.map((category) => {
+        return {
+            params: {
+                category,
+            },
+        };
+    });
+}
+
+const { category } = Astro.params;
+---
+
+<CategoryLayout category={category} />
