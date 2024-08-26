@@ -1,0 +1,77 @@
+---
+import type { MarkdownInstance } from "astro";
+import { Image } from "astro:assets";
+import type { Post } from "../types/post";
+
+interface Props {
+    posts: MarkdownInstance<Post>[];
+}
+const { posts } = Astro.props;
+const latestPosts = posts
+    .sort(
+        (a, b) =>
+            +new Date(b.frontmatter.pubDate) - +new Date(a.frontmatter.pubDate),
+    )
+    .splice(0, 4);
+---
+
+<div class="latest-posts">
+    <div class="ui-sidebar-header-box">
+        <h6 class="ui-sidebar-title">Latest posts</h6>
+        <span class="ui-sidebar-line"></span>
+    </div>
+    <ul class="list">
+        {
+            latestPosts.map(({ frontmatter }) => (
+                <li>
+                    <a class="link" href={frontmatter.slug}>
+                        <div class="img-box">
+                            <Image
+                                class="img"
+                                src={`/${frontmatter.image.url}`}
+                                alt={frontmatter.image.alt}
+                                width="87"
+                                height="87"
+                            />
+                        </div>
+                        {frontmatter.title}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    .ui-sidebar-header-box {
+        margin-bottom: 31px;
+    }
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .link {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.67em;
+        font-size: 12px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+
+        &:hover {
+            color: var(--color-grey-2);
+        }
+    }
+    .img-box {
+        margin-right: 24px;
+        width: 87px;
+        height: 87px;
+        float: left;
+    }
+    .img {
+        width: inherit;
+        height: inherit;
+    }
+</style>

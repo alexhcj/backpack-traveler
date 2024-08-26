@@ -1,7 +1,19 @@
 ---
+const posts = await Astro.glob<Post>("../pages/posts/*.md");
 import Categories from "../components/Categories.astro";
+import LatestPosts from "../components/LatestPosts.astro";
+import type { Post } from "../types/post";
 ---
 
 <aside class="aside">
-    <Categories />
+    <LatestPosts posts={posts} />
+    <Categories posts={posts} />
 </aside>
+
+<style>
+    .aside {
+        display: flex;
+        flex-direction: column;
+        gap: 37px;
+    }
+</style>
