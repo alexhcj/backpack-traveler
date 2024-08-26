@@ -1,0 +1,97 @@
+---
+import { Image } from "astro:assets";
+import type { IEssential } from "../types/essential";
+
+const essentials: IEssential[] = [
+    {
+        essential: "Handbag",
+        url: "https://www.amazon.com/Jack-Rogers-Celeste-Small-Leather/dp/B00PLPHWZ0/ref=sr_1_136?s=apparel&ie=UTF8&qid=1536138726&sr=1-136&nodeID=7141123011&psd=1&keywords=coral+bags+for+women&_ga=2.171022432.1973015166.1724354617-1114255449.1672116561",
+        img: "/images/handbag.webp",
+    },
+    {
+        essential: "Sandals",
+        url: "https://www.amazon.com/LUFFYMOMO-Gladiator-Sandals-Fisherman-Sandals%EF%BC%889/dp/B07RB4WB5L/ref=sr_1_6?dib=eyJ2IjoiMSJ9.Nx_5QPikI4gX7F9d34sFKywaSvhTJZKJq_qGGZCQCLxe-iDAh-PPIcSbJn8lHxelsI8zII3XJljxusNOpvpKnUrJ3NUl5Tw6oRl-Qme9MjWQ4L3_bGjhrnJo3GSuO3LNPjtwwdo0wXFDh8Ppem9voGTZ6V71H25EQ7jamacvEbmyFxrMXLz3z1OAjSLQpNJUbT4zTWuwePldMwixxRMqhnLZDwHV2Ac8lnOfZ-2CCvm_2RGtnqGm9NRnJWJTKV_z8e5A2NINwmr3COub5ZVzx8nmp83igXRY622xc2vYnaU.clHg4wt_TdG-vMNCmYoEUZlGR6qxymuK9nEzJpz4L6w&dib_tag=se&keywords=sandals%2Bbrown&qid=1724695033&sr=8-6&th=1",
+        img: "/images/sandals.webp",
+    },
+    {
+        essential: "Camera",
+        url: "https://www.amazon.com/Fujifilm-Instax-Mini-Instant-Camera/dp/B08527W1MF/ref=sr_1_1?crid=1PJP1JT3QXI9P&dib=eyJ2IjoiMSJ9.uJxL8-Dwe8lOppe0oH0KsiZp1AzOg6nreXMf7f5tbvuPXUp2Vwb6gJ1akGFvYR0asJeQd0gThNcN4ZKnOv3C_9eq20suYyTD9x4zDqlHAsXDPPiCNXhxAPc0DrJX16i-1a48hodJeJPTsDMm5P3SaXWUj7n_b9t2ztD_m8mfM_FHNCq3AfcWPhUapyhLfFxx24YMCHLOIsxAKmotGKBjSqt2Nr4lN5JevGG6FDnzTV8.4dxbZfD0NsZCqLLamycsZZXm5sjMJ_a-pJPV2mfas7s&dib_tag=se&keywords=blue+camera&qid=1724695086&sprefix=blue+camera%2Caps%2C309&sr=8-1",
+        img: "/images/camera.webp",
+    },
+    {
+        essential: "Suitcase",
+        url: "https://www.amazon.com/Kenneth-Cole-Reaction-Expandable-8-Wheel/dp/B07BFDWVDG/ref=pd_sbs_198_6?_encoding=UTF8&pd_rd_i=B07BFDWVDG&pd_rd_r=7ad862ca-b0e9-11e8-ab28-01ad97aa66bb&pd_rd_w=uzm53&pd_rd_wg=2Oien&pf_rd_i=desktop-dp-sims&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=0bb14103-7f67-4c21-9b0b-31f42dc047e7&pf_rd_r=8Q27Y3B02JG0KKV7XKYS&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=8Q27Y3B02JG0KKV7XKYS&_ga=2.171022432.1973015166.1724354617-1114255449.1672116561",
+        img: "/images/suitcase.webp",
+    },
+    {
+        essential: "Glasses",
+        url: "https://www.amazon.com/Ray-Ban-Clubround-Non-Polarized-Sunglasses-Tortoise/dp/B019STHPW4/ref=pd_sbs_309_20?_encoding=UTF8&pd_rd_i=B01BFB16M8&pd_rd_r=3d714790-b0ea-11e8-a16e-f165ee31ead5&pd_rd_w=iFJNS&pd_rd_wg=zAnbS&pf_rd_i=desktop-dp-sims&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=0bb14103-7f67-4c21-9b0b-31f42dc047e7&pf_rd_r=C94ZJ88S3S85SRMH1R58&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&refRID=C94ZJ88S3S85SRMH1R58&_ga=2.171022432.1973015166.1724354617-1114255449.1672116561&th=1",
+        img: "/images/glasses.webp",
+    },
+];
+---
+
+<section class="section">
+    <div class="wrapper">
+        <h3 class="title">My travel essentials</h3>
+        <p class="text">
+            We are the Backpack Traveler, your favorite travel assistants!
+        </p>
+        <ul class="list">
+            {
+                essentials.map(({ essential, url, img }) => (
+                    <li class="item">
+                        <a href={url} target="_blank">
+                            <Image
+                                src={img}
+                                width="177"
+                                height="177"
+                                alt={essential}
+                            />
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 60px 30px 110px;
+        background-color: var(--color-primary);
+    }
+    .wrapper {
+        text-align: center;
+        padding: 35px 15px 0;
+    }
+    .title {
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.33em;
+        font-size: 24px;
+        font-family: var(--family-montserrate);
+        font-weight: var(--weight-regular);
+        color: var(--color-black);
+    }
+    .text {
+        line-height: 30px;
+        font-size: 18px;
+        font-family: var(--family-lora);
+        color: var(--color-grey-4);
+    }
+    .list {
+        display: flex;
+        justify-content: center;
+        padding: 57px 12% 0;
+    }
+    .item {
+        width: 20%;
+        transition: var(--transition-default);
+
+        &:hover {
+            transform: translateY(-7px);
+        }
+    }
+</style>
