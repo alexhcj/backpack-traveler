@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
 import HeroHeader from "../components/HeroHeader.astro";
-import Categories from "../components/Categories.astro";
+import Sidebar from "../components/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
 
 import BookmarkSVG from "../../public/svg/bookmark.svg";
@@ -93,108 +93,106 @@ const { frontmatter } = Astro.props;
                 </div> -->
             </div>
             <div class="col-aside">
-                <aside>
-                    <Categories />
-                </aside>
+                <Sidebar />
             </div>
-
-            <style>
-                .row {
-                    display: flex;
-                    gap: 70px;
-                }
-                .col-post {
-                    width: 75%;
-                }
-                .col-aside {
-                    width: 25%;
-                }
-                .article {
-                    margin-bottom: 30px;
-                }
-                .img {
-                    margin-bottom: 40px;
-                    object-fit: cover;
-                }
-                .post-header {
-                    text-align: center;
-                }
-                .place {
-                    margin-bottom: 16px;
-                    line-height: 1em;
-                    font-size: 44px;
-                    font-family: var(--family-epic-ride);
-                    color: var(--color-dark);
-                    font-weight: var(--weight-regular);
-                }
-                .title {
-                    text-transform: uppercase;
-                    margin-bottom: 13px;
-                    letter-spacing: 0.2em;
-                    line-height: 1.33em;
-                    font-size: 24px;
-                    font-family: var(--family-montserrat);
-                    font-weight: var(--weight-regular);
-                }
-                .category {
-                    display: inline-block;
-                    text-transform: uppercase;
-                    letter-spacing: var(--letter-spacing-default-2);
-                    font-size: 10px;
-                    line-height: 1.8em;
-                    color: var(--color-grey-2);
-                    cursor: pointer;
-                    transition: var(--transition-default);
-
-                    &:hover {
-                        color: var(--color-black-0);
-                    }
-                }
-                .meta-top,
-                .tags,
-                .likes,
-                .comments {
-                    display: flex;
-                    align-items: center;
-                }
-                .meta-top {
-                    gap: 20px;
-                }
-                .comments,
-                .likes {
-                    gap: 3px;
-
-                    .count {
-                        font-size: 15px;
-                        color: var(--color-grey-2);
-                        font-family: var(--family-lora);
-                        font-style: italic;
-                    }
-                }
-                .footer {
-                    margin-top: 32px;
-                }
-                .tags {
-                    display: flex;
-                    gap: 5px;
-                }
-                .tags-list {
-                    display: flex;
-                    gap: 3px;
-                }
-                .tag {
-                    .tag-link {
-                        font-size: 15px;
-                        font-family: var(--family-lora);
-                        font-style: italic;
-                        color: var(--color-grey-2);
-                    }
-
-                    &:hover .tag-link {
-                        color: var(--color-dark);
-                    }
-                }
-            </style>
         </div>
     </div>
 </BaseLayout>
+
+<style>
+    .row {
+        display: flex;
+        gap: 70px;
+    }
+    .col-post {
+        width: 75%;
+    }
+    .col-aside {
+        width: 25%;
+    }
+    .article {
+        margin-bottom: 30px;
+    }
+    .img {
+        margin-bottom: 40px;
+        object-fit: cover;
+    }
+    .post-header {
+        text-align: center;
+    }
+    .place {
+        margin-bottom: 16px;
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+        color: var(--color-dark);
+        font-weight: var(--weight-regular);
+    }
+    .title {
+        text-transform: uppercase;
+        margin-bottom: 13px;
+        letter-spacing: 0.2em;
+        line-height: 1.33em;
+        font-size: 24px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-regular);
+    }
+    .category {
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default-2);
+        font-size: 10px;
+        line-height: 1.8em;
+        color: var(--color-grey-2);
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &:hover {
+            color: var(--color-black-0);
+        }
+    }
+    .meta-top,
+    .tags,
+    .likes,
+    .comments {
+        display: flex;
+        align-items: center;
+    }
+    .meta-top {
+        gap: 20px;
+    }
+    .comments,
+    .likes {
+        gap: 3px;
+
+        .count {
+            font-size: 15px;
+            color: var(--color-grey-2);
+            font-family: var(--family-lora);
+            font-style: italic;
+        }
+    }
+    .footer {
+        margin-top: 32px;
+    }
+    .tags {
+        display: flex;
+        gap: 5px;
+    }
+    .tags-list {
+        display: flex;
+        gap: 3px;
+    }
+    .tag {
+        .tag-link {
+            font-size: 15px;
+            font-family: var(--family-lora);
+            font-style: italic;
+            color: var(--color-grey-2);
+        }
+
+        &:hover .tag-link {
+            color: var(--color-dark);
+        }
+    }
+</style>
