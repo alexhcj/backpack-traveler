@@ -4,7 +4,7 @@ title: 'Traveler who walks around'
 slug: 'traveler-who-walks-around'
 pubDate: 2024-03-15
 country: 'UK'
-place: 'United Kingdom'
+destination: 'United Kingdom'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'

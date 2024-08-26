@@ -6,7 +6,7 @@ interface Props {
         url: string;
         alt: string;
     };
-    place: string;
+    destination: string;
     category: string;
     author: string;
     pubDate: Date;
@@ -16,7 +16,7 @@ const {
     title,
     slug,
     image: { url, alt },
-    place,
+    destination,
     category,
     author,
     pubDate,
@@ -29,7 +29,9 @@ import type { ISocial } from "../../types/social";
 
 <article class="article">
     <div class="post-header">
-        <a class="ui-post-place" href="/destinations/brazil">{place}</a>
+        <a class="ui-post-destination" href="/destinations/brazil"
+            >{destination}</a
+        >
         <h3 class="ui-post-title m-l">
             <a href={`/posts/${slug}`}>{title}</a>
         </h3>

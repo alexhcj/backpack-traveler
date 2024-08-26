@@ -4,7 +4,7 @@ title: '5 Types of nature travelers 😍'
 slug: '5-types-of-nature-travelers'
 pubDate: 2024-04-23
 country: 'Canada'
-place: 'Canada'
+destination: 'Canada'
 category: 'explore'
 description: 'Some post description'
 author: 'Murphy Cooper'

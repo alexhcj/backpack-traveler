@@ -26,7 +26,9 @@ const { frontmatter } = Astro.props;
                         height="638"
                     />
                     <div class="post-header">
-                        <a class="place" href="/">{frontmatter.place}</a>
+                        <a class="destination" href="/"
+                            >{frontmatter.destination}</a
+                        >
                         <h3 class="title">{frontmatter.title}</h3>
                         <a class="category" href="/">{frontmatter.category}</a>
                     </div>
@@ -120,7 +122,7 @@ const { frontmatter } = Astro.props;
     .post-header {
         text-align: center;
     }
-    .place {
+    .destination {
         margin-bottom: 16px;
         line-height: 1em;
         font-size: 44px;

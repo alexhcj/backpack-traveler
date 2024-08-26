@@ -4,7 +4,7 @@ title: 'Villages in the Brazil'
 slug: 'village-in-the-brazil'
 pubDate: 2023-06-15
 country: 'Canada'
-place: 'Canada'
+destination: 'Canada'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'

@@ -4,7 +4,7 @@ title: 'Beautiful Italy'
 slug: 'beautiful-italy'
 pubDate: 2024-08-13
 country: 'Italy'
-place: 'Italy'
+destination: 'Italy'
 category: 'travel guides'
 description: 'Some post description'
 author: 'Murphy Cooper'

@@ -7,7 +7,7 @@ export interface Post {
     alt: string;
   };
   country: string;
-  place: string;
+  destination: string;
   category: string;
   slug: string;
   pubDate: Date;

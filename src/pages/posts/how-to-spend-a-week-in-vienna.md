@@ -4,7 +4,7 @@ title: 'How to spend a week in Vienna'
 slug: 'how-to-spend-a-week-in-vienna'
 pubDate: 2024-08-18
 country: 'Spain'
-place: 'Spain'
+destination: 'Spain'
 category: 'explore'
 description: 'Some post description'
 author: 'Murphy Cooper'

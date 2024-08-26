@@ -4,7 +4,7 @@ title: 'The World’s Best Drinking'
 slug: 'the-world’s-best-drinking'
 pubDate: 2024-07-03
 country: 'Brazil'
-place: 'Brazil'
+destination: 'Brazil'
 category: 'travel guides'
 description: 'Some post description'
 author: 'Murphy Cooper'

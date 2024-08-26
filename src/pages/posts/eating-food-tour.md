@@ -4,7 +4,7 @@ title: 'Eating Food Tour! 😍'
 slug: 'eating-food-tour'
 pubDate: 2024-07-28
 country: 'France'
-place: 'Paris'
+destination: 'Paris'
 category: 'adventure'
 description: 'Some post description'
 author: 'Murphy Cooper'
