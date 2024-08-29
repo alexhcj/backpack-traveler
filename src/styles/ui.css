@@ -23,10 +23,13 @@
     font-weight: var(--weight-light);
     color: var(--color-black);
 }
-.paragraph {
+.md-paragraph {
     margin-top: 10px;
     font-family: var(--family-lora);
     color: var(--color-dark);
+}
+.md-underline {
+    text-decoration: underline;
 }
 .md-link {
     color: var(--color-secondary);
