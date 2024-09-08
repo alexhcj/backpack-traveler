@@ -1,0 +1,76 @@
+---
+import type { Post } from "../types/post";
+
+import { Image } from "astro:assets";
+import BaseLayout from "./Layout.astro";
+import PostMeta from "../components/PostMeta.astro";
+
+interface Props {
+    frontmatter: Post;
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} type="full">
+    <Image
+        class="img"
+        src={`/${frontmatter.image.url}`}
+        alt={frontmatter.image.alt}
+        width="1920"
+        height="620"
+    />
+    <div class="container">
+        <article class="article">
+            <div class="post-header">
+                <a class="ui-post-destination" href="/"
+                    >{frontmatter.destination}</a
+                >
+                <h3 class="ui-post-title m-m f-l">{frontmatter.title}</h3>
+                <a class="ui-post-category" href="/">{frontmatter.category}</a>
+            </div>
+            <div class="post-body">
+                <slot />
+            </div>
+            <div class="footer">
+                <PostMeta
+                    author={frontmatter.author}
+                    socials={frontmatter.socials ?? []}
+                    pubDate={frontmatter.pubDate}
+                    tags={frontmatter.tags ?? []}
+                    likesCount={0}
+                    commentsCount={0}
+                />
+            </div>
+        </article>
+        <!-- <div class="pagination">
+                    <div class="prev-post">Prev</div>
+                    <div class="next-post">Next</div>
+                </div> -->
+    </div>
+</BaseLayout>
+
+<style>
+    .container {
+        margin-top: -190px;
+    }
+    .article {
+        margin-bottom: 30px;
+        padding: 47px 130px;
+        background-color: var(--color-white);
+    }
+    .img {
+        position: relative;
+        max-height: 638px;
+        margin-bottom: 40px;
+        object-fit: cover;
+        z-index: var(--z-index--1);
+    }
+    .post-header {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    .footer {
+        margin-top: 32px;
+    }
+</style>

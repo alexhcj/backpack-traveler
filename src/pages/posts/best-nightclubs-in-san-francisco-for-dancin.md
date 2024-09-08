@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'Best nightclubs in san francisco for dancin'
 slug: 'best-nightclubs-in-san-francisco-for-dancin'
 pubDate: 2024-08-26

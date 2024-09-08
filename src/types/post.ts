@@ -1,4 +1,5 @@
 import type { ISocial } from "./social";
+import type { ITag } from "./tag";
 
 export interface Post {
   title: string;
@@ -13,6 +14,6 @@ export interface Post {
   pubDate: Date;
   description: string;
   author: string;
-  tags?: string[];
+  tags?: ITag[];
   socials?: ISocial[];
 }

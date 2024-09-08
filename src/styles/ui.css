@@ -102,9 +102,15 @@
     &.m-m {
         margin: 16px 0 13px;
     }
+
+    &.f-l {
+        font-size: 33px;
+        line-height: 1.21em;
+    }
 }
 .ui-post-category {
     display: inline-block;
+    padding: 4px 0;
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing-default-2);
     font-size: 10px;

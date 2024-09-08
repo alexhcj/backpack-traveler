@@ -1,14 +1,24 @@
 ---
+import type {ITag} from '../types/tag'
+import type { ISocial, IImageMetadata } from "../types/social";
+
+import { Image } from "astro:assets";
+import FormattedDate from "./FormattedDate.astro";
+
+import BookmarkSVG from "../../public/svg/bookmark.svg";
+import HeartSVG from "../../public/svg/heart.svg";
+import CommentSVG from "../../public/svg/comment.svg";
+
 interface Props {
     author: string;
     pubDate: Date;
     socials: ISocial[];
+    tags: ITag[];
+    likesCount: number;
+    commentsCount: number;
 }
-const { author, socials, pubDate } = Astro.props;
-import { Image } from "astro:assets";
 
-import FormattedDate from "./FormattedDate.astro";
-import type { ISocial, IImageMetadata } from "../types/social";
+const { author, socials, pubDate, tags, likesCount, commentsCount } = Astro.props;
 
 const socialSvgs: IImageMetadata = {
     facebook: "/svg/facebook-circle.svg",
@@ -18,34 +28,118 @@ const socialSvgs: IImageMetadata = {
 ---
 
 <div class="meta">
-    <a class="author" href="/">{author}</a>
-    <ul class="socials">
+    <div class="meta-top">
         {
-            socials && socials.map(({ social, url }) => (
-                <li class="social">
-                    <a href={url}>
-                        <Image
-                            src={socialSvgs[social]}
-                            alt=`${social} social`
-                            width="24"
-                            height="24"
-                        />
-                    </a>
-                </li>
-            ))
+            tags && (
+                <div class="tags">
+                    <Image
+                        src={BookmarkSVG}
+                        alt="Bookmark icon"
+                        width="15"
+                        height="15"
+                    />
+                    <ul class="tags-list">
+                        {tags.map((tag) => (
+                            <li class="tag">
+                                <a class="tag-link" href="/">
+                                    {tag}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )
         }
-    </ul>
-    <FormattedDate class="date" date={pubDate} />
+        <div class="likes">
+            <Image
+                src={HeartSVG}
+                alt="Heart icon"
+                width="15"
+                height="15"
+            />
+            <span class="count">{likesCount ?? 0}</span>
+        </div>
+        <div class="comments">
+            <Image
+                src={CommentSVG}
+                alt="Comment icon"
+                width="13"
+                height="13"
+            />
+            <span class="count">{commentsCount ?? 0}</span>
+        </div>
+    </div>
+    <div class="meta-bottom">
+        <a class="author" href="/">{author}</a>
+        <ul class="socials">
+            {
+                socials && socials.map(({ social, url }) => (
+                    <li class="social">
+                        <a href={url}>
+                            <Image
+                                src={socialSvgs[social]}
+                                alt=`${social} social`
+                                width="24"
+                                height="24"
+                            />
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+        <FormattedDate class="date" date={pubDate} />
+    </div>
 </div>
 
 <style>
-    .meta {
+    .meta-bottom {
         display: flex;
         justify-content: space-between;
         margin-top: 43px;
         padding: 19px 0 14px;
         border-top: 1px solid var(--color-border-2);
         border-bottom: 1px solid var(--color-border-2);
+    }
+    .tags {
+        display: flex;
+        gap: 5px;
+    }
+    .tags-list {
+        display: flex;
+        gap: 3px;
+    }
+    .tag {
+        .tag-link {
+            font-size: 15px;
+            font-family: var(--family-lora);
+            font-style: italic;
+            color: var(--color-grey-2);
+        }
+
+        &:hover .tag-link {
+            color: var(--color-dark);
+        }
+    }
+    .meta-top,
+    .tags,
+    .likes,
+    .comments {
+        display: flex;
+        align-items: center;
+    }
+    .meta-top {
+        gap: 20px;
+    }
+    .comments,
+    .likes {
+        gap: 3px;
+
+        .count {
+            font-size: 15px;
+            color: var(--color-grey-2);
+            font-family: var(--family-lora);
+            font-style: italic;
+        }
     }
     .author {
         text-transform: uppercase;

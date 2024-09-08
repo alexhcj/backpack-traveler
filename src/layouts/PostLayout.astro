@@ -7,10 +7,6 @@ import HeroHeader from "../components/HeroHeader.astro";
 import Sidebar from "../components/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
 
-import BookmarkSVG from "../../public/svg/bookmark.svg";
-import HeartSVG from "../../public/svg/heart.svg";
-import CommentSVG from "../../public/svg/comment.svg";
-
 interface Props {
     frontmatter: Post;
 }
@@ -18,7 +14,7 @@ interface Props {
 const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout title={frontmatter.title} headerType="long">
+<BaseLayout title={frontmatter.title} type="long">
     <HeroHeader type="home" />
     <div class="container">
         <div class="row">
@@ -32,66 +28,25 @@ const { frontmatter } = Astro.props;
                         height="638"
                     />
                     <div class="post-header">
-                        <a class="destination" href="/"
+                        <a class="ui-post-destination" href="/"
                             >{frontmatter.destination}</a
                         >
-                        <h3 class="title">{frontmatter.title}</h3>
-                        <a class="category" href="/">{frontmatter.category}</a>
+                        <h3 class="ui-post-title">{frontmatter.title}</h3>
+                        <a class="ui-post-category" href="/"
+                            >{frontmatter.category}</a
+                        >
                     </div>
                     <div class="post-body">
                         <slot />
                     </div>
                     <div class="footer">
-                        <div class="meta-top">
-                            {
-                                frontmatter.tags && (
-                                    <div class="tags">
-                                        <Image
-                                            src={BookmarkSVG}
-                                            alt="Bookmark icon"
-                                            width="15"
-                                            height="15"
-                                        />
-                                        <ul class="tags-list">
-                                            {frontmatter.tags.map(
-                                                (tag: string) => (
-                                                    <li class="tag">
-                                                        <a
-                                                            class="tag-link"
-                                                            href="/"
-                                                        >
-                                                            {tag}
-                                                        </a>
-                                                    </li>
-                                                ),
-                                            )}
-                                        </ul>
-                                    </div>
-                                )
-                            }
-                            <div class="likes">
-                                <Image
-                                    src={HeartSVG}
-                                    alt="Heart icon"
-                                    width="15"
-                                    height="15"
-                                />
-                                <span class="count">5</span>
-                            </div>
-                            <div class="comments">
-                                <Image
-                                    src={CommentSVG}
-                                    alt="Comment icon"
-                                    width="13"
-                                    height="13"
-                                />
-                                <span class="count">0</span>
-                            </div>
-                        </div>
                         <PostMeta
                             author={frontmatter.author}
                             socials={frontmatter.socials ?? []}
                             pubDate={frontmatter.pubDate}
+                            tags={frontmatter.tags ?? []}
+                            likesCount={0}
+                            commentsCount={0}
                         />
                     </div>
                 </article>
@@ -129,79 +84,7 @@ const { frontmatter } = Astro.props;
     .post-header {
         text-align: center;
     }
-    .destination {
-        margin-bottom: 16px;
-        line-height: 1em;
-        font-size: 44px;
-        font-family: var(--family-epic-ride);
-        color: var(--color-dark);
-        font-weight: var(--weight-regular);
-    }
-    .title {
-        text-transform: uppercase;
-        margin-bottom: 13px;
-        letter-spacing: 0.2em;
-        line-height: 1.33em;
-        font-size: 24px;
-        font-family: var(--family-montserrat);
-        font-weight: var(--weight-regular);
-    }
-    .category {
-        display: inline-block;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-default-2);
-        font-size: 10px;
-        line-height: 1.8em;
-        color: var(--color-grey-2);
-        cursor: pointer;
-        transition: var(--transition-default);
-
-        &:hover {
-            color: var(--color-black-0);
-        }
-    }
-    .meta-top,
-    .tags,
-    .likes,
-    .comments {
-        display: flex;
-        align-items: center;
-    }
-    .meta-top {
-        gap: 20px;
-    }
-    .comments,
-    .likes {
-        gap: 3px;
-
-        .count {
-            font-size: 15px;
-            color: var(--color-grey-2);
-            font-family: var(--family-lora);
-            font-style: italic;
-        }
-    }
     .footer {
         margin-top: 32px;
-    }
-    .tags {
-        display: flex;
-        gap: 5px;
-    }
-    .tags-list {
-        display: flex;
-        gap: 3px;
-    }
-    .tag {
-        .tag-link {
-            font-size: 15px;
-            font-family: var(--family-lora);
-            font-style: italic;
-            color: var(--color-grey-2);
-        }
-
-        &:hover .tag-link {
-            color: var(--color-dark);
-        }
     }
 </style>

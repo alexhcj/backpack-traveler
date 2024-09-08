@@ -1,10 +1,11 @@
 ---
-interface Props {
-    type: "long" | "short";
-}
+import type { IHeader } from "../types/header";
+
+interface Props extends IHeader {}
 
 const { type } = Astro.props;
 import { Image } from "astro:assets";
+
 const postsList = await Astro.glob("../pages/posts/*.md");
 const uniqueDestinationsList = [
     ...new Set(postsList.map((post: any) => post.frontmatter.country)),
@@ -26,6 +27,7 @@ const navList = [
     { url: "/", text: "Home" },
     { url: "/pages", text: "Pages" },
     { url: "/travel", text: "Travel" },
+    { url: "/", text: "Logo" },
     { url: "/blog", text: "Blog" },
     { url: "/shop", text: "Shop" },
 ];
@@ -56,12 +58,13 @@ interface ISocial {
         "header",
         { long: type === "long" },
         { short: type === "short" },
+        { full: type === "full" },
     ]}
 >
     <div class:list={["container", { xl: type === "short" }]}>
         <div class="box">
             {
-                type === "long" ? (
+                type !== "short" && (
                     <div class="destinations">
                         <ul class="destination-list">
                             <li class="destination-item">
@@ -82,7 +85,10 @@ interface ISocial {
                             ))}
                         </ul>
                     </div>
-                ) : (
+                )
+            }
+            {
+                type === "short" && (
                     <Image
                         src="/images/logo-short-dark.webp"
                         width="209"
@@ -94,17 +100,26 @@ interface ISocial {
             <nav class="nav">
                 <ul class="nav-list">
                     {
-                        navList.map((item) => (
+                        navList.map((item, index) => (
                             <li class="nav-item">
-                                <a
-                                    class:list={[
-                                        "nav-link",
-                                        { "size-sm": type === "short" },
-                                    ]}
-                                    href={item.url}
-                                >
-                                    {item.text}
-                                </a>
+                                {index === 3 && type === "full" ? (
+                                    <Image
+                                        src="/images/logo-short-dark.webp"
+                                        width="256"
+                                        height="55"
+                                        alt="Logo image"
+                                    />
+                                ) : (
+                                    <a
+                                        class:list={[
+                                            "nav-link",
+                                            { "size-sm": type === "short" },
+                                        ]}
+                                        href={item.url}
+                                    >
+                                        {item.text}
+                                    </a>
+                                )}
                                 {item.url === "/pages" && (
                                     <ul class="popup-list">
                                         {pagesList.map((item) => (
@@ -125,7 +140,7 @@ interface ISocial {
                 </ul>
             </nav>
             {
-                type === "long" && (
+                type !== "short" && (
                     <div class="right-column">
                         <ul class="socials">
                             {socialsList.map((social: ISocial) => (
@@ -140,24 +155,26 @@ interface ISocial {
                                 </li>
                             ))}
                         </ul>
-                        <div class="search">
-                            <span class="search-divider" />
-                            <input
-                                class="search-input"
-                                id="search-input"
-                                placeholder="Search..."
-                                type="text"
-                                id="search"
-                            />
-                            <img
-                                class="search-magnifier"
-                                id="search-magnifier"
-                                src="/svg/magnifier.svg"
-                                width="19px"
-                                height="20px"
-                                alt="Search for posts"
-                            />
-                        </div>
+                        {type === "long" && (
+                            <div class="search">
+                                <span class="search-divider" />
+                                <input
+                                    class="search-input"
+                                    id="search-input"
+                                    placeholder="Search..."
+                                    type="text"
+                                    id="search"
+                                />
+                                <img
+                                    class="search-magnifier"
+                                    id="search-magnifier"
+                                    src="/svg/magnifier.svg"
+                                    width="19px"
+                                    height="20px"
+                                    alt="Search for posts"
+                                />
+                            </div>
+                        )}
                     </div>
                 )
             }
@@ -173,6 +190,11 @@ interface ISocial {
         &.short {
             background-color: var(--color-white);
             height: 95px;
+        }
+
+        &.full {
+            background-color: var(--color-white);
+            height: 100px;
         }
     }
     .box {

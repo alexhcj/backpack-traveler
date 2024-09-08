@@ -1,16 +1,16 @@
 ---
+import type { IHeader } from "../types/header";
 import Header from "../components/Header.astro";
 import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/ui.css";
 import "../styles/slider.css";
 
-interface Props {
+interface Props extends IHeader {
     title: string;
-    headerType: "long" | "short";
 }
 
-const { title, headerType } = Astro.props;
+const { title, type } = Astro.props;
 ---
 
 <!doctype html>
@@ -30,7 +30,7 @@ const { title, headerType } = Astro.props;
         />
     </head>
     <body>
-        <Header type={headerType} />
+        <Header type={type} />
         <slot />
     </body>
 </html>
