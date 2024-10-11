@@ -1,6 +1,8 @@
 ---
+layout: '../../layouts/BookLayout.astro'
 title: 'New York'
 slug: 'new-york'
+destination: 'New York'
 price: 27
 discount: 0
 excerpt: 'Eam tale eros civibus ad. Vel cu habemus iudicabit referrentur, cu est autem omnesque. Dolorum accusamus at vel, duo putent accommodare ei. In veritus tacimates convenire mea, eam quas falli eripuit et. Ne graece audiam sea, fabellas urbanitas assueverit sea.'

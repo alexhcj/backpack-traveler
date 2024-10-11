@@ -1,6 +1,8 @@
 ---
+layout: '../../layouts/BookLayout.astro'
 title: '501 places'
 slug: '501-places'
+destination: 'Italy'
 price: 26
 discount: 2
 excerpt: 'Eam tale eros civibus ad. Vel cu habemus iudicabit referrentur, cu est autem omnesque. Dolorum accusamus at vel, duo putent accommodare ei. In veritus tacimates convenire mea, eam quas falli eripuit et. Ne graece audiam sea, fabellas urbanitas assueverit sea.'
