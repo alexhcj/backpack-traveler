@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import type { Post } from "../types/post";
+import type { Destination } from "../types/destination";
+
+import BaseLayout from "./Layout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import PostMeta from "../components/PostMeta.astro";
+import DestinationSlider from "../components/DestinationSlider/DestinationSlider.astro";
+
+interface Props {
+    frontmatter: Destination;
+}
+
+const {
+    frontmatter: { image, title, destination, author, socials, pubDate, tags },
+} = Astro.props;
+
+const posts = await Astro.glob<Post>("../pages/posts/*.md");
+
+const relatedDestinationList = posts.filter(
+    (post) => post.frontmatter.destination === destination,
+);
+---
+
+<BaseLayout title={title} type="short">
+    {
+        relatedDestinationList.length >= 3 ? (
+            <DestinationSlider destination={destination} />
+        ) : (
+            <div class="container">
+                <Image
+                    class="img"
+                    src={`/${image.url}`}
+                    alt={image.alt}
+                    width={1300}
+                    height={520}
+                />
+            </div>
+        )
+    }
+    <div class="container">
+        <div class="row">
+            <div class="col-post">
+                <article class="article">
+                    <div class="post-header">
+                        <a class="ui-post-destination" href="/">{destination}</a
+                        >
+                        <h3 class="ui-post-title">{title}</h3>
+                    </div>
+                    <div class="post-body">
+                        <slot />
+                    </div>
+                    <div class="footer">
+                        <PostMeta
+                            author={author}
+                            socials={socials ?? []}
+                            pubDate={pubDate}
+                            tags={tags ?? []}
+                            likesCount={0}
+                            commentsCount={0}
+                        />
+                    </div>
+                </article>
+                <!-- <div class="pagination">
+                    <div class="prev-post">Prev</div>
+                    <div class="next-post">Next</div>
+                </div> -->
+            </div>
+            <div class="col-aside">
+                <Sidebar articles advices />
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .img {
+        margin-bottom: 60px;
+    }
+
+    .row {
+        display: flex;
+        gap: 70px;
+    }
+
+    .col-post {
+        width: 75%;
+    }
+
+    .col-aside {
+        width: 25%;
+    }
+
+    .article {
+        margin-bottom: 30px;
+    }
+
+    .post-header {
+        text-align: start;
+
+        .ui-post-destination {
+            margin-bottom: 5px;
+        }
+
+        .ui-post-title {
+            margin-bottom: 31px;
+        }
+    }
+
+    .footer {
+        margin-top: 32px;
+    }
+</style>

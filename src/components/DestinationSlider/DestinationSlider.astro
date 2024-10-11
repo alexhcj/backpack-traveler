@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    destination: string;
+}
+
+const { destination } = Astro.props;
+---
+
+<section>
+    <ul id="destination-slider" class="keen-slider">
+        {
+            relatedDestinationList.map(({ frontmatter }, index) => (
+                <li class={`keen-slider__slide number-slide${index}`}>
+                    <a class="link" href={`/posts/${frontmatter.slug}`}>
+                        <Image
+                            class="img"
+                            src={`/${frontmatter.image.url}`}
+                            alt={frontmatter.image.alt}
+                            width="400"
+                            height="395"
+                        />
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</section>
+
+<script>
+    import "keen-slider/keen-slider.min.css";
+    import KeenSlider from "keen-slider";
+
+    const slider = new KeenSlider("#destination-slider", {
+        loop: true,
+        drag: true,
+        slides: {
+            perView: 3,
+        },
+    });
+</script>

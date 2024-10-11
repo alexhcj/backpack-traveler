@@ -37,7 +37,10 @@
     --z-index-10: 10;
 
     --transition-default: all 0.2s ease-out;
+    --transition-default-2: all 0.2s ease;
+    --transition-default-3: all 0.3s ease-in-out;
     --transition-input: width 0.2s;
+    --transition-image: all 0.7s;
 
     --bkg: 222 47.4% 11.2%;
     --bkg-alt: 226 58.3% 18.8%;
