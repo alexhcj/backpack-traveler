@@ -1,17 +1,19 @@
 ---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
 import { Image } from "astro:assets";
 
 interface Props {
-    destination: string;
+    posts: MarkdownInstance<Post>[];
 }
 
-const { destination } = Astro.props;
+const { posts } = Astro.props;
 ---
 
-<section>
+<section class="section">
     <ul id="destination-slider" class="keen-slider">
         {
-            relatedDestinationList.map(({ frontmatter }, index) => (
+            posts.map(({ frontmatter }, index) => (
                 <li class={`keen-slider__slide number-slide${index}`}>
                     <a class="link" href={`/posts/${frontmatter.slug}`}>
                         <Image
@@ -27,6 +29,22 @@ const { destination } = Astro.props;
         }
     </ul>
 </section>
+
+<style>
+    .section {
+        margin-bottom: 60px;
+    }
+    .keen-slider {
+        height: 400px;
+    }
+    .link {
+        display: flex;
+        height: 100%;
+    }
+    .img {
+        height: 100%;
+    }
+</style>
 
 <script>
     import "keen-slider/keen-slider.min.css";
