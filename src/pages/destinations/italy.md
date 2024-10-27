@@ -106,6 +106,7 @@ image:
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/501-places">
           <image class="ui-post-guides-list-item-image" src="/books/501-places.webp" alt="501 places" />
+          <span class="ui-post-guides-list-item-tag">Sale</span>
         </a>
         <div class="ui-post-guides-list-item-sell">
           Buy for
@@ -116,6 +117,7 @@ image:
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/new-york">
           <image class="ui-post-guides-list-item-image" src="/books/new-york.webp" alt="New York" />
+          <span class="ui-post-guides-list-item-tag">New</span>
         </a>
         <div class="ui-post-guides-list-item-sell">
           Buy for

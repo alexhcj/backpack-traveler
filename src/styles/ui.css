@@ -305,13 +305,17 @@
     position: relative;
 
     &:hover {
-        .ui-post-guides-list-item-link {
+        .ui-post-guides-list-item-image {
             transform: translateY(-13px);
         }
         .ui-post-guides-list-item-sell {
             opacity: 1;
         }
     }
+}
+
+.ui-post-guides-list-item-image {
+    transition: var(--transition-default);
 }
 
 .ui-post-guides-list-item-sell {
@@ -344,7 +348,15 @@
 .ui-post-guides-list-item-link {
     display: flex;
     height: 100%;
-    transition: var(--transition-default);
+}
+
+.ui-post-guides-list-item-tag {
+    position: absolute;
+    top: 0;
+    left: -18px;
+    font-size: 44px;
+    line-height: 1em;
+    font-family: var(--family-epic-ride);
 }
 
 .ui-post-expectations {
