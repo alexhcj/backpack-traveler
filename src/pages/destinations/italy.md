@@ -5,7 +5,9 @@ slug: 'italy'
 pubDate: 2024-09-03
 destination: 'Italy'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Murphy Cooper'
+  avatar: 'author/avatar.png'
 socials: [
   { social: 'facebook', url: '/' },
   { social: 'pinterest', url: '/' },
@@ -27,7 +29,7 @@ image:
 </p>
 <div class="md-space-xl"></div>
 
-<h4 class="md-list-title">
+<h4 class="md-list-title" id="things-to-see">
   Things to See and Do in Italy
 </h4>
 <div class="md-space-lg"></div>
@@ -45,7 +47,7 @@ image:
 <div class="md-space-lg"></div>
 
 <div class="md-space-md"></div>
-<h3 class="ui-post-title">Typical costs when travelling</h3>
+<h3 class="ui-post-title" id="typical-costs">Typical costs when travelling</h3>
 <div class="md-space-s"></div>
 
 <p class="md-paragraph"><b class="md-bold">Accommodation</b> – Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. Aperiam tractatos ex his, ex usu facete accumsan, duo platonem efficiantur intellegebat ut. Accusata scripserit persequeris pri eu, accusam argumentum disputationi an his. Nulla erant urbanitas sed ne, mei velit laudem id, nonumy eligendi pri ei. Eu mel everti ocurreret, nemore quodsi referrentur ius ad.</p>
@@ -65,7 +67,7 @@ image:
 </div>
 <div class="md-space-xl"></div>
 
-<h4 class="ui-post-title f-m">Money saving tips</h4>
+<h4 class="ui-post-title f-m" id="budget-tips">Money saving tips</h4>
 <div class="md-space-xs"></div>
 
 <ul class="ui-post-tips-list">
@@ -88,7 +90,7 @@ image:
 </ul>
 <div class="md-space-lg"></div>
 
-<div class="ui-post-guides">
+<div class="ui-post-guides" id="related-guides">
     <h3 class="ui-post-title">My Must Have Guides For Traveling</h3>
     <p class="ui-post-guides-subtitle">Everything you neeed to know about traveling.</p>
     <div class="md-space-xl"></div>
@@ -136,7 +138,7 @@ image:
     </ul>
 </div>
 
-<div class="ui-post-expectations">
+<div class="ui-post-expectations" id="related-articles">
   <h3 class="ui-post-title">What can I expect from Italy?</h3>
 </div>
 

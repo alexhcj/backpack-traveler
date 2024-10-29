@@ -7,7 +7,10 @@ export interface Destination {
   pubDate: Date;
   destination: string;
   description: string;
-  author: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
   socials?: ISocial[];
   tags?: ITag[];
   image: {
