@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+
+const data: { image: string; url: string; alt: string }[] = [
+    {
+        image: "/instagram/instagram-1.jpg",
+        url: "/",
+        alt: "We travel not to escape life, but for life not to escape us.👜",
+    },
+    {
+        image: "/instagram/instagram-2.jpg",
+        url: "/",
+        alt: "Learn the rules like a pro so you can break them like an artist.",
+    },
+    {
+        image: "/instagram/instagram-3.jpg",
+        url: "/",
+        alt: "All my troubles wash away in the water. 😄",
+    },
+    {
+        image: "/instagram/instagram-4.jpg",
+        url: "/",
+        alt: "Today’s good mood is sponsored by coffee 😊",
+    },
+];
+---
+
+<div class="instagram">
+    <div class="ui-sidebar-title-wrapper">
+        <h3 class="ui-sidebar-title bg-line">Instagram</h3>
+    </div>
+    <ul class="list">
+        {
+            data.map((item) => (
+                <li class="item">
+                    <a class="link" href={`${item.url}`}>
+                        <Image
+                            class="img"
+                            src={item.image}
+                            width={150}
+                            height={125}
+                            alt={item.alt}
+                        />
+                        <Image
+                            class="icon"
+                            src="/svg/instagram.svg"
+                            width={30}
+                            height={30}
+                            alt="Instagram icon"
+                        />
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    .instagram {
+        text-align: center;
+    }
+    .ui-sidebar-title {
+        margin-bottom: 16px;
+        line-height: 1.8;
+    }
+    .list {
+        display: grid;
+        grid-template: 125px 125px / 50% 50%;
+        gap: 4px;
+    }
+    .item:hover {
+        .link::after,
+        .icon {
+            opacity: 1;
+        }
+    }
+    .link {
+        position: relative;
+        display: block;
+        height: 100%;
+
+        &::after {
+            position: absolute;
+            content: "";
+            display: block;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-bg-overlay);
+            opacity: 0;
+            transition: var(--transition-default-4);
+        }
+    }
+    .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        opacity: 0;
+        transition: var(--transition-default-4);
+        z-index: var(--z-index-10);
+    }
+</style>

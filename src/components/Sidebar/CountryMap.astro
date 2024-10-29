@@ -1,0 +1,68 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+import { Image } from "astro:assets";
+
+interface Props {
+    posts: MarkdownInstance<Post>[];
+    destination: string;
+}
+const { posts, destination } = Astro.props;
+const relatedPosts = posts.filter(
+    (post) => post.frontmatter.country === destination,
+);
+---
+
+<div class="map">
+    <Image
+        src="/destinations-maps/italy-map.png"
+        width={230}
+        height={230}
+        alt="Italy map with desinations marks"
+    />
+    <h3 class="title">{destination}</h3>
+    <span class="related-articles">{relatedPosts.length} related articles</span>
+    <button class="btn">See articles</button>
+</div>
+
+<style>
+    .map {
+        text-align: center;
+        padding: 42px 35px;
+        border: 1px solid var(--color-border-3);
+    }
+    .title {
+        margin-bottom: 2px;
+        font-family: var(--family-epic-ride);
+        font-size: 44px;
+        line-height: 1em;
+        color: var(--color-dark);
+    }
+    .related-articles {
+        display: block;
+        margin-bottom: 22px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        color: var(--color-grey-2);
+        font-family: var(--family-montserrat);
+    }
+    .btn {
+        text-transform: uppercase;
+        padding: 13px 19px 11px;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 2em;
+        font-size: 10px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-medium);
+        border: 1px solid var(--color-dark-3);
+        transition: var(--transition-default-4);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--color-black);
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+    }
+</style>

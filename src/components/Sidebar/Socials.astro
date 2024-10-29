@@ -1,0 +1,145 @@
+---
+import { Image } from "astro:assets";
+
+const data: {
+    name: string;
+    image: string;
+    url: string;
+    width: number;
+    height: number;
+    alt: string;
+}[] = [
+    {
+        name: "instagram",
+        image: "/svg/instagram.svg",
+        url: "/",
+        width: 24,
+        height: 27,
+        alt: "We travel not to escape life, but for life not to escape us.👜",
+    },
+    {
+        name: "facebook",
+        image: "/svg/facebook.svg",
+        url: "/",
+        width: 26,
+        height: 26,
+        alt: "Learn the rules like a pro so you can break them like an artist.",
+    },
+    {
+        name: "twitter",
+        image: "/svg/twitter.svg",
+        url: "/",
+        width: 25,
+        height: 25,
+        alt: "All my troubles wash away in the water. 😄",
+    },
+    {
+        name: "pinterest",
+        image: "/svg/pinterest.svg",
+        url: "/",
+        width: 25,
+        height: 25,
+        alt: "Today’s good mood is sponsored by coffee 😊",
+    },
+    {
+        name: "youtube",
+        image: "/svg/youtube.svg",
+        url: "/",
+        width: 26,
+        height: 26,
+        alt: "Today’s good mood is sponsored by coffee 😊",
+    },
+    {
+        name: "rss",
+        image: "/svg/rss.svg",
+        url: "/",
+        width: 25,
+        height: 25,
+        alt: "Today’s good mood is sponsored by coffee 😊",
+    },
+];
+---
+
+<div class="socials">
+    <div class="ui-sidebar-title-wrapper">
+        <h3 class="ui-sidebar-title bg-line">Follow us</h3>
+    </div>
+    <ul class="list">
+        {
+            data.map((item) => (
+                <li class="item">
+                    <a class="link" href={`${item.url}`}>
+                        <Image
+                            class="icon"
+                            src={item.image}
+                            width={item.width}
+                            height={item.height}
+                            alt={item.alt}
+                        />
+                        <span class="name">{item.name}</span>
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    .socials {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .ui-sidebar-title {
+        margin-bottom: 37px;
+        line-height: 1.8;
+    }
+    .list {
+        display: grid;
+        grid-template: auto auto / repeat(3, 1fr);
+        gap: 25px 0;
+    }
+    .item {
+        margin-top: 4px;
+
+        &:hover .name {
+            color: var(--color-black);
+        }
+    }
+    .name {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 8px;
+        color: var(--color-grey-2);
+        font-family: var(--family-montserrat);
+    }
+    /* .item:hover {
+    } */
+    /* .link {
+        position: relative;
+        display: block;
+        height: 100%; */
+
+    /* &::after {
+            position: absolute;
+            content: "";
+            display: block;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-bg-overlay);
+            opacity: 0;
+            transition: var(--transition-default-4);
+        }
+    } */
+    /* .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        opacity: 0;
+        transition: var(--transition-default-4);
+        z-index: var(--z-index-10);
+    } */
+</style>

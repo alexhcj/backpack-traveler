@@ -222,6 +222,10 @@
     text-align: center;
 }
 
+.ui-sidebar-title-wrapper {
+    position: relative;
+}
+
 .ui-sidebar-title {
     display: inline-block;
     text-transform: uppercase;
@@ -232,6 +236,17 @@
     font-weight: var(--weight-semi-bold);
     color: var(--color-dark);
     background-color: var(--color-white);
+
+    &.bg-line::after {
+        position: absolute;
+        content: "";
+        top: 15px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--color-border-2);
+        z-index: var(--z-index--1);
+    }
 }
 
 .ui-sidebar-line {
@@ -308,6 +323,7 @@
         .ui-post-guides-list-item-image {
             transform: translateY(-13px);
         }
+
         .ui-post-guides-list-item-sell {
             opacity: 1;
         }

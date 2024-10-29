@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    destination: string;
+}
+
+const { destination } = Astro.props;
+---
+
+<div class="map">
+    <div class="ui-sidebar-title-wrapper">
+        <h3 class="ui-sidebar-title bg-line">Where we are now</h3>
+    </div>
+    <Image
+        src={`/world-maps/${destination.toLowerCase()}-map.png`}
+        width={272}
+        height={168}
+        alt={`${destination} mark on world map`}
+    />
+</div>
+
+<style>
+    .map {
+        text-align: center;
+    }
+    .ui-sidebar-title {
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+</style>

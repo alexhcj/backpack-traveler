@@ -1,0 +1,115 @@
+---
+import { Image } from "astro:assets";
+
+const nav: { icon: string; anchor: string; text: string }[] = [
+    {
+        icon: "/post-nav/things-to-see.png",
+        anchor: "#things-to-see",
+        text: "Things to see",
+    },
+    {
+        icon: "/post-nav/typical-costs.png",
+        anchor: "#typical-costs",
+        text: "Typical costs",
+    },
+    {
+        icon: "/post-nav/budget-tips.png",
+        anchor: "#budget-tips",
+        text: "Budget tips",
+    },
+    {
+        icon: "/post-nav/related-guides.png",
+        anchor: "#related-guides",
+        text: "Related guides",
+    },
+    {
+        icon: "/post-nav/related-articles.png",
+        anchor: "#related-articles",
+        text: "Related articles",
+    },
+    { icon: "/post-nav/comments.png", anchor: "#comments", text: "Comments" },
+];
+---
+
+<div id="post-nav">
+    <ul class="nav">
+        {
+            nav.map((item) => (
+                <li class="nav-item">
+                    <a class="nav-anchor" href={item.anchor}>
+                        <Image
+                            class="icon"
+                            src={item.icon}
+                            width={26}
+                            height={23}
+                            alt={item.text}
+                        />
+                        <span class="text">{item.text}</span>
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    #post-nav {
+        margin-top: 0;
+        transition: var(--transition-default-3);
+
+        &.sticky {
+            position: fixed;
+            top: 0;
+            width: 300px;
+            margin-top: 10px;
+        }
+    }
+    .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+        padding: 32px 20px 39px;
+        border: 1px solid var(--color-border-3);
+    }
+    .nav-item {
+        padding: 3px 0;
+        transition: var(--transition-default);
+
+        &:hover {
+            background-color: var(--color-primary);
+        }
+    }
+    .icon {
+        margin: 0 10px;
+        vertical-align: middle;
+    }
+    .text {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        font-size: 12px;
+        font-family: var(--family-montserrat);
+        color: var(--color-black);
+    }
+</style>
+
+<script>
+    import { throttle } from "../../utils/utils";
+
+    const postNavEl = document.getElementById("post-nav");
+    // TODO: fix offset elScrollPosition bug => randomnly offset values after refresh page 1165 || 1370, not stable
+    const elScrollPosition = postNavEl?.offsetTop ?? 0;
+
+    if (document.documentElement.scrollTop > elScrollPosition + 210) {
+        postNavEl?.classList.add("sticky");
+    }
+
+    function handleScroll() {
+        const currentScroll = document.documentElement.scrollTop;
+
+        currentScroll > elScrollPosition + 210
+            ? postNavEl?.classList.add("sticky")
+            : postNavEl?.classList.remove("sticky");
+    }
+
+    window.addEventListener("scroll", throttle(handleScroll, 80));
+</script>

@@ -7,7 +7,7 @@ const { posts } = Astro.props;
 const categoriesList = [
     ...new Set(posts.map((post) => post.frontmatter.category)),
 ];
-import type { Post } from "../types/post";
+import type { Post } from "../../types/post";
 import type { MarkdownInstance } from "astro";
 ---
 

@@ -1,0 +1,70 @@
+---
+
+---
+
+<div class="newsletter">
+    <div class="ui-sidebar-title-wrapper">
+        <h3 class="ui-sidebar-title bg-line">Newsletter</h3>
+    </div>
+    <form action="" class="form">
+        <input
+            class="input"
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Email address"
+        />
+        <button class="btn">Subscribe</button>
+    </form>
+</div>
+
+<style>
+    .newsletter {
+        text-align: center;
+    }
+    .ui-sidebar-title {
+        margin-bottom: 18px;
+        line-height: 1.8;
+    }
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+    }
+    .input {
+        padding: 9px 16px;
+        font-size: 12px;
+        color: var(--color-grey-2);
+        font-family: var(--family-montserrat);
+        font-style: italic;
+        border: 1px solid var(--color-dark-3);
+        transition: var(--transition-default-4);
+
+        &::placeholder {
+            text-transform: capitalize;
+            font-family: var(--family-montserrat);
+        }
+
+        &:focus {
+            color: var(--color-dark);
+            border-color: var(--color-black);
+        }
+    }
+    .btn {
+        padding: 9px 41px 9px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        font-size: 12px;
+        line-height: 2em;
+        font-weight: var(--weight-regular);
+        color: var(--color-white);
+        font-family: var(--family-montserrat);
+        background-color: var(--color-black);
+        cursor: pointer;
+        transition: var(--transition-default-4);
+
+        &:hover {
+            background-color: var(--color-dark-4);
+        }
+    }
+</style>

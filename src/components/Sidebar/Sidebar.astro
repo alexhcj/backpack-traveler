@@ -1,0 +1,65 @@
+---
+import type { Post } from "../../types/post";
+
+import Categories from "./Categories.astro";
+import LatestPosts from "./LatestPosts.astro";
+import CountryMap from "./CountryMap.astro";
+import PostNav from "./PostNav.astro";
+import Author from "./Author.astro";
+import WorldMap from "./WorldMap.astro";
+import Instagram from "./Instagram.astro";
+import Socials from "./Socials.astro";
+import Promo from "./Promo.astro";
+import Newsletter from "./Newsletter.astro";
+
+interface Props {
+    destination: string;
+    showLatestPosts?: boolean;
+    showCategories?: boolean;
+    showWorldMap?: boolean;
+    showInstagram?: boolean;
+    showSocials?: boolean;
+    showPromo?: boolean;
+    showNewsletter?: boolean;
+    showCountryMap?: boolean;
+    showPostNav?: boolean;
+    showAuthor?: boolean;
+}
+
+const {
+    destination,
+    showLatestPosts,
+    showCategories,
+    showWorldMap,
+    showInstagram,
+    showSocials,
+    showPromo,
+    showNewsletter,
+    showCountryMap,
+    showPostNav,
+    showAuthor,
+} = Astro.props;
+
+const posts = await Astro.glob<Post>("../../pages/posts/*.md");
+---
+
+<aside class="aside">
+    {showAuthor && <Author />}
+    {showWorldMap && <WorldMap destination={destination} />}
+    {showInstagram && <Instagram />}
+    {showSocials && <Socials />}
+    {showPromo && <Promo />}
+    {showCountryMap && <CountryMap posts={posts} destination={destination} />}
+    {showPostNav && <PostNav />}
+    {showLatestPosts && <LatestPosts posts={posts} />}
+    {showNewsletter && <Newsletter posts={posts} />}
+    {showCategories && <Categories posts={posts} />}
+</aside>
+
+<style>
+    .aside {
+        display: flex;
+        flex-direction: column;
+        gap: 37px;
+    }
+</style>
