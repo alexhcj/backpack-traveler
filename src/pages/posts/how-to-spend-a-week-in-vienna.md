@@ -7,7 +7,9 @@ country: 'Spain'
 destination: 'Spain'
 category: 'explore'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/how-to-spend-a-week-in-vienna.jpg'
     alt: 'Hat, glasses & photos on bed'

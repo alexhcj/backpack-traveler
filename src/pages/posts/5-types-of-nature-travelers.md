@@ -7,7 +7,9 @@ country: 'Canada'
 destination: 'Canada'
 category: 'explore'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Murphy Cooper'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/5-types-of-nature-travelers.jpg'
     alt: 'Italy cannals'

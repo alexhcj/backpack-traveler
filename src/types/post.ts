@@ -13,7 +13,10 @@ export interface Post {
   slug: string;
   pubDate: Date;
   description: string;
-  author: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
   tags?: ITag[];
   socials?: ISocial[];
 }

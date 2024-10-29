@@ -7,7 +7,9 @@ country: 'Canada'
 destination: 'Canada'
 category: 'destination'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/the-15-best-things-to-do-in-dublin.jpg'
     alt: 'Smiling girl with beige bandana lean on concrete ledge'

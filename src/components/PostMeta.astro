@@ -10,7 +10,7 @@ import HeartSVG from "../../public/svg/heart.svg";
 import CommentSVG from "../../public/svg/comment.svg";
 
 interface Props {
-    author: string;
+    author: {name: string; avatar: string;}
     pubDate: Date;
     socials: ISocial[];
     tags: ITag[];
@@ -70,7 +70,7 @@ const socialSvgs: IImageMetadata = {
         </div>
     </div>
     <div class="meta-bottom">
-        <a class="author" href="/">{author}</a>
+        <a class="author" href="/">{author.name}</a>
         <ul class="socials">
             {
                 socials && socials.map(({ social, url }) => (

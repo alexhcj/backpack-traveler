@@ -7,7 +7,9 @@ country: 'Australia'
 destination: 'Perth'
 category: 'adventure'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/top-10-popular-sports-on-the-world.jpg'
     alt: 'Big baloons in the sky'

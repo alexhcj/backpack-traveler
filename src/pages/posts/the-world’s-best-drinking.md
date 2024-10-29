@@ -7,7 +7,9 @@ country: 'Brazil'
 destination: 'Brazil'
 category: 'travel guides'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/the-world’s-best-drinking.jpg'
     alt: 'Big cap with coffee on the table'

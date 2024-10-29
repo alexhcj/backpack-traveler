@@ -7,7 +7,9 @@ country: 'Brazil'
 destination: 'Brazil'
 category: 'adventure'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/explore-the-finest-beaches-in-italy.jpg'
     alt: 'Smiling girl in sun glasses on the beach'

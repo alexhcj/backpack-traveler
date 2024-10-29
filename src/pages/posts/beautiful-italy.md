@@ -7,7 +7,9 @@ country: 'Italy'
 destination: 'Italy'
 category: 'travel guides'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Murphy Cooper'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/beautiful-italy.jpg'
     alt: 'Italy cannals'

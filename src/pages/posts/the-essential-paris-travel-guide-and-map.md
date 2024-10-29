@@ -7,7 +7,9 @@ country: 'France'
 destination: 'Paris'
 category: 'destination'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/the-essential-paris-travel-guide-and-map.jpg'
     alt: 'Elven Tower'

@@ -7,7 +7,9 @@ country: 'Brazil'
 destination: 'Brazil'
 category: 'adventure'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Murphy Cooper'
+  avatar: 'author/avatar.png'
 socials: [
   {social: 'facebook', url: '/'},
   {social: 'pinterest', url: '/'},

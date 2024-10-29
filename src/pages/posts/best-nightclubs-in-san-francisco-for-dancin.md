@@ -7,7 +7,9 @@ country: 'Canada'
 destination: 'Canada'
 category: 'vacation'
 description: 'Some post description'
-author: 'Melissa Johanson'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 socials: [
   {social: 'facebook', url: '/'},
   {social: 'pinterest', url: '/'},

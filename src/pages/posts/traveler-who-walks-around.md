@@ -7,7 +7,9 @@ country: 'UK'
 destination: 'United Kingdom'
 category: 'adventure'
 description: 'Some post description'
-author: 'Murphy Cooper'
+author:
+  name: 'Melissa Johanson'
+  avatar: 'author/avatar.png'
 image:
     url: 'posts/traveler-who-walks-around.jpg'
     alt: 'A jew walking near a burgundy wall of a building'
