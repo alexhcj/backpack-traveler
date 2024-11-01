@@ -93,9 +93,23 @@
 }
 
 .md-images {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50% 50%;
     gap: 12px;
     padding-top: 58px;
+
+    &.gap-lg {
+        gap: 30px;
+    }
+}
+
+.md-image {
+    display: grid;
+    grid-template: 310px auto / auto;
+}
+
+.md-image-center {
+    text-align: center;
 }
 
 .md-img-description {
