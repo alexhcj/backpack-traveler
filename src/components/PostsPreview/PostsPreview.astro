@@ -1,23 +1,16 @@
 ---
-import PostPreviewItem from "./PostPreviewItem.astro";
 import type { Post } from "../../types/post";
-const posts = await Astro.glob<Post>("../../pages/posts/*.md");
-const postsPreview = [
-    "village-in-the-brazil",
-    "top-10-popular-sports-on-the-world",
-    "eating-food-tour",
-    "venice-city-tour-with-river-cruise",
-    "the-15-best-things-to-do-in-dublin",
-    "the-world’s-best-drinking",
-    "explore-the-finest-beaches-in-italy",
-    "the-essential-paris-travel-guide-and-map",
-    "traveler-who-walks-around",
-    "a-guide-for-budget-travel-with-pets",
-];
-const postsList = posts.filter((post) =>
-    postsPreview.some((slug: string) => post.frontmatter.slug === slug),
-);
+
+import PostPreviewItem from "./PostPreviewItem.astro";
 import ArrowSVG from "../../../public/svg/arrow.svg";
+const posts = await Astro.glob<Post>("../../pages/posts/*.md");
+
+const postsList = posts
+    .sort(
+        (a, b) =>
+            +new Date(b.frontmatter.pubDate) - +new Date(a.frontmatter.pubDate),
+    )
+    .slice(0, 10);
 ---
 
 <section>
