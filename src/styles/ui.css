@@ -161,6 +161,19 @@
     background-color: var(--color-primary);
 }
 
+.md-excerpt {
+    margin: 20px 0;
+    padding: 38px 0 36px;
+    text-align: center;
+    letter-spacing: var(--letter-spacing-minus);
+    font-size: 44px;
+    line-height: 33px;
+    font-style: normal;
+    font-weight: var(--weight-medium);
+    font-family: var(--family-epic-ride);
+    color: var(--color-black);
+}
+
 /* posts ui */
 .ui-post-destination {
     line-height: 1em;

@@ -1,8 +1,8 @@
 ---
 layout: '../../layouts/PostLayout.astro'
-title: 'A year in London'
-slug: 'a-year-in-london'
-pubDate: 2023-09-06
+title: 'What to eat for breakfast'
+slug: 'what-to-eat-for-breakfast'
+pubDate: 2024-11-01
 country: 'UK'
 destination: 'London'
 category: 'adventure'
@@ -15,10 +15,10 @@ socials: [
   {social: 'pinterest', url: '/'},
   {social: 'twitter', url: '/'},
 ]
-tags: ['explore', 'travel', 'vacation']
+tags: ['food', 'travel']
 image:
-    url: 'posts/a-year-in-london/title.jpg'
-    alt: 'London from bird view'
+    url: 'posts/what-to-eat-for-breakfast/title.jpg'
+    alt: 'Food on the table'
 ---
 
 <p class="md-paragraph">
@@ -48,11 +48,11 @@ image:
 
 <div class="md-images">
   <div class="md-image">
-    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/sleepy-dog.jpg" alt="Sleepy dog">
+    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/cooked-food-onwhite-ceramic-plate.jpg" alt="Cooked food onwhite ceramic plate">
     <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
   <div class="md-image">
-    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/girl-with-hat.jpg" alt="Girl with hat">
+    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/loft-bread-on-round-white-ceramic-plate.jpg" alt=Loft bread on round white ceramic plate">
     <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
