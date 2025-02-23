@@ -8,11 +8,19 @@ interface Props extends IHeader {}
 const { type } = Astro.props;
 import { Image } from "astro:assets";
 
-const posts = await Astro.glob<Post>("../pages/posts/*.md");
+import InstagramSVG from "../../public/svg/instagram.svg";
+import TwitterSVG from "../../public/svg/twitter.svg";
+import FacebookSVG from "../../public/svg/facebook.svg";
+import PinterestSVG from "../../public/svg/pinterest.svg";
+import YoutubeSVG from "../../public/svg/youtube.svg";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
 const uniqueDestinationsList = [
-    ...new Set(
-        posts.map((post: MarkdownInstance<Post>) => post.frontmatter.country),
-    ),
+    ...new Set(posts.map((post) => post.frontmatter.country)),
 ];
 const destinationsList = uniqueDestinationsList.map((country) => {
     return {
@@ -20,11 +28,6 @@ const destinationsList = uniqueDestinationsList.map((country) => {
         text: country === "United Kingdom" ? "UK" : country, // TODO refactor to list if too much shorcut countries
     };
 });
-import InstagramSVG from "../../public/svg/instagram.svg";
-import TwitterSVG from "../../public/svg/twitter.svg";
-import FacebookSVG from "../../public/svg/facebook.svg";
-import PinterestSVG from "../../public/svg/pinterest.svg";
-import YoutubeSVG from "../../public/svg/youtube.svg";
 
 // TODO: refactor: add type field for cursor pointer: if link pointer (route link), else default (popover menu)
 const navList = [

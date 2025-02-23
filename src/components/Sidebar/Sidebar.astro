@@ -1,4 +1,5 @@
 ---
+import type { MarkdownInstance } from "astro";
 import type { Post } from "../../types/post";
 
 import Categories from "./Categories.astro";
@@ -40,7 +41,11 @@ const {
     showAuthor,
 } = Astro.props;
 
-const posts = await Astro.glob<Post>("../../pages/posts/*.md");
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../../pages/posts/*.md", {
+        eager: true,
+    }),
+);
 ---
 
 <aside class="aside">

@@ -1,4 +1,5 @@
 ---
+import type { MarkdownInstance } from "astro";
 import { Image } from "astro:assets";
 import type { Post } from "../types/post";
 import type { Destination } from "../types/destination";
@@ -16,10 +17,14 @@ const {
     frontmatter: { image, title, destination, author, socials, pubDate, tags },
 } = Astro.props;
 
-const posts = await Astro.glob<Post>("../pages/posts/*.md");
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
 
 const relatedDestinationList = posts.filter(
-    (post) => post.frontmatter.destination === destination,
+    ({ frontmatter }) => frontmatter.destination === destination,
 );
 ---
 

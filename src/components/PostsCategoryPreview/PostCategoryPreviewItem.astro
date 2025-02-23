@@ -8,7 +8,10 @@ interface Props {
     };
     destination: string;
     category: string;
-    author: string;
+    author: {
+        name: string;
+        avatar: string;
+    };
     pubDate: Date;
     socials: ISocial[];
 }

@@ -1,11 +1,16 @@
 ---
+import type { MarkdownInstance } from "astro";
 import CategoryLayout from "../../layouts/CategoryLayout.astro";
 import type { Post } from "../../types/post";
 
 export async function getStaticPaths() {
-    const postsList = await Astro.glob<Post>("../posts/*.md");
+    const postsList = Object.values(
+        import.meta.glob<MarkdownInstance<Post>>("../posts/*.md", {
+            eager: true,
+        }),
+    );
     const categoriesList: string[] = [
-        ...new Set(postsList.map((post) => post.frontmatter.category)),
+        ...new Set(postsList.map(({ frontmatter }) => frontmatter.category)),
     ];
 
     return categoriesList.map((category) => {
