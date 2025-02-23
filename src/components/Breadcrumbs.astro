@@ -1,8 +1,7 @@
 ---
-interface Props {
-    secondLvl: string;
-}
-const { secondLvl } = Astro.props;
+import { normalizeBreadcrumbs } from "../utils/utils";
+
+const breadcrumbs = normalizeBreadcrumbs(Astro.url.pathname);
 ---
 
 <section class="section">
@@ -10,8 +9,16 @@ const { secondLvl } = Astro.props;
         <div class="wrapper">
             <div class="breadcrumbs">
                 <a href="/">Home</a>
-                {secondLvl && <span class="divider">&#62;</span>}
-                <span>{secondLvl}</span>
+                {
+                    breadcrumbs.map((item) => {
+                        return (
+                            <div>
+                                <span class="divider">&#62;</span>
+                                <span class="breadcrumb">{item}</span>
+                            </div>
+                        );
+                    })
+                }
             </div>
         </div>
     </div>
@@ -28,15 +35,15 @@ const { secondLvl } = Astro.props;
         height: 100%;
     }
     .breadcrumbs {
-        text-transform: capitalize;
+        display: flex;
         font-size: 14px;
         font-family: var(--family-lora);
         font-weight: var(--weight-medium);
         color: var(--color-dark-2);
-
-        & > * {
-            display: inline-block;
-        }
+    }
+    .breadcrumb {
+        display: inline-block;
+        text-transform: capitalize;
     }
     .divider {
         margin: 0 7px;

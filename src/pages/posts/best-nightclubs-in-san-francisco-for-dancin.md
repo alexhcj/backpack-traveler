@@ -6,7 +6,7 @@ pubDate: 2024-08-26
 country: 'Canada'
 destination: 'Canada'
 category: 'vacation'
-description: 'Some post description'
+description: 'Lorem ipsum dolor sit amet, no elitr tation delicata cum, mei in causae deseruisse. Has eruditi singulis principes ad, eam fuisset voluptua ea, pro ceteros adipisci in. Sed tempor adversarium ad, eum ne facete delectus. Viris maiorum lucilius eum ei.'
 author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'
@@ -17,8 +17,11 @@ socials: [
 ]
 tags: ['explore', 'travel', 'vacation']
 image:
-    url: 'posts/best-nightclubs-in-san-francisco-for-dancin/title.jpg'
-    alt: 'Woman staying near wall of bricks'
+  url: 'posts/best-nightclubs-in-san-francisco-for-dancin/title.jpg'
+  alt: 'Woman staying near wall of bricks'
+masonry:
+  height: 280
+  description: true
 ---
 
 <p class="md-paragraph"><span class="md-first-letter">L</span>orem ipsum dolor sit amet, adhuc iriure dissentias est in, est ne diam graece tincidunt. Sit et liber minimum tacimates, sea no doctus fastidii.<span class="md-underline">An molestiae definiebas mel. Quo everti vituperata et, quo cu omnis maiorum.</span> At soluta fierentlaboramus eum.Nam at dicant deterruisset. Nam at nulla choro denique, et cum quando definitionem. Sea te nisl splendide, odio timeam an vim. Quas brute aliquam id per, et natum vocent eripuit sea. No mea feugiat nusquam ocurreret. Usu ad nominavi scripserit comprehensam, principes dissentiet est id. Primis eripuit ei vis, ne vis nibh delenit electram duo. <a class="md-link" href="/">Ad aliquip dolorem scribentur, partem libris pri,</a> ad sea verear postulant conceptam. Sed appellantur interpretaris cu, meis possit melius ut sed. Ex suas definiebas est, id his dicunt torquatos. Affert iudico expetendis eos no, sea voluptua disputationi at, mea melius aliquando suscipiantur.</p>

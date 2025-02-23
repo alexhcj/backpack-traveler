@@ -1,0 +1,26 @@
+---
+import type { Post } from "../../types/post";
+
+import DestinationRelatedPosts from "../../layouts/DestinationRelatedPostsLayout.astro";
+
+export async function getStaticPaths() {
+    const posts = await Astro.glob<Post>("../posts/*.md");
+    const destinationsList: string[] = [
+        ...new Set(
+            posts.map(({ frontmatter }) => frontmatter.country.toLowerCase()),
+        ),
+    ];
+
+    return destinationsList.map((destination) => {
+        return {
+            params: {
+                destination: destination,
+            },
+        };
+    });
+}
+
+const { destination } = Astro.params;
+---
+
+<DestinationRelatedPosts destination={destination} />

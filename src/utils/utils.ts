@@ -12,3 +12,9 @@ export function throttle(func: Function, limit: number) {
     }
   };
 }
+
+export const normalizeBreadcrumbs = (url: string): string[] =>
+  url
+    .split("/")
+    .filter((item) => item && item !== "/")
+    .map((item) => (item.includes("-") ? item.split("-").join(" ") : item));

@@ -1,0 +1,29 @@
+---
+const { destination } = Astro.params;
+
+import BaseLayout from "./Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PostsListMasonry from "../components/PostsListMasonry.astro";
+
+const capitalizedDestination =
+    destination![0].toUpperCase() + destination!.slice(1);
+---
+
+<BaseLayout title={capitalizedDestination} type="short">
+    <Breadcrumbs />
+    <section class="section">
+        <div class="container">
+            <PostsListMasonry destination={capitalizedDestination} />
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding: 70px 0 40px;
+    }
+    .row {
+        display: flex;
+        gap: 70px;
+    }
+</style>

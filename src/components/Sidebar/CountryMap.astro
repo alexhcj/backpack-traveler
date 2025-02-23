@@ -1,13 +1,13 @@
 ---
-import type {MarkdownInstance} from "astro";
-import type {Post} from "../../types/post";
-import {Image} from "astro:assets";
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+import { Image } from "astro:assets";
 
 interface Props {
     posts: MarkdownInstance<Post>[];
     destination: string;
 }
-const {posts, destination} = Astro.props;
+const { posts, destination } = Astro.props;
 
 const relatedPosts = posts.filter(
     (post) => post.frontmatter.country === destination,
@@ -16,23 +16,25 @@ const relatedPosts = posts.filter(
 
 <div class="map">
     <Image
-            src={`/destinations-maps/${destination.toLowerCase()}-map.png`}
-            width={230}
-            height={230}
-            alt={`${destination} map with destinations marks`}
+        src={`/destinations-maps/${destination.toLowerCase()}-map.png`}
+        width={230}
+        height={230}
+        alt={`${destination} map with destinations marks`}
     />
     <h3 class="title">{destination}</h3>
     <span class="related-articles"
-    >{
-        relatedPosts.length !== 0
-            ? `${relatedPosts.length} related articles`
-            : "coming soon!"
-    }</span
+        >{
+            relatedPosts.length !== 0
+                ? `${relatedPosts.length} related articles`
+                : "coming soon!"
+        }</span
     >
-    <button class="btn"
-    >{
-        relatedPosts.length !== 0 ? `See articles` : "Another destinations"
-    }</button
+    <a
+        class="btn"
+        href={`/destination-related-posts/${destination.toLowerCase()}`}
+        >{
+            relatedPosts.length !== 0 ? `See articles` : "Another destinations"
+        }</a
     >
 </div>
 

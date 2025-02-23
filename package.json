@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "astro": "^3.1.2",
-    "keen-slider": "^6.8.6"
+    "keen-slider": "^6.8.6",
+    "masonry-layout": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/masonry-layout": "^4.2.8"
   }
 }

@@ -29,6 +29,7 @@
     --color-border-3: #ededed;
 
     --color-bg-overlay: rgba(0, 0, 0, 0.3);
+    --color-img-hover-overlay: rgba(0, 0, 0, 0.1);
 
     --font-size-base: 16px;
     --line-height-base: 1.69em;
@@ -49,6 +50,8 @@
     --transition-default-4: all 0.2s ease-in-out;
     --transition-input: width 0.2s;
     --transition-image: all 0.7s;
+
+    --img-hover-scale: 1.04;
 
     --bkg: 222 47.4% 11.2%;
     --bkg-alt: 226 58.3% 18.8%;
@@ -81,6 +84,8 @@ html {
 }
 body {
     line-height: var(--line-height-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1 a,

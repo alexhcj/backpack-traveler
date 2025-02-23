@@ -1,14 +1,18 @@
 ---
+import type { MarkdownInstance } from "astro";
 import type { IHeader } from "../types/header";
+import type { Post } from "../types/post";
 
 interface Props extends IHeader {}
 
 const { type } = Astro.props;
 import { Image } from "astro:assets";
 
-const postsList = await Astro.glob("../pages/posts/*.md");
+const posts = await Astro.glob<Post>("../pages/posts/*.md");
 const uniqueDestinationsList = [
-    ...new Set(postsList.map((post: any) => post.frontmatter.country)),
+    ...new Set(
+        posts.map((post: MarkdownInstance<Post>) => post.frontmatter.country),
+    ),
 ];
 const destinationsList = uniqueDestinationsList.map((country) => {
     return {
