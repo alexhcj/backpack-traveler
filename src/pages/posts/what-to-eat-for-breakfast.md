@@ -52,7 +52,7 @@ image:
     <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
   <div class="md-image">
-    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/loft-bread-on-round-white-ceramic-plate.jpg" alt=Loft bread on round white ceramic plate">
+    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/loft-bread-on-round-white-ceramic-plate.jpg" alt="Loft bread on round white ceramic plate">
     <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>

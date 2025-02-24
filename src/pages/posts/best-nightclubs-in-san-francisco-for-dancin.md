@@ -1,24 +1,24 @@
 ---
-layout: '../../layouts/PostWithSidebarLayout.astro'
-title: 'Best nightclubs in san francisco for dancin'
-slug: 'best-nightclubs-in-san-francisco-for-dancin'
+layout: ../../layouts/PostWithSidebarLayout.astro
+title: Best nightclubs in san francisco for dancin
+slug: best-nightclubs-in-san-francisco-for-dancin
 pubDate: 2024-08-26
-country: 'Canada'
-destination: 'Canada'
-category: 'vacation'
-description: 'Lorem ipsum dolor sit amet, no elitr tation delicata cum, mei in causae deseruisse. Has eruditi singulis principes ad, eam fuisset voluptua ea, pro ceteros adipisci in. Sed tempor adversarium ad, eum ne facete delectus. Viris maiorum lucilius eum ei.'
+country: Canada
+destination: Canada
+category: vacation
+description: San Francisco is home to some of the best nightclubs for dancing, offering a diverse mix of music, atmosphere, and energy. Whether youre into EDM, hip-hop, or house, there’s a venue for every dancer. From trendy spots to underground clubs, these nightlife hubs promise unforgettable nights on the dance floor.
 author:
-  name: 'Melissa Johanson'
-  avatar: 'author/avatar.png'
+  name: Melissa Johanson
+  avatar: author/avatar.png
 socials: [
-  {social: 'facebook', url: '/'},
-  {social: 'pinterest', url: '/'},
-  {social: 'twitter', url: '/'},
+  {social: facebook, url: /},
+  {social: pinterest, url: /},
+  {social: twitter, url: /},
 ]
-tags: ['explore', 'travel', 'vacation']
+tags: [explore, travel, vacation]
 image:
-  url: 'posts/best-nightclubs-in-san-francisco-for-dancin/title.jpg'
-  alt: 'Woman staying near wall of bricks'
+  url: posts/best-nightclubs-in-san-francisco-for-dancin/title.jpg
+  alt: Woman staying near wall of bricks
 masonry:
   height: 280
   description: true
