@@ -11,8 +11,8 @@ author:
   name: Sarah Lee
   avatar: author/avatar.png
 image:
-    url: posts/top-5-hiking-trails-british-columbia/title.jpg
-    alt: Finding peace over a lake
+  url: posts/top-5-hiking-trails-british-columbia/title.jpg
+  alt: Finding peace over a lake
 masonry:
   height: 415
   description: true
