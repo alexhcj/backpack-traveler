@@ -20,8 +20,8 @@ export interface Post {
   };
   tags?: ITag[];
   socials?: ISocial[];
-  masonry: {
-    height?: IMasonryHeights;
+  masonry?: {
+    height: IMasonryHeights;
     description?: boolean;
   };
 }

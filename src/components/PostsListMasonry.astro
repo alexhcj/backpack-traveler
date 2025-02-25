@@ -42,12 +42,12 @@ const postsLists = posts
                     <a
                         class="img-link"
                         href={`/posts/${slug}`}
-                        style={{ height: `${masonry.height ?? 400}px` }}
+                        style={{ height: `${masonry?.height ?? 400}px` }}
                     >
                         <img
                             class="img"
                             src={`/${image.url}`}
-                            height={`${masonry.height ?? 400}px`}
+                            height={`${masonry?.height ?? 400}px`}
                             alt={image.alt}
                         />
                     </a>
