@@ -16,7 +16,7 @@ const relatedPosts = posts.filter(
 
 <div class="map">
     <Image
-        src={`/destinations-maps/${destination.toLowerCase()}-map.png`}
+        src={`/destinations-maps/${destination.replace(" ", "-").toLowerCase()}-map.png`}
         width={230}
         height={230}
         alt={`${destination} map with destinations marks`}
@@ -31,7 +31,7 @@ const relatedPosts = posts.filter(
     >
     <a
         class="btn"
-        href={`/destination-related-posts/${destination.toLowerCase()}`}
+        href={`/destination-related-posts/${destination.replace(" ", "-").toLowerCase()}`}
         >{
             relatedPosts.length !== 0 ? `See articles` : "Another destinations"
         }</a

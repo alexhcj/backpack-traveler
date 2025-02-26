@@ -8,6 +8,7 @@ interface Props extends IHeader {}
 const { type } = Astro.props;
 import { Image } from "astro:assets";
 
+import { getCountryShortcut } from "../utils/utils";
 import InstagramSVG from "../../public/svg/instagram.svg";
 import TwitterSVG from "../../public/svg/twitter.svg";
 import FacebookSVG from "../../public/svg/facebook.svg";
@@ -24,8 +25,8 @@ const uniqueDestinationsList = [
 ];
 const destinationsList = uniqueDestinationsList.map((country) => {
     return {
-        url: [country.toLowerCase()].join("-"),
-        text: country === "United Kingdom" ? "UK" : country, // TODO refactor to list if too much shorcut countries
+        url: country.toLowerCase().replace(" ", "-"),
+        text: getCountryShortcut(country),
     };
 });
 

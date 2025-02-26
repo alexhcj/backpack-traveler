@@ -3,7 +3,7 @@ layout: '../../layouts/DestinationLayout.astro'
 title: 'What can I expect from London?'
 slug: 'united-kingdom'
 pubDate: 2024-10-29
-destination: 'UK'
+destination: 'United Kingdom'
 description: 'Some post description'
 author:
   name: 'Murphy Cooper'
@@ -15,7 +15,7 @@ socials: [
 ]
 categories: [ 'flight', 'guides' ]
 image:
-  url: 'destinations/uk/title.jpg'
+  url: 'destinations/united-kingdom/title.jpg'
   alt: 'Bridge'
 ---
 
@@ -48,13 +48,13 @@ image:
 <div class="md-images gap-lg">
   <div class="md-image">
 
-  ![Koala sleeping on the tree](/destinations/uk/uk-1.jpg)
+  ![Koala sleeping on the tree](/destinations/united-kingdom/united-kingdom-1.jpg)
   <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
 
   <div class="md-image">
 
-  ![Man feeds monkey sitting on his shoulder](/destinations/uk/uk-2.jpg)
+  ![Man feeds monkey sitting on his shoulder](/destinations/united-kingdom/united-kingdom-2.jpg)
   <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
@@ -73,7 +73,7 @@ image:
 <div class="md-space-xxl"></div>
 
 <div class="md-image-center">
-  <img src="/destinations/uk/uk-sights.jpg" alt="London sights map">
+  <img src="/destinations/united-kingdom/united-kingdom-sights.jpg" alt="London sights map">
 </div>
 <div class="md-space-xxl"></div>
 

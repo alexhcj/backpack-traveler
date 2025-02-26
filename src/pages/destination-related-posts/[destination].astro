@@ -12,9 +12,13 @@ export async function getStaticPaths() {
     );
     const destinationsList: string[] = [
         ...new Set(
-            posts.map(({ frontmatter }) => frontmatter.country.toLowerCase()),
+            posts.map(({ frontmatter }) =>
+                frontmatter.country.replace(" ", "-").toLowerCase(),
+            ),
         ),
     ];
+
+    console.log(destinationsList);
 
     return destinationsList.map((destination) => {
         return {

@@ -3,7 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'A year in London'
 slug: 'a-year-in-london'
 pubDate: 2023-09-06
-country: 'UK'
+country: 'United Kingdom'
 destination: 'London'
 categories: [explore, adventure]
 description: 'Some post description'

@@ -3,7 +3,7 @@ layout: '../../layouts/PostLayout.astro'
 title: 'What to eat for breakfast'
 slug: 'what-to-eat-for-breakfast'
 pubDate: 2024-11-01
-country: 'UK'
+country: 'United Kingdom'
 destination: 'London'
 categories: [food, travel]
 description: 'Some post description'
