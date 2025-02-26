@@ -3,34 +3,17 @@ import type { MarkdownInstance } from "astro";
 import type { Post } from "../types/post";
 
 interface Props {
-    destination: string;
+    posts: MarkdownInstance<Post>[];
 }
 
-const { destination } = Astro.props;
-
-const normalizedDestination = destination
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
-
-const posts = Object.values(
-    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
-        eager: true,
-    }),
-);
-const postsLists = posts
-    .filter(({ frontmatter }) => frontmatter.country === normalizedDestination)
-    .sort(
-        (a, b) =>
-            +new Date(b.frontmatter.pubDate) - +new Date(a.frontmatter.pubDate),
-    );
+const { posts } = Astro.props;
 ---
 
 <div class="grid">
     <div class="grid-sizer"></div>
     <div class="gutter-sizer"></div>
     {
-        postsLists.map(
+        posts.map(
             ({
                 frontmatter: {
                     title,
