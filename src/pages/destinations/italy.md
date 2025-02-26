@@ -44,7 +44,6 @@ image:
   <li class="md-list-item">Vel velit auctor aliquet</li>
   <li class="md-list-item">Proin gravida nibh</li>
 </ul>
-<div class="md-space-lg"></div>
 
 <div class="md-images gap-lg">
   <div class="md-image">
