@@ -5,7 +5,7 @@ slug: 'what-to-eat-for-breakfast'
 pubDate: 2024-11-01
 country: 'UK'
 destination: 'London'
-category: 'adventure'
+categories: [food, travel]
 description: 'Some post description'
 author:
   name: 'Murphy Cooper'
@@ -15,7 +15,6 @@ socials: [
   {social: 'pinterest', url: '/'},
   {social: 'twitter', url: '/'},
 ]
-tags: ['food', 'travel']
 image:
     url: 'posts/what-to-eat-for-breakfast/title.jpg'
     alt: 'Food on the table'

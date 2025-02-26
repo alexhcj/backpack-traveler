@@ -5,7 +5,7 @@ slug: 'how-to-spend-a-week-in-vienna'
 pubDate: 2024-08-18
 country: 'Spain'
 destination: 'Spain'
-category: 'explore'
+categories: [explore]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

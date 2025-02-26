@@ -5,7 +5,7 @@ slug: 'the-world’s-best-drinking'
 pubDate: 2024-07-03
 country: 'Brazil'
 destination: 'Brazil'
-category: 'travel guides'
+categories: [travel, guides]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

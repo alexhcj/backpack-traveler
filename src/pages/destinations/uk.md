@@ -13,7 +13,7 @@ socials: [
   { social: 'pinterest', url: '/' },
   { social: 'twitter', url: '/' },
 ]
-tags: [ 'flight', 'guides' ]
+categories: [ 'flight', 'guides' ]
 image:
   url: 'destinations/uk/title.jpg'
   alt: 'Bridge'

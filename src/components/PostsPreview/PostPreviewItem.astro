@@ -1,5 +1,15 @@
 ---
-const { title, slug, url, alt, destination, category } = Astro.props;
+import type { ICategory } from "../../types/category";
+
+interface Props {
+    title: string;
+    slug: string;
+    url: string;
+    alt: string;
+    destination: string;
+    categories: ICategory[];
+}
+const { title, slug, url, alt, destination, categories } = Astro.props;
 ---
 
 <div class="post">
@@ -9,7 +19,20 @@ const { title, slug, url, alt, destination, category } = Astro.props;
     <div class="box">
         <a class="destination" href="/">{destination}</a>
         <h4 class="title">{title}</h4>
-        <a class="category" href="/">{category}</a>
+        <ul class="categories">
+            {
+                categories.map((category) => (
+                    <li>
+                        <a
+                            class="ui-post-category"
+                            href={`/category/${category}`}
+                        >
+                            {category}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
     </div>
 </div>
 
@@ -48,13 +71,14 @@ const { title, slug, url, alt, destination, category } = Astro.props;
         font-weight: var(--weight-medium);
         color: var(--color-black);
     }
-    .category {
-        display: block;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-default);
+    .categories {
+        display: flex;
+        justify-content: center;
+        gap: 3px;
         margin: 11px 0 35px;
-        line-height: 1.8em;
-        font-size: 10px;
-        color: var(--color-grey);
+        padding: 0 12%;
+    }
+    .category {
+        letter-spacing: var(--letter-spacing-default);
     }
 </style>

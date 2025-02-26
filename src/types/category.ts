@@ -1,4 +1,10 @@
-enum EnumTag {
+enum CategoryEnum {
+  camping,
+  beaches,
+  dogFiendly,
+  overnight,
+  restaurants,
+  lowBudget,
   explore,
   vacation,
   travel,
@@ -17,6 +23,6 @@ enum EnumTag {
   travelLife = "travel life",
 }
 
-export interface ITag {
-  tag: EnumTag;
+export interface ICategory {
+  category: CategoryEnum;
 }

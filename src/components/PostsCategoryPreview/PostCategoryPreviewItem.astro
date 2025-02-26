@@ -1,4 +1,11 @@
 ---
+import type { ISocial } from "../../types/social";
+import type { ICategory } from "../../types/category";
+
+import { Image } from "astro:assets";
+
+import PostMeta from "../PostMeta.astro";
+
 interface Props {
     title: string;
     slug: string;
@@ -7,7 +14,7 @@ interface Props {
         alt: string;
     };
     destination: string;
-    category: string;
+    categories: ICategory[];
     author: {
         name: string;
         avatar: string;
@@ -15,19 +22,17 @@ interface Props {
     pubDate: Date;
     socials: ISocial[];
 }
+
 const {
     title,
     slug,
     image: { url, alt },
     destination,
-    category,
+    categories,
     author,
     pubDate,
     socials,
 } = Astro.props;
-import { Image } from "astro:assets";
-import PostMeta from "../PostMeta.astro";
-import type { ISocial } from "../../types/social";
 ---
 
 <article class="article">
@@ -38,8 +43,20 @@ import type { ISocial } from "../../types/social";
         <h3 class="ui-post-title m-l">
             <a href={`/posts/${slug}`}>{title}</a>
         </h3>
-        <a href={`/category/${category}`} class="ui-post-category">{category}</a
-        >
+        <ul>
+            {
+                categories.map((category) => (
+                    <li>
+                        <a
+                            class="ui-post-category"
+                            href={`/category/${category}`}
+                        >
+                            {categories}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
     </div>
     <a href={`/posts/${slug}`}>
         <Image
@@ -53,7 +70,14 @@ import type { ISocial } from "../../types/social";
     <div class="reading-link">
         <a href={`/posts/${slug}`} class="link">Keep reading...</a>
     </div>
-    <PostMeta author={author} socials={socials} pubDate={pubDate} />
+    <PostMeta
+        author={author}
+        socials={socials}
+        pubDate={pubDate}
+        categories={categories}
+        likesCount={0}
+        commentsCount={0}
+    />
 </article>
 
 <style>

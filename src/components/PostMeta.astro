@@ -1,8 +1,9 @@
 ---
-import type {ITag} from '../types/tag'
+import type { ICategory } from '../types/category';
 import type { ISocial, IImageMetadata } from "../types/social";
 
 import { Image } from "astro:assets";
+
 import FormattedDate from "./FormattedDate.astro";
 
 import BookmarkSVG from "../../public/svg/bookmark.svg";
@@ -13,12 +14,12 @@ interface Props {
     author: {name: string; avatar: string;}
     pubDate: Date;
     socials: ISocial[];
-    tags: ITag[];
+    categories: ICategory[];
     likesCount: number;
     commentsCount: number;
 }
 
-const { author, socials, pubDate, tags, likesCount, commentsCount } = Astro.props;
+const { author, socials, pubDate, categories, likesCount, commentsCount } = Astro.props;
 
 const socialSvgs: IImageMetadata = {
     facebook: "/svg/facebook-circle.svg",
@@ -30,19 +31,19 @@ const socialSvgs: IImageMetadata = {
 <div class="meta">
     <div class="meta-top">
         {
-            tags && (
-                <div class="tags">
+            categories && (
+            <div class="categories">
                     <Image
                         src={BookmarkSVG}
                         alt="Bookmark icon"
                         width="15"
                         height="15"
                     />
-                    <ul class="tags-list">
-                        {tags.map((tag) => (
-                            <li class="tag">
-                                <a class="tag-link" href="/">
-                                    {tag}
+                    <ul class="categories-list">
+                        {categories.map((category) => (
+                            <li class="category">
+                                <a class="category-link" href="/">
+                                    {category}
                                 </a>
                             </li>
                         ))}
@@ -100,28 +101,28 @@ const socialSvgs: IImageMetadata = {
         border-top: 1px solid var(--color-border-2);
         border-bottom: 1px solid var(--color-border-2);
     }
-    .tags {
+    .categories {
         display: flex;
         gap: 5px;
     }
-    .tags-list {
+    .categories-list {
         display: flex;
         gap: 3px;
     }
-    .tag {
-        .tag-link {
+    .category {
+        .category-link {
             font-size: 15px;
             font-family: var(--family-lora);
             font-style: italic;
             color: var(--color-grey-2);
         }
 
-        &:hover .tag-link {
+        &:hover .category-link {
             color: var(--color-dark);
         }
     }
     .meta-top,
-    .tags,
+    .categories,
     .likes,
     .comments {
         display: flex;

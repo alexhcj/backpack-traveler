@@ -5,7 +5,7 @@ slug: 'the-essential-paris-travel-guide-and-map'
 pubDate: 2024-04-21
 country: 'France'
 destination: 'Paris'
-category: 'destination'
+categories: [destination]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

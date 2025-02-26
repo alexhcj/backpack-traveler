@@ -5,7 +5,7 @@ slug: 'top-10-popular-sports-on-the-world'
 pubDate: 2023-06-24
 country: 'Australia'
 destination: 'Perth'
-category: 'adventure'
+categories: [explore, adventure]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

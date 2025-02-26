@@ -2,6 +2,7 @@
 import type { Post } from "../types/post";
 
 import { Image } from "astro:assets";
+
 import BaseLayout from "./Layout.astro";
 import HeroHeader from "../components/HeroHeader.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
@@ -11,10 +12,20 @@ interface Props {
     frontmatter: Post;
 }
 
-const { frontmatter } = Astro.props;
+const {
+    frontmatter: {
+        title,
+        image,
+        destination,
+        categories,
+        author,
+        socials,
+        pubDate,
+    },
+} = Astro.props;
 ---
 
-<BaseLayout title={frontmatter.title} type="long">
+<BaseLayout title={title} type="long">
     <HeroHeader type="home" />
     <div class="container">
         <div class="row">
@@ -22,29 +33,39 @@ const { frontmatter } = Astro.props;
                 <article class="article">
                     <Image
                         class="img"
-                        src={`/${frontmatter.image.url}`}
-                        alt={frontmatter.image.alt}
+                        src={`/${image.url}`}
+                        alt={image.alt}
                         width="957"
                         height="638"
                     />
                     <div class="post-header">
-                        <a class="ui-post-destination" href="/"
-                            >{frontmatter.destination}</a
+                        <a class="ui-post-destination" href="/">{destination}</a
                         >
-                        <h3 class="ui-post-title">{frontmatter.title}</h3>
-                        <a class="ui-post-category" href="/"
-                            >{frontmatter.category}</a
-                        >
+                        <h3 class="ui-post-title">{title}</h3>
+                        <ul class="categories">
+                            {
+                                categories.map((category) => (
+                                    <li>
+                                        <a
+                                            class="ui-post-category"
+                                            href={`/category/${category}`}
+                                        >
+                                            {category}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
                     </div>
                     <div class="post-body">
                         <slot />
                     </div>
                     <div class="footer">
                         <PostMeta
-                            author={frontmatter.author}
-                            socials={frontmatter.socials ?? []}
-                            pubDate={frontmatter.pubDate}
-                            tags={frontmatter.tags ?? []}
+                            author={author}
+                            socials={socials ?? []}
+                            pubDate={pubDate}
+                            categories={categories}
                             likesCount={0}
                             commentsCount={0}
                         />
@@ -57,7 +78,7 @@ const { frontmatter } = Astro.props;
             </div>
             <div class="col-aside">
                 <Sidebar
-                    destination={frontmatter.destination}
+                    destination={destination}
                     showAuthor
                     showWorldMap
                     showInstagram
@@ -93,6 +114,12 @@ const { frontmatter } = Astro.props;
     }
     .post-header {
         text-align: center;
+    }
+    .categories {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
     }
     .footer {
         margin-top: 32px;

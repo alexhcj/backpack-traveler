@@ -1,5 +1,5 @@
 import type { ISocial } from "./social";
-import type { ITag } from "./tag";
+import type { ICategory } from "./category";
 
 export interface Destination {
   title: string;
@@ -12,7 +12,7 @@ export interface Destination {
     avatar: string;
   };
   socials?: ISocial[];
-  tags?: ITag[];
+  categories: ICategory[];
   image: {
     url: string;
     alt: string;

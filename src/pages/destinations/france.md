@@ -13,7 +13,7 @@ socials: [
   { social: 'pinterest', url: '/' },
   { social: 'twitter', url: '/' },
 ]
-tags: [ 'food', 'art' ]
+categories: [ 'food', 'art' ]
 image:
   url: 'destinations/france/title.jpg'
   alt: 'Paris Arc de Triomphe'

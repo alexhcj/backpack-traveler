@@ -32,8 +32,7 @@ const postsLists = posts
                     image,
                     country,
                     slug,
-                    tags,
-                    category,
+                    categories,
                     description,
                     masonry,
                 },
@@ -58,9 +57,18 @@ const postsLists = posts
                         <h3 class="title">
                             <a href={`/posts/${slug}`}>{title}</a>
                         </h3>
-                        <a class="category" href="/">
-                            {category}
-                        </a>
+                        <ul class="categories">
+                            {categories.map((category) => (
+                                <li>
+                                    <a
+                                        class="ui-post-category"
+                                        href={`/category/${category}`}
+                                    >
+                                        {category}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
                         <p class="description">{description}</p>
                     </div>
                 </article>
@@ -149,18 +157,12 @@ const postsLists = posts
             color: var(--color-black-0);
         }
     }
-    .category {
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-default);
-        margin: 11px 0 30px;
-        line-height: 1.8em;
-        font-size: 10px;
-        color: var(--color-black);
-        transition: var(--transition-default);
-
-        &:hover {
-            color: var(--color-grey-2);
-        }
+    .categories {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        margin: 11px 0 19px;
     }
     .description {
         padding: 0 5%;

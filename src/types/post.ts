@@ -1,5 +1,5 @@
 import type { ISocial } from "./social";
-import type { ITag } from "./tag";
+import type { ICategory } from "./category";
 import type { IMasonryHeights } from "./masonry";
 
 export interface Post {
@@ -10,7 +10,7 @@ export interface Post {
   };
   country: string;
   destination: string;
-  category: string;
+  categories: ICategory[];
   slug: string;
   pubDate: Date;
   description: string;
@@ -18,7 +18,6 @@ export interface Post {
     name: string;
     avatar: string;
   };
-  tags?: ITag[];
   socials?: ISocial[];
   masonry?: {
     height: IMasonryHeights;

@@ -5,7 +5,7 @@ slug: 'venice-city-tour-with-river-cruise'
 pubDate: 2024-08-09
 country: 'Italy'
 destination: 'Marano di Napoli'
-category: 'adventure'
+categories: [explore, adventure]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

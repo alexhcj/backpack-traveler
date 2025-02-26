@@ -5,7 +5,7 @@ slug: 'eating-food-tour'
 pubDate: 2024-07-28
 country: 'France'
 destination: 'Paris'
-category: 'adventure'
+categories: [explore, adventure]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'

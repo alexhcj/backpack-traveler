@@ -13,7 +13,7 @@ socials: [
   { social: 'pinterest', url: '/' },
   { social: 'twitter', url: '/' },
 ]
-tags: [ 'fishing', 'overnight' ]
+categories: [ 'fishing', 'overnight' ]
 ---
 
 <p class="md-paragraph">

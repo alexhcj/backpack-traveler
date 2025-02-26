@@ -5,7 +5,7 @@ slug: 'a-year-in-london'
 pubDate: 2023-09-06
 country: 'UK'
 destination: 'London'
-category: 'adventure'
+categories: [explore, adventure]
 description: 'Some post description'
 author:
   name: 'Murphy Cooper'
@@ -15,7 +15,6 @@ socials: [
   {social: 'pinterest', url: '/'},
   {social: 'twitter', url: '/'},
 ]
-tags: ['explore', 'travel', 'vacation']
 image:
     url: 'posts/a-year-in-london/title.jpg'
     alt: 'London from bird view'

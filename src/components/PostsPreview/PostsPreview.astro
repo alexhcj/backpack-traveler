@@ -23,15 +23,15 @@ const postsList = posts
     <div class="wrapper">
         <ul id="hero-slider" class="keen-slider">
             {
-                postsList.map((post, index) => (
+                postsList.map(({ frontmatter }, index) => (
                     <li class={`keen-slider__slide number-slide${index}`}>
                         <PostPreviewItem
-                            title={post.frontmatter.title}
-                            url={post.frontmatter.image.url}
-                            alt={post.frontmatter.image.alt}
-                            destination={post.frontmatter.destination}
-                            category={post.frontmatter.category}
-                            slug={post.frontmatter.slug}
+                            title={frontmatter.title}
+                            url={frontmatter.image.url}
+                            alt={frontmatter.image.alt}
+                            destination={frontmatter.destination}
+                            categories={frontmatter.categories}
+                            slug={frontmatter.slug}
                         />
                     </li>
                 ))

@@ -5,7 +5,7 @@ slug: 'a-guide-for-budget-travel-with-pets'
 pubDate: 2024-07-14
 country: 'Brazil'
 destination: 'Brazil'
-category: 'adventure'
+categories: [explore, adventure, vacation]
 description: 'Some post description'
 author:
   name: 'Murphy Cooper'
@@ -15,7 +15,6 @@ socials: [
   {social: 'pinterest', url: '/'},
   {social: 'twitter', url: '/'},
 ]
-tags: ['explore', 'travel', 'vacation']
 image:
     url: 'posts/a-guide-for-budget-travel-with-pets/title.jpg'
     alt: 'Dog sitting on the beach'

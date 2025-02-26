@@ -5,7 +5,7 @@ slug: 'traveler-who-walks-around'
 pubDate: 2024-03-15
 country: 'UK'
 destination: 'United Kingdom'
-category: 'adventure'
+categories: [explore, adventure]
 description: 'Some post description'
 author:
   name: 'Melissa Johanson'
