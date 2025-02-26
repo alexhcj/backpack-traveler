@@ -1,22 +1,22 @@
 ---
-layout: '../../layouts/DestinationLayout.astro'
-title: 'Welcome to France travel guide'
-slug: 'france'
+layout: ../../layouts/DestinationLayout.astro
+title: Welcome to France travel guide
+slug: france
 pubDate: 2024-09-27
-destination: 'France'
-description: 'Some post description'
+destination: France
+description: Some post description
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
-  { social: 'facebook', url: '/' },
-  { social: 'pinterest', url: '/' },
-  { social: 'twitter', url: '/' },
+  { social: facebook, url: / },
+  { social: pinterest, url: / },
+  { social: twitter, url: / },
 ]
-categories: [ 'food', 'art' ]
+categories: [ food, art ]
 image:
-  url: 'destinations/france/title.jpg'
-  alt: 'Paris Arc de Triomphe'
+  url: destinations/france/title.jpg
+  alt: Paris Arc de Triomphe
 ---
 
 <p class="md-paragraph">
@@ -47,18 +47,18 @@ image:
 
 <div class="md-images gap-lg">
   <div class="md-image">
-    <img class="img" src="/destinations/france/france-1.jpg" alt="Chateau de chambord" />
+    <img class="img h-100" src="/destinations/france/france-1.jpg" alt="Chateau de chambord" />
     <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
   <div class="md-image">
-    <img class="img" src="/destinations/france/france-2.jpg" alt="Louvre" />
+    <img class="img h-100" src="/destinations/france/france-2.jpg" alt="Louvre" />
     <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
 
-<div class="md-space-md"></div>
+<div class="md-space-xl"></div>
 <h3 class="ui-post-title" id="typical-costs">Typical costs when travelling</h3>
-<div class="md-space-s"></div>
+<div class="md-space-xs"></div>
 
 <p class="md-paragraph"><b class="md-bold">Accommodation</b> – Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. Aperiam tractatos ex his, ex usu facete accumsan, duo platonem efficiantur intellegebat ut. Accusata scripserit persequeris pri eu, accusam argumentum disputationi an his. Nulla erant urbanitas sed ne, mei velit laudem id, nonumy eligendi pri ei. Eu mel everti ocurreret, nemore quodsi referrentur ius ad.</p>
 <div class="md-space-s"></div>
@@ -70,16 +70,15 @@ image:
 <div class="md-space-xxl"></div>
 
 <div class="md-image-center">
-
-  ![France sights map](/destinations/france/france-sights.jpg)
+    <img src="/destinations/france/france-sights.jpg" alt="France sights map">
 </div>
 <div class="md-space-xxl"></div>
 
 <div class="md-note">
   <p class="md-paragraph"><b class="md-bold">Suggested daily budget</b> – 50-60 EUR / 52-62 USD (Note: This is a suggested budget assuming you’re staying in a hostel, eating out a little, cooking most of your meals, and using local transportation. Using the budget tips below, you can always lower this number. However, if you stay in fancier accommodation or eat out more often, expect this to be higher!)</p>
 </div>
-<div class="md-space-xl"></div>
 
+<div class="md-space-xl"></div>
 <h4 class="ui-post-title f-m" id="budget-tips">Money saving tips</h4>
 <div class="md-space-xs"></div>
 

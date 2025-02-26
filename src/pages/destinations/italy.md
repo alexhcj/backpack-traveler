@@ -1,22 +1,22 @@
 ---
-layout: '../../layouts/DestinationLayout.astro'
-title: 'What can I expect from Italy?'
-slug: 'italy'
+layout: ../../layouts/DestinationLayout.astro
+title: What can I expect from Italy?
+slug: italy
 pubDate: 2024-09-03
-destination: 'Italy'
-description: 'Some post description'
+destination: Italy
+description: Some post description
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
-  { social: 'facebook', url: '/' },
-  { social: 'pinterest', url: '/' },
-  { social: 'twitter', url: '/' },
+  { social: facebook, url: / },
+  { social: pinterest, url: / },
+  { social: twitter, url: / },
 ]
-categories: [ 'fishing', 'overnight' ]
+categories: [ fishing, overnight ]
 image:
-  url: 'destinations/italy/title.jpg'
-  alt: 'Italy cathedral at sunrise from bird fly view'
+  url: destinations/italy/title.jpg
+  alt: Italy cathedral at sunrise from bird fly view
 ---
 
 <p class="md-paragraph">
@@ -46,9 +46,20 @@ image:
 </ul>
 <div class="md-space-lg"></div>
 
-<div class="md-space-md"></div>
+<div class="md-images gap-lg">
+  <div class="md-image">
+    <img class="img h-100" src="/destinations/italy/italy-1.jpg" alt="Road between green grass field near mountains under blue and brown sky at golden hour" />
+    <h2 class="md-img-description">“Amazing Sunset in Tuscany”</h2>
+  </div>
+  <div class="md-image">
+    <img class="img h-100" src="/destinations/italy/italy-2.jpg" alt="Coliseum, Italy" />
+    <h2 class="md-img-description">“Colosseum Exterior”</h2>
+  </div>
+</div>
+
+<div class="md-space-xl"></div>
 <h3 class="ui-post-title" id="typical-costs">Typical costs when travelling</h3>
-<div class="md-space-s"></div>
+<div class="md-space-xs"></div>
 
 <p class="md-paragraph"><b class="md-bold">Accommodation</b> – Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. Aperiam tractatos ex his, ex usu facete accumsan, duo platonem efficiantur intellegebat ut. Accusata scripserit persequeris pri eu, accusam argumentum disputationi an his. Nulla erant urbanitas sed ne, mei velit laudem id, nonumy eligendi pri ei. Eu mel everti ocurreret, nemore quodsi referrentur ius ad.</p>
 <div class="md-space-s"></div>
@@ -59,7 +70,9 @@ image:
 <p class="md-paragraph"><b class="md-bold">Transportation</b> – Accusata vulputate pri an, mel no vivendo deleniti, aliquid probatus elaboraret ut quo. Veniam facete intellegebat et mei, cetero luptatum definiebas at nec. Nisl viris inimicus no eam. Audire platonem id mea, prompta volumus mandamus mel cu. Pri in wisi ancillae constituam, nec nisl numquam honestatis eu. Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. In wisi adhuc oportere quo, eu fabulas principes his. Esse justo euripidis duo ea. Eum ad audire dolorum, no nullam dicunt bonorum.</p>
 <div class="md-space-xxl"></div>
 
-![Italy advantages map](/destinations/italy/italy-advantages.png)
+<div class="md-image-center">
+    <img src="/destinations/italy/italy-sights.png" alt="Italy sights map">
+</div>
 <div class="md-space-xxl"></div>
 
 <div class="md-note">

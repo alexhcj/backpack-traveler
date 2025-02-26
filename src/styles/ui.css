@@ -96,7 +96,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    padding-top: 58px;
+    padding-top: 42px;
 
     &.gap-lg {
         gap: 30px;
@@ -119,6 +119,11 @@
 
 .md-image-center {
     text-align: center;
+
+    & > img {
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 .md-img-description {

@@ -1,22 +1,22 @@
 ---
-layout: '../../layouts/DestinationLayout.astro'
-title: 'What can I expect from London?'
-slug: 'united-kingdom'
+layout: ../../layouts/DestinationLayout.astro
+title: What can I expect from London?
+slug: united-kingdom
 pubDate: 2024-10-29
-destination: 'United Kingdom'
-description: 'Some post description'
+destination: United Kingdom
+description: Some post description
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
-  { social: 'facebook', url: '/' },
-  { social: 'pinterest', url: '/' },
-  { social: 'twitter', url: '/' },
+  { social: facebook, url: / },
+  { social: pinterest, url: / },
+  { social: twitter, url: / },
 ]
-categories: [ 'flight', 'guides' ]
+categories: [ flight, guides ]
 image:
-  url: 'destinations/united-kingdom/title.jpg'
-  alt: 'Bridge'
+  url: destinations/united-kingdom/title.jpg
+  alt: Bridge
 ---
 
 <p class="md-paragraph">
@@ -47,21 +47,18 @@ image:
 
 <div class="md-images gap-lg">
   <div class="md-image">
-
-  ![Koala sleeping on the tree](/destinations/united-kingdom/united-kingdom-1.jpg)
-  <h2 class="md-img-description">“The Professional Hobo”</h2>
+      <img class="img h-100" src="/destinations/united-kingdom/united-kingdom-1.jpg" alt="Koala sleeping on the tree">
+      <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
-
   <div class="md-image">
-
-  ![Man feeds monkey sitting on his shoulder](/destinations/united-kingdom/united-kingdom-2.jpg)
-  <h2 class="md-img-description">“Never Ending Footsteps”</h2>
+      <img class="img h-100" src="/destinations/united-kingdom/united-kingdom-2.jpg" alt="Man feeds monkey sitting on his shoulder">
+      <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
 
-<div class="md-space-md"></div>
+<div class="md-space-xl"></div>
 <h3 class="ui-post-title" id="typical-costs">Typical costs when travelling</h3>
-<div class="md-space-s"></div>
+<div class="md-space-xs"></div>
 
 <p class="md-paragraph"><b class="md-bold">Accommodation</b> – Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. Aperiam tractatos ex his, ex usu facete accumsan, duo platonem efficiantur intellegebat ut. Accusata scripserit persequeris pri eu, accusam argumentum disputationi an his. Nulla erant urbanitas sed ne, mei velit laudem id, nonumy eligendi pri ei. Eu mel everti ocurreret, nemore quodsi referrentur ius ad.</p>
 <div class="md-space-s"></div>
@@ -80,8 +77,8 @@ image:
 <div class="md-note">
   <p class="md-paragraph"><b class="md-bold">Suggested daily budget</b> – 50-60 EUR / 52-62 USD (Note: This is a suggested budget assuming you’re staying in a hostel, eating out a little, cooking most of your meals, and using local transportation. Using the budget tips below, you can always lower this number. However, if you stay in fancier accommodation or eat out more often, expect this to be higher!)</p>
 </div>
-<div class="md-space-xl"></div>
 
+<div class="md-space-xl"></div>
 <h4 class="ui-post-title f-m" id="budget-tips">Money saving tips</h4>
 <div class="md-space-xs"></div>
 
