@@ -1,14 +1,16 @@
 ---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+
 interface Props {
     posts: MarkdownInstance<Post>[];
 }
 
 const { posts } = Astro.props;
-const categoriesList = [
-    ...new Set(posts.map((post) => post.frontmatter.category)),
+
+const categories = [
+    ...new Set(posts.map(({ frontmatter }) => frontmatter.categories).flat()),
 ];
-import type { Post } from "../../types/post";
-import type { MarkdownInstance } from "astro";
 ---
 
 <div class="categories">
@@ -18,7 +20,7 @@ import type { MarkdownInstance } from "astro";
     </div>
     <ul class="list">
         {
-            categoriesList.map((category) => (
+            categories.map((category) => (
                 <li class="item">
                     <a href={`/category/${category}`} class="link">
                         {category}

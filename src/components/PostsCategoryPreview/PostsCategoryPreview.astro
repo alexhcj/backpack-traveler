@@ -1,37 +1,29 @@
 ---
 import type { MarkdownInstance } from "astro";
 import type { Post } from "../../types/post";
+import type { ICategory } from "../../types/category";
 
 import PostCategoryPreviewItem from "./PostCategoryPreviewItem.astro";
 
 interface Props {
-    category: string;
+    category: ICategory;
 }
 const { category } = Astro.props;
 
-const postsList = Object.values(
+const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../../pages/posts/*.md", {
         eager: true,
     }),
 );
-const postsByCategory = postsList.filter(
-    ({ frontmatter }) => frontmatter.category === category,
+const postsByCategory = posts.filter(({ frontmatter: { categories } }) =>
+    categories.find((item) => item === category),
 );
 ---
 
 <ul class="list">
     {
         postsByCategory.map(({ frontmatter }) => (
-            <PostCategoryPreviewItem
-                title={frontmatter.title}
-                slug={frontmatter.slug}
-                category={frontmatter.category}
-                image={frontmatter.image}
-                destination={frontmatter.destination}
-                author={frontmatter.author}
-                pubDate={frontmatter.pubDate}
-                socials={frontmatter.socials ?? []}
-            />
+            <PostCategoryPreviewItem frontmatter={frontmatter} />
         ))
     }
 </ul>

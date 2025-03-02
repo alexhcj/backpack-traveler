@@ -1,22 +1,38 @@
 ---
+import type { ICategory } from "../types/category";
+
+interface Props {
+    category: ICategory;
+}
+
 const { category } = Astro.params;
+const { category: categoryProps } = Astro.props;
 
 import BaseLayout from "./Layout.astro";
 import PostsCategoryPreview from "../components/PostsCategoryPreview/PostsCategoryPreview.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-import Sidebar from "../components/Sidebar.astro";
+import Sidebar from "../components/Sidebar/Sidebar.astro";
 ---
 
-<BaseLayout title={category || "post category"} headerType="short">
+<BaseLayout title={category || "post category"} type="short">
     <Breadcrumbs secondLvl={category || "category"} />
     <section class="section">
         <div class="container">
             <div class="row">
                 <div class="col-posts">
-                    <PostsCategoryPreview category={category || "category"} />
+                    <PostsCategoryPreview category={categoryProps} />
                 </div>
                 <div class="col-aside">
-                    <Sidebar />
+                    <Sidebar
+                        showAuthor
+                        showWorldMap
+                        showInstagram
+                        showSocials
+                        showPromo
+                        showLatestPosts
+                        showNewsletter
+                        showCategories
+                    />
                 </div>
             </div>
         </div>
