@@ -12,9 +12,10 @@ import Instagram from "./Instagram.astro";
 import Socials from "./Socials.astro";
 import Promo from "./Promo.astro";
 import Newsletter from "./Newsletter.astro";
+import MostRatedPosts from "./MostRatedPosts.astro";
 
 interface Props {
-    destination: string;
+    destination?: string;
     showLatestPosts?: boolean;
     showCategories?: boolean;
     showWorldMap?: boolean;
@@ -25,6 +26,7 @@ interface Props {
     showCountryMap?: boolean;
     showPostNav?: boolean;
     showAuthor?: boolean;
+    showMostRatedPosts?: boolean;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
     showCountryMap,
     showPostNav,
     showAuthor,
+    showMostRatedPosts,
 } = Astro.props;
 
 const posts = Object.values(
@@ -50,15 +53,20 @@ const posts = Object.values(
 
 <aside class="aside">
     {showAuthor && <Author />}
-    {showWorldMap && <WorldMap destination={destination} />}
+    {showWorldMap && destination && <WorldMap destination={destination} />}
     {showInstagram && <Instagram />}
     {showSocials && <Socials />}
     {showPromo && <Promo />}
-    {showCountryMap && <CountryMap posts={posts} destination={destination} />}
+    {
+        showCountryMap && destination && (
+            <CountryMap posts={posts} destination={destination} />
+        )
+    }
     {showPostNav && <PostNav />}
     {showLatestPosts && <LatestPosts posts={posts} />}
     {showNewsletter && <Newsletter posts={posts} />}
     {showCategories && <Categories posts={posts} />}
+    {showMostRatedPosts && <MostRatedPosts posts={posts} />}
 </aside>
 
 <style>

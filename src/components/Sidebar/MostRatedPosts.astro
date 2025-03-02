@@ -1,0 +1,97 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+
+import { Image } from "astro:assets";
+
+interface Props {
+    posts: MarkdownInstance<Post>[];
+}
+const { posts } = Astro.props;
+
+const mostRatedPostList = posts
+    .sort((a, b) => b.frontmatter.likesCount - a.frontmatter.likesCount)
+    .slice(0, 6);
+---
+
+<div class="posts">
+    <ul>
+        {
+            mostRatedPostList.map(
+                ({ frontmatter: { slug, title, categories } }) => (
+                    <li class="item">
+                        <h3>
+                            <a class="title" href={`/posts/${slug}`}>
+                                {title}
+                            </a>
+                        </h3>
+                        <ul class="categories">
+                            {categories.map((category) => (
+                                <li>
+                                    <a
+                                        class="ui-post-category"
+                                        href={`/category/${category}`}
+                                    >
+                                        {category}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ),
+            )
+        }
+    </ul>
+</div>
+
+<style>
+    .posts {
+        padding: 20px calc(15px + 7%) 10px calc(15px + 5.5%);
+        border: 1px solid var(--color-border);
+    }
+    .item {
+        padding: 27px 0 23px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--color-border);
+        }
+    }
+    .title {
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.67em;
+        font-size: 12px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+
+        &:hover {
+            color: var(--color-black-0);
+        }
+    }
+    .categories {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 3px;
+    }
+    .ui-post-category {
+        margin-left: 2px;
+        font-size: 8px;
+    }
+    .title,
+    .ui-post-category {
+        display: block;
+    }
+    .img-box {
+        margin-right: 24px;
+        width: 87px;
+        height: 87px;
+        float: left;
+    }
+    .img {
+        width: inherit;
+        height: inherit;
+    }
+</style>

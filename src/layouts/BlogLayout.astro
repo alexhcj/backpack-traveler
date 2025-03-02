@@ -1,0 +1,187 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../types/post";
+import type { IImageMetadata } from "../types/social";
+
+import { Image } from "astro:assets";
+
+import BaseLayout from "./Layout.astro";
+import HeroHeader from "../components/HeroHeader.astro";
+import Sidebar from "../components/Sidebar/Sidebar.astro";
+import BlogPostsList from "../components/BlogPostsList/BlogPostsList.astro";
+import {convertISODate} from '../utils/utils'
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const latestPostList = posts
+    .sort(
+        (a, b) =>
+            +new Date(b.frontmatter.pubDate) - +new Date(a.frontmatter.pubDate),
+    )
+    .filter((_, i) => i < 10);
+const latestPost = latestPostList[0].frontmatter;
+
+const socialSvgs: IImageMetadata = {
+    facebook: "/svg/facebook-circle.svg",
+    pinterest: "/svg/pinterest-circle.svg",
+    twitter: "/svg/twitter-circle.svg",
+};
+---
+
+<BaseLayout title="Backpack Traveler – Modern Travel Blog" type="long">
+    <HeroHeader />
+    <div class="container">
+        <div class="row">
+            <div class="col-post">
+                <article class="article">
+                    <span class="date">{convertISODate(latestPost.pubDate)}</span>
+                    <a
+                        class="ui-link-with-img"
+                        href={`/posts/${latestPost.slug}`}
+                    >
+                        <Image
+                            class="img"
+                            src={`/${latestPost.image.url}`}
+                            alt={latestPost.image.alt}
+                            width="957"
+                            height="638"
+                        />
+                    </a>
+                    <div class="post-header">
+                        <a
+                            class="ui-post-destination black"
+                            href={`/destinations/${latestPost.country.toLowerCase().replace(' ', '-')}`}
+                            >{latestPost.destination}</a
+                        >
+                        <h3 class="ui-post-title">
+                            <a href={`/posts/${latestPost.slug}`}>
+                                {latestPost.title}</a
+                            >
+                        </h3>
+                        <ul class="categories">
+                            {
+                                latestPost.categories.map((category) => (
+                                    <li>
+                                        <a
+                                            class="ui-post-category"
+                                            href={`/category/${category}`}
+                                        >
+                                            {category}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        <p class="description">{latestPost.description}</p>
+                        <a
+                            class="ui-button-text"
+                            href={`/posts/${latestPost.slug}`}
+                            >Keep reading...</a
+                        >
+                        {
+                          latestPost.socials && (
+                            <ul class="socials">
+                                {latestPost.socials.map(({ social, url }) => (
+                                      <li class="social">
+                                          <a href={url}>
+                                              <Image
+                                                  src={socialSvgs[social]}
+                                                  alt=`${social} social`
+                                                  width="24"
+                                                  height="24"
+                                              />
+                                          </a>
+                                      </li>
+                                    )
+                                )}
+                            </ul>
+                        )}
+                    </div>
+                </article>
+                <BlogPostsList posts={latestPostList.slice(1)} >
+                <!-- button load more -->
+            </div>
+            <div class="col-aside">
+                <Sidebar showMostRatedPosts />
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .row {
+        display: flex;
+        gap: 30px;
+    }
+    .col-post {
+        width: 75%;
+    }
+    .col-aside {
+        width: 25%;
+    }
+    .article {
+        position: relative;
+        margin-bottom: 30px;
+
+        &:has(.ui-link-with-img:hover) {
+            .date {
+                opacity: 1;
+            }
+        }
+    }
+    .date {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        content: "";
+        padding: 4px 11px 5px;
+        font-size: 15px;
+        background-color: var(--color-white);
+        font-family: var(--family-lora);
+        color: var(--color-black);
+        z-index: var(--z-index-10);
+        opacity: 0;
+        transition: var(--transition-default-2)
+    }
+    .post-header {
+        padding: 36px 0 13px;
+        text-align: center;
+        border: 1px solid var(--color-border);
+        border-top: none;
+    }
+    .ui-link-with-img {
+        display: block;
+        max-height: 638px;
+        z-index: var(--z-index-1);
+    }
+    .ui-post-title {
+        margin: 7px 30px 10px;
+    }
+    .categories {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        margin-bottom: 22px;
+    }
+    .description {
+        margin-bottom: 30px;
+        padding: 0 8%;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+    .ui-button-text {
+        margin-bottom: 17px;
+    }
+    .socials {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 34px;
+        padding-top: 10px;
+    }
+</style>

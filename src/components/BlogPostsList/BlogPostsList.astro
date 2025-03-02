@@ -1,0 +1,28 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+
+import BlogPostsItem from "./BlogPostsItem.astro";
+
+interface Props {
+    posts: MarkdownInstance<Post>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="list">
+    {
+        posts.map(({ frontmatter }) => (
+            <BlogPostsItem frontmatter={frontmatter} />
+        ))
+    }
+</ul>
+
+<style>
+    .list {
+        display: grid;
+        grid-template: auto / repeat(3, 1fr);
+        gap: 30px;
+    }
+</style>
