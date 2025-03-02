@@ -1,24 +1,24 @@
 ---
-layout: '../../layouts/PostLayout.astro'
-title: 'A Guide for Budget Travel With Pets'
-slug: 'a-guide-for-budget-travel-with-pets'
+layout: ../../layouts/PostLayout.astro
+title: A Guide for Budget Travel With Pets
+slug: a-guide-for-budget-travel-with-pets
 pubDate: 2024-07-14
-country: 'Brazil'
-destination: 'Brazil'
+country: Brazil
+destination: Brazil
 categories: [explore, adventure, vacation]
-description: 'Some post description'
+description: Some post description
 likesCount: 6
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
-  {social: 'facebook', url: '/'},
-  {social: 'pinterest', url: '/'},
-  {social: 'twitter', url: '/'},
+  {social: facebook, url: /},
+  {social: pinterest, url: /},
+  {social: twitter, url: /},
 ]
 image:
-    url: 'posts/a-guide-for-budget-travel-with-pets/title.jpg'
-    alt: 'Dog sitting on the beach'
+    url: posts/a-guide-for-budget-travel-with-pets/title.jpg
+    alt: Dog sitting on the beach
 ---
 
 <p class="md-paragraph">
@@ -50,20 +50,19 @@ image:
   Learn more in related article: <a class="md-link-dark" href="/">Staying with a local family on Bali</a>
 </p>
 
+<div class="md-space-s"></div>
 <div class="md-images">
-  <div class="md-image">
-
-  ![Sleepy dog](/posts/a-guide-for-budget-travel-with-pets/sleepy-dog.jpg)
-  <h2 class="md-img-description">“The Professional Hobo”</h2>
+  <div class="md-image lg">
+    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/sleepy-dog.jpg" alt="Sleepy dog">
+    <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
-
-  <div class="md-image">
-
-  ![Girl with hat](/posts/a-guide-for-budget-travel-with-pets/girl-with-hat.jpg)
-  <h2 class="md-img-description">“Never Ending Footsteps”</h2>
+  <div class="md-image lg">
+    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/girl-with-hat.jpg" alt="Girl with hat">
+    <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
 
+<div class="md-space-lg"></div>
 <p class="md-paragraph">
 Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. An sententiae disputando eos. Delicata voluptaria referrentur mel eu. Forensibus disputationi an eam. Sea ex delectus dignissim gloriatur, quem suas per ea. In solum menandri cum.
 </p>
