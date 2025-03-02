@@ -1,6 +1,8 @@
 ---
 import type { IHeader } from "../types/header";
+
 import Header from "../components/Header.astro";
+
 import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/ui.css";
@@ -34,11 +36,3 @@ const { title, type } = Astro.props;
         <slot />
     </body>
 </html>
-<style is:global>
-    :root {
-    }
-    html {
-    }
-    code {
-    }
-</style>
