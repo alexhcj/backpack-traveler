@@ -7,6 +7,7 @@ country: 'Brazil'
 destination: 'Brazil'
 categories: [travel, guides]
 description: 'Some post description'
+likesCount: 5
 author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'

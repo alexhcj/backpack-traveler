@@ -7,6 +7,7 @@ country: 'Italy'
 destination: 'Italy'
 categories: [travel, guides]
 description: 'Some post description'
+likesCount: 0
 author:
   name: 'Murphy Cooper'
   avatar: 'author/avatar.png'

@@ -7,6 +7,7 @@ country: 'United Kingdom'
 destination: 'London'
 categories: [explore, adventure]
 description: 'Some post description'
+likesCount: 1
 author:
   name: 'Murphy Cooper'
   avatar: 'author/avatar.png'

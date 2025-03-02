@@ -7,6 +7,7 @@ country: Canada
 destination: British Columbia
 categories: [explore, adventure]
 description: British Columbia is a hiker’s paradise, offering breathtaking trails that range from serene lakes to majestic mountain peaks. Whether youre a beginner or an experienced trekker, BC’s diverse landscapes provide hikes for all levels. Discover the top 5 trails that promise unforgettable adventures in this stunning province.
+likesCount: 10
 author:
   name: Sarah Lee
   avatar: author/avatar.png

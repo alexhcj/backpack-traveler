@@ -7,6 +7,7 @@ country: 'Spain'
 destination: 'Spain'
 categories: [explore]
 description: 'Some post description'
+likesCount: 0
 author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'

@@ -7,6 +7,7 @@ country: 'Canada'
 destination: 'Canada'
 categories: [destination]
 description: 'Lorem ipsum dolor sit amet, no elitr tation delicata cum, mei in causae deseruisse. Has eruditi singulis principes ad, eam fuisset voluptua ea, pro ceteros adipisci in. Sed tempor adversarium ad, eum ne facete delectus. Viris maiorum lucilius eum ei.'
+likesCount: 0
 author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'

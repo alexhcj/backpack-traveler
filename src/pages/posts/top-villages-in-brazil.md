@@ -7,9 +7,15 @@ country: Brazil
 destination: Brazil Villages
 categories: [travel]
 description: Discover the charm of Brazil’s top villages, from colonial towns to stunning beach destinations. Explore Paraty, Penedo, and more.
+likesCount: 0
 author:
   name: Carlos Ferreira
   avatar: author/avatar.png
+socials: [
+  {social: 'facebook', url: '/'},
+  {social: 'pinterest', url: '/'},
+  {social: 'twitter', url: '/'},
+]
 image:
   url: posts/top-villages-in-brazil/title.jpg
   alt: Brown and white concrete building under blue sky

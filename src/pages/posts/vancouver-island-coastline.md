@@ -7,6 +7,7 @@ country: Canada
 destination: Vancouver Island
 categories: [nature, outdore]
 description: Vancouver Island offers stunning landscapes, from rugged coastlines and pristine beaches to lush forests. Whether you're into whale watching, kayaking, or hiking through its national parks, this island is an adventurer’s dream. Its charming towns, wildlife encounters, and natural beauty make it a top destination for those seeking tranquility or a thrill.
+likesCount: 0
 author:
   name: Michael Johnson
   avatar: author/avatar.png

@@ -7,6 +7,7 @@ country: 'Brazil'
 destination: 'Brazil'
 categories: [explore, adventure, vacation]
 description: 'Some post description'
+likesCount: 6
 author:
   name: 'Murphy Cooper'
   avatar: 'author/avatar.png'

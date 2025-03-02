@@ -7,6 +7,7 @@ country: 'United Kingdom'
 destination: 'London'
 categories: [food, travel]
 description: 'Some post description'
+likesCount: 0
 author:
   name: 'Murphy Cooper'
   avatar: 'author/avatar.png'

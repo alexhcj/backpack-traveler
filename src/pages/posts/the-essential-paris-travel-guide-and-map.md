@@ -7,6 +7,7 @@ country: 'France'
 destination: 'Paris'
 categories: [destination]
 description: 'Some post description'
+likesCount: 0
 author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'
