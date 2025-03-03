@@ -1,0 +1,50 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../types/post";
+
+import BaseLayout from "../layouts/Layout.astro";
+import HeroBanner from "../components/HeroBanner.astro";
+import CategoriesList from "../components/CategoriesList.astro";
+
+import HeroImg from "../../public/images/hero-banner.jpg";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const images = Object.values(
+    import.meta.glob<{ default: string }>("../../public/categories/*.png", {
+        query: "url",
+        eager: true,
+    }),
+).map((item) => item.default.replace("/public/", ""));
+
+const categoriesSet = [
+    ...new Set(posts.map(({ frontmatter }) => frontmatter.categories).flat()),
+];
+
+const categories = categoriesSet.map((category) => {
+    return {
+        category,
+        url: images.find((url) => url.includes(category.toLowerCase())),
+        count: posts.reduce((acc, cur) => {
+            if (cur.frontmatter.categories.includes(category)) {
+                acc += 1;
+            }
+            return acc;
+        }, 0),
+    };
+});
+
+const image = {
+    url: HeroImg,
+    alt: "Man standing on the rock",
+};
+---
+
+<BaseLayout title="Backpack Traveler | Categories list" type="long">
+    <HeroBanner title="Categories" image={image} />
+    <CategoriesList categories={categories} />
+</BaseLayout>

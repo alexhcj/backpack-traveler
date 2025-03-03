@@ -5,7 +5,7 @@ slug: 'how-to-spend-a-week-in-vienna'
 pubDate: 2024-08-18
 country: 'Spain'
 destination: 'Spain'
-categories: [explore]
+categories: [vacation, cultural]
 description: 'Some post description'
 likesCount: 0
 author:

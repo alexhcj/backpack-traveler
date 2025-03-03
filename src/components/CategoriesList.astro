@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import type { ECategory } from "../types/category";
+
+interface Props {
+    categories: {
+        category: ECategory;
+        url: string | undefined;
+        count: number;
+    }[];
+}
+
+const { categories } = Astro.props;
+---
+
+<section class="section">
+    <div class="container">
+        <ul class="list">
+            {
+                categories.map(({ category, url, count }) => (
+                    <li class="item">
+                        <a class="link" href={`/categories/${category}`}>
+                            <Image
+                                class="item-img"
+                                src={`/${url}`}
+                                width={110}
+                                height={75}
+                                alt={`${category}`}
+                            />
+                            <h4 class="category">{category}</h4>
+                            <span class="count">{count} destination</span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 110px 0 98px;
+    }
+    .list {
+        display: grid;
+        grid-template: auto / repeat(6, 1fr);
+        gap: 20px;
+    }
+    .item {
+        padding: 30px 5px 20px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: var(--transition-default-4);
+
+        &:hover {
+            border-color: var(--color-border-3);
+
+            .item-img {
+                translate: 0 -7px;
+            }
+        }
+    }
+    .link {
+        display: grid;
+        grid-template: 75px auto auto / 1fr;
+        justify-items: center;
+    }
+    .item-img {
+        transition: translate 0.2s;
+    }
+    .category {
+        margin: 15px 0 3px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.57em;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+    }
+    .count {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 8px;
+        font-weight: var(--weight-medium);
+        font-family: var(--family-montserrat);
+        color: var(--color-grey-2);
+    }
+</style>

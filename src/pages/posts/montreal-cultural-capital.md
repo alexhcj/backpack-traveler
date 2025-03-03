@@ -5,7 +5,7 @@ slug: montreal-cultural-capital
 pubDate: 2025-01-05
 country: Canada
 destination: Montreal
-categories: [culture]
+categories: [cultural]
 description: Montreal is a vibrant city that blends French-Canadian heritage with modern influences. Known for its rich culture, delicious cuisine, and artistic vibes, Montreal offers an exciting escape. Explore Old Montreal’s cobblestone streets, indulge in world-renowned pastries, and dive into the city's lively art scene. This cultural capital is a perfect destination for foodies, history buffs, and culture seekers.
 likesCount: 13
 author:

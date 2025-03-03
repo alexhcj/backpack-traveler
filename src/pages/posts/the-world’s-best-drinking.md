@@ -5,7 +5,7 @@ slug: 'the-world’s-best-drinking'
 pubDate: 2024-07-03
 country: 'Brazil'
 destination: 'Brazil'
-categories: [travel, guides]
+categories: [road-trips, drinks]
 description: 'Some post description'
 likesCount: 5
 author:

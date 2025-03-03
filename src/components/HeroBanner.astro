@@ -1,0 +1,38 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    title: string;
+    image: {
+        url: ImageMetadata;
+        alt: string;
+    };
+}
+
+const {
+    title,
+    image: { url, alt },
+} = Astro.props;
+---
+
+<section class="section">
+    <h1 class="title">{title}</h1>
+    <Image class="img" src={url} alt={alt} />
+</section>
+
+<style>
+    .section {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .title {
+        position: absolute;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.25em;
+        font-size: 40px;
+        color: var(--color-white);
+    }
+</style>

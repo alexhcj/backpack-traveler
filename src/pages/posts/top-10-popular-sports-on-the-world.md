@@ -5,7 +5,7 @@ slug: 'top-10-popular-sports-on-the-world'
 pubDate: 2023-06-24
 country: 'Australia'
 destination: 'Perth'
-categories: [explore, adventure]
+categories: [sports, flights, photography]
 description: 'Some post description'
 likesCount: 0
 author:

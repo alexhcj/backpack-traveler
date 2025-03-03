@@ -5,7 +5,7 @@ slug: 'traveler-who-walks-around'
 pubDate: 2024-03-15
 country: 'United Kingdom'
 destination: 'United Kingdom'
-categories: [explore, adventure]
+categories: [cultural]
 description: 'Some post description'
 likesCount: 0
 author:

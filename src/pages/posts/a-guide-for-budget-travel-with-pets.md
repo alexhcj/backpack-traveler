@@ -5,7 +5,7 @@ slug: a-guide-for-budget-travel-with-pets
 pubDate: 2024-07-14
 country: Brazil
 destination: Brazil
-categories: [explore, adventure, vacation]
+categories: [adventure, dog-friendly, low-budget]
 description: Some post description
 likesCount: 6
 author:

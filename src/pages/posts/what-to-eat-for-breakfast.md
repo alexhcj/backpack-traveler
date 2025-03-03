@@ -5,7 +5,7 @@ slug: 'what-to-eat-for-breakfast'
 pubDate: 2024-11-01
 country: 'United Kingdom'
 destination: 'London'
-categories: [food, travel]
+categories: [food, cultural]
 description: 'Some post description'
 likesCount: 0
 author:

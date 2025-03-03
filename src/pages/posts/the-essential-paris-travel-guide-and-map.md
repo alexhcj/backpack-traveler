@@ -5,7 +5,7 @@ slug: 'the-essential-paris-travel-guide-and-map'
 pubDate: 2024-04-21
 country: 'France'
 destination: 'Paris'
-categories: [destination]
+categories: [food, cultural]
 description: 'Some post description'
 likesCount: 0
 author:

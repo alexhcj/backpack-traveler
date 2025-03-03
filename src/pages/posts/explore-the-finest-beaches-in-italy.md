@@ -5,7 +5,7 @@ slug: 'explore-the-finest-beaches-in-italy'
 pubDate: 2024-08-13
 country: 'Brazil'
 destination: 'Brazil'
-categories: [explore, adventure]
+categories: [explore, beaches]
 description: 'Some post description'
 likesCount: 0
 author:

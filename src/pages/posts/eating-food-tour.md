@@ -5,7 +5,7 @@ slug: 'eating-food-tour'
 pubDate: 2024-07-28
 country: 'France'
 destination: 'Paris'
-categories: [explore, adventure]
+categories: [food]
 description: 'Some post description'
 likesCount: 27
 author:

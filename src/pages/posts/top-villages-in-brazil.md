@@ -5,7 +5,7 @@ slug: top-villages-in-brazil
 pubDate: 2025-02-25
 country: Brazil
 destination: Brazil Villages
-categories: [travel]
+categories: [road-trips]
 description: Discover the charm of Brazil’s top villages, from colonial towns to stunning beach destinations. Explore Paraty, Penedo, and more.
 likesCount: 0
 author:

@@ -5,7 +5,7 @@ slug: 'venice-city-tour-with-river-cruise'
 pubDate: 2024-08-09
 country: 'Italy'
 destination: 'Marano di Napoli'
-categories: [explore, adventure]
+categories: [road-trips, eco]
 description: 'Some post description'
 likesCount: 0
 author:

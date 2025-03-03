@@ -5,7 +5,7 @@ slug: 'beautiful-italy'
 pubDate: 2024-08-13
 country: 'Italy'
 destination: 'Italy'
-categories: [travel, guides]
+categories: [road-trips]
 description: 'Some post description'
 likesCount: 0
 author:

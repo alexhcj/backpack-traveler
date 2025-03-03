@@ -5,7 +5,7 @@ slug: best-nightclubs-in-san-francisco-for-dancin
 pubDate: 2024-08-26
 country: Canada
 destination: Canada
-categories: [explore, travel, vacation]
+categories: [explore, vacation]
 description: San Francisco is home to some of the best nightclubs for dancing, offering a diverse mix of music, atmosphere, and energy. Whether youre into EDM, hip-hop, or house, there’s a venue for every dancer. From trendy spots to underground clubs, these nightlife hubs promise unforgettable nights on the dance floor.
 likesCount: 0
 author:
