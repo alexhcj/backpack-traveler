@@ -311,7 +311,7 @@
 }
 
 .ui-post-category {
-    display: inline-block;
+    display: block;
     padding: 4px 0;
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing-default-2);
