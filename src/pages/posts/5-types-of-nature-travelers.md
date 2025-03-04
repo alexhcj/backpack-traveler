@@ -13,7 +13,7 @@ author:
   avatar: author/avatar.png
 image:
     url: posts/5-types-of-nature-travelers.jpg
-    alt: Italy cannals
+    alt: A scenic landscape featuring lush green fields
 masonry:
   height: 280
   description: true
