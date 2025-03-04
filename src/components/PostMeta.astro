@@ -1,5 +1,5 @@
 ---
-import type { ICategory } from '../types/category';
+import type { ECategory } from '../types/category';
 import type { ISocial, IImageMetadata } from "../types/social";
 
 import { Image } from "astro:assets";
@@ -14,7 +14,7 @@ interface Props {
     author: {name: string; avatar: string;}
     pubDate: Date;
     socials: ISocial[];
-    categories: ICategory[];
+    categories: ECategory[];
     likesCount: number;
     commentsCount: number;
 }

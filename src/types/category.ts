@@ -26,10 +26,6 @@ export enum ECategory {
   TRAIN_AND_SCENIC_RAILWAY = "TRAIN_AND_SCENIC_RAILWAY", // Luxury trains, cross-country rail trips
 }
 
-export interface ICategory {
-  category: ECategory;
-}
-
 export type TCategoriesMap = {
   [key in ECategory]?: string;
 };

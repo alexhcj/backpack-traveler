@@ -1,5 +1,5 @@
 ---
-import type { ICategory } from "../../types/category";
+import type { ECategory } from "../../types/category";
 
 interface Props {
     title: string;
@@ -7,7 +7,7 @@ interface Props {
     url: string;
     alt: string;
     destination: string;
-    categories: ICategory[];
+    categories: ECategory[];
 }
 const { title, slug, url, alt, destination, categories } = Astro.props;
 ---

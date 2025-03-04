@@ -1,12 +1,12 @@
 ---
 import type { MarkdownInstance } from "astro";
 import type { Post } from "../../types/post";
-import type { ICategory } from "../../types/category";
+import type { ECategory } from "../../types/category";
 
 import PostCategoryPreviewItem from "./PostCategoryPreviewItem.astro";
 
 interface Props {
-    category: ICategory;
+    category: ECategory;
 }
 const { category } = Astro.props;
 
