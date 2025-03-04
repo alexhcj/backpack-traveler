@@ -45,16 +45,13 @@ masonry:
 </p>
 
 <div class="md-images">
-  <div class="md-image">
-
-  ![Girl with book watching mackbook](/posts/best-nightclubs-in-san-francisco-for-dancin/girl-with-book-watching-mackbook.jpg)
-  <h2 class="md-img-description">“The Professional Hobo”</h2>
+  <div class="md-image lg">
+      <img class="img" src="/posts/best-nightclubs-in-san-francisco-for-dancin/girl-with-book-watching-mackbook.jpg" alt="Girl with book watching mackbook">
+      <h2 class="md-img-description">“The Professional Hobo”</h2>
   </div>
-
-  <div class="md-image">
-
-  ![Man in mountains near the lake](/posts/best-nightclubs-in-san-francisco-for-dancin/man-in-mountains-near-the-lake.jpg)
-  <h2 class="md-img-description">“Never Ending Footsteps”</h2>
+  <div class="md-image lg">
+      <img class="img" src="/posts/best-nightclubs-in-san-francisco-for-dancin/man-in-mountains-near-the-lake.jpg" alt="Man in mountains near the lake">
+      <h2 class="md-img-description">“Never Ending Footsteps”</h2>
   </div>
 </div>
 
