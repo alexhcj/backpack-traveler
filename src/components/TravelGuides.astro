@@ -1,0 +1,101 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Book } from "../types/book";
+
+import { Image } from "astro:assets";
+
+interface Props {
+    booksList: string[];
+}
+
+const books = Object.values(
+    import.meta.glob<MarkdownInstance<Book>>("../pages/books/*.md", {
+        eager: true,
+    }),
+);
+
+const { booksList } = Astro.props;
+
+const booksToShow = booksList.map((book) => {
+    const {
+        frontmatter: { slug, image, discount, tag, price },
+    } = books.find(({ frontmatter: { slug } }) => slug.includes(book))!;
+
+    return {
+        image,
+        slug,
+        discount,
+        tag,
+        price,
+    };
+});
+---
+
+<section class="ui-post-guides">
+    <div class="container">
+        <h3 class="ui-post-title">My travel guides</h3>
+        <p class="ui-post-guides-subtitle">
+            We are That Backpacker, Melissa and Johnatan (that’s us!)
+        </p>
+        <ul class="ui-post-guides-list">
+            {
+                booksToShow.map(
+                    ({ image: { url, alt }, slug, tag, price, discount }) => (
+                        <li class="ui-post-guides-list-item">
+                            <a class="link" href={`/shop/books/${slug}`}>
+                                <span class="ui-post-guides-list-item-tag">
+                                    {tag}
+                                </span>
+                                <Image
+                                    class="ui-post-guides-list-item-image"
+                                    src={`/${url}`}
+                                    width={220}
+                                    height={270}
+                                    alt={alt}
+                                />
+                                <div class="ui-post-guides-list-item-sell">
+                                    Buy for
+                                    <span
+                                        class={`ui-post-guides-list-item-price ${discount && "discount"}`}
+                                    >
+                                        ${price}
+                                    </span>
+                                    {discount && (
+                                        <span class="ui-post-guides-list-item-discount">
+                                            - ${price - discount}
+                                        </span>
+                                    )}
+                                </div>
+                            </a>
+                        </li>
+                    ),
+                )
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .ui-post-guides {
+        margin: 0;
+        padding: 100px 0;
+    }
+    .ui-post-guides-subtitle {
+        margin-top: 13px;
+        line-height: 34px;
+    }
+    .ui-post-guides-list {
+        grid-template: auto / repeat(6, 1fr);
+        margin-top: 78px;
+    }
+    .link {
+        display: block;
+    }
+    .ui-post-guides-list-item-image {
+        width: 100%;
+        object-fit: cover;
+    }
+    .ui-post-guides-list-item-sell {
+        bottom: 95px;
+    }
+</style>

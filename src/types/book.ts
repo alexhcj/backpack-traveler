@@ -1,15 +1,21 @@
 import type { IReview } from "./review";
-import type { ICategory } from "./category";
+import type { ECategory } from "./category";
+
+enum EBookTag {
+  SALE = "sale",
+  NEW = "new",
+}
 
 export interface Book {
   title: string;
   slug: string;
   destination: string;
   price: number;
-  discount: number;
+  discount?: number;
   excerpt: string;
   description: string;
-  categories: ICategory[];
+  categories: ECategory[];
+  tag?: EBookTag;
   pubDate: Date;
   image: {
     url: string;

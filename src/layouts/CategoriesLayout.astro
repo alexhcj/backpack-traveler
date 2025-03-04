@@ -5,6 +5,7 @@ import type { Post } from "../types/post";
 import BaseLayout from "../layouts/Layout.astro";
 import HeroBanner from "../components/HeroBanner.astro";
 import CategoriesList from "../components/CategoriesList.astro";
+import TravelGuides from "../components/TravelGuides.astro";
 
 import HeroImg from "../../public/images/hero-banner.jpg";
 
@@ -42,9 +43,19 @@ const image = {
     url: HeroImg,
     alt: "Man standing on the rock",
 };
+
+const booksList: string[] = [
+    "almost-fearless",
+    "501-places",
+    "new-york",
+    "out-to-africa-life-cruiser",
+    "wandering-educators",
+    "france-in-6-days",
+];
 ---
 
 <BaseLayout title="Backpack Traveler | Categories list" type="long">
     <HeroBanner title="Categories" image={image} />
     <CategoriesList categories={categories} />
+    <TravelGuides booksList={booksList} />
 </BaseLayout>

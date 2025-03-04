@@ -292,12 +292,14 @@
         line-height: 1.21em;
     }
 
-    & > a {
-        color: inherit;
-    }
+    &:has(a) {
+        & > a {
+            color: inherit;
+        }
 
-    &:hover {
-        color: var(--color-black-0);
+        &:hover {
+            color: var(--color-black-0);
+        }
     }
 }
 
@@ -420,9 +422,8 @@
 }
 
 .ui-post-guides-list {
-    display: flex;
-    justify-content: center;
-    height: 210px;
+    display: grid;
+    grid-template: auto / repeat(4, 1fr);
 }
 
 .ui-post-guides-list-item {
@@ -430,7 +431,7 @@
 
     &:hover {
         .ui-post-guides-list-item-image {
-            transform: translateY(-13px);
+            translate: 0 -13px;
         }
 
         .ui-post-guides-list-item-sell {
@@ -440,12 +441,12 @@
 }
 
 .ui-post-guides-list-item-image {
-    transition: var(--transition-default);
+    transition: var(--transition-default-2);
 }
 
 .ui-post-guides-list-item-sell {
     position: absolute;
-    bottom: 60px;
+    bottom: 73px;
     left: -11px;
     padding: 10px 9px 11px 12px;
     line-height: 1em;
@@ -479,6 +480,7 @@
     position: absolute;
     top: 0;
     left: -18px;
+    text-transform: capitalize;
     font-size: 44px;
     line-height: 1em;
     font-family: var(--family-epic-ride);
