@@ -56,6 +56,16 @@ const booksList: string[] = [
 
 <BaseLayout title="Backpack Traveler | Categories list" type="long">
     <HeroBanner title="Categories" image={image} />
-    <CategoriesList categories={categories} />
+    <section class="section">
+        <div class="container">
+            <CategoriesList categories={categories} />
+        </div>
+    </section>
     <TravelGuides booksList={booksList} />
 </BaseLayout>
+
+<style>
+    .section {
+        padding: 110px 0 98px;
+    }
+</style>

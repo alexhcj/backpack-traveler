@@ -1,14 +1,85 @@
 ---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../types/post";
+
 import HeroHeader from "../components/HeroHeader.astro";
 import PostsPreview from "../components/PostsPreview/PostsPreview.astro";
 import TravelEssentials from "../components/TravelEssentials.astro";
 import Reviews from "../components/Reviews.astro";
 import Layout from "../layouts/Layout.astro";
+import CategoriesList from "../components/CategoriesList.astro";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const images = Object.values(
+    import.meta.glob<{ default: string }>("../../public/categories/*.png", {
+        query: "url",
+        eager: true,
+    }),
+).map((item) => item.default.replace("/public/", ""));
+
+const categoriesSet = [
+    ...new Set(posts.map(({ frontmatter }) => frontmatter.categories).flat()),
+];
+
+const categories = categoriesSet
+    .map((category) => {
+        return {
+            category,
+            url: images.find((url) => url.includes(category.toLowerCase())),
+            count: posts.reduce((acc, cur) => {
+                if (cur.frontmatter.categories.includes(category)) {
+                    acc += 1;
+                }
+                return acc;
+            }, 0),
+            totalLikes: posts.reduce((acc, cur) => {
+                if (cur.frontmatter.categories.includes(category)) {
+                    acc += cur.frontmatter.likesCount;
+                }
+                return acc;
+            }, 0),
+        };
+    })
+    .sort((a, b) => b.totalLikes - a.totalLikes)
+    .slice(0, 6);
 ---
 
 <Layout title="Backpack Traveler – Modern Travel Blog" type="long">
     <HeroHeader />
     <PostsPreview />
     <TravelEssentials />
+    <section class="ui-post-guides">
+        <div class="container">
+            <h3 class="ui-post-title">Top categories</h3>
+            <p class="ui-post-guides-subtitle">
+                We are That Backpacker, Melissa and Johnatan (that’s us!)
+            </p>
+            <div class="list">
+                <CategoriesList categories={categories} />
+            </div>
+        </div>
+    </section>
     <!-- <Reviews /> -->
 </Layout>
+
+<style>
+    .ui-post-guides {
+        margin: 0;
+        padding: 112px 0 0;
+        background-color: var(--color-white);
+    }
+    .ui-post-title {
+        margin-top: 0;
+    }
+    .ui-post-guides-subtitle {
+        margin-top: 13px;
+    }
+    .list {
+        padding: 50px 0 30px;
+    }
+</style>

@@ -13,34 +13,27 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<section class="section">
-    <div class="container">
-        <ul class="list">
-            {
-                categories.map(({ category, url, count }) => (
-                    <li class="item">
-                        <a class="link" href={`/categories/${category}`}>
-                            <Image
-                                class="item-img"
-                                src={`/${url}`}
-                                width={110}
-                                height={75}
-                                alt={`${category}`}
-                            />
-                            <h4 class="category">{category}</h4>
-                            <span class="count">{count} destination</span>
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </div>
-</section>
+<ul class="list">
+    {
+        categories.map(({ category, url, count }) => (
+            <li class="item">
+                <a class="link" href={`/destination-category/${category}`}>
+                    <Image
+                        class="item-img"
+                        src={`/${url}`}
+                        width={110}
+                        height={75}
+                        alt={`${category}`}
+                    />
+                    <h4 class="category">{category}</h4>
+                    <span class="count">{count} destination</span>
+                </a>
+            </li>
+        ))
+    }
+</ul>
 
 <style>
-    .section {
-        padding: 110px 0 98px;
-    }
     .list {
         display: grid;
         grid-template: auto / repeat(6, 1fr);
