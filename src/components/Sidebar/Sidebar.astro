@@ -16,6 +16,7 @@ import MostRatedPosts from "./MostRatedPosts.astro";
 
 interface Props {
     destination?: string;
+    slug?: string;
     showLatestPosts?: boolean;
     showCategories?: boolean;
     showWorldMap?: boolean;
@@ -31,6 +32,7 @@ interface Props {
 
 const {
     destination,
+    slug,
     showLatestPosts,
     showCategories,
     showWorldMap,
@@ -49,11 +51,22 @@ const posts = Object.values(
         eager: true,
     }),
 );
+
+const postsWithoutWorldMap = ["5-types-of-nature-travelers"];
 ---
 
 <aside class="aside">
     {showAuthor && <Author />}
-    {showWorldMap && destination && <WorldMap destination={destination} />}
+    {
+        showWorldMap &&
+            destination &&
+            slug &&
+            !postsWithoutWorldMap.find((post) => post.includes(slug)) && (
+                <WorldMap
+                    destination={destination.toLowerCase().replaceAll(" ", "-")}
+                />
+            )
+    }
     {showInstagram && <Instagram />}
     {showSocials && <Socials />}
     {showPromo && <Promo />}

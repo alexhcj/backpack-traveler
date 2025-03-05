@@ -10,7 +10,6 @@ const {
     frontmatter: {
         slug,
         title,
-        destination,
         categories,
         country,
         image: { url, alt },
@@ -32,7 +31,7 @@ const {
         <a
             class="ui-post-destination black"
             href={`/destinations/${country.toLowerCase().replace(" ", "-")}`}
-            >{destination}</a
+            >{country}</a
         >
         <h3 class="ui-post-title f-m">
             <a href={`/posts/${slug}`}>{title}</a>

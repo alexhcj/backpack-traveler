@@ -1,8 +1,9 @@
 ---
 import type { MarkdownInstance } from "astro";
-import { Image } from "astro:assets";
 import type { Post } from "../types/post";
 import type { Destination } from "../types/destination";
+
+import { Image } from "astro:assets";
 
 import BaseLayout from "./Layout.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
@@ -57,8 +58,7 @@ const relatedDestinationList = posts.filter(
             <div class="col-post">
                 <article class="article">
                     <div class="post-header">
-                        <a class="ui-post-destination" href="/">{destination}</a
-                        >
+                        <span class="ui-post-destination">{destination}</span>
                         <h3 class="ui-post-title">{title}</h3>
                     </div>
                     <div class="post-body">
@@ -112,6 +112,7 @@ const relatedDestinationList = posts.filter(
         text-align: start;
 
         .ui-post-destination {
+            display: inline-block;
             margin-bottom: 5px;
             color: var(--color-black);
         }

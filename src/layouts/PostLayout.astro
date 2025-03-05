@@ -15,8 +15,10 @@ interface Props {
 const {
     frontmatter: {
         title,
+        slug,
         image,
         destination,
+        country,
         categories,
         author,
         socials,
@@ -39,7 +41,10 @@ const {
                         height="638"
                     />
                     <div class="post-header">
-                        <a class="ui-post-destination" href="/">{destination}</a
+                        <a
+                            class="ui-post-destination"
+                            href={`/destinations/${country.toLowerCase().replace(" ", "-")}`}
+                            >{country}</a
                         >
                         <h3 class="ui-post-title">{title}</h3>
                         <ul class="categories">
@@ -79,6 +84,7 @@ const {
             <div class="col-aside">
                 <Sidebar
                     destination={destination}
+                    slug={slug}
                     showAuthor
                     showWorldMap
                     showInstagram
