@@ -42,7 +42,7 @@ const { posts } = Astro.props;
                         <span class="country">
                             <a href={`/posts/${slug}`}>{country}</a>
                         </span>
-                        <h3 class="title">
+                        <h3 class="ui-post-title f-m">
                             <a href={`/posts/${slug}`}>{title}</a>
                         </h3>
                         <ul class="categories">
@@ -126,21 +126,14 @@ const { posts } = Astro.props;
         font-family: var(--family-epic-ride);
         transition: var(--transition-default);
     }
-    .title {
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-m);
+    .ui-post-title {
         padding: 5px 12% 0px;
-        line-height: 1.57em;
-        font-size: 14px;
-        font-weight: var(--weight-medium);
-        color: var(--color-black);
 
         & > a {
             display: initial;
         }
     }
-    .country,
-    .title {
+    .country {
         &:hover {
             color: var(--color-black-0);
         }

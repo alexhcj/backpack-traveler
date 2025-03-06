@@ -260,8 +260,7 @@
 
 .ui-post-title {
     text-transform: uppercase;
-    margin-bottom: 13px;
-    letter-spacing: 0.2em;
+    letter-spacing: var(--letter-spacing-m);
     line-height: 1.33em;
     font-size: 24px;
     font-family: var(--family-montserrat);
@@ -274,6 +273,12 @@
 
     &.m-m {
         margin: 16px 0 13px;
+    }
+
+    &.f-xs {
+        line-height: 1.67em;
+        font-size: 12px;
+        font-weight: var(--weight-medium);
     }
 
     &.f-s {
@@ -307,7 +312,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3px;
+    flex-wrap: wrap;
+    gap: 0 3px;
 }
 
 .ui-post-category {
@@ -403,15 +409,10 @@
 }
 
 .ui-post-guides {
-    margin-top: 25px;
+    margin: 25px 0 32px;
     padding: 33px 30px 70px;
     text-align: center;
     background-color: var(--color-primary);
-
-    .ui-post-title {
-        margin-bottom: 0;
-        margin-top: 20px;
-    }
 }
 
 .ui-post-guides-subtitle {
@@ -484,15 +485,6 @@
     font-size: 44px;
     line-height: 1em;
     font-family: var(--family-epic-ride);
-}
-
-.ui-post-expectations {
-    padding-top: 32px;
-
-    .ui-post-title {
-        margin-top: 20px;
-        margin-bottom: 21px;
-    }
 }
 
 .ui-post-related-posts {

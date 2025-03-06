@@ -58,7 +58,7 @@ image:
 
 <div class="md-space-xl"></div>
 <h3 class="ui-post-title" id="typical-costs">Typical costs when travelling</h3>
-<div class="md-space-xs"></div>
+<div class="md-space-ms"></div>
 
 <p class="md-paragraph"><b class="md-bold">Accommodation</b> – Quo at mollis tritani molestie, munere vivendum sit ei, nec congue bonorum an. In quidam iriure alienum nam, in scripta probatus usu. Aperiam tractatos ex his, ex usu facete accumsan, duo platonem efficiantur intellegebat ut. Accusata scripserit persequeris pri eu, accusam argumentum disputationi an his. Nulla erant urbanitas sed ne, mei velit laudem id, nonumy eligendi pri ei. Eu mel everti ocurreret, nemore quodsi referrentur ius ad.</p>
 <div class="md-space-s"></div>
@@ -80,7 +80,7 @@ image:
 <div class="md-space-xl"></div>
 
 <h4 class="ui-post-title f-m" id="budget-tips">Money saving tips</h4>
-<div class="md-space-xs"></div>
+<div class="md-space-ms"></div>
 
 <ul class="ui-post-tips-list">
   <li class="ui-post-tips-item">
@@ -149,11 +149,8 @@ image:
       </li>
     </ul>
 </div>
-
-<div class="ui-post-expectations" id="related-articles">
-  <h3 class="ui-post-title">What can I expect from Italy?</h3>
-</div>
-
+<h3 class="ui-post-title" id="related-articles">What can I expect from Italy?</h3>
+<div class="md-space"></div>
 <p class="md-paragraph">Lorem ipsum proin gravida nibh <span class="md-text-accent">vel velit auctor</span> aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh <span class="md-underline">vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio.</span> Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue consequat elis. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, <span class="md-text-accent">nisi elit consequat ipsum, nec sagittis sem nibh id elit.</span> Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt.</p>
 <div class="md-space-ms"></div>
 

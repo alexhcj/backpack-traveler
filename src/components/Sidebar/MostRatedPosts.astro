@@ -20,12 +20,10 @@ const mostRatedPostList = posts
             mostRatedPostList.map(
                 ({ frontmatter: { slug, title, categories } }) => (
                     <li class="item">
-                        <h3>
-                            <a class="title" href={`/posts/${slug}`}>
-                                {title}
-                            </a>
+                        <h3 class="ui-post-title f-xs">
+                            <a href={`/posts/${slug}`}>{title}</a>
                         </h3>
-                        <ul class="categories">
+                        <ul class="ui-post-categories">
                             {categories.map((category) => (
                                 <li>
                                     <a
@@ -50,37 +48,22 @@ const mostRatedPostList = posts
         border: 1px solid var(--color-border);
     }
     .item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         padding: 27px 0 23px;
 
         &:not(:last-child) {
             border-bottom: 1px solid var(--color-border);
         }
     }
-    .title {
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 1.67em;
-        font-size: 12px;
-        font-family: var(--family-montserrat);
-        font-weight: var(--weight-medium);
-        color: var(--color-black);
-
-        &:hover {
-            color: var(--color-black-0);
-        }
-    }
-    .categories {
-        display: flex;
+    .ui-post-categories {
         justify-content: start;
-        align-items: center;
-        gap: 3px;
     }
     .ui-post-category {
         margin-left: 2px;
         font-size: 8px;
     }
-    .title,
     .ui-post-category {
         display: block;
     }
