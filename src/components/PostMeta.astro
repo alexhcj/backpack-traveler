@@ -42,7 +42,7 @@ const socialSvgs: IImageMetadata = {
                     <ul class="categories-list">
                         {categories.map((category) => (
                             <li class="category">
-                                <a class="category-link" href="/">
+                                <a class="category-link" href={`/category/${category}`}>
                                     {category}
                                 </a>
                             </li>

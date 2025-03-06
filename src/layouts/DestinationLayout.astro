@@ -15,15 +15,7 @@ interface Props {
 }
 
 const {
-    frontmatter: {
-        image,
-        title,
-        destination,
-        author,
-        socials,
-        pubDate,
-        categories,
-    },
+    frontmatter: { image, title, destination, author, socials, pubDate },
 } = Astro.props;
 
 const posts = Object.values(
@@ -33,8 +25,16 @@ const posts = Object.values(
 );
 
 const relatedDestinationList = posts.filter(
-    ({ frontmatter }) => frontmatter.destination === destination,
+    ({ frontmatter }) => frontmatter.country === destination,
 );
+
+const categoriesRelatedSet = [
+    ...new Set(
+        posts
+            .filter(({ frontmatter }) => frontmatter.country === destination)
+            .flatMap(({ frontmatter }) => frontmatter.categories),
+    ),
+];
 ---
 
 <BaseLayout title={title} type="short">
@@ -69,7 +69,7 @@ const relatedDestinationList = posts.filter(
                             author={author}
                             socials={socials ?? []}
                             pubDate={pubDate}
-                            categories={categories}
+                            categories={categoriesRelatedSet}
                             likesCount={0}
                             commentsCount={0}
                         />
