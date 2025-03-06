@@ -96,7 +96,6 @@ const nav: { icon: string; anchor: string; text: string }[] = [
     import { throttle } from "../../utils/utils";
 
     const postNavEl = document.getElementById("post-nav");
-    // TODO: fix offset elScrollPosition bug => randomnly offset values after refresh page 1165 || 1370, not stable
     const elScrollPosition = postNavEl?.offsetTop ?? 0;
 
     if (document.documentElement.scrollTop > elScrollPosition + 210) {
