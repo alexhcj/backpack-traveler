@@ -14,6 +14,7 @@ import TwitterSVG from "../../public/svg/twitter.svg";
 import FacebookSVG from "../../public/svg/facebook.svg";
 import PinterestSVG from "../../public/svg/pinterest.svg";
 import YoutubeSVG from "../../public/svg/youtube.svg";
+import StarSVG from "../../public/svg/star.svg";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -34,7 +35,7 @@ const destinationsList = uniqueDestinationsList.map((country) => {
 const navList = [
     { url: "/", text: "Home" },
     { url: "/pages", text: "Pages" },
-    { url: "/travel", text: "Travel" },
+    { url: "/categories", text: "Travel" },
     { url: "/", text: "Logo" },
     { url: "/blog", text: "Blog" },
     { url: "/shop", text: "Shop" },
@@ -128,6 +129,15 @@ interface ISocial {
                                         href={item.url}
                                     >
                                         {item.text}
+                                        {item.url === "/travel" && (
+                                            <Image
+                                                class="star-icon"
+                                                src={StarSVG}
+                                                width={11}
+                                                height={11}
+                                                alt="Star icon orange color"
+                                            />
+                                        )}
                                     </a>
                                 )}
                                 {item.url === "/pages" && (
@@ -329,6 +339,7 @@ interface ISocial {
     }
 
     .nav-link {
+        position: relative;
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-default);
         line-height: 23px;
@@ -341,6 +352,12 @@ interface ISocial {
 
         &.size-sm {
             font-size: 10px;
+        }
+
+        .star-icon {
+            position: absolute;
+            top: 0;
+            right: -6px;
         }
     }
 
