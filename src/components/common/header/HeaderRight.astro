@@ -49,20 +49,16 @@ interface ISocial {
     </ul>
     <div class="search">
         <span class="search-divider"></span>
-        <input
-            class="search-input"
-            id="search-input"
-            placeholder="Search..."
-            type="text"
-        />
-        <Image
-            class="search-magnifier"
-            id="search-magnifier"
-            src="/svg/magnifier.svg"
-            width={19}
-            height={20}
-            alt="Search for posts"
-        />
+        <input class="search-input" placeholder="Search..." type="text" />
+        <button class="search-button">
+            <Image
+                class="search-magnifier"
+                src="/svg/magnifier.svg"
+                width={19}
+                height={20}
+                alt="Search for posts"
+            />
+        </button>
     </div>
 </div>
 
@@ -121,6 +117,10 @@ interface ISocial {
         }
     }
 
+    .search-button {
+        display: flex;
+    }
+
     .search-magnifier {
         margin: 10px 7px;
         transform: scaleX(-1);
@@ -129,18 +129,39 @@ interface ISocial {
 </style>
 
 <script>
-    const searchIcon = document.getElementById("search-magnifier");
-    const searchInput = document.getElementById("search-input");
+    const button = document.querySelector<HTMLButtonElement>(".search-button");
+    const searchInput =
+        document.querySelector<HTMLInputElement>(".search-input");
 
-    searchIcon?.addEventListener("click", (e: any) => {
-        e.target?.id === "search-magnifier" &&
-            searchInput?.classList.add("active");
-    });
+    const handleSearchToggle = (e: MouseEvent) => {
+        searchInput?.classList.toggle("active");
+    };
 
-    document.addEventListener("click", (e: any) => {
-        if (e.target?.id === "search-input") return;
+    const handleOutsideClick = (e: MouseEvent) => {
+        if (!searchInput?.classList.contains("active")) return;
 
-        e.target?.id !== "search-magnifier" &&
+        const target = e.target as HTMLElement;
+        if (
+            !target.closest(".search-button") &&
+            !target.closest(".search-input")
+        ) {
+            searchInput.classList.remove("active");
+        }
+    };
+
+    const handleSearchClose = (e: KeyboardEvent) => {
+        if (e.key === "Escape" || e.key === "Esc") {
             searchInput?.classList.remove("active");
+        }
+    };
+
+    button?.addEventListener("click", handleSearchToggle);
+    document.addEventListener("click", handleOutsideClick);
+    document.addEventListener("keyup", handleSearchClose);
+
+    document.addEventListener("astro:before-unmount", () => {
+        button?.removeEventListener("click", handleSearchToggle);
+        document.removeEventListener("click", handleOutsideClick);
+        document.removeEventListener("keyup", handleSearchClose);
     });
 </script>
