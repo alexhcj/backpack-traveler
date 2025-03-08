@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: Top 5 Hiking Trails in British Columbia
 slug: top-5-hiking-trails-british-columbia
 pubDate: 2025-02-23

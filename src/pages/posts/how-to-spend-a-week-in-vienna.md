@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'How to spend a week in Vienna'
 slug: 'how-to-spend-a-week-in-vienna'
 pubDate: 2024-08-18

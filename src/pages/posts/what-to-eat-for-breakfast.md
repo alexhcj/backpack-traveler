@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'What to eat for breakfast'
 slug: 'what-to-eat-for-breakfast'
 pubDate: 2024-11-01

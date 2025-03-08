@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: A Guide for Budget Travel With Pets
 slug: a-guide-for-budget-travel-with-pets
 pubDate: 2024-07-14

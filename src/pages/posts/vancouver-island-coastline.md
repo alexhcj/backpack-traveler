@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: The Beautiful Coastline of Vancouver Island
 slug: vancouver-island-coastline
 pubDate: 2025-02-19

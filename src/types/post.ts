@@ -24,4 +24,8 @@ export interface Post {
     height: IMasonryHeights;
     description?: boolean;
   };
+  previewImage?: {
+    url: string;
+    alt: string;
+  };
 }

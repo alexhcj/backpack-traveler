@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'Venice city tour with river cruise'
 slug: 'venice-city-tour-with-river-cruise'
 pubDate: 2024-08-09

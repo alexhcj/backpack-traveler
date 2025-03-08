@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: The Cultural Taste of Montreal
 slug: montreal-cultural-capital
 pubDate: 2025-01-05

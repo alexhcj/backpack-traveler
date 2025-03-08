@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: Top Villages in Brazil You Should Visit
 slug: top-villages-in-brazil
 pubDate: 2025-02-25

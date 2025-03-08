@@ -12,6 +12,10 @@ author:
   name: 'Melissa Johanson'
   avatar: 'author/avatar.png'
 image:
-    url: 'posts/top-10-popular-sports-on-the-world.jpg'
-    alt: 'Big baloons in the sky'
+    url: 'posts/top-10-popular-sports-on-the-world/title.jpg'
+    alt: 'Big balloons in the sky'
+previewImage: {
+  url: 'posts/top-10-popular-sports-on-the-world/preview.jpg',
+  alt: 'Multiple big balloons in the sky'
+}
 ---

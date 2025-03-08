@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'The World’s Best Drinking'
 slug: 'the-world’s-best-drinking'
 pubDate: 2024-07-03

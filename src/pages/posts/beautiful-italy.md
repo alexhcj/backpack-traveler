@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'Beautiful Italy'
 slug: 'beautiful-italy'
 pubDate: 2024-08-13

@@ -2,7 +2,10 @@
 import type { Post } from "../types/post";
 
 import { Image } from "astro:assets";
+
 import BaseLayout from "./Layout.astro";
+import HeroHeader from "../components/common/header/HeroHeader.astro";
+import Sidebar from "../components/Sidebar/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
 import { EHeader } from "../types/header";
 
@@ -13,8 +16,10 @@ interface Props {
 const {
     frontmatter: {
         title,
+        slug,
         image,
         destination,
+        country,
         categories,
         author,
         socials,
@@ -23,74 +28,99 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} type={EHeader.TRANSPARENT}>
-    <Image
-        class="img"
-        src={`/${image.url}`}
-        alt={image.alt}
-        width="1920"
-        height="620"
-    />
+<BaseLayout title={title} type={EHeader.BASE}>
+    <HeroHeader type={EHeader.BASE_COMPACT} />
     <div class="container">
-        <article class="article">
-            <div class="post-header">
-                <a class="ui-post-destination" href="/">{destination}</a>
-                <h3 class="ui-post-title m-m f-l">{title}</h3>
-                <ul class="categories">
-                    {
-                        categories.map((category) => (
-                            <li class="category">
-                                <a
-                                    class="ui-post-category"
-                                    href={`/category/${category}`}
-                                >
-                                    {category}
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-            <div class="post-body">
-                <slot />
-            </div>
-            <div class="footer">
-                <PostMeta
-                    author={author}
-                    socials={socials ?? []}
-                    pubDate={pubDate}
-                    categories={categories}
-                    likesCount={0}
-                    commentsCount={0}
-                />
-            </div>
-        </article>
-        <!-- <div class="pagination">
+        <div class="row">
+            <div class="col-post">
+                <article class="article">
+                    <Image
+                        class="img"
+                        src={`/${image.url}`}
+                        alt={image.alt}
+                        width="957"
+                        height="638"
+                    />
+                    <div class="post-header">
+                        <a
+                            class="ui-post-destination"
+                            href={`/destinations/${country.toLowerCase().replace(" ", "-")}`}
+                            >{country}</a
+                        >
+                        <h3 class="ui-post-title m-m">{title}</h3>
+                        <ul class="categories">
+                            {
+                                categories.map((category) => (
+                                    <li>
+                                        <a
+                                            class="ui-post-category"
+                                            href={`/category/${category}`}
+                                        >
+                                            {category}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div class="post-body">
+                        <slot />
+                    </div>
+                    <div class="footer">
+                        <PostMeta
+                            author={author}
+                            socials={socials ?? []}
+                            pubDate={pubDate}
+                            categories={categories}
+                            likesCount={0}
+                            commentsCount={0}
+                        />
+                    </div>
+                </article>
+                <!-- <div class="pagination">
                     <div class="prev-post">Prev</div>
                     <div class="next-post">Next</div>
                 </div> -->
+            </div>
+            <div class="col-aside">
+                <Sidebar
+                    destination={destination}
+                    slug={slug}
+                    showAuthor
+                    showWorldMap
+                    showInstagram
+                    showSocials
+                    showPromo
+                    showLatestPosts
+                    showNewsletter
+                    showCategories
+                />
+            </div>
+        </div>
     </div>
 </BaseLayout>
 
 <style>
-    .container {
-        margin-top: -190px;
+    .row {
+        display: flex;
+        gap: 70px;
+    }
+    .col-post {
+        width: 75%;
+    }
+    .col-aside {
+        width: 25%;
     }
     .article {
         margin-bottom: 30px;
-        padding: 47px 130px;
-        background-color: var(--color-white);
     }
     .img {
-        position: relative;
         max-height: 638px;
         margin-bottom: 40px;
         object-fit: cover;
-        z-index: var(--z-index--1);
     }
     .post-header {
         text-align: center;
-        margin-bottom: 16px;
     }
     .categories {
         display: flex;

@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: Exploring the natural wonders
 slug: banff-national-park-exploration
 pubDate: 2025-02-23

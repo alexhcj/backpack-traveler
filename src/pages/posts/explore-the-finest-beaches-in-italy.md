@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'Explore the Finest Beaches in Italy'
 slug: 'explore-the-finest-beaches-in-italy'
 pubDate: 2024-08-13

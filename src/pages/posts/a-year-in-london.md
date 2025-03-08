@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/PostLayout.astro'
+layout: '../../layouts/PostWithSidebarLayout.astro'
 title: 'A year in London'
 slug: 'a-year-in-london'
 pubDate: 2023-09-06

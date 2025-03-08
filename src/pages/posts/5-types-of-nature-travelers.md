@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: ../../layouts/PostWithSidebarLayout.astro
 title: 5 Types of nature travelers 😍
 slug: 5-types-of-nature-travelers
 pubDate: 2024-04-23
