@@ -9,6 +9,7 @@ import BaseLayout from "./Layout.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
 import DestinationSlider from "../components/DestinationSlider/DestinationSlider.astro";
+import { EHeader } from "../types/header";
 
 interface Props {
     frontmatter: Destination;
@@ -37,7 +38,7 @@ const categoriesRelatedSet = [
 ];
 ---
 
-<BaseLayout title={title} type="short">
+<BaseLayout title={title} type={EHeader.TRANSPARENT}>
     {
         relatedDestinationList.length >= 3 ? (
             <DestinationSlider posts={relatedDestinationList} />

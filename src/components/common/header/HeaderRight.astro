@@ -1,0 +1,146 @@
+---
+import type { EHeader } from "../../../types/header";
+
+import { Image } from "astro:assets";
+
+import InstagramSVG from "../../../../public/svg/instagram.svg";
+import TwitterSVG from "../../../../public/svg/twitter.svg";
+import FacebookSVG from "../../../../public/svg/facebook.svg";
+import PinterestSVG from "../../../../public/svg/pinterest.svg";
+import YoutubeSVG from "../../../../public/svg/youtube.svg";
+
+interface Props {
+    type: EHeader;
+}
+
+const { type } = Astro.props;
+
+const socialsList = [
+    { url: "/", icon: InstagramSVG, alt: "Instagram link" },
+    { url: "/", icon: TwitterSVG, alt: "Twitter link" },
+    { url: "/", icon: FacebookSVG, alt: "Facebook link" },
+    { url: "/", icon: PinterestSVG, alt: "Pinterest link" },
+    { url: "/", icon: YoutubeSVG, alt: "Youtube link" },
+];
+
+interface ISocial {
+    url: string;
+    icon: ImageMetadata;
+    alt: string;
+}
+---
+
+<div class="right">
+    <ul class="socials">
+        {
+            socialsList.map((social: ISocial) => (
+                <li>
+                    <a href={social.url}>
+                        <Image
+                            src={social.icon}
+                            width={13}
+                            height={13}
+                            alt={social.alt}
+                        />
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+    <div class="search">
+        <span class="search-divider"></span>
+        <input
+            class="search-input"
+            id="search-input"
+            placeholder="Search..."
+            type="text"
+        />
+        <Image
+            class="search-magnifier"
+            id="search-magnifier"
+            src="/svg/magnifier.svg"
+            width={19}
+            height={20}
+            alt="Search for posts"
+        />
+    </div>
+</div>
+
+<style>
+    .right {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: end;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .socials {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 13px;
+    }
+
+    .search {
+        position: relative;
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+    }
+
+    .search-divider {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        content: "";
+        width: 1px;
+        height: 15px;
+        background-color: var(--color-grey-2);
+        transform: translateY(-50%);
+    }
+
+    .search-input {
+        padding-left: 7px;
+        max-width: 164px;
+        width: 0;
+        line-height: 43px;
+        font-size: 14px;
+        color: var(--color-grey-3);
+        font-family: var(--family-lora);
+        font-weight: 400;
+        font-style: italic;
+        transition: var(--transition-input);
+
+        &::placeholder {
+            color: var(--color-grey-3);
+            font-family: var(--family-lora);
+        }
+
+        &.active {
+            width: 100%;
+        }
+    }
+
+    .search-magnifier {
+        margin: 10px 7px;
+        transform: scaleX(-1);
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    const searchIcon = document.getElementById("search-magnifier");
+    const searchInput = document.getElementById("search-input");
+
+    searchIcon?.addEventListener("click", (e: any) => {
+        e.target?.id === "search-magnifier" &&
+            searchInput?.classList.add("active");
+    });
+
+    document.addEventListener("click", (e: any) => {
+        if (e.target?.id === "search-input") return;
+
+        e.target?.id !== "search-magnifier" &&
+            searchInput?.classList.remove("active");
+    });
+</script>

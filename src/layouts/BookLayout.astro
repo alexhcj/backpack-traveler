@@ -1,5 +1,10 @@
 ---
+import { EHeader } from "../types/header";
+
 import BaseLayout from "./Layout.astro";
 ---
 
-<BaseLayout title={category || "book desc. TOTO replace"} headerType="short" />
+<BaseLayout
+    title={category || "book desc. TOTO replace"}
+    type={EHeader.TRANSPARENT}
+/>

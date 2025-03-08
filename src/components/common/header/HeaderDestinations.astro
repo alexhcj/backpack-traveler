@@ -1,0 +1,96 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../../types/post";
+import type { EHeader } from "../../../types/header";
+
+import { Image } from "astro:assets";
+
+import { getCountryShortcut } from "../../../utils/utils";
+
+interface Props {
+    type: EHeader;
+}
+
+const { type } = Astro.props;
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../../../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+const destinationsSet = [
+    ...new Set(posts.map((post) => post.frontmatter.country)),
+];
+const destinations = destinationsSet.map((country) => {
+    return {
+        url: country.toLowerCase().replace(" ", "-"),
+        text: getCountryShortcut(country),
+    };
+});
+---
+
+<div class="destinations">
+    {
+        type === "transparent" ? (
+            <a href="/">
+                <Image
+                    src="/images/logo-short-dark.webp"
+                    width={209}
+                    height={45}
+                    alt="Logo image"
+                />
+            </a>
+        ) : (
+        <div class="logo">
+            <Image
+                src="/images/earth-marker.png"
+                width={24}
+                height={20}
+                alt="Globe as planet with marker"
+            />
+            <span>Destinations</span>
+        </div>
+        <ul class="ui-popup-list">
+            {
+                destinations.map(({url, text}) => (
+                    <li>
+                        <a class="ui-popup-link" href={`/destinations/${url}`}>
+                            {text}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+        )
+    }
+
+</div>
+
+<style>
+    .destinations {
+        position: relative;
+        display: grid;
+        justify-items: start;
+        align-items: center;
+        height: 100%;
+
+        &:hover .ui-popup-list {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    .logo {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        font-weight: var(--weight-medium);
+        cursor: pointer;
+    }
+    .ui-popup-link {
+        padding: 1px 21px 1px 22px;
+    }
+</style>

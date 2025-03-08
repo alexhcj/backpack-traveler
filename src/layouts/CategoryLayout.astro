@@ -12,9 +12,10 @@ import BaseLayout from "./Layout.astro";
 import PostsCategoryPreview from "../components/PostsCategoryPreview/PostsCategoryPreview.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
+import { EHeader } from "../types/header";
 ---
 
-<BaseLayout title={category || "post category"} type="short">
+<BaseLayout title={category || "post category"} type={EHeader.TRANSPARENT}>
     <Breadcrumbs secondLvl={category || "category"} />
     <section class="section">
         <div class="container">

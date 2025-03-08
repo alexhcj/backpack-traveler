@@ -1,0 +1,184 @@
+---
+import type { EHeader } from "../../../types/header";
+
+import { Image } from "astro:assets";
+
+import StarSVG from "../../../../public/svg/star.svg";
+
+interface Props {
+    type: EHeader;
+}
+
+interface INavList {
+    url: string;
+    type: "link" | "submenu" | "logo";
+    text: string;
+}
+
+const { type } = Astro.props;
+
+const navList: INavList[] = [
+    { url: "/", text: "Home", type: "link" },
+    { url: "/pages", text: "Pages", type: "submenu" },
+    { url: "/travel", text: "Travel", type: "submenu" },
+    { url: "/", text: "Logo", type: "logo" },
+    { url: "/blog", text: "Blog", type: "link" },
+    { url: "/shop", text: "Shop", type: "link" },
+];
+const pagesSubList = [
+    { url: "who-we-are", text: "Who we are" },
+    { url: "about-me", text: "About me" },
+    { url: "destination-map", text: "Destination map" },
+    { url: "get-in-touch", text: "Get in touch" },
+    { url: "faq", text: "FAQ page" },
+];
+const travelSubList = [
+    { url: "/list", text: "List" },
+    { url: "/map", text: "Map" },
+    { url: "/categories", text: "Categories" },
+    { url: "/gallery", text: "Gallery" },
+];
+---
+
+<nav class="nav">
+    <ul class="nav-list">
+        {
+            navList.map((item, index) => (
+                <>
+                    {type === "centered" &&
+                        index === 3 &&
+                        item.type === "logo" && (
+                            <li class="nav-item">
+                                <Image
+                                    src="/images/logo-short-dark.webp"
+                                    width={256}
+                                    height={55}
+                                    alt="Backpack Traveler logo"
+                                />
+                            </li>
+                        )}
+                    {index !== 3 && (
+                        <li class="nav-item">
+                            <a
+                                class:list={[
+                                    "nav-link",
+                                    {
+                                        link: item.type === "link",
+                                        submenu: item.type === "submenu",
+                                        "size-sm": type === "transparent",
+                                    },
+                                ]}
+                                href={item.url}
+                            >
+                                {item.text}
+                                {item.url === "/travel" && (
+                                    <Image
+                                        class="star-icon"
+                                        src={StarSVG}
+                                        width={11}
+                                        height={11}
+                                        alt="Star icon orange color"
+                                    />
+                                )}
+                            </a>
+                            {item.url === "/pages" && (
+                                <ul class="ui-popup-list">
+                                    {pagesSubList.map((item) => (
+                                        <li class="ui-popup-item">
+                                            <a
+                                                class="ui-popup-link"
+                                                href={`destination-map/${item.url}`}
+                                            >
+                                                {item.text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                            {item.url === "/travel" && (
+                                <ul class="ui-popup-list">
+                                    {travelSubList.map((item) => (
+                                        <li class="ui-popup-item">
+                                            <a
+                                                class="ui-popup-link"
+                                                href={item.url}
+                                            >
+                                                {item.text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    )}
+                </>
+            ))
+        }
+    </ul>
+</nav>
+
+<style>
+    .nav {
+        height: 100%;
+    }
+
+    .nav-list {
+        display: grid;
+        grid-template: auto / repeat(5, min-content);
+        justify-self: center;
+        height: 100%;
+    }
+
+    .nav-item {
+        position: relative;
+        display: grid;
+        align-items: center;
+        padding: 0 14px;
+        height: 100%;
+
+        &:has(.ui-popup-list) {
+            .ui-popup-list {
+                min-width: 210px;
+            }
+        }
+
+        &:hover {
+            .ui-popup-list {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    .nav-link {
+        position: relative;
+        text-transform: uppercase;
+        padding: 3px 0;
+        letter-spacing: var(--letter-spacing-default);
+        line-height: 23px;
+        font-size: 11px;
+        font-weight: var(--weight-medium);
+
+        &.link {
+            cursor: pointer;
+        }
+
+        &.submenu {
+            cursor: default;
+        }
+
+        &:hover {
+            color: var(--color-grey);
+        }
+
+        &.size-sm {
+            font-size: 10px;
+        }
+
+        .star-icon {
+            position: absolute;
+            top: 3px;
+            right: -6px;
+        }
+    }
+</style>

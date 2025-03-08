@@ -6,6 +6,7 @@ import BaseLayout from "../layouts/Layout.astro";
 import HeroBanner from "../components/HeroBanner.astro";
 import CategoriesList from "../components/CategoriesList.astro";
 import TravelGuides from "../components/TravelGuides.astro";
+import { EHeader } from "../types/header";
 
 import HeroImg from "../../public/images/hero-banner.jpg";
 
@@ -54,7 +55,7 @@ const booksList: string[] = [
 ];
 ---
 
-<BaseLayout title="Backpack Traveler | Categories list" type="long">
+<BaseLayout title="Backpack Traveler | Categories list" type={EHeader.BASE}>
     <HeroBanner title="Categories" image={image} />
     <section class="section">
         <div class="container">

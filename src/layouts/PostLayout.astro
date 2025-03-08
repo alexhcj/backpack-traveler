@@ -4,9 +4,10 @@ import type { Post } from "../types/post";
 import { Image } from "astro:assets";
 
 import BaseLayout from "./Layout.astro";
-import HeroHeader from "../components/HeroHeader.astro";
+import HeroHeader from "../components/common/header/HeroHeader.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
+import { EHeader } from "../types/header";
 
 interface Props {
     frontmatter: Post;
@@ -27,7 +28,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} type="long">
+<BaseLayout title={title} type={EHeader.BASE}>
     <HeroHeader type="home" />
     <div class="container">
         <div class="row">

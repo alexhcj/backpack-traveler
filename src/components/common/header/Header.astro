@@ -1,0 +1,55 @@
+---
+import type { EHeader } from "../../../types/header";
+
+import HeaderDestination from "./HeaderDestinations.astro";
+import HeaderNav from "./HeaderNav.astro";
+import HeaderRight from "./HeaderRight.astro";
+
+interface Props {
+    type: EHeader;
+}
+
+const { type } = Astro.props;
+---
+
+<header
+    class:list={[
+        "header",
+        { base: type === "base" },
+        { "base-compact": type === "base-compact" },
+        { transparent: type === "transparent" },
+        { centered: type === "centered" },
+    ]}
+>
+    <div class:list={["container", { xl: type === "transparent" }]}>
+        <div class="box">
+            <HeaderDestination type={type} />
+            <HeaderNav type={type} />
+            <HeaderRight type={type} />
+        </div>
+    </div>
+
+    <style>
+        .header {
+            background-color: var(--color-primary);
+            height: 60px;
+
+            &.transparent {
+                background-color: var(--color-white);
+                height: 95px;
+            }
+
+            &.centered {
+                background-color: var(--color-white);
+                height: 100px;
+            }
+        }
+
+        .box {
+            display: grid;
+            grid-template: auto / repeat(3, 1fr);
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+</header>

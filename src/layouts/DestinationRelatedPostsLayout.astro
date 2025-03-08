@@ -5,6 +5,7 @@ import type { Post } from "../types/post";
 import BaseLayout from "./Layout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import PostsListMasonry from "../components/PostsListMasonry.astro";
+import { EHeader } from "../types/header";
 
 const { destination } = Astro.params;
 
@@ -29,7 +30,7 @@ const postsList = posts
 
 <BaseLayout
     title={"Destinations archive list | " + normalizedDestination}
-    type="short"
+    type={EHeader.TRANSPARENT}
 >
     <Breadcrumbs />
     <section class="section">

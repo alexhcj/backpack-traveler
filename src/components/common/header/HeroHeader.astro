@@ -1,0 +1,138 @@
+---
+import type { EHeader } from "../../../types/header";
+
+import { Image } from "astro:assets";
+
+import CupHeart from "../../../../public/images/cup-heart.png";
+import TodoList from "../../../../public/images/todo-list.png";
+import LogoDark from "../../../../public/images/logo-dark.png";
+import MapMarker from "../../../../public/images/map-marker.png";
+import LoveMessage from "../../../../public/images/love-message.png";
+
+interface Props {
+    type: EHeader;
+}
+
+interface INavList {
+    url: string;
+    type: "icon" | "logo";
+    text?: string;
+    img: ImageMetadata;
+    alt: string;
+}
+
+const { type } = Astro.props;
+
+const navList: INavList[] = [
+    {
+        url: "/blog",
+        type: "icon",
+        text: "Get inspired",
+        img: CupHeart,
+        alt: "Hot cup with heart",
+    },
+    {
+        url: "/shop",
+        type: "icon",
+        text: "My books",
+        img: TodoList,
+        alt: "Note with todo list",
+    },
+    { url: "/", type: "logo", img: LogoDark, alt: "Backpack Traveler Logo" },
+    {
+        url: "/blog",
+        type: "icon",
+        text: "Travel guides",
+        img: MapMarker,
+        alt: "Map with marker",
+    },
+    {
+        url: "/about",
+        type: "icon",
+        text: "About me",
+        img: LoveMessage,
+        alt: "Message with love text",
+    },
+];
+---
+
+<div class="hero-header">
+    <ul class="nav-list">
+        {
+            type === "base-compact" ? (
+                <li class="nav-item" data-type="logo">
+                    <a class="nav-link" href={navList[2].url}>
+                        <Image
+                            src={navList[2].img}
+                            width={363}
+                            height={92}
+                            alt={navList[2].alt}
+                        />
+                    </a>
+                    <span class="text">{navList[2].text}</span>
+                </li>
+            ) : (
+                navList.map((item) => (
+                    <li class="nav-item" data-type={item.type}>
+                        <a class="nav-link" href={item.url}>
+                            <Image
+                                src={item.img}
+                                width={item.type === "icon" ? 62 : 363}
+                                height={item.type === "icon" ? 59 : 92}
+                                alt={item.alt}
+                            />
+                        </a>
+                        <span class="text">{item.text}</span>
+                    </li>
+                ))
+            )
+        }
+    </ul>
+</div>
+
+<style>
+    .hero-header {
+        display: grid;
+        align-items: center;
+        height: 240px;
+    }
+    .nav-list {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: center;
+    }
+    .nav-item {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        margin: 25px;
+
+        &[data-type="icon"] {
+            .nav-link {
+                height: 59px;
+            }
+
+            &:hover > .nav-link {
+                transform: translateY(-6px);
+            }
+        }
+    }
+    .nav-item[data-type="logo"] {
+        margin: 0 35px;
+        min-width: 530px;
+
+        > span {
+            display: none;
+            visibility: hidden;
+        }
+    }
+    .nav-link {
+        text-align: center;
+    }
+    .text {
+        text-transform: capitalize;
+        margin-top: 3px;
+        color: var(--color-dark-2);
+        font-family: var(--family-lora);
+    }
+</style>

@@ -4,6 +4,7 @@ import type { Post } from "../types/post";
 import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
 import PostMeta from "../components/PostMeta.astro";
+import { EHeader } from "../types/header";
 
 interface Props {
     frontmatter: Post;
@@ -22,7 +23,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} type="full">
+<BaseLayout title={title} type={EHeader.TRANSPARENT}>
     <Image
         class="img"
         src={`/${image.url}`}
