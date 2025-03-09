@@ -284,6 +284,7 @@
 }
 /* ui post */
 .ui-post-destination {
+    text-transform: capitalize;
     line-height: 1em;
     font-size: 44px;
     font-family: var(--family-epic-ride);
