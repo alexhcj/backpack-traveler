@@ -83,8 +83,6 @@ const categories = [
 
     function handleScroll() {
         const currentScroll = document.documentElement.scrollTop;
-        console.log("categoriesOffset: " + categoriesOffset);
-        console.log("currentScroll: " + currentScroll);
 
         currentScroll > categoriesOffset
             ? categories?.classList.add("sticky")
