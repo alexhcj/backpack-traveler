@@ -54,14 +54,12 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 
 <style>
     .post-nav {
-        margin-top: 0;
-        transition: var(--transition-default-3);
+        max-width: inherit;
+        width: inherit;
 
         &.sticky {
-            position: fixed;
-            top: 0;
-            width: 300px;
-            margin-top: 10px;
+            position: sticky;
+            top: 10px;
         }
     }
     .nav {
@@ -108,5 +106,10 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 
     handleScroll();
 
-    document.addEventListener("scroll", throttle(handleScroll, 80));
+    document.addEventListener("scroll", throttle(handleScroll, 50));
+    // document.addEventListener("scroll", handleScroll);
+
+    document.addEventListener("astro:before-unmount", () => {
+        document.removeEventListener("scroll", handleScroll);
+    });
 </script>

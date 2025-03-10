@@ -13,7 +13,7 @@ const categories = [
 ];
 ---
 
-<div class="categories">
+<div class="categories" id="categories">
     <div class="ui-sidebar-header-box">
         <h6 class="ui-sidebar-title">Categories</h6>
         <span class="ui-sidebar-line"></span>
@@ -34,6 +34,13 @@ const categories = [
 <style>
     .categories {
         text-align: center;
+        max-width: inherit;
+        width: inherit;
+
+        &.sticky {
+            position: sticky;
+            top: 10px;
+        }
     }
     .list {
         text-align: start;
@@ -67,3 +74,29 @@ const categories = [
         }
     }
 </style>
+
+<script>
+    import { throttle } from "../../utils/utils";
+
+    const categories = document.getElementById("categories") as HTMLElement;
+    const categoriesOffset = categories.offsetTop;
+
+    function handleScroll() {
+        const currentScroll = document.documentElement.scrollTop;
+        console.log("categoriesOffset: " + categoriesOffset);
+        console.log("currentScroll: " + currentScroll);
+
+        currentScroll > categoriesOffset
+            ? categories?.classList.add("sticky")
+            : categories?.classList.remove("sticky");
+    }
+
+    handleScroll();
+
+    document.addEventListener("scroll", throttle(handleScroll, 50));
+    // document.addEventListener("scroll", handleScroll);
+
+    document.addEventListener("astro:before-unmount", () => {
+        document.removeEventListener("scroll", handleScroll);
+    });
+</script>
