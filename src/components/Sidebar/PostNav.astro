@@ -31,7 +31,7 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 ];
 ---
 
-<div id="post-nav">
+<div class="post-nav">
     <ul class="nav">
         {
             nav.map((item) => (
@@ -53,7 +53,7 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 </div>
 
 <style>
-    #post-nav {
+    .post-nav {
         margin-top: 0;
         transition: var(--transition-default-3);
 
@@ -95,20 +95,18 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 <script>
     import { throttle } from "../../utils/utils";
 
-    const postNavEl = document.getElementById("post-nav");
-    const elScrollPosition = postNavEl?.offsetTop ?? 0;
-
-    if (document.documentElement.scrollTop > elScrollPosition + 210) {
-        postNavEl?.classList.add("sticky");
-    }
+    const postNav = document.querySelector(".post-nav") as HTMLElement;
+    const postNavOffset = postNav.offsetTop;
 
     function handleScroll() {
         const currentScroll = document.documentElement.scrollTop;
 
-        currentScroll > elScrollPosition + 210
-            ? postNavEl?.classList.add("sticky")
-            : postNavEl?.classList.remove("sticky");
+        currentScroll > postNavOffset
+            ? postNav?.classList.add("sticky")
+            : postNav?.classList.remove("sticky");
     }
 
-    window.addEventListener("scroll", throttle(handleScroll, 80));
+    handleScroll();
+
+    document.addEventListener("scroll", throttle(handleScroll, 80));
 </script>
