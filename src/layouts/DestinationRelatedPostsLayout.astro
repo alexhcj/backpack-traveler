@@ -9,6 +9,10 @@ import { EHeader } from "../types/header";
 
 const { destination } = Astro.params;
 
+if (!destination) {
+    Astro.redirect("/not-found");
+}
+
 const normalizedDestination = destination!
     .split("-")
     .map((word) => word[0].toUpperCase() + word.slice(1))

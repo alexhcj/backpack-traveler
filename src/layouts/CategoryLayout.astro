@@ -5,8 +5,12 @@ interface Props {
     category: ECategory;
 }
 
-const { category } = Astro.params;
+const category = Astro.params.category ?? "Backpack Traveler Category";
 const { category: categoryProps } = Astro.props;
+
+if (!category || !categoryProps) {
+    Astro.redirect("/not-found");
+}
 
 import BaseLayout from "./Layout.astro";
 import PostsCategoryPreview from "../components/PostsCategoryPreview/PostsCategoryPreview.astro";
@@ -15,8 +19,8 @@ import Sidebar from "../components/Sidebar/Sidebar.astro";
 import { EHeader } from "../types/header";
 ---
 
-<BaseLayout title={category || "post category"} type={EHeader.TRANSPARENT}>
-    <Breadcrumbs secondLvl={category || "category"} />
+<BaseLayout title={category} type={EHeader.TRANSPARENT}>
+    <Breadcrumbs />
     <section class="section">
         <div class="container">
             <div class="row">
