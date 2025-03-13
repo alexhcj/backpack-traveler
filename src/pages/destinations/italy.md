@@ -110,7 +110,7 @@ image:
     <ul class="ui-post-guides-list">
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/almost-fearless">
-          <image class="ui-post-guides-list-item-image" src="/books/almost-fearless.png" alt="Almost fearless" />
+          <img class="ui-post-guides-list-item-image" src="/books/almost-fearless.png" alt="Almost fearless" />
         </a>
         <div class="ui-post-guides-list-item-sell">
           Buy for
@@ -119,7 +119,7 @@ image:
       </li>
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/501-places">
-          <image class="ui-post-guides-list-item-image" src="/books/501-places.webp" alt="501 places" />
+          <img class="ui-post-guides-list-item-image" src="/books/501-places.webp" alt="501 places" />
           <span class="ui-post-guides-list-item-tag">Sale</span>
         </a>
         <div class="ui-post-guides-list-item-sell">
@@ -130,7 +130,7 @@ image:
       </li>
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/new-york">
-          <image class="ui-post-guides-list-item-image" src="/books/new-york.webp" alt="New York" />
+          <img class="ui-post-guides-list-item-image" src="/books/new-york.webp" alt="New York" />
           <span class="ui-post-guides-list-item-tag">New</span>
         </a>
         <div class="ui-post-guides-list-item-sell">
@@ -140,7 +140,7 @@ image:
       </li>
       <li class="ui-post-guides-list-item">
         <a class="ui-post-guides-list-item-link" href="/books/out-to-africa-life-cruiser">
-          <image class="ui-post-guides-list-item-image" src="/books/out-to-africa-life-cruiser.webp" alt="Out to Africa life cruiser" />
+          <img class="ui-post-guides-list-item-image" src="/books/out-to-africa-life-cruiser.webp" alt="Out to Africa life cruiser" />
         </a>
         <div class="ui-post-guides-list-item-sell">
           Buy for
@@ -157,7 +157,7 @@ image:
 <ul class="ui-post-related-posts">
   <li class="ui-post-related-posts-item">
     <a class="ui-post-related-posts-item-link" href="/posts/how-to-spend-a-week-in-vienna">
-      <image class="ui-post-related-posts-image" src="/posts/how-to-spend-a-week-in-vienna.jpg" alt="Hat, glasses & photos on bed" />
+      <img class="ui-post-related-posts-image" src="/posts/how-to-spend-a-week-in-vienna.jpg" alt="Hat, glasses & photos on bed" />
     </a>
     <a class="ui-post-related-posts-item-link" href="/posts/how-to-spend-a-week-in-vienna">
       <h4 class="ui-post-title f-s">How to spend a week in Vienna</h4>
@@ -165,7 +165,7 @@ image:
   </li>
   <li class="ui-post-related-posts-item">
     <a class="ui-post-related-posts-item-link" href="/posts/the-15-best-things-to-do-in-dublin">
-      <image class="ui-post-related-posts-image" src="/posts/the-15-best-things-to-do-in-dublin.jpg" alt="Smiling girl with beige bandana lean on concrete ledge" />
+      <img class="ui-post-related-posts-image" src="/posts/the-15-best-things-to-do-in-dublin.jpg" alt="Smiling girl with beige bandana lean on concrete ledge" />
     </a>
     <a class="ui-post-related-posts-item-link" href="/posts/the-15-best-things-to-do-in-dublin">
       <h4 class="ui-post-title f-s">The 15 best Things to Do in Dublin</h4>
@@ -173,7 +173,7 @@ image:
   </li>
   <li class="ui-post-related-posts-item">
     <a class="ui-post-related-posts-item-link" href="/posts/explore-the-finest-beaches-in-italy">
-      <image class="ui-post-related-posts-image" src="/posts/explore-the-finest-beaches-in-italy.jpg" alt="Smiling girl in sun glasses on the beach" />
+      <img class="ui-post-related-posts-image" src="/posts/explore-the-finest-beaches-in-italy.jpg" alt="Smiling girl in sun glasses on the beach" />
     </a>
     <a class="ui-post-related-posts-item-link" href="/posts/explore-the-finest-beaches-in-italy">
       <h4 class="ui-post-title f-s">Explore the Finest Beaches in Italy</h4>
