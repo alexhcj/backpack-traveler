@@ -45,20 +45,34 @@ const travelSubList = [
         {
             navList.map((item, index) => (
                 <>
-                    {type === "centered" &&
-                        index === 3 &&
-                        item.type === "logo" && (
-                            <li class="nav-item">
+                    {type === "centered" && item.type === "logo" && (
+                        <li class="nav-item">
+                            <a
+                                class:list={[
+                                    "nav-link",
+                                    { logo: item.type === "logo" },
+                                ]}
+                                href="/"
+                            >
                                 <Image
                                     src="/images/logo-short-dark.webp"
                                     width={256}
                                     height={55}
                                     alt="Backpack Traveler logo"
                                 />
-                            </li>
-                        )}
+                            </a>
+                        </li>
+                    )}
                     {index !== 3 && (
-                        <li class="nav-item">
+                        <li
+                            class:list={[
+                                "nav-item",
+                                {
+                                    "home-none":
+                                        index === 0 && type === "centered",
+                                },
+                            ]}
+                        >
                             <a
                                 class:list={[
                                     "nav-link",
@@ -142,6 +156,11 @@ const travelSubList = [
             }
         }
 
+        &.home-none {
+            display: none;
+            visibility: hidden;
+        }
+
         &:hover {
             .ui-popup-list {
                 opacity: 1;
@@ -165,6 +184,11 @@ const travelSubList = [
 
         &.submenu {
             cursor: default;
+        }
+
+        &.logo {
+            width: 256px;
+            height: 55px;
         }
 
         &:hover {

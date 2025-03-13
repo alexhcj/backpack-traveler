@@ -25,7 +25,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} type={EHeader.TRANSPARENT}>
+<BaseLayout title={title} type={EHeader.CENTERED}>
     <Image
         class="img h-100"
         src={`/${previewImage?.url ?? image.url}`}
@@ -85,8 +85,7 @@ const {
     }
     .img {
         position: relative;
-        max-height: 638px;
-        margin-bottom: 40px;
+        height: 620px;
         z-index: var(--z-index--1);
     }
     .post-header {

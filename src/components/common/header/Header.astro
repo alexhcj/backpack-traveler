@@ -36,20 +36,52 @@ const { type } = Astro.props;
 
             &.transparent {
                 background-color: var(--color-white);
-                height: 95px;
+                height: 100px;
             }
 
             &.centered {
                 background-color: var(--color-white);
                 height: 100px;
             }
+
+            &.sticky {
+                position: sticky;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-white);
+                border-bottom: 1px solid var(--color-border-2);
+                z-index: var(--z-index-10);
+            }
         }
 
         .box {
             display: grid;
-            grid-template: auto / repeat(3, 1fr);
+            grid-template: auto / 350px 1fr 350px;
             align-items: center;
             height: 100%;
         }
     </style>
 </header>
+
+<script>
+    import { throttle } from "../../../utils/utils";
+
+    const header = document.querySelector("header") as HTMLElement;
+
+    function handleScroll() {
+        const currentScroll = document.documentElement.scrollTop;
+        currentScroll > 200
+            ? header?.classList.add("sticky")
+            : header?.classList.remove("sticky");
+    }
+
+    handleScroll();
+
+    document.addEventListener("scroll", throttle(handleScroll, 50));
+    // document.addEventListener("scroll", handleScroll);
+
+    document.addEventListener("astro:before-unmount", () => {
+        document.removeEventListener("scroll", handleScroll);
+    });
+</script>
