@@ -1,62 +1,65 @@
 ---
-layout: '../../layouts/PostWithSidebarLayout.astro'
-title: 'A year in London'
-slug: 'a-year-in-london'
+layout: ../../layouts/PostWithSidebarLayout.astro
+title: A year in London
+slug: a-year-in-london
 pubDate: 2023-09-06
-country: 'United Kingdom'
-destination: 'London'
+country: United Kingdom
+destination: London
 categories: [explore, adventure]
-description: 'Some post description'
+description: Some post description
 likesCount: 1
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
-  {social: 'facebook', url: '/'},
-  {social: 'pinterest', url: '/'},
-  {social: 'twitter', url: '/'},
+  {social: facebook, url: /},
+  {social: pinterest, url: /},
+  {social: twitter, url: /},
 ]
 image:
-    url: 'posts/a-year-in-london/title.jpg'
-    alt: 'London from bird view'
+    url: posts/a-year-in-london/title.jpg
+    alt: London from bird view
 ---
 
-<p class="md-paragraph">
-<span class="md-first-letter">L</span>
-  orem ipsum dolor sit amet, adhuc iriure dissentias est in, est ne diam graece tincidunt. Sit et liber minimum tacimates, sea no doctus fastidii. <span class="md-underline">An molestiae definiebas mel. Quo everti vituperata et, quo cu omnis maiorum.</span> At soluta fierenti laboramus eum.Nam at dicant deterruisset. Nam at nulla choro denique, cum quando definitionem. Sea te nisl splendide, odio timeam an vim. Quas brute aliquam id per, et natum vocent eripuit sea. No mea feugiat nusquam ocurreret usu ad alter dicant. <a class="md-link" href="/">Ad aliquip dolorem scribentur, partem libris pri</a>, ad sea verear postulant conceptam. Sed appellantur interpretaris cu, meis possit melius ut sed. Ex suas definiebas est, id his dicunt torquatos. Id euismod mentitum dissentiet duo, aeterno eripuit. Comprehensam, principes dissentiet est id. Primis eripuit ei vis, ne vis nibh delenit electram duo. At pri elitr utinam tempor, purto facilis vim ut.
-</p>
 <div class="md-space"></div>
-
 <p class="md-paragraph">
-  Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Per eu unum persius, mei tantas postea in. Te his labores singulis, eum ei urbanitas adversarium. Ut quo numquam honestatis, qui populo percipit intellegat ea. Pri laudem tractatos hendrerit an.
+  <span class="md-first-letter">A</span> year in London changed the way I see the world. When I first arrived, the city felt like a whirlwind—its history whispered through the architecture, its diversity reflected in the faces around me. The iconic red buses, the hum of the Underground, and the ever-present drizzle became the backdrop of my daily life. Each morning, I’d step out of my flat in Notting Hill, the scent of fresh pastries from the corner bakery mingling with the crisp air. I was a visitor at first, but London had a way of making you feel like you belonged.
 </p>
-<div class="md-space"></div>
+<p class="md-paragraph">Some days were spent in quiet corners of the British Library, others wandering through bustling markets in Camden or Borough. The city taught me to appreciate the slow moments—watching the Thames shimmer at sunset from Waterloo Bridge or sipping tea in a hidden café in Soho. I found stories in every street, from the neon glow of the West End to the historic pubs where Dickens once drank. Each neighborhood had a different rhythm, and I learned to dance to them all.</p>
 
-<p class="md-paragraph">
-  Qui ad idque soluta deterruisset, nec sale pertinax mandamus et. Eu mei soluta scriptorem dissentiet, cu vel sensibus cotidieque. Ne per malorum vivendum principes, congue imperdiet cu vel. Sit cu stet autem eligendi, eros reprimique mel id, no pri tation altera. At soluta fierent laboramus eum.Nam at dicant deterruisset. Nam at nulla choro denique, et cum quando. Et est eius pertinax, duo falli noster alienum et.
-</p>
+<div class="md-space-xl"></div>
+<h4 class="md-list-title" id="things-to-see">Memorable Moments:</h4>
+<div class="md-space-lg"></div>
+<ul class="md-list col-1">
+  <li class="md-list-item">Experiencing my first snowfall in Hyde Park, where the city turned into a quiet wonderland.</li>
+  <li class="md-list-item">Watching Shakespeare at the Globe Theatre, standing in the pit, rain dripping from the open roof.</li>
+  <li class="md-list-item">Getting lost in the winding streets of Covent Garden and discovering a hidden jazz bar.</li>
+</ul>
 
-<p class="md-excerpt">With all that fear, it’s much easier to stay at home in our comfort zones </br> than to break out and travel.</p>
-
-<p class="md-paragraph">
-  Pri laudem tractatos hendrerit an. Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Per eu unum persius, mei tantas postea in. Te his labores singulis, eum ei urbanitas adversarium. Ut quo numquam honestatis, qui populo percipit intellegat ea.
-</p>
-
-<p class="md-paragraph">
-  Learn more in related article: <a class="md-link-dark" href="/">Staying with a local family on Bali</a>
+<div class="md-space-xl"></div><p class="md-paragraph">
+  London wasn’t just a place I lived—it was a place that lived within me. The friendships, the quiet discoveries, the unexpected adventures, all wove together into a year I’ll never forget. There’s something about this city that changes you, that leaves you with a piece of it long after you’ve left.
 </p>
 
-<div class="md-images">
-  <div class="md-image">
-    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/sleepy-dog.jpg" alt="Sleepy dog">
-    <h2 class="md-img-description">“The Professional Hobo”</h2>
+<blockquote class="md-blockquote">
+  "London doesn’t ask you to rush. It teaches you to pause and notice—to find beauty in the ordinary."
+</blockquote>
+
+<p class="md-paragraph">
+  As I boarded my flight home, I knew I wasn’t really leaving. London had already left its mark. And one day, I’d return, ready for another chapter in the city that never stops telling stories.
+</p>
+
+<div class="md-images gap-lg">
+  <div class="md-image lg">
+      <img class="img h-100" src="/posts/a-year-in-london/london-1.jpg" alt="Photo of car and bus near castle">
+      <h2 class="md-img-description">“Oxford Street, London, United Kingdom”</h2>
   </div>
-  <div class="md-image">
-    <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/girl-with-hat.jpg" alt="Girl with hat">
-    <h2 class="md-img-description">“Never Ending Footsteps”</h2>
+  <div class="md-image lg">
+      <img class="img h-100" src="/posts/a-year-in-london/london-2.jpg" alt="Big Ben on a bright day">
+      <h2 class="md-img-description">“Big Ben on a bright day”</h2>
   </div>
 </div>
 
+<div class="md-space-xl"></div>
 <p class="md-paragraph">
-Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. An sententiae disputando eos. Delicata voluptaria referrentur mel eu. Forensibus disputationi an eam. Sea ex delectus dignissim gloriatur, quem suas per ea. In solum menandri cum.
+    Reflecting on my year in London, I realized it was more than just a place I lived—it was a space that challenged me, inspired me, and left an indelible mark on my identity. The city’s rhythm, from its hurried mornings on the Tube to the quiet moments along the Thames at sunset, became part of my own story. Whether it was embracing the unpredictable weather or learning to navigate its intricate streets without a map, London taught me adaptability, resilience, and the beauty of constant change. If there’s any city that truly never grows old, it’s London.
 </p>
