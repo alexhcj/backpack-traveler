@@ -1,16 +1,42 @@
 import { ECountryShortcut, type TCountryShortcutKeys } from "../types/country";
 
-export function throttle(func: Function, limit: number) {
-  let inThrottle: boolean;
+/**
+ * Creates a throttled function that only invokes the provided function at most once
+ * within the specified interval.
+ *
+ * @param {Function} func - The function to throttle
+ * @param {number} limit - The time limit in milliseconds
+ * @returns {Function} - The throttled function
+ */
+export function throttle<T extends (...args: any[]) => any>(
+  func: T,
+  limit: number,
+): (...args: Parameters<T>) => void {
+  let inThrottle: boolean = false;
+  let lastFunc: ReturnType<typeof setTimeout> | undefined;
+  let lastRan: number = 0;
 
-  return function () {
-    const args = arguments;
-    // @ts-ignore
+  return function (this: any, ...args: Parameters<T>): void {
     const context = this;
+
     if (!inThrottle) {
+      // If not in throttle period, execute immediately
       func.apply(context, args);
+      lastRan = Date.now();
       inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
+    } else {
+      // Otherwise, schedule execution after the throttle period
+      clearTimeout(lastFunc);
+
+      lastFunc = setTimeout(
+        function () {
+          if (Date.now() - lastRan >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          }
+        },
+        limit - (Date.now() - lastRan),
+      );
     }
   };
 }
