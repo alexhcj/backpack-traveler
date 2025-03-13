@@ -16,6 +16,7 @@ interface INavList {
 }
 
 const { type } = Astro.props;
+const pathname = Astro.url.pathname;
 
 const navList: INavList[] = [
     { url: "/", text: "Home", type: "link" },
@@ -80,6 +81,23 @@ const travelSubList = [
                                         link: item.type === "link",
                                         submenu: item.type === "submenu",
                                         "size-sm": type === "transparent",
+                                        active:
+                                            (item.url === "/pages" &&
+                                                pagesSubList.some((route) =>
+                                                    pathname.includes(
+                                                        route.url,
+                                                    ),
+                                                )) ||
+                                            (item.url === "/travel" &&
+                                                travelSubList.some((route) =>
+                                                    pathname.includes(
+                                                        route.url,
+                                                    ),
+                                                )) ||
+                                            (item.url === "/blog" &&
+                                                pathname.includes("/blog")) ||
+                                            (item.url === "/shop" &&
+                                                pathname.includes("/shop")),
                                     },
                                 ]}
                                 href={item.url}
@@ -197,6 +215,10 @@ const travelSubList = [
 
         &.size-sm {
             font-size: 10px;
+        }
+
+        &.active {
+            color: var(--color-grey);
         }
 
         .star-icon {
