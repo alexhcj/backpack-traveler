@@ -25,7 +25,9 @@ const { categories } = Astro.props;
                         height={75}
                         alt={`${category}`}
                     />
-                    <h4 class="category">{category}</h4>
+                    <h4 class="category">
+                        {category.replaceAll("-and-", " & ")}
+                    </h4>
                     <span class="count">{count} destination</span>
                 </a>
             </li>
@@ -62,6 +64,7 @@ const { categories } = Astro.props;
         transition: translate 0.2s;
     }
     .category {
+        text-align: center;
         margin: 15px 0 3px;
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-m);
