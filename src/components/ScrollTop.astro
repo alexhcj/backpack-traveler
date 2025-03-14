@@ -1,0 +1,67 @@
+<button class="btn-scroll" aria-label="scroll to top">Top</button>
+
+<style>
+    .btn-scroll {
+        position: fixed;
+        right: 37px;
+        bottom: 35px;
+        opacity: 0;
+        visibility: hidden;
+        text-align: center;
+        width: 61px;
+        height: 61px;
+        line-height: 63px;
+        font-size: 43px;
+        border-radius: 100%;
+        font-family: var(--family-epic-ride);
+        color: var(--color-black);
+        background-color: var(--color-white);
+        border: 1px solid var(--color-white);
+        z-index: var(--z-index-10);
+        cursor: pointer;
+        transition: var(--transition-default-4);
+
+        &:hover {
+            background-color: var(--color-black);
+            border-color: var(--color-black);
+            color: var(--color-white);
+        }
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+</style>
+
+<script>
+    import { throttle } from "../utils/utils";
+
+    const button = document.querySelector(".btn-scroll") as HTMLButtonElement;
+    const rootElement = document.documentElement;
+
+    const handleScroll = (): void => {
+        if (rootElement.scrollTop > 500) {
+            button.classList.add("visible");
+        } else {
+            button.classList.remove("visible");
+        }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+        e.preventDefault();
+
+        rootElement.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    document.addEventListener("scroll", throttle(handleScroll, 100));
+    button.addEventListener("click", handleClick);
+
+    document.addEventListener("astro:before-unmount", () => {
+        document.removeEventListener("scroll", handleScroll);
+        button.removeEventListener("click", handleClick);
+    });
+</script>

@@ -47,6 +47,7 @@
     --transition-default-2: all 0.2s ease;
     --transition-default-3: all 0.3s ease-in-out;
     --transition-default-4: all 0.2s ease-in-out;
+    --transition-default-5: all 0.3s ease;
     --transition-input: width 0.2s;
     --transition-image: all 0.7s;
     --transition-svg: 0.3s;
