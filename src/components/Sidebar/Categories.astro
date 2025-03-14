@@ -92,7 +92,6 @@ const categories = [
     handleScroll();
 
     document.addEventListener("scroll", throttle(handleScroll, 50));
-    // document.addEventListener("scroll", handleScroll);
 
     document.addEventListener("astro:before-unmount", () => {
         document.removeEventListener("scroll", handleScroll);
