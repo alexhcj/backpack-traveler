@@ -99,7 +99,6 @@ const nav: { icon: string; anchor: string; text: string }[] = [
 
     function handleScroll() {
         const currentScroll = document.documentElement.scrollTop;
-        console.log(currentScroll);
 
         currentScroll > postNavOffset - 100
             ? postNav?.classList.add("sticky")
@@ -109,7 +108,6 @@ const nav: { icon: string; anchor: string; text: string }[] = [
     handleScroll();
 
     document.addEventListener("scroll", throttle(handleScroll, 50));
-    // document.addEventListener("scroll", handleScroll);
 
     document.addEventListener("astro:before-unmount", () => {
         document.removeEventListener("scroll", handleScroll);
