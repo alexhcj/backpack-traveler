@@ -1,6 +1,7 @@
 ---
 import type { MarkdownInstance } from "astro";
 import type { Post } from "../../types/post";
+
 import { Image } from "astro:assets";
 
 interface Props {
@@ -11,50 +12,51 @@ const { posts } = Astro.props;
 ---
 
 <section class="section">
-    <ul id="destination-slider" class="keen-slider">
-        {
-            posts.map(({ frontmatter }, index) => (
-                <li class={`keen-slider__slide number-slide${index}`}>
-                    <a class="link" href={`/posts/${frontmatter.slug}`}>
-                        <Image
-                            class="img"
-                            src={`/${frontmatter.image.url}`}
-                            alt={frontmatter.image.alt}
-                            width="400"
-                            height="395"
-                        />
-                    </a>
-                </li>
-            ))
-        }
-    </ul>
+    <div class="swiper-container">
+        <ul class="swiper-wrapper">
+            {
+                posts.map(({ frontmatter }) => (
+                    <li class="swiper-slide">
+                        <a class="link" href={`/posts/${frontmatter.slug}`}>
+                            <Image
+                                class="slider-img"
+                                src={`/${frontmatter.image.url}`}
+                                alt={frontmatter.image.alt}
+                                width="400"
+                                height="395"
+                            />
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
 </section>
 
 <style>
     .section {
         margin-bottom: 60px;
     }
-    .keen-slider {
-        height: 400px;
-    }
     .link {
         display: flex;
         height: 100%;
     }
-    .img {
-        height: 100%;
+    .slider-img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        transition: var(--transition-default);
     }
 </style>
 
 <script>
-    import "keen-slider/keen-slider.min.css";
-    import KeenSlider from "keen-slider";
+    import "swiper/css";
 
-    const slider = new KeenSlider("#destination-slider", {
+    import Swiper from "swiper";
+
+    const swiper = new Swiper(".swiper-container", {
         loop: true,
-        drag: true,
-        slides: {
-            perView: 3,
-        },
+        slidesPerView: 3,
+        height: 400,
     });
 </script>

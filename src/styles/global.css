@@ -49,6 +49,7 @@
     --transition-default-4: all 0.2s ease-in-out;
     --transition-input: width 0.2s;
     --transition-image: all 0.7s;
+    --transition-svg: 0.3s;
 
     --img-hover-scale: 1.04;
 

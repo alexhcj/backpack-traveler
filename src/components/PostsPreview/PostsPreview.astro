@@ -20,11 +20,11 @@ const postsList = posts
 ---
 
 <section>
-    <div class="wrapper">
-        <ul id="hero-slider" class="keen-slider">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
             {
                 postsList.map(({ frontmatter }, index) => (
-                    <li class={`keen-slider__slide number-slide${index}`}>
+                    <li class="swiper-slide">
                         <PostPreviewItem
                             title={frontmatter.title}
                             url={frontmatter.image.url}
@@ -36,79 +36,90 @@ const postsList = posts
                     </li>
                 ))
             }
-        </ul>
-        <div class="controls" data-controls>
-            <button
-                class="control prev"
-                role="presentation"
-                type="button"
-                data-control="prev"
-            >
-                <img src={ArrowSVG.src} alt="Previous slide" />
-            </button>
-            <button
-                class="control next"
-                role="presentation"
-                type="button"
-                data-control="next"
-            >
-                <img src={ArrowSVG.src} alt="Next slide" />
-            </button>
         </div>
+        <button class="swiper-button-prev control control-next" type="button">
+            <ArrowSVG class="svg" />
+        </button>
+        <button class="swiper-button-next control control-next" type="button">
+            <ArrowSVG class="svg" />
+        </button>
     </div>
 </section>
 
 <style>
     section {
+        position: relative;
+        margin: 0 40px;
         padding-bottom: 100px;
     }
-    .wrapper {
-        padding: 0 40px;
-        position: relative;
+    .swiper-container {
+        overflow: hidden;
     }
     .control {
-        position: absolute;
         top: 200px;
         width: 62px;
         height: 47px;
         padding: 10px;
         background-color: var(--color-white);
-        cursor: pointer;
 
-        &.prev {
-            left: 0;
+        &::after {
+            display: none;
         }
 
-        &.next {
-            right: 0;
+        & + .control-next {
+            transform: scaleX(-1);
+        }
 
-            img {
-                transform: scaleX(-1);
+        .svg g > * {
+            transition: var(--transition-svg);
+        }
+
+        &:hover {
+            &.control-next .svg {
+                line {
+                    transform: scaleX(0.7);
+                    transform-origin: 55% 0;
+                }
+
+                polyline {
+                    translate: 5px 0;
+                }
+            }
+            &.control-prev .svg {
+                line {
+                    transform: scaleX(0.7);
+                    transform-origin: 55% 0;
+                }
+
+                polyline {
+                    translate: 0 -5px;
+                }
             }
         }
+    }
+    .swiper-button-prev {
+        left: -40px;
+    }
+    .swiper-button-next {
+        right: -40px;
     }
 </style>
 
 <script>
-    import "keen-slider/keen-slider.min.css";
-    import KeenSlider from "keen-slider";
+    import "swiper/css";
+    import "swiper/css/navigation";
 
-    const slider = new KeenSlider("#hero-slider", {
+    import Swiper from "swiper";
+    import { Navigation } from "swiper/modules";
+
+    const swiper = new Swiper(".swiper-container", {
+        modules: [Navigation],
         loop: true,
-        drag: true,
-        slides: {
-            perView: 5,
-            spacing: 10,
+        slidesPerView: 5,
+        spaceBetween: 9,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
         },
     });
-
-    const handleSliderControls = (control: any) => {
-        control.target.getAttribute("data-control") === "next"
-            ? slider.next()
-            : slider.prev();
-    };
-
-    const controls = document.querySelector("[data-controls]")!;
-
-    controls.addEventListener("click", (e: any) => handleSliderControls(e));
 </script>
