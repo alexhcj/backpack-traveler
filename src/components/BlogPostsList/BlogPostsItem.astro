@@ -4,6 +4,7 @@ import type { Post } from "../../types/post";
 
 interface Props {
     frontmatter: Post;
+    dataIndex?: number;
 }
 
 const {
@@ -14,10 +15,11 @@ const {
         country,
         image: { url, alt },
     },
+    dataIndex,
 } = Astro.props;
 ---
 
-<article class="article">
+<article class="article" data-index={dataIndex}>
     <a class="img-link ui-link-with-img" href={`/posts/${slug}`}>
         <Image
             class="img h-100"

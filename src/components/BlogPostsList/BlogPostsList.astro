@@ -11,7 +11,7 @@ interface Props {
 const { posts } = Astro.props;
 ---
 
-<ul class="list">
+<ul class="blog-posts-list">
     {
         posts.map(({ frontmatter }) => (
             <BlogPostsItem frontmatter={frontmatter} />
@@ -20,7 +20,7 @@ const { posts } = Astro.props;
 </ul>
 
 <style>
-    .list {
+    .blog-posts-list {
         display: grid;
         grid-template: auto / repeat(3, 1fr);
         gap: 30px;

@@ -9,6 +9,7 @@ import BaseLayout from "./Layout.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
 import BlogPostsList from "../components/BlogPostsList/BlogPostsList.astro";
 import HeroHeader from "../components/common/header/HeroHeader.astro";
+import BlogPostsItem from "../components/BlogPostsList/BlogPostsItem.astro";
 import { EHeader } from "../types/header";
 import {convertISODate} from '../utils/utils'
 
@@ -18,12 +19,13 @@ const posts = Object.values(
     }),
 );
 
+const limit = 9;
+
 const latestPostList = posts
     .sort(
         (a, b) =>
             +new Date(b.frontmatter.pubDate) - +new Date(a.frontmatter.pubDate),
-    )
-    .filter((_, i) => i < 10);
+    );
 const latestPost = latestPostList[0].frontmatter;
 
 const socialSvgs: IImageMetadata = {
@@ -103,8 +105,17 @@ const socialSvgs: IImageMetadata = {
                         )}
                     </div>
                 </article>
-                <BlogPostsList posts={latestPostList.slice(1)} >
-                <!-- button load more -->
+                <BlogPostsList posts={latestPostList.slice(1, limit + 1)} />
+                <ul class="blog-posts-list-rest">
+                    {
+                        latestPostList.slice(limit).map(({ frontmatter }, index) => (
+                            <BlogPostsItem frontmatter={frontmatter} dataIndex={index} />
+                        ))
+                    }
+                </ul>
+                {latestPostList.length > limit && (
+                    <button class="btn-show-more">Show more</button>
+                )}
             </div>
             <div class="col-aside">
                 <Sidebar showMostRatedPosts />
@@ -186,4 +197,59 @@ const socialSvgs: IImageMetadata = {
         margin-bottom: 34px;
         padding-top: 10px;
     }
+    .blog-posts-list-rest {
+        display: none;
+    }
+    .btn-show-more {
+        display: flex;
+        justify-self: center;
+        text-transform: uppercase;
+        margin: 20px 0;
+        padding: 13px 19px 11px;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 2em;
+        font-size: 10px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-medium);
+        border: 1px solid var(--color-dark-3);
+        transition: var(--transition-default-4);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--color-black);
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+    }
 </style>
+
+<script>
+   const button = document.querySelector('.btn-show-more') as HTMLElement;
+   const posts = document.querySelector('.blog-posts-list');
+   const restPosts = document.querySelector('.blog-posts-list-rest');
+
+   if (button && posts && restPosts) {
+     const limit = 9;
+     let currentIndex = 0;
+
+     button.addEventListener('click', () => {
+       for (let i = 0; i < limit; i++) {
+         const template = restPosts.querySelector(`[data-index="${currentIndex}"]`);
+
+         if (!template) {
+           button.style.display = 'none';
+           break;
+         }
+
+         const clone = template.cloneNode(true);
+         posts.appendChild(clone);
+
+         currentIndex++;
+       }
+
+       if (!restPosts.querySelector(`[data-index="${currentIndex}"]`)) {
+          button.style.display = 'none';
+        }
+       });
+   }
+</script>
