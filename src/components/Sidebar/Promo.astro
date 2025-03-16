@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 ---
 
 <div class="promo">
-    <a href="/">
+    <a class="link" href="/">
         <Image
             class="img"
             src="/promo/promo-our-books.jpg"
@@ -13,3 +13,9 @@ import { Image } from "astro:assets";
         />
     </a>
 </div>
+
+<style>
+    .link {
+        display: block;
+    }
+</style>
