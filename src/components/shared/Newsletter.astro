@@ -1,12 +1,16 @@
 ---
+interface Props {
+    type?: "grey"; // indeed for footer
+}
 
+const { type } = Astro.props;
 ---
 
-<div class="newsletter">
+<div class={`newsletter ${type}`}>
     <div class="ui-sidebar-title-wrapper">
         <h3 class="ui-sidebar-title bg-line">Newsletter</h3>
     </div>
-    <form action="" class="form">
+    <form class="form">
         <input
             class="input"
             type="text"
@@ -21,15 +25,28 @@
 <style>
     .newsletter {
         text-align: center;
+
+        &.grey {
+            display: grid;
+
+            .ui-sidebar-title {
+                color: var(--color-grey-5);
+            }
+        }
+    }
+    .ui-sidebar-title-wrapper {
+        margin-bottom: 18px;
     }
     .ui-sidebar-title {
-        margin-bottom: 18px;
         line-height: 1.8;
     }
     .form {
         display: flex;
         flex-direction: column;
+        justify-self: center;
         gap: 13px;
+        max-width: 315px;
+        width: 100%;
     }
     .input {
         padding: 9px 16px;

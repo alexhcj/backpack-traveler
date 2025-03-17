@@ -2,18 +2,19 @@
 import { Image } from "astro:assets";
 
 interface Props {
-    destination: string;
+    type?: "grey";
 }
 
-const { destination } = Astro.props;
+const { type } = Astro.props;
+const destination = Astro.url.pathname.replace("/posts/", "");
 ---
 
-<div class="map">
+<div class={`map ${type}`}>
     <div class="ui-sidebar-title-wrapper">
         <h3 class="ui-sidebar-title bg-line">Where we are now</h3>
     </div>
     <Image
-        src={`/world-maps/${destination}-map.png`}
+        src={`/world-maps/${destination}.png`}
         width={272}
         height={168}
         alt={`${destination} mark on world map`}
@@ -23,9 +24,14 @@ const { destination } = Astro.props;
 <style>
     .map {
         text-align: center;
+
+        &.grey {
+        }
+    }
+    .ui-sidebar-title-wrapper {
+        margin-bottom: 20px;
     }
     .ui-sidebar-title {
-        margin-bottom: 20px;
         line-height: 1.8;
     }
 </style>

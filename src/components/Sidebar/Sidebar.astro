@@ -7,12 +7,12 @@ import LatestPosts from "./LatestPosts.astro";
 import CountryMap from "./CountryMap.astro";
 import PostNav from "./PostNav.astro";
 import Author from "./Author.astro";
-import WorldMap from "./WorldMap.astro";
 import Instagram from "./Instagram.astro";
-import Socials from "./Socials.astro";
 import Promo from "./Promo.astro";
-import Newsletter from "./Newsletter.astro";
 import MostRatedPosts from "./MostRatedPosts.astro";
+import WorldMap from "../../components/shared/WorldMap.astro";
+import Socials from "../../components/shared/Socials.astro";
+import Newsletter from "../../components/shared/Newsletter.astro";
 
 interface Props {
     destination?: string;
@@ -62,9 +62,7 @@ const postsWithoutWorldMap = ["5-types-of-nature-travelers"];
             destination &&
             slug &&
             !postsWithoutWorldMap.find((post) => post.includes(slug)) && (
-                <WorldMap
-                    destination={destination.toLowerCase().replaceAll(" ", "-")}
-                />
+                <WorldMap />
             )
     }
     {showInstagram && <Instagram />}
@@ -77,7 +75,7 @@ const postsWithoutWorldMap = ["5-types-of-nature-travelers"];
     }
     {showPostNav && <PostNav />}
     {showLatestPosts && <LatestPosts posts={posts} />}
-    {showNewsletter && <Newsletter posts={posts} />}
+    {showNewsletter && <Newsletter />}
     {showCategories && <Categories posts={posts} />}
     {showMostRatedPosts && <MostRatedPosts posts={posts} />}
 </aside>

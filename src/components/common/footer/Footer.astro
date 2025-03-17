@@ -1,0 +1,148 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../../types/post";
+import type { EFooter } from "../../../types/footer";
+
+import WorldMap from "../../shared/WorldMap.astro";
+import Newsletter from "../../shared/Newsletter.astro";
+import Socials from "../../shared/Socials.astro";
+import GithubSVG from "../../../../public/svg/github.svg";
+import TelegramSVG from "../../../../public/svg/telegram.svg";
+
+interface Props {
+    type?: EFooter;
+}
+
+const { type } = Astro.props;
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../../../pages/posts/*.md", {
+        eager: true,
+    }),
+).sort((a, b) => b.frontmatter.likesCount - a.frontmatter.likesCount);
+
+const mostPopularCategories = [
+    ...new Set(posts.map(({ frontmatter }) => frontmatter.categories).flat()),
+].slice(0, 5);
+---
+
+<footer class={`footer ${type}`}>
+    {
+        type === "full" && (
+            <div class="top">
+                <div class="container">
+                    <div class="box">
+                        <WorldMap />
+                        <Socials type="grey" />
+                        <Newsletter type="grey" />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    <div class="bottom">
+        <div class="container">
+            <div class="bottom-box">
+                <div class="bottom-left">
+                    <p class="copyright">2025 Astro Project.</p>
+                    <p class="author">Fullstack Development, alexhcj</p>
+                    <a
+                        class="contact"
+                        target="_blank"
+                        href="https://github.com/alexhcj"
+                    >
+                        <GithubSVG class="social" width={20} height={20} />
+                    </a>
+                    <a
+                        class="contact"
+                        target="_blank"
+                        href="https://t.me/alex_hcj"
+                    >
+                        <TelegramSVG class="social" width={20} height={20} />
+                    </a>
+                </div>
+                <ul class="categories">
+                    {
+                        mostPopularCategories.map((category) => (
+                            <li>
+                                <a
+                                    class="category"
+                                    href={`/category/${category}`}
+                                >
+                                    {category}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        /* padding-top: 40px;
+        border-top: 1px solid var(--color-border); */
+
+        &.full {
+            padding-top: 84px;
+            border-top: none;
+        }
+    }
+    .box {
+        display: grid;
+        grid-template: auto / repeat(3, 1fr);
+        gap: 30px;
+    }
+    .bottom {
+        margin-top: 32px;
+        padding: 19px 0;
+        background-color: var(--color-primary);
+    }
+    .bottom-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .categories {
+        display: flex;
+        gap: 13px;
+    }
+    .category {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        font-family: var(--family-montserrat);
+        color: var(--color-grey-2);
+        transition: var(--transition-default-2);
+
+        &:hover {
+            color: var(--color-black);
+        }
+    }
+    .bottom-left {
+        display: flex;
+        gap: 5px;
+    }
+    .copyright,
+    .author,
+    .contact {
+        font-size: 14px;
+        font-style: italic;
+        font-family: var(--family-lora);
+    }
+    .contact {
+        display: flex;
+        align-items: center;
+        padding: 0 2px;
+    }
+    .social {
+        fill: var(--color-grey-3);
+        transition: var(--transition-default);
+
+        &:hover {
+            fill: var(--color-black);
+        }
+    }
+</style>

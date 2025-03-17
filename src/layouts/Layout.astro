@@ -1,7 +1,9 @@
 ---
 import type { EHeader } from "../types/header";
+import type { EFooter } from "../types/footer";
 
 import Header from "../components/common/header/Header.astro";
+import Footer from "../components/common/footer/Footer.astro";
 import ScrollTop from "../components/ScrollTop.astro";
 
 import "../styles/reset.css";
@@ -11,10 +13,11 @@ import "../styles/slider.css";
 
 interface Props {
     title: string;
-    type: EHeader;
+    footerType?: EFooter;
+    headerType: EHeader;
 }
 
-const { title, type } = Astro.props;
+const { title, headerType, footerType } = Astro.props;
 ---
 
 <!doctype html>
@@ -34,8 +37,9 @@ const { title, type } = Astro.props;
         />
     </head>
     <body>
-        <Header type={type} />
+        <Header type={headerType} />
         <slot />
         <ScrollTop />
+        <Footer type={footerType} />
     </body>
 </html>

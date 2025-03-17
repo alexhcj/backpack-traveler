@@ -1,0 +1,108 @@
+---
+import Instagram from "../../../public/svg/instagram.svg";
+import Facebook from "../../../public/svg/facebook.svg";
+import Twitter from "../../../public/svg/twitter.svg";
+import Pinterest from "../../../public/svg/pinterest.svg";
+import Youtube from "../../../public/svg/youtube.svg";
+import Rss from "../../../public/svg/rss.svg";
+
+interface Props {
+    type?: "grey";
+}
+
+const { type } = Astro.props;
+---
+
+<div class={`socials ${type}`}>
+    <div class="ui-sidebar-title-wrapper">
+        <h3 class="ui-sidebar-title bg-line">Follow us</h3>
+    </div>
+    <ul class="list">
+        <li class="item">
+            <a class="link" href="/">
+                <Instagram class="icon" width={24} height={27} />
+                <span class="name">Instagram</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="/">
+                <Facebook class="icon" width={26} height={26} />
+                <span class="name">Facebook</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="/">
+                <Twitter class="icon" width={24} height={27} />
+                <span class="name">Twitter</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="/">
+                <Pinterest class="icon" width={24} height={27} />
+                <span class="name">Pinterest</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="/">
+                <Youtube class="icon" width={24} height={27} />
+                <span class="name">Youtube</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="/">
+                <Rss class="icon" width={24} height={27} />
+                <span class="name">RSS</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<style>
+    .socials {
+        text-align: center;
+
+        &.grey {
+            .ui-sidebar-title-wrapper {
+                margin-bottom: 45px;
+            }
+            .ui-sidebar-title {
+                color: var(--color-grey-5);
+            }
+            .list {
+                grid-template: auto auto / repeat(3, 25%);
+                justify-content: center;
+            }
+        }
+    }
+    .ui-sidebar-title-wrapper {
+        margin-bottom: 37px;
+    }
+    .ui-sidebar-title {
+        line-height: 1.8;
+    }
+    .list {
+        display: grid;
+        grid-template: auto auto / repeat(3, 1fr);
+        gap: 25px 0;
+    }
+    .item {
+        margin-top: 4px;
+
+        &:hover .name {
+            color: var(--color-black);
+        }
+    }
+    .icon {
+        path {
+            fill: var(--color-black);
+        }
+    }
+    .name {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 8px;
+        color: var(--color-grey-2);
+        font-family: var(--family-montserrat);
+    }
+</style>
