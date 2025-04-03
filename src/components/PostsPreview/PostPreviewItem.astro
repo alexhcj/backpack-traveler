@@ -2,6 +2,7 @@
 import type { ECategory } from "../../types/category";
 
 import { Image } from "astro:assets";
+import { normalizeStrToAmpersand } from "../../utils/utils";
 
 interface Props {
     title: string;
@@ -41,7 +42,7 @@ const { title, slug, url, alt, country, categories } = Astro.props;
                             class="ui-post-category"
                             href={`/category/${category}`}
                         >
-                            {category}
+                            {normalizeStrToAmpersand(category)}
                         </a>
                     </li>
                 ))

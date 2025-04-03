@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "./Layout.astro";
 import PostMeta from "../components/PostMeta.astro";
 import { EHeader } from "../types/header";
+import { normalizeStrToAmpersand } from "../utils/utils";
 
 interface Props {
     frontmatter: Post;
@@ -46,7 +47,7 @@ const {
                                     class="ui-post-category"
                                     href={`/category/${category}`}
                                 >
-                                    {category}
+                                    {normalizeStrToAmpersand(category)}
                                 </a>
                             </li>
                         ))

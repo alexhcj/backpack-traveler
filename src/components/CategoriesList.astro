@@ -1,6 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import type { ECategory } from "../types/category";
+
+import { Image } from "astro:assets";
+
+import { normalizeStrToAmpersand } from "../utils/utils";
 
 interface Props {
     categories: {
@@ -26,7 +29,7 @@ const { categories } = Astro.props;
                         alt={`${category}`}
                     />
                     <h4 class="category">
-                        {category.replaceAll("-and-", " & ")}
+                        {normalizeStrToAmpersand(category)}
                     </h4>
                     <span class="count">{count} destination</span>
                 </a>

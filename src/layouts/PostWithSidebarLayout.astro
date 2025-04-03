@@ -9,6 +9,7 @@ import Sidebar from "../components/Sidebar/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
+import { normalizeStrToAmpersand } from "../utils/utils";
 
 interface Props {
     frontmatter: Post;
@@ -57,7 +58,7 @@ const {
                                             class="ui-post-category"
                                             href={`/category/${category}`}
                                         >
-                                            {category}
+                                            {normalizeStrToAmpersand(category)}
                                         </a>
                                     </li>
                                 ))

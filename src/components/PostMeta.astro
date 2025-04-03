@@ -5,6 +5,7 @@ import type { ISocial, IImageMetadata } from "../types/social";
 import { Image } from "astro:assets";
 
 import FormattedDate from "./FormattedDate.astro";
+import { normalizeStrToAmpersand } from '../utils/utils';
 
 import BookmarkSVG from "../../public/svg/bookmark.svg";
 import HeartSVG from "../../public/svg/heart.svg";
@@ -43,7 +44,7 @@ const socialSvgs: IImageMetadata = {
                         {categories.map((category) => (
                             <li class="category">
                                 <a class="category-link" href={`/category/${category}`}>
-                                    {category}
+                                    {normalizeStrToAmpersand(category)}
                                 </a>
                             </li>
                         ))}

@@ -11,7 +11,7 @@ import BlogPostsList from "../components/BlogPostsList/BlogPostsList.astro";
 import HeroHeader from "../components/common/header/HeroHeader.astro";
 import BlogPostsItem from "../components/BlogPostsList/BlogPostsItem.astro";
 import { EHeader } from "../types/header";
-import {convertISODate} from '../utils/utils'
+import {convertISODate, normalizeStrToAmpersand} from '../utils/utils'
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -73,7 +73,7 @@ const socialSvgs: IImageMetadata = {
                                             class="ui-post-category"
                                             href={`/category/${category}`}
                                         >
-                                            {category}
+                                            {normalizeStrToAmpersand(category)}
                                         </a>
                                     </li>
                                 ))

@@ -3,6 +3,7 @@ import type { MarkdownInstance } from "astro";
 import type { Post } from "../../../types/post";
 import type { EFooter } from "../../../types/footer";
 
+import { normalizeStrToAmpersand } from "../../../utils/utils";
 import WorldMap from "../../shared/WorldMap.astro";
 import Newsletter from "../../shared/Newsletter.astro";
 import Socials from "../../shared/Socials.astro";
@@ -69,7 +70,7 @@ const mostPopularCategories = [
                                     class="category"
                                     href={`/category/${category}`}
                                 >
-                                    {category}
+                                    {normalizeStrToAmpersand(category)}
                                 </a>
                             </li>
                         ))
