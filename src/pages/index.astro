@@ -8,6 +8,8 @@ import TravelEssentials from "../components/TravelEssentials.astro";
 import Reviews from "../components/Reviews.astro";
 import Layout from "../layouts/Layout.astro";
 import CategoriesList from "../components/CategoriesList.astro";
+import { EHeader } from "../types/header";
+import { EFooter } from "../types/footer";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -49,7 +51,11 @@ const categories = categoriesSet
     .slice(0, 6);
 ---
 
-<Layout title="Backpack Traveler – Modern Travel Blog" type="long">
+<Layout
+    title="Backpack Traveler – Modern Travel Blog"
+    headerType={EHeader.BASE}
+    footerType={EFooter.FULL}
+>
     <HeroHeader />
     <PostsPreview />
     <TravelEssentials />

@@ -11,6 +11,7 @@ import BlogPostsList from "../components/BlogPostsList/BlogPostsList.astro";
 import HeroHeader from "../components/common/header/HeroHeader.astro";
 import BlogPostsItem from "../components/BlogPostsList/BlogPostsItem.astro";
 import { EHeader } from "../types/header";
+import { EFooter } from "../types/footer";
 import {convertISODate, normalizeStrToAmpersand} from '../utils/utils'
 
 const posts = Object.values(
@@ -35,7 +36,7 @@ const socialSvgs: IImageMetadata = {
 };
 ---
 
-<BaseLayout title="Backpack Traveler – Modern Travel Blog" headerType={EHeader.BASE}>
+<BaseLayout title="Backpack Traveler – Modern Travel Blog" headerType={EHeader.BASE} footerType={EFooter.FULL}>
     <HeroHeader type={EHeader.BASE} />
     <div class="container">
         <div class="row">

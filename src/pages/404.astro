@@ -1,8 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { EHeader } from "../types/header";
 ---
 
-<Layout title="Backpack Traveler | Page not found" type="short">
+<Layout
+    title="Backpack Traveler | Page not found"
+    headerType={EHeader.BASE_COMPACT}
+>
     <section class="section">
         <div class="box">
             <h1 class="title">404</h1>

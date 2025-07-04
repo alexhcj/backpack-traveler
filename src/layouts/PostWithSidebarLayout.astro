@@ -30,7 +30,11 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} headerType={EHeader.BASE} footerType={EFooter.FULL}>
+<BaseLayout
+    title={title}
+    headerType={EHeader.BASE}
+    footerType={EFooter.SHORT_BORDER}
+>
     <HeroHeader type={EHeader.BASE_COMPACT} />
     <div class="container">
         <div class="row">
