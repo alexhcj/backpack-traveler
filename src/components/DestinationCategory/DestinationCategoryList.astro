@@ -1,0 +1,54 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../../types/post";
+import type { ECategory } from "../../types/category";
+
+import DestinationCategoryItem from "./DestinationCategoryItem.astro";
+
+interface Props {
+    category: ECategory;
+}
+const { category } = Astro.props;
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const destinationsWithCategories = posts.reduce(
+    (acc, cur) => {
+        const country = cur.frontmatter.country;
+        const categories = cur.frontmatter.categories;
+
+        if (categories.includes(category)) {
+            if (!acc[country]) {
+                acc[country] = new Set(categories);
+            } else {
+                categories.forEach((category) => acc[country].add(category));
+            }
+        }
+        return acc;
+    },
+    {} as { [key: string]: Set<ECategory> },
+);
+---
+
+<ul class="list">
+    {
+        Object.entries(destinationsWithCategories).map(([key, value]) => (
+            <DestinationCategoryItem
+                destination={key}
+                categories={Array.from(value)}
+            />
+        ))
+    }
+</ul>
+
+<style>
+    .list {
+        display: grid;
+        grid-template: auto / repeat(4, 1fr);
+        gap: 30px;
+    }
+</style>

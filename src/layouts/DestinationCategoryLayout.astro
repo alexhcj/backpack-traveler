@@ -1,0 +1,39 @@
+---
+import type { ECategory } from "../types/category";
+
+interface Props {
+    category: ECategory;
+}
+
+const category = Astro.params.category ?? "Backpack Traveler Category";
+const { category: categoryProps } = Astro.props;
+
+if (!category || !categoryProps) {
+    Astro.redirect("/not-found");
+}
+
+import BaseLayout from "./Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import DestinationCategoryList from "../components/DestinationCategory/DestinationCategoryList.astro";
+import { EHeader } from "../types/header";
+import { EFooter } from "../types/footer";
+---
+
+<BaseLayout
+    title={category}
+    headerType={EHeader.TRANSPARENT}
+    footerType={EFooter.FULL}
+>
+    <Breadcrumbs />
+    <section class="section">
+        <div class="container">
+            <DestinationCategoryList category={categoryProps} />
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding: 70px 0 40px;
+    }
+</style>
