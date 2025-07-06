@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ flight, road-trips ]
 image:
   url: destinations/united-kingdom/title.jpg
   alt: Bridge

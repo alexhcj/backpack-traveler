@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ camping, restaurants ]
 image:
   url: destinations/costa-rica/title.jpg
   alt: Black and yellow bird standing on tree branch

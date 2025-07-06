@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ food, art ]
 image:
   url: destinations/france/title.jpg
   alt: Paris Arc de Triomphe

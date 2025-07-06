@@ -13,7 +13,7 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ camping, restaurants ]
+# categories: [ camping, restaurants ]
 image:
   url: destinations/australia/title.jpg
   alt: Girl sitting near dog

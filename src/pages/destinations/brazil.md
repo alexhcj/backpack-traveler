@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ beaches, photography ]
 image:
   url: destinations/brazil/title.jpg
   alt: Brazil beach near green hills

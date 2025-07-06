@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ fishing, overnight ]
 image:
   url: destinations/spain/title.jpg
   alt: Monestir de Montserrat

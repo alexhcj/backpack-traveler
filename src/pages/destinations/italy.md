@@ -13,7 +13,6 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ fishing, overnight ]
 image:
   url: destinations/italy/title.jpg
   alt: Italy cathedral at sunrise from bird fly view

@@ -13,7 +13,7 @@ socials: [
   { social: pinterest, url: / },
   { social: twitter, url: / },
 ]
-categories: [ fishing, overnight ]
+# categories: [ fishing, overnight ]
 image:
   url: destinations/canada/title.jpg
   alt: Cristal lake near snowy mountains
