@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.5.3",
+    "astro": "^5.11.0",
     "masonry-layout": "^4.2.2",
     "swiper": "^11.2.6"
   },
