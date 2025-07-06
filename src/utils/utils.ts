@@ -55,6 +55,10 @@ export const normalizeStrToAmpersand = (str: string) => {
   return str.replaceAll("-and-", " & ");
 };
 
+export const normalizeStrToSlug = (str: string) => {
+  return str.toLowerCase().replace(" ", "-");
+};
+
 export const convertISODate = (date: Date, type = "digit", locale = "en") => {
   const convertedDate = new Date(date);
   const year = convertedDate.getFullYear();
