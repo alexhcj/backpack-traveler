@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import ReviewItem from "./ReviewItem.astro";
+
+const allReviews = await getCollection("reviews");
+
+// Separate main reviews from replies
+const mainReviews = allReviews
+    .filter((review) => !review.data.isReply)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 6);
+
+// Group replies by parent
+const repliesByParent = allReviews
+    .filter((review) => review.data.isReply)
+    .reduce(
+        (acc, reply) => {
+            const parentId = reply.data.parentId;
+            if (parentId) {
+                if (!acc[parentId]) acc[parentId] = [];
+                acc[parentId].push(reply);
+            }
+            return acc;
+        },
+        {} as Record<string, typeof allReviews>,
+    );
+
+// Sort replies by date
+Object.keys(repliesByParent).forEach((parentId) => {
+    repliesByParent[parentId].sort(
+        (a, b) => a.data.date.getTime() - b.data.date.getTime(),
+    );
+});
+---
+
+<section class="section">
+    <h3 class="title">Comments:</h3>
+    <div class="reviews">
+        {
+            mainReviews.map((review) => (
+                <div class="review-thread">
+                    <ReviewItem review={review} isMainReview={true} />
+                    {repliesByParent[review.id] && (
+                        <div class="replies">
+                            {repliesByParent[review.id].map((reply) => (
+                                <ReviewItem
+                                    review={reply}
+                                    isMainReview={false}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .section {
+        padding-top: 52px;
+    }
+    .title {
+        margin-bottom: 26px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.33em;
+        font-size: 19px;
+        font-weight: var(--weight-regular);
+    }
+    .reviews {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .replies {
+        padding-left: 145px;
+    }
+</style>

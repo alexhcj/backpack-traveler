@@ -1,0 +1,132 @@
+---
+import { Image } from "astro:assets";
+import { convertISODate } from "../../utils/utils";
+import defaultAvatar from "../../assets/images/avatars/default-avatar.webp";
+import tablerSvg from "../../assets/svg/tabler.svg";
+
+import { render, type CollectionEntry } from "astro:content";
+
+interface Props {
+    review: CollectionEntry<"reviews">;
+    isMainReview?: boolean;
+}
+
+const { review, isMainReview = true } = Astro.props;
+const { Content } = await render(review);
+const {
+    data: { name, avatar, date, isReply, hasReplies },
+} = review;
+
+const avatarAlt = name ? `${name}'s avatar` : "Default user avatar";
+const publicAvatarPath = avatar ? `/user-uploads/${avatar}` : null;
+const usePublicAvatar = avatar && avatar !== "";
+---
+
+<div class={`review ${isReply ? "reply" : "main-review"}`}>
+    {hasReplies && <Image class="icon" src={tablerSvg} alt="Tabler Icon" />}
+    {
+        usePublicAvatar ? (
+            <img
+                class="avatar"
+                src={publicAvatarPath}
+                alt={avatarAlt}
+                width={isMainReview ? "96" : "64"}
+                height={isMainReview ? "96" : "64"}
+                onerror="this.src='/defaults/default-avatar.webp'"
+            />
+        ) : (
+            <Image
+                class="avatar"
+                src={defaultAvatar}
+                alt={avatarAlt}
+                width={isMainReview ? 96 : 64}
+                height={isMainReview ? 96 : 64}
+            />
+        )
+    }
+
+    <div>
+        <div class="meta">
+            <h4 class="name">{name}</h4>
+            <span class="date">
+                {convertISODate(date)}
+            </span>
+        </div>
+        <div class="review-text">
+            <Content />
+        </div>
+        <button class="button-reply">Reply...</button>
+    </div>
+</div>
+
+<style>
+    .review {
+        position: relative;
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 28px;
+        padding: 22px 29px 27px;
+        border: 1px solid var(--color-border-2);
+
+        &.reply {
+            margin-top: 40px;
+        }
+        .icon {
+            position: absolute;
+            bottom: -58px;
+            left: 75px;
+            width: 25px;
+            height: 25px;
+        }
+    }
+    .avatar {
+        margin-top: 10px;
+        width: 96px;
+        height: 96px;
+    }
+    .meta {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin-bottom: 7px;
+    }
+    .name {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.57em;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+    }
+    .date {
+        line-height: 2.1em;
+        font-size: 15px;
+        font-style: italic;
+        color: var(--color-accent);
+        font-family: var(--family-lora);
+    }
+    .review-text {
+        p {
+            margin-bottom: 5px;
+            color: var(--color-grey-4);
+            font-family: var(--family-lora);
+        }
+
+        p:last-child {
+            margin-bottom: 22px;
+        }
+    }
+    .button-reply {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 12px;
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &:hover {
+            color: var(--color-grey-2);
+        }
+    }
+</style>
