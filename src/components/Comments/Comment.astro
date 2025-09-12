@@ -1,28 +1,29 @@
 ---
 import { Image } from "astro:assets";
+import { render, type CollectionEntry } from "astro:content";
 import { convertISODate } from "../../utils/utils";
 import defaultAvatar from "../../assets/images/avatars/default-avatar.webp";
 import tablerSvg from "../../assets/svg/tabler.svg";
 
-import { render, type CollectionEntry } from "astro:content";
+import CommentForm from "../shared/CommentForm.astro";
 
 interface Props {
-    review: CollectionEntry<"reviews">;
-    isMainReview?: boolean;
+    comment: CollectionEntry<"comments">;
 }
 
-const { review, isMainReview = true } = Astro.props;
-const { Content } = await render(review);
+const { comment } = Astro.props;
+const { Content } = await render(comment);
 const {
-    data: { name, avatar, date, isReply, hasReplies },
-} = review;
+    id,
+    data: { name, avatar, date, parentId, hasReplies },
+} = comment;
 
 const avatarAlt = name ? `${name}'s avatar` : "Default user avatar";
 const publicAvatarPath = avatar ? `/user-uploads/${avatar}` : null;
 const usePublicAvatar = avatar && avatar !== "";
 ---
 
-<div class={`review ${isReply ? "reply" : "main-review"}`}>
+<div class={`comment ${parentId ? "reply" : "main-comment"}`}>
     {hasReplies && <Image class="icon" src={tablerSvg} alt="Tabler Icon" />}
     {
         usePublicAvatar ? (
@@ -30,8 +31,8 @@ const usePublicAvatar = avatar && avatar !== "";
                 class="avatar"
                 src={publicAvatarPath}
                 alt={avatarAlt}
-                width={isMainReview ? "96" : "64"}
-                height={isMainReview ? "96" : "64"}
+                width={96}
+                height={96}
                 onerror="this.src='/defaults/default-avatar.webp'"
             />
         ) : (
@@ -39,8 +40,8 @@ const usePublicAvatar = avatar && avatar !== "";
                 class="avatar"
                 src={defaultAvatar}
                 alt={avatarAlt}
-                width={isMainReview ? 96 : 64}
-                height={isMainReview ? 96 : 64}
+                width={96}
+                height={96}
             />
         )
     }
@@ -52,15 +53,20 @@ const usePublicAvatar = avatar && avatar !== "";
                 {convertISODate(date)}
             </span>
         </div>
-        <div class="review-text">
+        <div class="comment-text">
             <Content />
         </div>
-        <button class="button-reply">Reply...</button>
+        <button class="btn-reply" data-action="show-reply">Reply...</button>
+
+        <div class="reply-form-container" data-reply-form>
+            <h3 class="title">Reply to {name}</h3>
+            <CommentForm parentId={id} />
+        </div>
     </div>
 </div>
 
 <style>
-    .review {
+    .comment {
         position: relative;
         display: grid;
         grid-template-columns: 96px 1fr;
@@ -105,7 +111,7 @@ const usePublicAvatar = avatar && avatar !== "";
         color: var(--color-accent);
         font-family: var(--family-lora);
     }
-    .review-text {
+    .comment-text {
         p {
             margin-bottom: 5px;
             color: var(--color-grey-4);
@@ -116,7 +122,7 @@ const usePublicAvatar = avatar && avatar !== "";
             margin-bottom: 22px;
         }
     }
-    .button-reply {
+    .btn-reply {
         text-transform: uppercase;
         letter-spacing: 0.2em;
         font-size: 12px;
@@ -128,5 +134,15 @@ const usePublicAvatar = avatar && avatar !== "";
         &:hover {
             color: var(--color-grey-2);
         }
+    }
+    .reply-form-container {
+        display: none;
+    }
+    .title {
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.33em;
+        font-size: 14px;
     }
 </style>

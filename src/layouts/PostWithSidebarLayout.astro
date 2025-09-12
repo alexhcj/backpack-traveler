@@ -7,7 +7,7 @@ import BaseLayout from "./Layout.astro";
 import HeroHeader from "../components/common/header/HeroHeader.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
 import PostMeta from "../components/PostMeta.astro";
-import Reviews from "../components/Reviews/Reviews.astro";
+import Comments from "../components/Comments/Comments.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
 import { normalizeStrToAmpersand } from "../utils/utils";
@@ -83,7 +83,7 @@ const {
                             commentsCount={0}
                         />
                     </div>
-                    <Reviews />
+                    <Comments />
                 </article>
                 <!-- <div class="pagination">
                     <div class="prev-post">Prev</div>

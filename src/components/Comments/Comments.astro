@@ -1,0 +1,292 @@
+---
+import { getCollection } from "astro:content";
+import Comment from "./Comment.astro";
+import CommentForm from "../shared/CommentForm.astro";
+
+const allComments = await getCollection("comments");
+
+// Separate main comments from replies
+const mainComments = allComments
+    .filter((comment) => !comment.data.parentId)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 6);
+
+// Group replies by parent
+const repliesByParent = allComments
+    .filter((comment) => comment.data.parentId)
+    .reduce(
+        (acc, reply) => {
+            const parentId = reply.data.parentId;
+            if (parentId) {
+                if (!acc[parentId]) acc[parentId] = [];
+                acc[parentId].push(reply);
+            }
+            return acc;
+        },
+        {} as Record<string, typeof allComments>,
+    );
+
+// Sort replies by date
+Object.keys(repliesByParent).forEach((parentId) => {
+    repliesByParent[parentId].sort(
+        (a, b) => a.data.date.getTime() - b.data.date.getTime(),
+    );
+});
+---
+
+<section class="section">
+    {
+        mainComments.length > 0 && (
+            <div>
+                <h3 class="title">Comments:</h3>
+                <div class="list">
+                    {mainComments.map((comment) => (
+                        <div class="comment-thread">
+                            <Comment comment={comment} />
+                            {repliesByParent[comment.id] && (
+                                <div class="replies">
+                                    {repliesByParent[comment.id].map(
+                                        (reply) => (
+                                            <Comment comment={reply} />
+                                        ),
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+    <h3 class="title">Post a comment</h3>
+    <CommentForm />
+</section>
+
+<style>
+    .section {
+        padding-top: 60px;
+    }
+    .title {
+        margin-top: 25px;
+        margin-bottom: 26px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.33em;
+        font-size: 19px;
+        font-weight: var(--weight-regular);
+    }
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding-bottom: 48px;
+    }
+    .replies {
+        padding-left: 145px;
+    }
+</style>
+
+<script>
+    import type { ICommentFormData } from "../../types/comments";
+
+    const handleSubmit = async (data: ICommentFormData) => {
+        try {
+            // Show loading state
+            const submitBtn = document.querySelector(
+                ".form .btn-submit",
+            ) as HTMLButtonElement;
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+            }
+
+            const formData = new FormData();
+
+            // Add all form data
+            if (data.parentId) formData.append("parentId", data.parentId);
+            formData.append("name", data.name);
+            formData.append("email", data.email);
+            formData.append("message", data.message);
+            if (data.saveAuthorData) formData.append("saveAuthorData", "on");
+
+            const response = await fetch("/api/comments", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log("Success:", result);
+
+                // Save author data to localStorage if requested
+                if (result.saveAuthorData && result.authorData) {
+                    localStorage.setItem(
+                        "commentAuthorData",
+                        JSON.stringify(result.authorData),
+                    );
+                }
+
+                alert(result.message);
+            } else {
+                throw new Error(result.error || "Failed to submit comment");
+            }
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+            alert("Failed to submit comment. Please try again.");
+        } finally {
+            // Reset button state
+            const submitBtn = document.querySelector(
+                ".form .btn-submit",
+            ) as HTMLButtonElement;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit";
+            }
+        }
+    };
+
+    // Load saved author data
+    function loadSavedAuthorData() {
+        try {
+            const savedData = localStorage.getItem("commentAuthorData");
+            if (savedData) {
+                const authorData = JSON.parse(savedData);
+                return authorData;
+            }
+        } catch (error) {
+            console.error("Error loading saved author data:", error);
+        }
+        return null;
+    }
+
+    // Pre-fill form with saved data
+    function prefillForm(form: HTMLFormElement) {
+        const savedData = loadSavedAuthorData();
+        if (savedData) {
+            const nameInput = form.querySelector(
+                'input[name="name"]',
+            ) as HTMLInputElement;
+            const emailInput = form.querySelector(
+                'input[name="email"]',
+            ) as HTMLInputElement;
+            const saveDataCheckbox = form.querySelector(
+                'input[name="saveAuthorData"]',
+            ) as HTMLInputElement;
+
+            if (nameInput && !nameInput.value)
+                nameInput.value = savedData.name || "";
+            if (emailInput && !emailInput.value)
+                emailInput.value = savedData.email || "";
+            if (saveDataCheckbox) saveDataCheckbox.checked = true;
+        }
+    }
+
+    // Toggle reply forms
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle reply button clicks
+        document.addEventListener("click", function (e) {
+            const target = e.target as HTMLElement;
+
+            if (target.matches('[data-action="show-reply"]')) {
+                e.preventDefault();
+
+                const commentContainer = target.closest(".comment");
+                const replyForm = commentContainer?.querySelector(
+                    "[data-reply-form]",
+                ) as HTMLElement;
+                const form = replyForm?.querySelector(
+                    "form",
+                ) as HTMLFormElement;
+
+                if (replyForm && form) {
+                    replyForm.style.display = "block";
+                    target.style.display = "none";
+
+                    prefillForm(form);
+
+                    // const isVisible = replyForm.style.display !== "none";
+
+                    // Focus on message input if opening
+                    // if (!isVisible) {
+                    setTimeout(() => {
+                        const nameInput = replyForm.querySelector(
+                            'input[name="message"]',
+                        ) as HTMLInputElement;
+                        nameInput?.focus();
+                    }, 100);
+                    // }
+                }
+            }
+
+            // Handle cancel buttons
+            if (target.matches('[data-action="cancel"]')) {
+                e.preventDefault();
+
+                const replyForm = target.closest(
+                    "[data-reply-form]",
+                ) as HTMLElement;
+                const commentContainer = target.closest(".comment");
+                const replyButton = commentContainer?.querySelector(
+                    '[data-action="show-reply"]',
+                ) as HTMLElement;
+
+                if (replyButton) {
+                    replyButton.style.display = "block";
+                }
+
+                if (replyForm) {
+                    replyForm.style.display = "none";
+
+                    // Clear form
+                    const form = replyForm.querySelector("form");
+                    if (form) form.reset();
+                }
+            }
+        });
+
+        // Handle form submission
+        document.addEventListener("submit", function (e) {
+            const target = e.target as HTMLFormElement;
+
+            if (target.matches(".form")) {
+                e.preventDefault();
+
+                const formData = new FormData(target);
+                const parentId = target.dataset.parentId;
+
+                const data: ICommentFormData = {
+                    parentId: parentId || undefined,
+                    name: formData.get("name") as string,
+                    email: formData.get("email") as string,
+                    message: formData.get("message") as string,
+                    saveAuthorData: formData.get("saveAuthorData") === "on",
+                };
+
+                handleSubmit(data);
+
+                // TODO: show success message or handle the submission
+
+                // Hide form and reset
+                // const replyForm = target.closest(
+                //     "[data-reply-form]",
+                // ) as HTMLElement;
+
+                // const commentContainer = target.closest(".comment");
+                // const replyButton = commentContainer?.querySelector(
+                //     '[data-action="show-reply"]',
+                // ) as HTMLElement;
+
+                // if (replyButton) {
+                //     replyButton.style.display = "block";
+                // }
+
+                // if (replyForm) {
+                //     replyForm.style.display = "none";
+                //     target.reset();
+                // }
+            }
+        });
+    });
+</script>
