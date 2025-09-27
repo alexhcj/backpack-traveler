@@ -7,35 +7,87 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
-// Helper function to generate slug from name
-function generateSlug(name: string, parentId?: string): string {
+// Helper function to generate simple slug with UUID-like ID
+function generateSlug(name: string): string {
   const baseSlug = name
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
-    .trim();
+    .trim()
+    .slice(0, 20); // Limit length
 
   const timestamp = Date.now();
+  const randomId = Math.random().toString(36).substr(2, 9);
 
-  if (parentId) {
-    return `${baseSlug}-reply-to-${parentId}-${timestamp}`;
+  return `${baseSlug}-${timestamp}-${randomId}`;
+}
+
+// Helper function to get comment level and root parent
+async function getCommentHierarchy(parentId: string) {
+  try {
+    const commentsDir = path.join(process.cwd(), "src/content/comments");
+    const parentFilePath = path.join(commentsDir, `${parentId}.md`);
+
+    if (!existsSync(parentFilePath)) {
+      return { level: 1, rootParentId: null };
+    }
+
+    const fs = await import("node:fs/promises");
+    const content = await fs.readFile(parentFilePath, "utf-8");
+
+    // Extract frontmatter
+    const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
+    if (!frontmatterMatch) {
+      return { level: 1, rootParentId: null };
+    }
+
+    const frontmatter = frontmatterMatch[1];
+    const parentIdMatch = frontmatter.match(/parentId:\s*(.+)/);
+    const levelMatch = frontmatter.match(/level:\s*(\d+)/);
+    const rootParentIdMatch = frontmatter.match(/rootParentId:\s*(.+)/);
+
+    if (!parentIdMatch) {
+      // This is a level 1 comment, so reply will be level 2
+      return { level: 2, rootParentId: parentId };
+    }
+
+    const parentLevel = levelMatch ? parseInt(levelMatch[1]) : 2;
+    const rootParentId = rootParentIdMatch ? rootParentIdMatch[1] : parentId;
+
+    // Max 3 levels
+    const newLevel = Math.min(parentLevel + 1, 3);
+
+    return { level: newLevel, rootParentId };
+  } catch (error) {
+    console.error("Failed to get comment hierarchy:", error);
+    return { level: 2, rootParentId: parentId };
   }
-
-  return `${baseSlug}-comment-${timestamp}`;
 }
 
 // Helper function to create markdown frontmatter
-function createFrontmatter(data: ICommentFormData, slug: string): string {
+function createFrontmatter(
+  data: ICommentFormData,
+  slug: string,
+  level: number,
+  rootParentId: string | null,
+): string {
   const now = new Date();
 
   let frontmatter = `---
 name: ${data.name}
-date: ${now.toISOString().split("T")[0]}`;
+date: ${now.toISOString().split("T")[0]}
+level: ${level}`;
 
   if (data.parentId) {
     frontmatter += `\nparentId: ${data.parentId}`;
-  } else {
+  }
+
+  if (rootParentId) {
+    frontmatter += `\nrootParentId: ${rootParentId}`;
+  }
+
+  if (level < 3) {
     frontmatter += `\nhasReplies: false`;
   }
 
@@ -90,10 +142,26 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const slug = generateSlug(data.name, data.parentId);
+    // Get hierarchy info
+    const { level, rootParentId } = data.parentId
+      ? await getCommentHierarchy(data.parentId)
+      : { level: 1, rootParentId: null };
+
+    // Check if trying to reply to level 3 comment
+    if (level > 3) {
+      return new Response(
+        JSON.stringify({ error: "Maximum comment depth reached" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    }
+
+    const slug = generateSlug(data.name);
 
     // Create the markdown content
-    const frontmatter = createFrontmatter(data, slug);
+    const frontmatter = createFrontmatter(data, slug, level, rootParentId);
     const markdownContent = frontmatter + data.message;
 
     // Ensure comments directory exists
@@ -111,13 +179,13 @@ export const POST: APIRoute = async ({ request }) => {
       await updateParentComment(data.parentId);
     }
 
-    // Handle saveAuthorData (store in localStorage via response)
     const response = {
       success: true,
       message: data.parentId
         ? "Reply submitted successfully!"
         : "Comment submitted successfully!",
       slug: slug,
+      level: level,
       saveAuthorData: data.saveAuthorData,
       authorData: data.saveAuthorData
         ? {

@@ -1,6 +1,9 @@
 // comments for posts
 export interface IComment {
   parentId?: string;
+  rootParentId?: string;
+  level: number;
+  hasReplies: boolean;
   name: string;
   email: string;
   message: string;

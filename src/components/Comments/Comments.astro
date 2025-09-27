@@ -1,58 +1,61 @@
 ---
 import { getCollection } from "astro:content";
-import Comment from "./Comment.astro";
 import CommentForm from "../shared/CommentForm.astro";
+import CommentThread from "./CommentThread.astro";
 
 const allComments = await getCollection("comments");
 
-// Separate main comments from replies
-const mainComments = allComments
-    .filter((comment) => !comment.data.parentId)
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-    .slice(0, 6);
+// Build comment hierarchy
+function buildCommentHierarchy(comments: typeof allComments) {
+    const commentMap = new Map();
+    const rootComments: any[] = [];
 
-// Group replies by parent
-const repliesByParent = allComments
-    .filter((comment) => comment.data.parentId)
-    .reduce(
-        (acc, reply) => {
-            const parentId = reply.data.parentId;
-            if (parentId) {
-                if (!acc[parentId]) acc[parentId] = [];
-                acc[parentId].push(reply);
-            }
-            return acc;
-        },
-        {} as Record<string, typeof allComments>,
-    );
+    // First, create a map of all comments
+    comments.forEach((comment) => {
+        commentMap.set(comment.id, {
+            ...comment,
+            children: [],
+        });
+    });
 
-// Sort replies by date
-Object.keys(repliesByParent).forEach((parentId) => {
-    repliesByParent[parentId].sort(
-        (a, b) => a.data.date.getTime() - b.data.date.getTime(),
-    );
-});
+    // Then, build the hierarchy
+    comments.forEach((comment) => {
+        const commentWithChildren = commentMap.get(comment.id);
+
+        if (comment.data.parentId && commentMap.has(comment.data.parentId)) {
+            // This is a reply, add it to parent's children
+            const parent = commentMap.get(comment.data.parentId);
+            parent.children.push(commentWithChildren);
+
+            // Sort children by date
+            parent.children.sort(
+                (a: any, b: any) =>
+                    a.data.date.getTime() - b.data.date.getTime(),
+            );
+        } else {
+            // This is a root comment
+            rootComments.push(commentWithChildren);
+        }
+    });
+
+    // Sort root comments by date (newest first)
+    rootComments.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+    return rootComments.slice(0, 6); // Limit to 6 main threads
+}
+
+const commentHierarchy = buildCommentHierarchy(allComments);
 ---
 
 <section class="section">
     {
-        mainComments.length > 0 && (
+        commentHierarchy.length > 0 && (
             <div>
                 <h3 class="title">Comments:</h3>
                 <div class="list">
-                    {mainComments.map((comment) => (
-                        <div class="comment-thread">
-                            <Comment comment={comment} />
-                            {repliesByParent[comment.id] && (
-                                <div class="replies">
-                                    {repliesByParent[comment.id].map(
-                                        (reply) => (
-                                            <Comment comment={reply} />
-                                        ),
-                                    )}
-                                </div>
-                            )}
-                        </div>
+                    {commentHierarchy.map((comment) => (
+                        // recursive component for rendering comment threads
+                        <CommentThread comment={comment} level={1} />
                     ))}
                 </div>
             </div>
@@ -81,9 +84,6 @@ Object.keys(repliesByParent).forEach((parentId) => {
         gap: 40px;
         padding-bottom: 48px;
     }
-    .replies {
-        padding-left: 145px;
-    }
 </style>
 
 <script>
@@ -91,7 +91,6 @@ Object.keys(repliesByParent).forEach((parentId) => {
 
     const handleSubmit = async (data: ICommentFormData) => {
         try {
-            // Show loading state
             const submitBtn = document.querySelector(
                 ".form .btn-submit",
             ) as HTMLButtonElement;
@@ -103,7 +102,6 @@ Object.keys(repliesByParent).forEach((parentId) => {
 
             const formData = new FormData();
 
-            // Add all form data
             if (data.parentId) formData.append("parentId", data.parentId);
             formData.append("name", data.name);
             formData.append("email", data.email);
@@ -120,7 +118,6 @@ Object.keys(repliesByParent).forEach((parentId) => {
             if (response.ok) {
                 console.log("Success:", result);
 
-                // Save author data to localStorage if requested
                 if (result.saveAuthorData && result.authorData) {
                     localStorage.setItem(
                         "commentAuthorData",
@@ -129,14 +126,20 @@ Object.keys(repliesByParent).forEach((parentId) => {
                 }
 
                 alert(result.message);
+
+                // Reload page to show new comment
+                window.location.reload();
             } else {
                 throw new Error(result.error || "Failed to submit comment");
             }
         } catch (error) {
             console.error("Error submitting comment:", error);
-            alert("Failed to submit comment. Please try again.");
+            alert(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to submit comment. Please try again.",
+            );
         } finally {
-            // Reset button state
             const submitBtn = document.querySelector(
                 ".form .btn-submit",
             ) as HTMLButtonElement;

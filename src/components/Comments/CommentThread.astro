@@ -1,0 +1,36 @@
+---
+import Comment from "./Comment.astro";
+
+interface Props {
+    comment: any;
+    level?: number;
+}
+
+const { comment, level = 1 } = Astro.props;
+---
+
+<div class={`comment-thread level-${level}`}>
+    <Comment comment={comment} level={level} />
+    {
+        comment.children && comment.children.length > 0 && (
+            <div class="children">
+                {comment.children.map((child: any) => (
+                    <Astro.self comment={child} level={level + 1} />
+                ))}
+            </div>
+        )
+    }
+</div>
+
+<style>
+    .comment-thread {
+        position: relative;
+    }
+
+    .comment-thread.level-2 {
+        margin-left: 145px;
+        margin-top: 40px;
+    }
+
+    /* TODO: add toggle button styles */
+</style>

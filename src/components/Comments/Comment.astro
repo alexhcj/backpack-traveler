@@ -9,22 +9,50 @@ import CommentForm from "../shared/CommentForm.astro";
 
 interface Props {
     comment: CollectionEntry<"comments">;
+    level?: number;
 }
 
-const { comment } = Astro.props;
+const { comment, level = 1 } = Astro.props;
 const { Content } = await render(comment);
 const {
     id,
-    data: { name, avatar, date, parentId, hasReplies },
+    data: { name, avatar, date, parentId, hasReplies, level: commentLevel },
 } = comment;
 
+const actualLevel = level || commentLevel || 1;
+// const canReply = actualLevel < 3;
 const avatarAlt = name ? `${name}'s avatar` : "Default user avatar";
 const publicAvatarPath = avatar ? `/user-uploads/${avatar}` : null;
 const usePublicAvatar = avatar && avatar !== "";
 ---
 
-<div class={`comment ${parentId ? "reply" : "main-comment"}`}>
-    {hasReplies && <Image class="icon" src={tablerSvg} alt="Tabler Icon" />}
+<div
+    class={`comment level-${actualLevel} ${parentId ? "reply" : "main-comment"}`}
+>
+    {
+        hasReplies && actualLevel === 1 && (
+            <Image class="icon" src={tablerSvg} alt="Thread indicator" />
+        )
+    }
+
+    {
+        actualLevel >= 3 && (
+            <div class="depth-indicator">
+                <span class="depth-badge">L{actualLevel}</span>
+            </div>
+        )
+    }
+
+    {
+        hasReplies && actualLevel > 2 && (
+            <div class="threads-toggler">
+                <button class="btn-show-threads" type="button">
+                    Show thread (3)
+                </button>
+            </div>
+        )
+    }
+
     {
         usePublicAvatar ? (
             <img
@@ -56,10 +84,12 @@ const usePublicAvatar = avatar && avatar !== "";
         <div class="comment-text">
             <Content />
         </div>
+
         <button class="btn-reply" data-action="show-reply">Reply...</button>
 
         <div class="reply-form-container" data-reply-form>
             <h3 class="title">Reply to {name}</h3>
+            <button class="btn-cancel" data-action="cancel"> Cancel </button>
             <CommentForm parentId={id} />
         </div>
     </div>
@@ -75,8 +105,9 @@ const usePublicAvatar = avatar && avatar !== "";
         border: 1px solid var(--color-border-2);
 
         &.reply {
-            margin-top: 40px;
+            margin-top: 20px;
         }
+
         .icon {
             position: absolute;
             bottom: -58px;
@@ -85,17 +116,42 @@ const usePublicAvatar = avatar && avatar !== "";
             height: 25px;
         }
     }
+
+    .depth-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .depth-badge {
+        background: var(--color-accent);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .threads-toggler {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+    }
+
     .avatar {
         margin-top: 10px;
         width: 96px;
         height: 96px;
     }
+
     .meta {
         display: flex;
         align-items: center;
         gap: 11px;
         margin-bottom: 7px;
+        flex-wrap: wrap;
     }
+
     .name {
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-m);
@@ -104,6 +160,7 @@ const usePublicAvatar = avatar && avatar !== "";
         font-weight: var(--weight-medium);
         color: var(--color-black);
     }
+
     .date {
         line-height: 2.1em;
         font-size: 15px;
@@ -111,6 +168,7 @@ const usePublicAvatar = avatar && avatar !== "";
         color: var(--color-accent);
         font-family: var(--family-lora);
     }
+
     .comment-text {
         p {
             margin-bottom: 5px;
@@ -122,6 +180,7 @@ const usePublicAvatar = avatar && avatar !== "";
             margin-bottom: 22px;
         }
     }
+
     .btn-reply {
         text-transform: uppercase;
         letter-spacing: 0.2em;
@@ -135,14 +194,31 @@ const usePublicAvatar = avatar && avatar !== "";
             color: var(--color-grey-2);
         }
     }
+
     .reply-form-container {
         display: none;
     }
+
     .title {
         margin-bottom: 10px;
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-m);
         line-height: 1.33em;
         font-size: 14px;
+    }
+
+    .btn-cancel {
+        margin-top: 10px;
+        padding: 5px 15px;
+        background: var(--color-grey-2);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        text-transform: uppercase;
+
+        &:hover {
+            background: var(--color-grey-3);
+        }
     }
 </style>
