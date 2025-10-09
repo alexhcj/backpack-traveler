@@ -4,15 +4,24 @@ import { render, type CollectionEntry } from "astro:content";
 import { convertISODate } from "../../utils/utils";
 import defaultAvatar from "../../assets/images/avatars/default-avatar.webp";
 import tablerSvg from "../../assets/svg/tabler.svg";
+import arrowSvg from "../../assets/svg/arrow.svg";
 
 import CommentForm from "../shared/CommentForm.astro";
 
 interface Props {
     comment: CollectionEntry<"comments">;
     level?: number;
+    childrenCount?: number;
+    showToggleButton?: boolean;
 }
 
-const { comment, level = 1 } = Astro.props;
+const {
+    comment,
+    level = 1,
+    childrenCount = 0,
+    showToggleButton = false,
+} = Astro.props;
+
 const { Content } = await render(comment);
 const {
     id,
@@ -20,15 +29,12 @@ const {
 } = comment;
 
 const actualLevel = level || commentLevel || 1;
-// const canReply = actualLevel < 3;
 const avatarAlt = name ? `${name}'s avatar` : "Default user avatar";
 const publicAvatarPath = avatar ? `/user-uploads/${avatar}` : null;
 const usePublicAvatar = avatar && avatar !== "";
 ---
 
-<div
-    class={`comment level-${actualLevel} ${parentId ? "reply" : "main-comment"}`}
->
+<div class={`comment level-${actualLevel}`} data-comment-id={id}>
     {
         hasReplies && actualLevel === 1 && (
             <Image class="icon" src={tablerSvg} alt="Thread indicator" />
@@ -39,16 +45,6 @@ const usePublicAvatar = avatar && avatar !== "";
         actualLevel >= 3 && (
             <div class="depth-indicator">
                 <span class="depth-badge">L{actualLevel}</span>
-            </div>
-        )
-    }
-
-    {
-        hasReplies && actualLevel > 2 && (
-            <div class="threads-toggler">
-                <button class="btn-show-threads" type="button">
-                    Show thread (3)
-                </button>
             </div>
         )
     }
@@ -74,22 +70,54 @@ const usePublicAvatar = avatar && avatar !== "";
         )
     }
 
-    <div>
+    <div class="content">
         <div class="meta">
             <h4 class="name">{name}</h4>
             <span class="date">
                 {convertISODate(date)}
             </span>
         </div>
+
         <div class="comment-text">
             <Content />
         </div>
 
-        <button class="btn-reply" data-action="show-reply">Reply...</button>
+        <div class="actions">
+            <button class="btn-reply" data-action="show-reply">
+                Reply...
+            </button>
+
+            {/* Toggle button for showing/hiding nested comments */}
+            {
+                showToggleButton && (
+                    <div class="thread-toggle">
+                        <button
+                            class="btn-toggle-thread"
+                            data-action="toggle-thread"
+                            data-target={id}
+                            data-count={childrenCount}
+                        >
+                            <span class="toggle-text">
+                                Show thread ({childrenCount})
+                            </span>
+                            <Image
+                                class="toggle-icon"
+                                src={arrowSvg}
+                                alt="Thread toggle icon"
+                            />
+                        </button>
+                    </div>
+                )
+            }
+        </div>
 
         <div class="reply-form-container" data-reply-form>
-            <h3 class="title">Reply to {name}</h3>
-            <button class="btn-cancel" data-action="cancel"> Cancel </button>
+            <div class="form-header">
+                <h3 class="title">Reply to {name}</h3>
+                <button class="btn-cancel" data-action="cancel">
+                    Cancel reply
+                </button>
+            </div>
             <CommentForm parentId={id} />
         </div>
     </div>
@@ -103,10 +131,6 @@ const usePublicAvatar = avatar && avatar !== "";
         gap: 28px;
         padding: 22px 29px 27px;
         border: 1px solid var(--color-border-2);
-
-        &.reply {
-            margin-top: 20px;
-        }
 
         .icon {
             position: absolute;
@@ -132,16 +156,15 @@ const usePublicAvatar = avatar && avatar !== "";
         font-weight: bold;
     }
 
-    .threads-toggler {
-        position: absolute;
-        right: 15px;
-        bottom: 15px;
-    }
-
     .avatar {
         margin-top: 10px;
         width: 96px;
         height: 96px;
+        border-radius: 4px;
+    }
+
+    .content {
+        width: 100%;
     }
 
     .meta {
@@ -170,15 +193,29 @@ const usePublicAvatar = avatar && avatar !== "";
     }
 
     .comment-text {
+        margin-bottom: 20px;
+
         p {
             margin-bottom: 5px;
             color: var(--color-grey-4);
             font-family: var(--family-lora);
+            line-height: 1.6;
         }
 
         p:last-child {
-            margin-bottom: 22px;
+            margin-bottom: 0;
         }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .actions > :nth-child(2) {
+        margin-left: auto;
     }
 
     .btn-reply {
@@ -189,36 +226,66 @@ const usePublicAvatar = avatar && avatar !== "";
         color: var(--color-black);
         cursor: pointer;
         transition: var(--transition-default);
+        border: none;
+        background: none;
 
         &:hover {
             color: var(--color-grey-2);
         }
     }
 
+    .btn-toggle-thread {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        color: var(--color-dark);
+        transition: var(--transition-default-2s);
+
+        .toggle-icon {
+            transition: transform 0.2s ease;
+            width: 14px;
+            height: 14px;
+        }
+
+        &.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+    }
+
     .reply-form-container {
         display: none;
+        background: var(--color-light-1);
+        border: 1px solid var(--color-border-1);
+        border-radius: 4px;
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
     }
 
     .title {
-        margin-bottom: 10px;
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-m);
         line-height: 1.33em;
         font-size: 14px;
+        margin: 0;
     }
 
     .btn-cancel {
-        margin-top: 10px;
-        padding: 5px 15px;
-        background: var(--color-grey-2);
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 12px;
         text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        font-size: 12px;
+        color: var(--color-accent);
+        cursor: pointer;
+        transition: var(--transition-default-2);
 
         &:hover {
-            background: var(--color-grey-3);
+            color: var(--color-black);
         }
     }
 </style>

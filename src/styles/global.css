@@ -53,6 +53,8 @@
     --transition-image: all 0.7s;
     --transition-svg: 0.3s;
 
+    --animation-comment-toggle: fadeIn 0.3s ease-in-out;
+
     --img-hover-scale: 1.04;
 
     --bkg: 222 47.4% 11.2%;

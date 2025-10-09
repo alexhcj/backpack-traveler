@@ -54,7 +54,6 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 <h3 class="title">Comments:</h3>
                 <div class="list">
                     {commentHierarchy.map((comment) => (
-                        // recursive component for rendering comment threads
                         <CommentThread comment={comment} level={1} />
                     ))}
                 </div>
@@ -89,6 +88,7 @@ const commentHierarchy = buildCommentHierarchy(allComments);
 <script>
     import type { ICommentFormData } from "../../types/comments";
 
+    // Handle comment form submission
     const handleSubmit = async (data: ICommentFormData) => {
         try {
             const submitBtn = document.querySelector(
@@ -126,8 +126,6 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 }
 
                 alert(result.message);
-
-                // Reload page to show new comment
                 window.location.reload();
             } else {
                 throw new Error(result.error || "Failed to submit comment");
@@ -186,12 +184,56 @@ const commentHierarchy = buildCommentHierarchy(allComments);
         }
     }
 
-    // Toggle reply forms
+    // Toggle thread visibility
+    function toggleThread(targetId: string, button: HTMLButtonElement) {
+        const threadElement = document.querySelector(
+            `[data-thread-id="${targetId}"]`,
+        );
+        const childrenElement = threadElement?.querySelector(
+            `[data-children="${targetId}"]`,
+        );
+
+        if (!childrenElement || !button) return;
+
+        const isHidden = childrenElement.classList.contains("hidden");
+        const toggleText = button.querySelector(".toggle-text");
+        const count = button.dataset.count || "0";
+
+        if (isHidden) {
+            childrenElement.classList.remove("hidden");
+            childrenElement.classList.add("show");
+            button.classList.add("expanded");
+            if (toggleText) toggleText.textContent = `Hide thread (${count})`;
+        } else {
+            childrenElement.classList.add("hidden");
+            childrenElement.classList.remove("show");
+            button.classList.remove("expanded");
+            if (toggleText) toggleText.textContent = `Show thread (${count})`;
+        }
+    }
+
+    // Main event listener
     document.addEventListener("DOMContentLoaded", function () {
-        // Handle reply button clicks
         document.addEventListener("click", function (e) {
             const target = e.target as HTMLElement;
 
+            // Handle thread toggle
+            if (
+                target.matches('[data-action="toggle-thread"]') ||
+                target.closest('[data-action="toggle-thread"]')
+            ) {
+                e.preventDefault();
+                const button = target.closest(
+                    '[data-action="toggle-thread"]',
+                ) as HTMLButtonElement;
+                const targetId = button?.dataset.target;
+
+                if (targetId && button) {
+                    toggleThread(targetId, button);
+                }
+            }
+
+            // Handle reply button clicks
             if (target.matches('[data-action="show-reply"]')) {
                 e.preventDefault();
 
@@ -209,17 +251,12 @@ const commentHierarchy = buildCommentHierarchy(allComments);
 
                     prefillForm(form);
 
-                    // const isVisible = replyForm.style.display !== "none";
-
-                    // Focus on message input if opening
-                    // if (!isVisible) {
                     setTimeout(() => {
-                        const nameInput = replyForm.querySelector(
-                            'input[name="message"]',
-                        ) as HTMLInputElement;
-                        nameInput?.focus();
+                        const messageInput = replyForm.querySelector(
+                            'textarea[name="message"]',
+                        ) as HTMLTextAreaElement;
+                        messageInput?.focus();
                     }, 100);
-                    // }
                 }
             }
 
@@ -242,7 +279,6 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 if (replyForm) {
                     replyForm.style.display = "none";
 
-                    // Clear form
                     const form = replyForm.querySelector("form");
                     if (form) form.reset();
                 }
@@ -268,27 +304,6 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 };
 
                 handleSubmit(data);
-
-                // TODO: show success message or handle the submission
-
-                // Hide form and reset
-                // const replyForm = target.closest(
-                //     "[data-reply-form]",
-                // ) as HTMLElement;
-
-                // const commentContainer = target.closest(".comment");
-                // const replyButton = commentContainer?.querySelector(
-                //     '[data-action="show-reply"]',
-                // ) as HTMLElement;
-
-                // if (replyButton) {
-                //     replyButton.style.display = "block";
-                // }
-
-                // if (replyForm) {
-                //     replyForm.style.display = "none";
-                //     target.reset();
-                // }
             }
         });
     });

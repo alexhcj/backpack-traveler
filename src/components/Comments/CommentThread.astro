@@ -7,13 +7,38 @@ interface Props {
 }
 
 const { comment, level = 1 } = Astro.props;
+
+// Count total nested replies (recursive)
+function countNestedReplies(comment: any): number {
+    let count = 0;
+    if (comment.children && comment.children.length > 0) {
+        count += comment.children.length;
+        comment.children.forEach((child: any) => {
+            count += countNestedReplies(child);
+        });
+    }
+    return count;
+}
+
+const hasChildren = comment.children && comment.children.length > 0;
+const childrenCount = countNestedReplies(comment);
+const showToggleButton = hasChildren && level >= 2; // Show toggle for level 2 and deeper
 ---
 
-<div class={`comment-thread level-${level}`}>
-    <Comment comment={comment} level={level} />
+<div class={`comment-thread level-${level}`} data-thread-id={comment.id}>
+    <Comment
+        comment={comment}
+        level={level}
+        childrenCount={childrenCount}
+        showToggleButton={showToggleButton}
+    />
+
     {
-        comment.children && comment.children.length > 0 && (
-            <div class="children">
+        hasChildren && (
+            <div
+                class={`children ${level >= 2 ? "hidden" : ""}`}
+                data-children={comment.id}
+            >
                 {comment.children.map((child: any) => (
                     <Astro.self comment={child} level={level + 1} />
                 ))}
@@ -32,5 +57,32 @@ const { comment, level = 1 } = Astro.props;
         margin-top: 40px;
     }
 
-    /* TODO: add toggle button styles */
+    .comment-thread.level-3 {
+        margin-top: 30px;
+    }
+
+    /* Hide children by default for level 2 and deeper */
+    .children.hidden {
+        display: none;
+    }
+
+    .children {
+        transition: var(--transition-default-3);
+    }
+
+    .children.show {
+        display: block;
+        animation: var(--animation-comment-toggle);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
