@@ -123,7 +123,7 @@ const usePublicAvatar = avatar && avatar !== "";
                     Cancel reply
                 </button>
             </div>
-            <CommentForm parentId={id} />
+            <CommentForm parentId={id} postSlug={comment.data.postSlug} />
         </div>
     </div>
 </div>
@@ -165,7 +165,6 @@ const usePublicAvatar = avatar && avatar !== "";
         margin-top: 10px;
         width: 96px;
         height: 96px;
-        border-radius: 4px;
     }
 
     .content {

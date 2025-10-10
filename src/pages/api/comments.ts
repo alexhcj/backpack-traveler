@@ -108,7 +108,7 @@ function createFrontmatter(
 name: ${data.name}
 email: ${data.email}
 date: ${now.toISOString().split("T")[0]}
-level: ${level}`;
+postSlug: ${data.postSlug}`;
 
   if (data.parentId) {
     frontmatter += `\nparentId: ${data.parentId}`;
@@ -156,6 +156,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const data: ICommentFormData = {
       parentId: (formData.get("parentId") as string) || undefined,
+      postSlug: formData.get("postSlug") as string,
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       message: formData.get("message") as string,
@@ -163,7 +164,7 @@ export const POST: APIRoute = async ({ request }) => {
     };
 
     // Validate required fields
-    if (!data.name || !data.email || !data.message) {
+    if (!data.name || !data.email || !data.message || !data.postSlug) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         {

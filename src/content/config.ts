@@ -7,6 +7,7 @@ const commentsCollection = defineCollection({
     name: z.string(),
     email: z.string().email(),
     date: z.date(),
+    postSlug: z.string(),
     parentId: z.string().optional(),
     rootParentId: z.string().optional(),
     level: z.number().default(1),

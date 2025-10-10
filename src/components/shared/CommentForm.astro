@@ -1,13 +1,14 @@
 ---
 interface Props {
     parentId?: string;
+    postSlug: string;
 }
 
-const { parentId } = Astro.props;
+const { parentId, postSlug } = Astro.props;
 ---
 
 <div class="box">
-    <form class="form" data-parent-id={parentId}>
+    <form class="form" data-parent-id={parentId} data-post-slug={postSlug}>
         <div class="field textarea">
             <textarea
                 name="message"

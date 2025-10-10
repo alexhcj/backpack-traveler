@@ -3,10 +3,20 @@ import { getCollection } from "astro:content";
 import CommentForm from "../shared/CommentForm.astro";
 import CommentThread from "./CommentThread.astro";
 
+interface Props {
+    postSlug: string;
+}
+
+const { postSlug } = Astro.props;
+
 const allComments = await getCollection("comments");
 
+const postComments = allComments.filter(
+    (comment) => comment.data.postSlug === postSlug,
+);
+
 // Build comment hierarchy
-function buildCommentHierarchy(comments: typeof allComments) {
+function buildCommentHierarchy(comments: typeof postComments) {
     const commentMap = new Map();
     const rootComments: any[] = [];
 
@@ -44,7 +54,7 @@ function buildCommentHierarchy(comments: typeof allComments) {
     return rootComments.slice(0, 6); // Limit to 6 main threads
 }
 
-const commentHierarchy = buildCommentHierarchy(allComments);
+const commentHierarchy = buildCommentHierarchy(postComments);
 ---
 
 <section class="section">
@@ -61,7 +71,7 @@ const commentHierarchy = buildCommentHierarchy(allComments);
         )
     }
     <h3 class="title">Post a comment</h3>
-    <CommentForm />
+    <CommentForm postSlug={postSlug} />
 </section>
 
 <style>
@@ -103,6 +113,7 @@ const commentHierarchy = buildCommentHierarchy(allComments);
             const formData = new FormData();
 
             if (data.parentId) formData.append("parentId", data.parentId);
+            formData.append("postSlug", data.postSlug);
             formData.append("name", data.name);
             formData.append("email", data.email);
             formData.append("message", data.message);
@@ -364,9 +375,11 @@ const commentHierarchy = buildCommentHierarchy(allComments);
 
                 const formData = new FormData(target);
                 const parentId = target.dataset.parentId;
+                const postSlug = target.dataset.postSlug;
 
                 const data: ICommentFormData = {
                     parentId: parentId || undefined,
+                    postSlug: postSlug || "",
                     name: formData.get("name") as string,
                     email: formData.get("email") as string,
                     message: formData.get("message") as string,

@@ -7,6 +7,7 @@ import BaseLayout from "./Layout.astro";
 import PostMeta from "../components/PostMeta.astro";
 import { EHeader } from "../types/header";
 import { normalizeStrToAmpersand } from "../utils/utils";
+import Comments from "../components/Comments/Comments.astro";
 
 interface Props {
     frontmatter: Post;
@@ -16,6 +17,7 @@ const {
     frontmatter: {
         title,
         image,
+        slug,
         destination,
         categories,
         author,
@@ -67,6 +69,7 @@ const {
                     commentsCount={0}
                 />
             </div>
+            <Comments postSlug={slug} />
         </article>
         <!-- <div class="pagination">
                     <div class="prev-post">Prev</div>
