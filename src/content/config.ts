@@ -5,6 +5,7 @@ const commentsCollection = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/comments" }),
   schema: z.object({
     name: z.string(),
+    email: z.string().email(),
     date: z.date(),
     parentId: z.string().optional(),
     rootParentId: z.string().optional(),

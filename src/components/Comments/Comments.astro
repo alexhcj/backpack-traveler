@@ -165,9 +165,10 @@ const commentHierarchy = buildCommentHierarchy(allComments);
     // Check if user is the author of a comment and hide reply button
     function checkAndHideOwnCommentReplies() {
         const savedData = loadSavedAuthorData();
-        if (!savedData || !savedData.name) return;
+        if (!savedData || !savedData.name || !savedData.email) return;
 
         const currentUserName = savedData.name.toLowerCase().trim();
+        const currentUserEmail = savedData.email.toLowerCase().trim();
 
         // Find all comments
         const comments = document.querySelectorAll(".comment");
@@ -178,9 +179,17 @@ const commentHierarchy = buildCommentHierarchy(allComments);
             )
                 .toLowerCase()
                 .trim();
+            const commentAuthorEmail = (
+                comment.getAttribute("data-author-email") || ""
+            )
+                .toLowerCase()
+                .trim();
 
-            // If the current user is the author of this comment
-            if (commentAuthorName === currentUserName) {
+            // If the current user is the author of this comment (match both name AND email)
+            if (
+                commentAuthorName === currentUserName &&
+                commentAuthorEmail === currentUserEmail
+            ) {
                 const replyButton = comment.querySelector(
                     ".btn-reply",
                 ) as HTMLElement;
@@ -273,15 +282,27 @@ const commentHierarchy = buildCommentHierarchy(allComments);
 
                 // Check if user is trying to reply to their own comment
                 const savedData = loadSavedAuthorData();
-                if (savedData && savedData.name) {
+                if (savedData && savedData.name && savedData.email) {
                     const commentAuthorName = (
                         commentContainer?.getAttribute("data-author-name") || ""
                     )
                         .toLowerCase()
                         .trim();
+                    const commentAuthorEmail = (
+                        commentContainer?.getAttribute("data-author-email") ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .trim();
                     const currentUserName = savedData.name.toLowerCase().trim();
+                    const currentUserEmail = savedData.email
+                        .toLowerCase()
+                        .trim();
 
-                    if (commentAuthorName === currentUserName) {
+                    if (
+                        commentAuthorName === currentUserName &&
+                        commentAuthorEmail === currentUserEmail
+                    ) {
                         alert("You cannot reply to your own comment");
                         return;
                     }

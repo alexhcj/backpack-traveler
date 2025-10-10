@@ -30,7 +30,12 @@ async function getCommentHierarchy(parentId: string) {
     const parentFilePath = path.join(commentsDir, `${parentId}.md`);
 
     if (!existsSync(parentFilePath)) {
-      return { level: 1, rootParentId: null, parentAuthorName: null };
+      return {
+        level: 1,
+        rootParentId: null,
+        parentAuthorName: null,
+        parentAuthorEmail: null,
+      };
     }
 
     const fs = await import("node:fs/promises");
@@ -39,7 +44,12 @@ async function getCommentHierarchy(parentId: string) {
     // Extract frontmatter
     const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
     if (!frontmatterMatch) {
-      return { level: 1, rootParentId: null, parentAuthorName: null };
+      return {
+        level: 1,
+        rootParentId: null,
+        parentAuthorName: null,
+        parentAuthorEmail: null,
+      };
     }
 
     const frontmatter = frontmatterMatch[1];
@@ -47,12 +57,19 @@ async function getCommentHierarchy(parentId: string) {
     const levelMatch = frontmatter.match(/level:\s*(\d+)/);
     const rootParentIdMatch = frontmatter.match(/rootParentId:\s*(.+)/);
     const nameMatch = frontmatter.match(/name:\s*(.+)/);
+    const emailMatch = frontmatter.match(/email:\s*(.+)/);
 
     const parentAuthorName = nameMatch ? nameMatch[1].trim() : null;
+    const parentAuthorEmail = emailMatch ? emailMatch[1].trim() : null;
 
     if (!parentIdMatch) {
       // This is a level 1 comment, so reply will be level 2
-      return { level: 2, rootParentId: parentId, parentAuthorName };
+      return {
+        level: 2,
+        rootParentId: parentId,
+        parentAuthorName,
+        parentAuthorEmail,
+      };
     }
 
     const parentLevel = levelMatch ? parseInt(levelMatch[1]) : 2;
@@ -61,10 +78,20 @@ async function getCommentHierarchy(parentId: string) {
     // Max 3 levels
     const newLevel = Math.min(parentLevel + 1, 3);
 
-    return { level: newLevel, rootParentId, parentAuthorName };
+    return {
+      level: newLevel,
+      rootParentId,
+      parentAuthorName,
+      parentAuthorEmail,
+    };
   } catch (error) {
     console.error("Failed to get comment hierarchy:", error);
-    return { level: 2, rootParentId: parentId, parentAuthorName: null };
+    return {
+      level: 2,
+      rootParentId: parentId,
+      parentAuthorName: null,
+      parentAuthorEmail: null,
+    };
   }
 }
 
@@ -79,6 +106,7 @@ function createFrontmatter(
 
   let frontmatter = `---
 name: ${data.name}
+email: ${data.email}
 date: ${now.toISOString().split("T")[0]}
 level: ${level}`;
 
@@ -146,14 +174,23 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Get hierarchy info
-    const { level, rootParentId, parentAuthorName } = data.parentId
-      ? await getCommentHierarchy(data.parentId)
-      : { level: 1, rootParentId: null, parentAuthorName: null };
+    const { level, rootParentId, parentAuthorName, parentAuthorEmail } =
+      data.parentId
+        ? await getCommentHierarchy(data.parentId)
+        : {
+            level: 1,
+            rootParentId: null,
+            parentAuthorName: null,
+            parentAuthorEmail: null,
+          };
 
-    // Check if trying to reply to own comment
+    // Check if trying to reply to own comment (compare both name and email)
     if (
       parentAuthorName &&
-      data.name.toLowerCase().trim() === parentAuthorName.toLowerCase().trim()
+      parentAuthorEmail &&
+      data.name.toLowerCase().trim() ===
+        parentAuthorName.toLowerCase().trim() &&
+      data.email.toLowerCase().trim() === parentAuthorEmail.toLowerCase().trim()
     ) {
       return new Response(
         JSON.stringify({ error: "You cannot reply to your own comment" }),

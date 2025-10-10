@@ -38,6 +38,7 @@ const usePublicAvatar = avatar && avatar !== "";
     class={`comment level-${actualLevel}`}
     data-comment-id={id}
     data-author-name={name}
+    data-author-email={comment.data.email}
 >
     {
         hasReplies && actualLevel === 1 && (
