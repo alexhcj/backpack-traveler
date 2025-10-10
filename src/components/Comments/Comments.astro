@@ -120,7 +120,7 @@ const commentHierarchy = buildCommentHierarchy(allComments);
 
                 if (result.saveAuthorData && result.authorData) {
                     localStorage.setItem(
-                        "commentAuthorData",
+                        "comment-author-data",
                         JSON.stringify(result.authorData),
                     );
                 }
@@ -151,7 +151,7 @@ const commentHierarchy = buildCommentHierarchy(allComments);
     // Load saved author data
     function loadSavedAuthorData() {
         try {
-            const savedData = localStorage.getItem("commentAuthorData");
+            const savedData = localStorage.getItem("comment-author-data");
             if (savedData) {
                 const authorData = JSON.parse(savedData);
                 return authorData;
@@ -160,6 +160,38 @@ const commentHierarchy = buildCommentHierarchy(allComments);
             console.error("Error loading saved author data:", error);
         }
         return null;
+    }
+
+    // Check if user is the author of a comment and hide reply button
+    function checkAndHideOwnCommentReplies() {
+        const savedData = loadSavedAuthorData();
+        if (!savedData || !savedData.name) return;
+
+        const currentUserName = savedData.name.toLowerCase().trim();
+
+        // Find all comments
+        const comments = document.querySelectorAll(".comment");
+
+        comments.forEach((comment) => {
+            const commentAuthorName = (
+                comment.getAttribute("data-author-name") || ""
+            )
+                .toLowerCase()
+                .trim();
+
+            // If the current user is the author of this comment
+            if (commentAuthorName === currentUserName) {
+                const replyButton = comment.querySelector(
+                    ".btn-reply",
+                ) as HTMLElement;
+                const actionsDiv = comment.querySelector(".actions");
+
+                if (replyButton && actionsDiv) {
+                    // Hide the reply button
+                    replyButton.style.display = "none";
+                }
+            }
+        });
     }
 
     // Pre-fill form with saved data
@@ -238,6 +270,23 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 e.preventDefault();
 
                 const commentContainer = target.closest(".comment");
+
+                // Check if user is trying to reply to their own comment
+                const savedData = loadSavedAuthorData();
+                if (savedData && savedData.name) {
+                    const commentAuthorName = (
+                        commentContainer?.getAttribute("data-author-name") || ""
+                    )
+                        .toLowerCase()
+                        .trim();
+                    const currentUserName = savedData.name.toLowerCase().trim();
+
+                    if (commentAuthorName === currentUserName) {
+                        alert("You cannot reply to your own comment");
+                        return;
+                    }
+                }
+
                 const replyForm = commentContainer?.querySelector(
                     "[data-reply-form]",
                 ) as HTMLElement;
@@ -306,5 +355,30 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                 handleSubmit(data);
             }
         });
+
+        // Handle saveAuthorData checkbox changes
+        document.addEventListener("change", function (e) {
+            const target = e.target as HTMLInputElement;
+
+            if (target.matches('input[name="saveAuthorData"]')) {
+                // If checkbox is unchecked, clear saved data from localStorage
+                if (!target.checked) {
+                    try {
+                        localStorage.removeItem("comment-author-data");
+                    } catch (error) {
+                        console.error("Error clearing author data:", error);
+                    }
+                }
+            }
+        });
+
+        // Pre-fill all forms on page load
+        const allForms = document.querySelectorAll(".form");
+        allForms.forEach((form) => {
+            prefillForm(form as HTMLFormElement);
+        });
+
+        // Check and hide reply buttons for author's own comments
+        checkAndHideOwnCommentReplies();
     });
 </script>

@@ -151,3 +151,51 @@ const { parentId } = Astro.props;
         }
     }
 </style>
+
+<script>
+    // Auto-fill form with saved author data from localStorage
+    function loadAndFillAuthorData() {
+        try {
+            const savedData = localStorage.getItem("comment-author-data");
+            if (savedData) {
+                const authorData = JSON.parse(savedData);
+
+                // Find all comment forms on the page
+                const forms = document.querySelectorAll(".form");
+
+                forms.forEach((form) => {
+                    const nameInput = form.querySelector(
+                        'input[name="name"]',
+                    ) as HTMLInputElement;
+                    const emailInput = form.querySelector(
+                        'input[name="email"]',
+                    ) as HTMLInputElement;
+                    const saveDataCheckbox = form.querySelector(
+                        'input[name="saveAuthorData"]',
+                    ) as HTMLInputElement;
+
+                    // Only fill if inputs are empty
+                    if (nameInput && !nameInput.value && authorData.name) {
+                        nameInput.value = authorData.name;
+                    }
+                    if (emailInput && !emailInput.value && authorData.email) {
+                        emailInput.value = authorData.email;
+                    }
+                    if (saveDataCheckbox) {
+                        saveDataCheckbox.checked = true;
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error loading saved author data:", error);
+        }
+    }
+
+    // Run on DOM load
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadAndFillAuthorData);
+    } else {
+        // DOM already loaded
+        loadAndFillAuthorData();
+    }
+</script>

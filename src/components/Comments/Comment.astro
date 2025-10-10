@@ -34,7 +34,11 @@ const publicAvatarPath = avatar ? `/user-uploads/${avatar}` : null;
 const usePublicAvatar = avatar && avatar !== "";
 ---
 
-<div class={`comment level-${actualLevel}`} data-comment-id={id}>
+<div
+    class={`comment level-${actualLevel}`}
+    data-comment-id={id}
+    data-author-name={name}
+>
     {
         hasReplies && actualLevel === 1 && (
             <Image class="icon" src={tablerSvg} alt="Thread indicator" />
