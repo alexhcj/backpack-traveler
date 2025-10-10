@@ -373,6 +373,39 @@ const commentHierarchy = buildCommentHierarchy(allComments);
                     saveAuthorData: formData.get("saveAuthorData") === "on",
                 };
 
+                // Check if user is trying to reply to their own comment
+                if (parentId) {
+                    const parentComment = document.querySelector(
+                        `[data-comment-id="${parentId}"]`,
+                    );
+
+                    if (parentComment) {
+                        const parentAuthorName = (
+                            parentComment.getAttribute("data-author-name") || ""
+                        )
+                            .toLowerCase()
+                            .trim();
+                        const parentAuthorEmail = (
+                            parentComment.getAttribute("data-author-email") ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .trim();
+
+                        const currentName = data.name.toLowerCase().trim();
+                        const currentEmail = data.email.toLowerCase().trim();
+
+                        // Check if both name AND email match the parent comment author
+                        if (
+                            parentAuthorName === currentName &&
+                            parentAuthorEmail === currentEmail
+                        ) {
+                            alert("You cannot reply to your own comment");
+                            return;
+                        }
+                    }
+                }
+
                 handleSubmit(data);
             }
         });
