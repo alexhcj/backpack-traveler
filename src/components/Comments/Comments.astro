@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import CommentForm from "../shared/CommentForm.astro";
 import CommentThread from "./CommentThread.astro";
 
@@ -9,16 +9,23 @@ interface Props {
 
 const { postSlug } = Astro.props;
 
-const allComments = await getCollection("comments");
+const allComments: CollectionEntry<"comments">[] =
+    await getCollection("comments");
 
 const postComments = allComments.filter(
     (comment) => comment.data.postSlug === postSlug,
 );
 
+type CommentWithChildren = CollectionEntry<"comments"> & {
+    children: CommentWithChildren[];
+};
+
 // Build comment hierarchy
-function buildCommentHierarchy(comments: typeof postComments) {
-    const commentMap = new Map();
-    const rootComments: any[] = [];
+function buildCommentHierarchy(
+    comments: CollectionEntry<"comments">[],
+): CommentWithChildren[] {
+    const commentMap = new Map<string, CommentWithChildren>();
+    const rootComments: CommentWithChildren[] = [];
 
     // First, create a map of all comments
     comments.forEach((comment) => {
@@ -35,16 +42,19 @@ function buildCommentHierarchy(comments: typeof postComments) {
         if (comment.data.parentId && commentMap.has(comment.data.parentId)) {
             // This is a reply, add it to parent's children
             const parent = commentMap.get(comment.data.parentId);
-            parent.children.push(commentWithChildren);
+            if (parent && commentWithChildren) {
+                parent.children.push(commentWithChildren);
 
-            // Sort children by date
-            parent.children.sort(
-                (a: any, b: any) =>
-                    a.data.date.getTime() - b.data.date.getTime(),
-            );
+                // Sort children by date
+                parent.children.sort(
+                    (a, b) => a.data.date.getTime() - b.data.date.getTime(),
+                );
+            }
         } else {
             // This is a root comment
-            rootComments.push(commentWithChildren);
+            if (commentWithChildren) {
+                rootComments.push(commentWithChildren);
+            }
         }
     });
 
