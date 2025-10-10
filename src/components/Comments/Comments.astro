@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { TCommentWithChildren } from "../../types/comments";
 import CommentForm from "../shared/CommentForm.astro";
 import CommentThread from "./CommentThread.astro";
 
@@ -16,16 +17,12 @@ const postComments = allComments.filter(
     (comment) => comment.data.postSlug === postSlug,
 );
 
-type CommentWithChildren = CollectionEntry<"comments"> & {
-    children: CommentWithChildren[];
-};
-
 // Build comment hierarchy
 function buildCommentHierarchy(
     comments: CollectionEntry<"comments">[],
-): CommentWithChildren[] {
-    const commentMap = new Map<string, CommentWithChildren>();
-    const rootComments: CommentWithChildren[] = [];
+): TCommentWithChildren[] {
+    const commentMap = new Map<string, TCommentWithChildren>();
+    const rootComments: TCommentWithChildren[] = [];
 
     // First, create a map of all comments
     comments.forEach((comment) => {

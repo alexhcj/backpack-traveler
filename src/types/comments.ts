@@ -1,3 +1,5 @@
+import type { CollectionEntry } from "astro:content";
+
 export interface ICommentFormData {
   parentId?: string;
   postSlug: string;
@@ -6,3 +8,7 @@ export interface ICommentFormData {
   message: string;
   saveAuthorData: boolean;
 }
+
+export type TCommentWithChildren = CollectionEntry<"comments"> & {
+  children: TCommentWithChildren[];
+};
