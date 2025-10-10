@@ -25,7 +25,7 @@ const {
 const { Content } = await render(comment);
 const {
     id,
-    data: { name, avatar, date, parentId, hasReplies, level: commentLevel },
+    data: { name, avatar, date, hasReplies, level: commentLevel },
 } = comment;
 
 const actualLevel = level || commentLevel || 1;
