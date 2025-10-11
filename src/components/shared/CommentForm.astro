@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import DoneSVG from "../../../public/svg/done.svg";
+
 interface Props {
     parentId?: string;
     postSlug: string;
@@ -30,6 +33,8 @@ const { parentId, postSlug } = Astro.props;
         </div>
         <div class="field checkbox">
             <input type="checkbox" name="saveAuthorData" id="saveAuthorData" />
+            <DoneSVG class="icon" />
+            <!-- <Image class="icon" src={DoneSVG} alt="Author will save data" /> -->
             <label for="saveAuthorData"
                 >Save my name and email in this browser for the next time I
                 comment.</label
@@ -102,6 +107,7 @@ const { parentId, postSlug } = Astro.props;
         }
 
         &.checkbox {
+            position: relative;
             grid-area: saveAuthorData;
             display: flex;
             align-items: baseline;
@@ -128,6 +134,25 @@ const { parentId, postSlug } = Astro.props;
                 &:checked {
                     border-color: var(--color-dark);
                     background-color: var(--color-dark);
+                }
+
+                &:checked + .icon {
+                    display: block;
+                }
+            }
+
+            .icon {
+                position: absolute;
+                top: 12px;
+                left: 6px;
+                display: none;
+                width: 9px;
+                height: 9px;
+                pointer-events: none;
+                transform: translate(0, -50%);
+
+                path {
+                    fill: var(--color-white);
                 }
             }
         }
