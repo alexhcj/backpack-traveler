@@ -109,12 +109,13 @@ const socialSvgs: IImageMetadata = {
                 <BlogPostsList posts={latestPostList.slice(1, limit + 1)} />
                 <ul class="blog-posts-list-rest">
                     {
-                        latestPostList.slice(limit).map(({ frontmatter }, index) => (
+                        // start from limit + 1 so we don't duplicate the last visible post (index `limit`)
+                        latestPostList.slice(limit + 1).map(({ frontmatter }, index) => (
                             <BlogPostsItem frontmatter={frontmatter} dataIndex={index} />
                         ))
                     }
                 </ul>
-                {latestPostList.length > limit && (
+                {latestPostList.length > limit + 1 && (
                     <button class="btn-show-more">Show more</button>
                 )}
             </div>
@@ -225,32 +226,34 @@ const socialSvgs: IImageMetadata = {
 </style>
 
 <script>
-   const button = document.querySelector('.btn-show-more') as HTMLElement;
-   const posts = document.querySelector('.blog-posts-list');
-   const restPosts = document.querySelector('.blog-posts-list-rest');
+  const button = document.querySelector('.btn-show-more') as HTMLElement;
+  const posts = document.querySelector('.blog-posts-list');
+  const restPosts = document.querySelector('.blog-posts-list-rest');
 
-   if (button && posts && restPosts) {
-     const limit = 9;
-     let currentIndex = 0;
+  if (button && posts && restPosts) {
+    const CHUNK = 9; // number of posts to append per click
+    // collect rest templates once
+    const templates = Array.from(restPosts.querySelectorAll('[data-index]'));
+    let offset = 0;
 
-     button.addEventListener('click', () => {
-       for (let i = 0; i < limit; i++) {
-         const template = restPosts.querySelector(`[data-index="${currentIndex}"]`);
+    button.addEventListener('click', () => {
+      // take next chunk
+      const next = templates.slice(offset, offset + CHUNK);
+      if (next.length === 0) {
+        button.style.display = 'none';
+        return;
+      }
 
-         if (!template) {
-           button.style.display = 'none';
-           break;
-         }
+      next.forEach(t => {
+        const clone = t.cloneNode(true);
+        posts.appendChild(clone);
+      });
 
-         const clone = template.cloneNode(true);
-         posts.appendChild(clone);
+      offset += next.length;
 
-         currentIndex++;
-       }
-
-       if (!restPosts.querySelector(`[data-index="${currentIndex}"]`)) {
-          button.style.display = 'none';
-        }
-       });
-   }
+      if (offset >= templates.length) {
+        button.style.display = 'none';
+      }
+    });
+  }
 </script>
