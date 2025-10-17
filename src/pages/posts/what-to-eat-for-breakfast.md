@@ -1,62 +1,107 @@
 ---
-layout: '../../layouts/PostWithSidebarLayout.astro'
-title: 'What to eat for breakfast'
-slug: 'what-to-eat-for-breakfast'
+layout: ../../layouts/PostWithSidebarLayout.astro
+title: What to Eat for Breakfast
+slug: what-to-eat-for-breakfast
 pubDate: 2024-11-01
-country: 'United Kingdom'
-destination: 'London'
+country: United Kingdom
+destination: London
 categories: [food, cultural]
-description: 'Some post description'
+description: From hearty fry-ups to artisanal pastries, here’s what Londoners love to eat for breakfast — and where you can try it.
 likesCount: 0
 author:
-  name: 'Murphy Cooper'
-  avatar: 'author/avatar.png'
+  name: Murphy Cooper
+  avatar: author/avatar.png
 socials: [
   {social: 'facebook', url: '/'},
   {social: 'pinterest', url: '/'},
   {social: 'twitter', url: '/'},
 ]
 image:
-    url: 'posts/what-to-eat-for-breakfast/title.jpg'
-    alt: 'Food on the table'
+  url: posts/what-to-eat-for-breakfast/title.jpg
+  alt: Food on the table
+previewImage:
+  url: posts/what-to-eat-for-breakfast/preview.jpg
+  alt: Full English breakfast served with coffee
 ---
 
 <p class="md-paragraph">
-<span class="md-first-letter">L</span>
-  orem ipsum dolor sit amet, adhuc iriure dissentias est in, est ne diam graece tincidunt. Sit et liber minimum tacimates, sea no doctus fastidii. <span class="md-underline">An molestiae definiebas mel. Quo everti vituperata et, quo cu omnis maiorum.</span> At soluta fierenti laboramus eum.Nam at dicant deterruisset. Nam at nulla choro denique, cum quando definitionem. Sea te nisl splendide, odio timeam an vim. Quas brute aliquam id per, et natum vocent eripuit sea. No mea feugiat nusquam ocurreret usu ad alter dicant. <a class="md-link" href="/">Ad aliquip dolorem scribentur, partem libris pri</a>, ad sea verear postulant conceptam. Sed appellantur interpretaris cu, meis possit melius ut sed. Ex suas definiebas est, id his dicunt torquatos. Id euismod mentitum dissentiet duo, aeterno eripuit. Comprehensam, principes dissentiet est id. Primis eripuit ei vis, ne vis nibh delenit electram duo. At pri elitr utinam tempor, purto facilis vim ut.
-</p>
-<div class="md-space"></div>
-
-<p class="md-paragraph">
-  Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Per eu unum persius, mei tantas postea in. Te his labores singulis, eum ei urbanitas adversarium. Ut quo numquam honestatis, qui populo percipit intellegat ea. Pri laudem tractatos hendrerit an.
-</p>
-<div class="md-space"></div>
-
-<p class="md-paragraph">
-  Qui ad idque soluta deterruisset, nec sale pertinax mandamus et. Eu mei soluta scriptorem dissentiet, cu vel sensibus cotidieque. Ne per malorum vivendum principes, congue imperdiet cu vel. Sit cu stet autem eligendi, eros reprimique mel id, no pri tation altera. At soluta fierent laboramus eum.Nam at dicant deterruisset. Nam at nulla choro denique, et cum quando. Et est eius pertinax, duo falli noster alienum et.
+  <span class="md-first-letter">B</span>reakfast in London is both tradition and trend. Whether you start your morning with a classic English fry-up, a croissant in a Notting Hill café, or a vegan bowl in Shoreditch — the city celebrates the first meal of the day in every possible way.
 </p>
 
-<p class="md-excerpt">With all that fear, it’s much easier to stay at home in our comfort zones </br> than to break out and travel.</p>
+<div class="md-space-lg"></div>
 
+<h4 class="md-section-title">The Classic English Breakfast</h4>
 <p class="md-paragraph">
-  Pri laudem tractatos hendrerit an. Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Per eu unum persius, mei tantas postea in. Te his labores singulis, eum ei urbanitas adversarium. Ut quo numquam honestatis, qui populo percipit intellegat ea.
+  Known simply as the <b>“Full English”</b>, this hearty meal includes eggs, bacon, sausages, baked beans, grilled tomatoes, mushrooms, and toast — often served with tea or coffee. It’s a breakfast born from Britain’s working-class history and still a staple in cafés across the UK.
 </p>
 
 <p class="md-paragraph">
-  Learn more in related article: <a class="md-link-dark" href="/">Staying with a local family on Bali</a>
+  Local favorite spots include <b>The Breakfast Club</b> in Soho and <b>Regency Café</b> near Westminster — the latter known for its retro interior and appearances in British films.
 </p>
 
-<div class="md-images">
-  <div class="md-image">
-    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/cooked-food-onwhite-ceramic-plate.jpg" alt="Cooked food onwhite ceramic plate">
-    <h2 class="md-img-description">“The Professional Hobo”</h2>
+<div class="md-space-md"></div>
+<div class="md-image md">
+  <img class="img" src="/posts/what-to-eat-for-breakfast/full-english.jpg" alt="Full English breakfast with eggs, bacon, and beans">
+  <div class="md-img-description">The classic Full English — satisfying and timeless.</div>
+</div>
+
+<div class="md-space-lg"></div>
+
+<h4 class="md-section-title">Modern Morning Trends</h4>
+<p class="md-paragraph">
+  London’s food scene has evolved into a playground for creative breakfasts. Avocado toast, shakshuka, and matcha lattes have become staples in trendy cafés. Visit <b>Dishoom</b> for its Bombay-style breakfast — bacon naan rolls and house chai are must-tries.
+</p>
+
+<div class="md-space-md"></div>
+<div class="md-image md">
+  <img class="img" src="/posts/what-to-eat-for-breakfast/avocado-toast.jpg" alt="Avocado toast with poached eggs on a plate">
+  <div class="md-img-description">Avocado toast — London’s most Instagrammed breakfast.</div>
+</div>
+
+<div class="md-space-lg"></div>
+
+<h4 class="md-section-title">Healthy & On-the-Go Options</h4>
+<p class="md-paragraph">
+  For those in a rush, smoothie bars and bakeries make mornings easier. Grab a granola pot or a sourdough pastry from <b>Gail’s Bakery</b> or <b>Pret a Manger</b>. You’ll find Londoners sipping oat lattes as they walk to work — a modern ritual that keeps the city moving.
+</p>
+
+<div class="md-space-md"></div>
+<div class="md-image md">
+  <img class="img" src="/posts/what-to-eat-for-breakfast/pastries-coffee.jpg" alt="Coffee and pastries served on wooden table">
+  <div class="md-img-description">A slower morning starts with coffee and fresh pastries.</div>
+</div>
+
+<div class="md-space-lg"></div>
+
+<h4 class="md-section-title">Cultural Twists on Breakfast</h4>
+<p class="md-paragraph">
+  London’s diversity means you can start your day with flavors from around the world — Turkish menemen in Dalston, Japanese-style pancakes in Soho, or Caribbean saltfish and ackee in Brixton. Each borough offers a breakfast adventure of its own.
+</p>
+
+<p class="md-excerpt">
+  “Breakfast isn’t just a meal — it’s how London wakes up, one neighborhood at a time.”
+</p>
+
+<div class="md-space-lg"></div>
+
+<p class="md-paragraph">
+  Learn more in related article: <a class="md-link-dark" href="/">Top 10 Cafés in Shoreditch You Must Visit</a>
+</p>
+
+<div class="md-space-md"></div>
+<div class="md-images gap-lg">
+  <div class="md-image md">
+    <img class="img h-100" src="/posts/what-to-eat-for-breakfast/cooked-food-onwhite-ceramic-plate.jpg" alt="Cooked food on white ceramic plate">
+    <div class="md-img-description">A warm breakfast plate — comfort in every bite.</div>
   </div>
-  <div class="md-image">
+  <div class="md-image md">
     <img class="img h-100" src="/posts/what-to-eat-for-breakfast/loft-bread-on-round-white-ceramic-plate.jpg" alt="Loft bread on round white ceramic plate">
-    <h2 class="md-img-description">“Never Ending Footsteps”</h2>
+    <div class="md-img-description">Freshly baked bread — the quiet hero of London mornings.</div>
   </div>
 </div>
 
+<div class="md-space-lg"></div>
+
 <p class="md-paragraph">
-Quot appetere patrioque te mea, animal aliquip te pri. Ad vis animal ceteros percipitur, eos tollit civibus percipitur no. Posse definiebas dissentiunt mel ea, nam ferri utroque invenire an. Ius te iuvaret offendit pertinax, his verear deseruisse ex. Illud elitr eam eu. Id usu putant commune, stet primis expetenda cu vel. Mea ipsum homero apeirian te. Accumsan similique instructior ad pro, te purto dicit qui. Mediocrem reprimique an vim, veniam tibique omittantur duo ut, agam graeci in vim. An sententiae disputando eos. Delicata voluptaria referrentur mel eu. Forensibus disputationi an eam. Sea ex delectus dignissim gloriatur, quem suas per ea. In solum menandri cum.
+  Whether you’re a traveler or a local, breakfast in London is the perfect reflection of the city itself — diverse, dynamic, and always delicious.
 </p>

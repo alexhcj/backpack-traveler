@@ -27,7 +27,7 @@ image:
 </p>
 
 <div class="md-space-xl"></div>
-<h3 class="ui-post-title" id="typical-costs">Paraty – A Colonial Gem by the Sea</h3>
+<h3 class="ui-post-title" id="typical-costs">1. Paraty – A Colonial Gem by the Sea</h3>
 <p class="md-paragraph">Located on the coast of the state of Rio de Janeiro, Paraty is a stunning colonial town that has been preserved remarkably well. The cobblestone streets, white-washed buildings, and colorful doors and windows offer a peek into Brazil’s colonial past. The village sits between the lush Atlantic Rainforest and the crystal-clear waters of the Bay of Paraty, making it a perfect spot for nature lovers and history enthusiasts alike.</p>
 
 <div class="md-space-xl"></div>
@@ -51,7 +51,7 @@ image:
 </div>
 
 <div class="md-space-xl"></div>
-<h3 class="ui-post-title" id="typical-costs">Penedo – A Piece of Finland in Brazil</h3>
+<h3 class="ui-post-title" id="typical-costs">2. Penedo – A Piece of Finland in Brazil</h3>
 <p class="md-paragraph">Penedo is a small village located in the state of Rio de Janeiro, famous for its Finnish influence. The village is nestled in the hills of the Serra da Mantiqueira and has an alpine vibe with charming stone houses and cozy cabins. Penedo is known for its beautiful scenery, hiking trails, and the Finnish culture that has been integrated into its food, architecture, and traditions.</p>
 
 <div class="md-space-xl"></div>
@@ -75,7 +75,7 @@ image:
 </div>
 
 <div class="md-space-xl"></div>
-<h3 class="ui-post-title" id="typical-costs">São João del Rei – A Historical Village in Minas Gerais</h3>
+<h3 class="ui-post-title" id="typical-costs">3. São João del Rei – A Historical Village in Minas Gerais</h3>
 <p class="md-paragraph">São João del Rei is a historical village that boasts incredible colonial architecture and a rich cultural heritage. Located in the state of Minas Gerais, this charming town is home to some of Brazil’s most impressive baroque churches, charming squares, and winding streets. The village is also known for its traditional festivals and vibrant music scene, especially its lively performances during the Carnival season.</p>
 
 <div class="md-space-xl"></div>
@@ -94,7 +94,7 @@ image:
 </div>
 
 <div class="md-space-xl"></div>
-<h3 class="ui-post-title" id="typical-costs">Monte Verde – A Mountain Retreat</h3>
+<h3 class="ui-post-title" id="typical-costs">4. Monte Verde – A Mountain Retreat</h3>
 <p class="md-paragraph">Monte Verde, located in the state of Minas Gerais, is an alpine-style village nestled in the mountains. Known for its cool weather, lush forests, and beautiful landscapes, it is a popular retreat for those looking to escape the heat of Brazil’s larger cities. The village offers plenty of outdoor activities, from hiking and horseback riding to zip-lining and mountain biking, making it perfect for adventure lovers.</p>
 
 <div class="md-space-xl"></div>
@@ -118,7 +118,7 @@ image:
 </div>
 
 <div class="md-space-xl"></div>
-<h3 class="ui-post-title" id="typical-costs">Trancoso – A Bohemian Beach Village</h3>
+<h3 class="ui-post-title" id="typical-costs">5. Trancoso – A Bohemian Beach Village</h3>
 <p class="md-paragraph">Trancoso is a laid-back and bohemian village located in the state of Bahia, famous for its stunning beaches, vibrant nightlife, and welcoming atmosphere. The village exudes an artistic vibe, with colorful buildings, charming shops, and an active arts scene. It is also a hotspot for beach lovers, offering some of the best beaches in Brazil, including Praia dos Nativos and Praia do Espelho.</p>
 
 <div class="md-space-xl"></div>

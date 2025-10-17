@@ -39,7 +39,7 @@ Learn more in related article: <a class="md-link-dark" href="/">Exploring Costa 
 <div class="md-space-s"></div>
 <div class="md-images">
   <div class="md-image lg">
-    <img class="img h-100" src="/posts/costa-rica-rainforests/costa-rica-1.jpg" alt="Shallow focus photography of black and white monkey on person's right arm">
+    <img class="img h-100" src="/posts/costa-rica-rainforests/costa-rica-1.jpg" alt="Shallow focus photography of black and white monkey on person’s right arm">
     <h2 class="md-img-description">"Jaco, Costa Rica"</h2>
   </div>
   <div class="md-image lg">

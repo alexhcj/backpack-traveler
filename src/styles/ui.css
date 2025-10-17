@@ -78,7 +78,6 @@
 }
 
 .md-blockquote {
-    margin-top: 10px;
     text-align: center;
     padding-top: 38px;
     padding-bottom: 36px;
@@ -112,6 +111,10 @@
 
     &.lg {
         grid-template: 600px auto / auto;
+    }
+
+    &.row {
+        grid-column: span 2;
     }
 }
 
