@@ -32,7 +32,7 @@ const { title, slug, url, alt, country, categories } = Astro.props;
             >{country}</a
         >
         <h4 class="ui-post-title f-m">
-            <a href={`/posts/${slug}`}>{title}</a>
+            <a class="title" href={`/posts/${slug}`}>{title}</a>
         </h4>
         <ul class="categories">
             {
@@ -79,6 +79,15 @@ const { title, slug, url, alt, country, categories } = Astro.props;
     }
     .ui-post-title {
         padding: 5px 12% 0px;
+        min-height: 5em;
+
+        .title {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
     .categories {
         display: flex;
