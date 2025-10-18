@@ -37,8 +37,24 @@ const { title, headerType, footerType } = Astro.props;
     </head>
     <body>
         <Header type={headerType} />
-        <slot />
+        <main class="layout">
+            <slot />
+        </main>
         <ScrollTop />
         <Footer type={footerType} />
     </body>
 </html>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .layout {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
