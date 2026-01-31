@@ -1,4 +1,4 @@
-/* grid */
+/* GRID */
 .container {
     margin: 0 auto;
     max-width: 1300px;
@@ -12,7 +12,7 @@
     }
 }
 
-/* posts md */
+/* POSTS MD */
 .md-first-letter {
     float: left;
     margin-right: 13px;
@@ -30,10 +30,6 @@
 
 .md-underline {
     text-decoration: underline;
-}
-
-.md-bold {
-    font-weight: bolder;
 }
 
 .md-link,
@@ -160,6 +156,10 @@
     color: var(--color-black);
     font-family: var(--family-lora);
 
+    b {
+        font-weight: var(--weight-bold);
+    }
+
     &::after {
         position: absolute;
         top: 13px;
@@ -191,7 +191,7 @@
     color: var(--color-black);
 }
 
-/* ui global */
+/* UI GLOBAL */
 .ui-popup-list {
     position: absolute;
     top: calc(100% - 1px);
@@ -283,7 +283,8 @@
         color: var(--color-black-0);
     }
 }
-/* ui post */
+
+/* UI POST */
 .ui-post-destination {
     text-transform: capitalize;
     line-height: 1em;
@@ -383,7 +384,7 @@
     }
 }
 
-/* sidebar ui */
+/* SIDEBAR UI */
 .ui-sidebar-header-box {
     position: relative;
     margin-bottom: 9px;
@@ -429,6 +430,7 @@
     z-index: var(--z-index--1);
 }
 
+/* POST TIPS BLOCK */
 .ui-post-tips-list {
     display: grid;
     grid-template: auto auto / 50% 50%;
@@ -459,6 +461,9 @@
     }
 }
 
+/* POST TOP RATING BLOCK */
+
+/* POST GUIDES BLOCK */
 .ui-post-guides {
     margin: 25px 0 32px;
     padding: 33px 30px 70px;
