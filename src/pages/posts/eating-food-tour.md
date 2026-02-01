@@ -19,6 +19,7 @@ previewImage:
   alt: French market stall with bread and cheese
 ---
 
+<div class="md-space"></div>
 <p class="md-paragraph">
   <span class="md-first-letter">F</span>rance is a love story between food and culture. Each region brings its own flavor — buttery croissants, aged cheese, and sun-kissed wines. From Parisian cafés to seaside bistros, every meal is an invitation to savor life slowly.
 </p>

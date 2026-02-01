@@ -24,6 +24,7 @@ previewImage:
   alt: Traveler walking with dog on a tropical road
 ---
 
+<div class="md-space"></div>
 <p class="md-paragraph">
   <span class="md-first-letter">T</span>raveling with pets adds joy — and a few logistical challenges. Whether you're backpacking through Brazil’s beaches or visiting its vibrant cities, budget travel with animals is absolutely possible with the right preparation and mindset.
 </p>
@@ -34,7 +35,7 @@ previewImage:
 <p class="md-paragraph">
   Buses and domestic flights in Brazil often allow pets, but rules vary by company. Check airline or bus carrier websites early — most require small pets in carriers and vaccination certificates. For road trips, ensure frequent breaks for water, shade, and stretching.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/dog-in-car.jpg" alt="Dog looking out car window during road trip">
   <div class="md-img-description">Frequent rest stops keep your pet calm and healthy on the road.</div>
@@ -46,7 +47,7 @@ previewImage:
 <p class="md-paragraph">
   Brazil offers an increasing number of <b>pousadas</b> (guesthouses) and Airbnbs that welcome pets. Filter listings with “pet-friendly” tags and message hosts directly about pet size or extra fees. Some beachside hostels even allow dogs to roam safely on enclosed patios.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/a-guide-for-budget-travel-with-pets/pet-friendly-stay.jpg" alt="Dog relaxing on a guesthouse patio in Brazil">
   <div class="md-img-description">Many family-run pousadas in Brazil happily host pets — just ask first.</div>

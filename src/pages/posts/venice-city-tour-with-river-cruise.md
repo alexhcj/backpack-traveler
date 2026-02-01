@@ -19,6 +19,7 @@ previewImage:
   alt: Gondolas floating through narrow Venetian canals
 ---
 
+<div class="md-space"></div>
 <p class="md-paragraph">
   <span class="md-first-letter">V</span>enice’s magic is best discovered from the water. Cruising its canals reveals layers of history, romance, and art that make it one of the world’s most enchanting cities.
 </p>
@@ -47,7 +48,7 @@ previewImage:
 <p class="md-paragraph">
   As your boat glides past the <b>Doge’s Palace</b> and the <b>Bridge of Sighs</b>, you’ll understand why Venice has captured hearts for centuries. The reflections, the quiet ripples, and the sound of water against stone make every moment cinematic.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image lg">
   <img class="img" src="/posts/venice-city-tour-with-river-cruise/bridge-of-sighs.jpg" alt="Bridge of Sighs connecting palace to prison">
   <div class="md-img-description">The Bridge of Sighs — where legends meet light</div>

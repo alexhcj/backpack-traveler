@@ -24,6 +24,7 @@ previewImage:
   alt: Full English breakfast served with coffee
 ---
 
+<div class="md-space"></div>
 <p class="md-paragraph">
   <span class="md-first-letter">B</span>reakfast in London is both tradition and trend. Whether you start your morning with a classic English fry-up, a croissant in a Notting Hill café, or a vegan bowl in Shoreditch — the city celebrates the first meal of the day in every possible way.
 </p>

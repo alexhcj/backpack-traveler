@@ -33,7 +33,7 @@ previewImage:
 <p class="md-paragraph">
   Made with <b>cachaça</b> (a sugarcane spirit), lime, sugar, and ice, the Caipirinha is Brazil’s signature cocktail. It’s refreshing, tangy, and deceptively strong — the perfect companion for sunset on Copacabana Beach.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/the-worlds-best-drinks/caipirinha.jpg" alt="Caipirinha cocktail with lime and sugar">
   <div class="md-img-description">The classic Caipirinha — Brazil’s favorite cocktail</div>
@@ -45,7 +45,7 @@ previewImage:
 <p class="md-paragraph">
   A sweet, lightly carbonated drink made from the <b>guaraná berry</b> native to the Amazon rainforest. Packed with natural caffeine, it’s a symbol of Brazilian vitality and found everywhere — from street stalls to football matches.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/the-worlds-best-drinks/guarana.jpg" alt="Guaraná soft drink bottle and glass">
   <div class="md-img-description">Guaraná — sweet, fizzy, and full of energy</div>
@@ -57,7 +57,7 @@ previewImage:
 <p class="md-paragraph">
   The frozen pulp of the Amazonian <b>açaí berry</b> has become a global trend, but its roots are deeply Brazilian. Blended into thick smoothies or served in bowls with banana and granola, it’s a healthy favorite in Rio’s beach cafés.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/the-worlds-best-drinks/acai-bowl.jpg" alt="Açaí bowl with banana and granola">
   <div class="md-img-description">Açaí bowls — colorful, refreshing, and full of energy</div>
@@ -69,7 +69,7 @@ previewImage:
 <p class="md-paragraph">
   In Brazil, coconut water isn’t bottled — it’s cracked open fresh. Street vendors slice the top of a green coconut, hand you a straw, and let you sip the purest tropical refreshment straight from nature.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/the-worlds-best-drinks/coconut-water.jpg" alt="Green coconut with straw on beach">
   <div class="md-img-description">Fresh coconut water on a Rio beach</div>
@@ -81,7 +81,7 @@ previewImage:
 <p class="md-paragraph">
   Coffee is part of Brazilian identity. Locals drink it strong and sweet — a quick <b>“cafezinho”</b> shared between friends or during business meetings. Brazil is the world’s largest coffee producer, and its aroma fills every city corner.
 </p>
-
+<div class="md-space-md"></div>
 <div class="md-image md">
   <img class="img" src="/posts/the-worlds-best-drinks/brazilian-coffee.jpg" alt="Small espresso cup of Brazilian coffee on table">
   <div class="md-img-description">“Cafezinho” — the Brazilian symbol of warmth and welcome</div>

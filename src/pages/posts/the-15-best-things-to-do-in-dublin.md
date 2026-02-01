@@ -27,8 +27,8 @@ previewImage:
 </p>
 
 <div class="md-space-lg"></div>
-
 <h4 class="md-list-title">The 15 Best Things to Do in Dublin</h4>
+<div class="md-space-lg"></div>
 <ul class="md-list col-1">
   <li class="md-list-item"><b>1. Visit Trinity College & The Book of Kells</b> – Step inside Ireland’s oldest university and admire the world-famous illuminated manuscript in the Long Room Library.</li>
   <li class="md-list-item"><b>2. Explore Dublin Castle</b> – Once the heart of British rule in Ireland, now an art and cultural hub filled with history.</li>

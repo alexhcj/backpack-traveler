@@ -19,6 +19,7 @@ previewImage:
   alt: Schönbrunn Palace gardens view
 ---
 
+<div class="md-space"></div>
 <p class="md-paragraph">
   <span class="md-first-letter">V</span>ienna blends imperial elegance with modern rhythm. In one week, you can experience centuries of art, music, and café culture — all wrapped in the city’s timeless charm.
 </p>
@@ -30,8 +31,8 @@ previewImage:
 </p>
 
 <div class="md-space-lg"></div>
-
 <h4 class="md-list-title">7-Day Highlights</h4>
+<div class="md-space-lg"></div>
 <ul class="md-list col-1">
   <li class="md-list-item"><b>Day 1: Schönbrunn Palace & Gardens</b> – Start your journey at the Habsburgs’ summer residence. Stroll through its manicured gardens and visit the Gloriette for panoramic views.</li>
   <li class="md-list-item"><b>Day 2: St. Stephen’s Cathedral & the Historic Center</b> – Explore Vienna’s heart — climb the cathedral tower, then wander cobblestone streets lined with cafés and boutiques.</li>
