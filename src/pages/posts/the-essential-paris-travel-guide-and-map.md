@@ -13,6 +13,7 @@ author:
   avatar: author/avatar.png
 image:
   url: posts/the-essential-paris-travel-guide-and-map/title.jpg
+  thumbnail: posts/the-essential-paris-travel-guide-and-map/thumbnail.jpg
   alt: Eiffel Tower at sunrise
 previewImage:
   url: posts/the-essential-paris-travel-guide-and-map/preview.jpg

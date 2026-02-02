@@ -27,7 +27,10 @@ const postsList = posts
                     <li class="swiper-slide">
                         <PostPreviewItem
                             title={frontmatter.title}
-                            url={frontmatter.image.url}
+                            image={{
+                                url: frontmatter.image.url,
+                                thumbnail: frontmatter.image.thumbnail,
+                            }}
                             alt={frontmatter.image.alt}
                             country={frontmatter.country}
                             categories={frontmatter.categories}

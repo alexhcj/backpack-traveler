@@ -6,6 +6,7 @@ export interface Post {
   title: string;
   image: {
     url: string;
+    thumbnail?: string;
     alt: string;
   };
   country: string;
