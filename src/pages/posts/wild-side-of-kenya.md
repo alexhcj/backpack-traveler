@@ -41,7 +41,7 @@ image:
 <p class="md-paragraph">From witnessing the Great Migration to engaging in hands-on conservation efforts, my ethical safari in Kenya was more than just a trip—it was a transformative experience. The beauty of Kenya’s wilderness, coupled with the commitment of conservationists and local communities, left an indelible mark on my heart. If you’re seeking an adventure that aligns with sustainability and meaningful travel, an ethical safari in Kenya should be at the top of your list.</p>
 
 <p class="md-paragraph">
-  Learn more in related article: <a class="md-link-dark" href="/">How to Travel Responsibly in Africa</a>
+  Learn more in related article: <a class="md-link-dark" href="/posts/kenya-how-to-travel-responsibly">How to Travel Responsibly in Kenya</a>
 </p>
 
 <div class="md-images gap-lg">

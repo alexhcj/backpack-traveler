@@ -33,7 +33,7 @@ What makes Costa Rica’s trekking experiences even more remarkable is their dee
 </p>
 
 <p class="md-paragraph">
-Learn more in related article: <a class="md-link-dark" href="/">Exploring Costa Rica’s Cloud Forests</a>
+Learn more in related article: <a class="md-link-dark" href="/posts/exploring-costa-ricas-cloud-forests">Exploring Costa Rica’s Cloud Forests</a>
 </p>
 
 <div class="md-space-s"></div>

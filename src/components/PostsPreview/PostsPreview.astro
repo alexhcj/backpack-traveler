@@ -29,9 +29,14 @@ const postsList = posts
                             title={frontmatter.title}
                             image={{
                                 url: frontmatter.image.url,
-                                thumbnail: frontmatter.image.thumbnail,
+                                alt: frontmatter.image.alt,
                             }}
-                            alt={frontmatter.image.alt}
+                            previewImage={
+                                frontmatter.previewImage && {
+                                    url: frontmatter.previewImage.url,
+                                    alt: frontmatter.previewImage.alt,
+                                }
+                            }
                             country={frontmatter.country}
                             categories={frontmatter.categories}
                             slug={frontmatter.slug}

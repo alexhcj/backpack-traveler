@@ -17,9 +17,6 @@ image:
 masonry:
   height: 415
   description: true
-previewImage:
-  url: posts/the-15-best-things-to-do-in-dublin/preview.jpg
-  alt: Aerial view over Dublin city with the River Liffey
 ---
 
 <p class="md-paragraph">

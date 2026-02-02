@@ -14,9 +14,6 @@ author:
 image:
   url: posts/how-to-spend-a-week-in-vienna/title.jpg
   alt: Vienna city view with St. Stephen’s Cathedral
-previewImage:
-  url: posts/how-to-spend-a-week-in-vienna/preview.jpg
-  alt: Schönbrunn Palace gardens view
 ---
 
 <div class="md-space"></div>

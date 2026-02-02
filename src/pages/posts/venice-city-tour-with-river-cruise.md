@@ -14,9 +14,6 @@ author:
 image:
   url: posts/venice-city-tour-with-river-cruise/title.jpg
   alt: Venice streets
-previewImage:
-  url: posts/venice-city-tour-with-river-cruise/preview.jpg
-  alt: Gondolas floating through narrow Venetian canals
 ---
 
 <div class="md-space"></div>

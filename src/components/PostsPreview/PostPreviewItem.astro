@@ -9,23 +9,26 @@ interface Props {
     slug: string;
     image: {
         url: string;
-        thumbnail?: string;
+        alt: string;
     };
-    alt: string;
+    previewImage?: {
+        url: string;
+        alt: string;
+    };
     country: string;
     categories: ECategory[];
 }
-const { title, slug, image, alt, country, categories } = Astro.props;
+const { title, slug, image, previewImage, country, categories } = Astro.props;
 ---
 
 <div class="post">
     <a class="img-box" href={`/posts/${slug}`}>
         <Image
             class="img h-100"
-            src={image.thumbnail ? `/${image.thumbnail}` : `/${image.url}`}
+            src={previewImage ? `/${previewImage.url}` : `/${image.url}`}
             width={280}
             height={400}
-            alt={alt}
+            alt={previewImage ? previewImage.alt : image.alt}
         />
     </a>
     <div class="box">

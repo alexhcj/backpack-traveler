@@ -86,7 +86,7 @@ previewImage:
 <div class="md-space-lg"></div>
 
 <p class="md-paragraph">
-  Learn more in related article: <a class="md-link-dark" href="/">Top 10 Cafés in Shoreditch You Must Visit</a>
+  Learn more in related article: <a class="md-link-dark" href="/posts/top-cafes-in-shoreditch">Top Cafes in Shoreditch You Must Visit</a>
 </p>
 
 <div class="md-space-md"></div>

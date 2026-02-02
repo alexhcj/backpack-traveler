@@ -19,9 +19,6 @@ socials: [
 image:
   url: posts/a-guide-for-budget-travel-with-pets/title.jpg
   alt: Dog sitting on the beach
-previewImage:
-  url: posts/a-guide-for-budget-travel-with-pets/preview.jpg
-  alt: Traveler walking with dog on a tropical road
 ---
 
 <div class="md-space"></div>
@@ -101,7 +98,7 @@ previewImage:
 </p>
 
 <p class="md-paragraph">
-  Learn more in related article: <a class="md-link-dark" href="/">Staying with a Local Family on Bali</a>
+  Learn more in related article: <a class="md-link-dark" href="/posts/the-traveler-who-walks-across-brazil">The Traveler Who Walks Across Brazil</a>
 </p>
 
 <div class="md-space-lg"></div>

@@ -112,6 +112,10 @@
     &.row {
         grid-column: span 2;
     }
+
+    &.position-bottom > img {
+        object-position: bottom;
+    }
 }
 
 .md-image-center {
