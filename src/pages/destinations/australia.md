@@ -17,6 +17,10 @@ socials: [
 image:
   url: destinations/australia/title.jpg
   alt: Girl sitting near dog
+previewImage: {
+  url: destinations/australia/preview.jpg,
+  alt: A koala lying on a tree
+}
 ---
 
 <p class="md-paragraph">

@@ -15,4 +15,8 @@ export interface Destination {
     url: string;
     alt: string;
   };
+  previewImage?: {
+    url: string;
+    alt: string;
+  };
 }

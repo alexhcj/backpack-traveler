@@ -16,6 +16,9 @@ socials: [
 image:
   url: destinations/italy/title.jpg
   alt: Italy cathedral at sunrise from bird fly view
+previewImage:
+  url:  destinations/italy/preview.jpg
+  alt: Venice streets
 ---
 
 <p class="md-paragraph">

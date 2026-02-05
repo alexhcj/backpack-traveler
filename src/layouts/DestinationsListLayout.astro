@@ -1,0 +1,114 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Destination } from "../types/destination";
+import type { Post } from "../types/post";
+import type { ECategory } from "../types/category";
+
+import BaseLayout from "./Layout.astro";
+import DestinationsList from "../components/DestinationsList.astro";
+import { EHeader } from "../types/header";
+import { EFooter } from "../types/footer";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/**/*.md", {
+        eager: true,
+    }),
+);
+
+const destinationCategoriesMap: Record<string, Set<ECategory>> = {};
+
+posts.forEach(({ frontmatter }) => {
+    const destination = frontmatter.country;
+    if (!destination) return;
+
+    if (!destinationCategoriesMap[destination]) {
+        destinationCategoriesMap[destination] = new Set();
+    }
+
+    frontmatter.categories?.forEach((category) => {
+        destinationCategoriesMap[destination].add(category);
+    });
+});
+
+const destinations = Object.values(
+    import.meta.glob<MarkdownInstance<Destination>>(
+        "../pages/destinations/*.md",
+        { eager: true },
+    ),
+);
+
+const destinationsData = destinations
+    .filter(
+        ({ frontmatter }) =>
+            destinationCategoriesMap[frontmatter.destination]?.size,
+    )
+    .map(({ frontmatter }) => ({
+        title: frontmatter.title,
+        slug: frontmatter.slug,
+        destination: frontmatter.destination,
+        image: {
+            url: frontmatter.image.url,
+            alt: frontmatter.image.alt,
+        },
+        previewImage: frontmatter.previewImage && {
+            url: frontmatter.previewImage.url,
+            alt: frontmatter.previewImage.alt,
+        },
+        categories: Array.from(
+            destinationCategoriesMap[frontmatter.destination],
+        ).slice(0, 2),
+    }));
+---
+
+<BaseLayout
+    title="Destinations list"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <section class="section">
+        <div class="header">
+            <h1 class="title">Where to travel?</h1>
+            <p class="text">
+                Every place we’ve explored so far — cities, countries, and
+                hidden corners — waiting to be discovered again <span
+                    >through stories and guides.</span
+                >
+            </p>
+        </div>
+        <DestinationsList destinations={destinationsData} />
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding-top: 83px;
+        background: url(/destinations-bg.png) 0% 3% no-repeat;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 160px;
+    }
+
+    .title {
+        margin: 20px 0 25px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.25em;
+        font-size: 40px;
+        font-weight: var(--weight-regular);
+    }
+
+    .text {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 30px;
+        font-size: 18px;
+        color: var(--color-grey-4);
+        font-family: var(--family-lora);
+
+        span {
+            color: var(--color-accent);
+        }
+    }
+</style>

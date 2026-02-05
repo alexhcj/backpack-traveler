@@ -19,9 +19,15 @@ const { type } = Astro.props;
         { "base-compact": type === "base-compact" },
         { transparent: type === "transparent" },
         { centered: type === "centered" },
+        { full: type === "full" },
     ]}
 >
-    <div class:list={["container", { xl: type === "transparent" }]}>
+    <div
+        class:list={[
+            "container",
+            { xl: type === "transparent", full: type === "full" },
+        ]}
+    >
         <div class="box">
             <HeaderDestination type={type} />
             <HeaderNav type={type} />
@@ -52,6 +58,12 @@ const { type } = Astro.props;
                 background-color: var(--color-white);
                 border-bottom: 1px solid var(--color-border-2);
                 z-index: var(--z-index-100);
+            }
+
+            &.full {
+                padding: 0 40px;
+                height: 100px;
+                background-color: var(--color-white);
             }
         }
 

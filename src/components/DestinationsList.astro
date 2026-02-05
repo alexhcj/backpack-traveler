@@ -1,0 +1,185 @@
+---
+import type { ECategory } from "../types/category";
+
+import { Image } from "astro:assets";
+
+import { normalizeStrToSlug } from "../utils/utils";
+
+interface Props {
+    destinations: {
+        title: string;
+        slug: string;
+        destination: string;
+        categories: ECategory[];
+        image: {
+            url: string;
+            alt: string;
+        };
+        previewImage?: {
+            url: string;
+            alt: string;
+        };
+    }[];
+}
+
+const { destinations } = Astro.props;
+---
+
+<section>
+    <div class="container">
+        <ul class="grid">
+            {
+                destinations.map(
+                    ({
+                        destination,
+                        slug,
+                        image,
+                        previewImage,
+                        categories,
+                    }) => (
+                        <li class="card">
+                            <a
+                                class="ui-link-with-img"
+                                href={`/destinations/${slug}`}
+                            >
+                                <Image
+                                    class="img destination-image"
+                                    src={
+                                        previewImage
+                                            ? `/${previewImage.url}`
+                                            : `/${image.url}`
+                                    }
+                                    width={302}
+                                    height={226}
+                                    alt={
+                                        previewImage
+                                            ? `${previewImage.alt}`
+                                            : `${image.alt}`
+                                    }
+                                />
+                            </a>
+                            <div class="content">
+                                <Image
+                                    class="img destination-map"
+                                    src={`/destinations-maps/${destination.split(" ").join("-").toLowerCase()}-map.png`}
+                                    width={270}
+                                    height={170}
+                                    alt={image.alt}
+                                />
+                                <h3 class="destination">{destination}</h3>
+                                <ul class="categories">
+                                    {categories.map((category) => (
+                                        <li class="category-item">
+                                            <a
+                                                class="category-link"
+                                                href={`/category/${normalizeStrToSlug(category)}`}
+                                            >
+                                                {category}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a
+                                    class="btn"
+                                    href={`/destinations/${normalizeStrToSlug(destination)}`}
+                                >
+                                    Explore
+                                </a>
+                            </div>
+                        </li>
+                    ),
+                )
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+
+    .card {
+        text-align: center;
+    }
+
+    .content {
+        border: 1px solid var(--color-border-3);
+        border-top: none;
+        padding: 37px 5%;
+    }
+
+    .ui-link-with-img {
+        display: block;
+    }
+
+    .destination-image {
+        height: 226px;
+    }
+
+    .destination-map {
+        padding: 0 50px;
+    }
+
+    .destination {
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+    .categories {
+        margin: 3px 0 22px;
+    }
+    .category-item {
+        position: relative;
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: 3px;
+            padding-right: 6px;
+
+            &::after {
+                content: "/";
+                position: absolute;
+                right: -4px;
+                top: 0;
+                line-height: inherit;
+                font-size: 9px;
+                color: var(--color-grey-3);
+            }
+        }
+
+        &:not(:first-child) {
+            margin-left: 3px;
+            padding-left: 6px;
+        }
+    }
+    .category-link {
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        font-weight: var(--weight-medium);
+        color: var(--color-grey-2);
+    }
+    .btn {
+        text-transform: uppercase;
+        margin-top: auto;
+        padding: 9px 41px 10px;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 2em;
+        font-size: 12px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-medium);
+        border: 1px solid var(--color-dark-3);
+        transition: var(--transition-default-4);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--color-black);
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+    }
+</style>
