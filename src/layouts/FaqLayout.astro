@@ -1,0 +1,160 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "./Layout.astro";
+
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import Sidebar from "../components/Sidebar/Sidebar.astro";
+---
+
+<BaseLayout
+    title="FAQ Page"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <section class="preview">
+        <Image
+            src="/faq-bg.jpg"
+            width={1900}
+            height={300}
+            alt="Girl eating cookies near mini van"
+        />
+        <h1 class="preview-title">FAQ Page</h1>
+    </section>
+    <div class="container">
+        <div class="grid">
+            <div>
+                <div class="header">
+                    <h3>Most asked questions</h3>
+                </div>
+                <div class="questions-list">
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            How do you manage to travel the world? 🌍
+                        </h4>
+                        <p class="question-text">
+                            It’s a mix of long-term planning and staying
+                            flexible. I keep my expenses low by slow traveling,
+                            choosing affordable destinations, and avoiding
+                            short, rushed trips. Most of my stays are planned
+                            around off-season prices, local transport, and
+                            simple accommodation. I also work remotely while
+                            traveling, which allows me to stay longer in one
+                            place instead of constantly moving.
+                        </p>
+                    </div>
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            How did you build and market your blog? 🤔
+                        </h4>
+                        <p class="question-text">
+                            The blog started as a personal journal and slowly
+                            turned into something more structured. I focused on
+                            writing useful, honest content instead of chasing
+                            trends. Over time, consistency helped more than
+                            anything else. Social media, SEO basics, and word of
+                            mouth played a role, but the biggest growth came
+                            from publishing real experiences and practical
+                            guides people could actually use.
+                        </p>
+                    </div>
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            What restaurants do you recommend? 🍕
+                        </h4>
+                        <p class="question-text">
+                            I usually avoid tourist-heavy spots and look for
+                            places locals eat at. Small family-run restaurants,
+                            street food stalls, and neighborhood cafés tend to
+                            offer the best food and atmosphere. When possible, I
+                            ask locals for recommendations or check markets to
+                            see where people queue. I care more about
+                            authenticity than fancy interiors.
+                        </p>
+                    </div>
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            What gear & software do you use? 📷
+                        </h4>
+                        <p class="question-text">
+                            I travel light and keep my setup minimal. A reliable
+                            camera, a lightweight laptop, and a good backpack
+                            cover most needs. For software, I use simple photo
+                            editing tools, cloud storage, and writing apps that
+                            work offline. I prefer tools that are stable and
+                            efficient rather than complex or expensive.
+                        </p>
+                    </div>
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            How to travel with your dog? 🐶
+                        </h4>
+                        <p class="question-text">
+                            Traveling with a dog takes extra planning, but it’s
+                            absolutely doable. I choose destinations with good
+                            pet-friendly infrastructure and always check
+                            transport rules in advance. Having the right
+                            documents, vaccinations, and a comfortable carrier
+                            makes a big difference. Slower travel works best —
+                            fewer moves, longer stays, and plenty of outdoor
+                            time.
+                        </p>
+                    </div>
+                    <div class="question-item">
+                        <h4 class="question-title">
+                            What low-budget destinations do you recommend? 💸
+                        </h4>
+                        <p class="question-text">
+                            Countries with a lower cost of living are ideal for
+                            longer trips. Parts of Eastern Europe, Southeast
+                            Asia, and Central America offer great experiences
+                            without high daily expenses. The key is staying
+                            longer in one place, using local transport, and
+                            adapting to local habits instead of traveling like a
+                            tourist.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <Sidebar showAuthor showPromo />
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .preview {
+        position: relative;
+        height: 300px;
+    }
+    .preview-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        color: var(--color-white);
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: 75% 25%;
+        grid-gap: 30px;
+        padding: 70px 0 40px;
+    }
+    .header {
+        margin: 20px 0 45px;
+    }
+    .questions-list {
+        display: grid;
+        gap: 30px;
+    }
+    .question-title {
+        margin-bottom: 17px;
+    }
+    .question-text {
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+</style>

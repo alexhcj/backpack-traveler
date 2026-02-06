@@ -224,6 +224,10 @@
     color: var(--color-dark);
     font-family: var(--family-lora);
 
+    &.active {
+        color: var(--color-accent);
+    }
+
     &::before {
         position: absolute;
         top: 50%;
@@ -238,7 +242,7 @@
         transition: var(--transition-default);
     }
 
-    &:hover {
+    &:not(.active):hover {
         color: var(--color-grey);
         padding-left: 35px;
 

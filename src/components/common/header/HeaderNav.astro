@@ -27,11 +27,11 @@ const navList: INavList[] = [
     { url: "/shop", text: "Shop", type: "link" },
 ];
 const pagesSubList = [
-    { url: "who-we-are", text: "Who we are" },
-    { url: "about-me", text: "About me" },
-    { url: "destination-map", text: "Destination map" },
-    { url: "get-in-touch", text: "Get in touch" },
-    { url: "faq", text: "FAQ page" },
+    { url: "/who-we-are", text: "Who we are" },
+    { url: "/about-me", text: "About me" },
+    { url: "/destination-map", text: "Destination map" },
+    { url: "/get-in-touch", text: "Get in touch" },
+    { url: "/faq", text: "FAQ page" },
 ];
 const travelSubList = [
     { url: "/destinations-list", text: "List" },
@@ -118,8 +118,15 @@ const travelSubList = [
                                     {pagesSubList.map((item) => (
                                         <li class="ui-popup-item">
                                             <a
-                                                class="ui-popup-link"
-                                                href={`destination-map/${item.url}`}
+                                                class:list={[
+                                                    "ui-popup-link",
+                                                    {
+                                                        active:
+                                                            item.url ===
+                                                            pathname,
+                                                    },
+                                                ]}
+                                                href={`${item.url}`}
                                             >
                                                 {item.text}
                                             </a>
