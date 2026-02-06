@@ -6,7 +6,7 @@ pubDate: 2023-09-06
 country: United Kingdom
 destination: London
 categories: [explore, adventure]
-description: Some post description
+description: A year spent in London unfolds as a personal journey through historic streets, diverse neighborhoods, and quiet everyday moments that turn a visitor into a local.
 likesCount: 1
 author:
   name: Murphy Cooper
