@@ -5,6 +5,8 @@ import type { Book } from "../types/book";
 import { Image } from "astro:assets";
 
 interface Props {
+    title?: string;
+    subTitle?: string;
     booksList: string[];
 }
 
@@ -14,7 +16,11 @@ const books = Object.values(
     }),
 );
 
-const { booksList } = Astro.props;
+const {
+    booksList,
+    title = "My travel guides",
+    subTitle = "We are That Backpacker, Melissa and Johnatan (that’s us!)",
+} = Astro.props;
 
 const booksToShow = booksList.map((book) => {
     const {
@@ -33,9 +39,9 @@ const booksToShow = booksList.map((book) => {
 
 <section class="ui-post-guides">
     <div class="container">
-        <h3 class="ui-post-title">My travel guides</h3>
+        <h3 class="ui-post-title">{title}</h3>
         <p class="ui-post-guides-subtitle">
-            We are That Backpacker, Melissa and Johnatan (that’s us!)
+            {subTitle}
         </p>
         <ul class="ui-post-guides-list">
             {

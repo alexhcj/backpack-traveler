@@ -12,6 +12,12 @@
     --color-accent: #f2756a;
     --color-primary: #f7f2ee;
     --color-secondary: #f7775e;
+    --color-error: #dc3545;
+    --color-error-dark: #721c24;
+    --color-error-light: #f8d7da;
+    --color-success: #28a745;
+    --color-success-light: #d4edda;
+    --color-green: #155724;
     --color-black-0: #000000e6;
     --color-black: #000000;
     --color-dark: #565050;

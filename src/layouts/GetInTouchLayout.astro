@@ -1,0 +1,226 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "./Layout.astro";
+import GetInTouchForm from "../components/GetInTouchForm.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import TravelGuides from "../components/TravelGuides.astro";
+
+const booksList: string[] = [
+    "almost-fearless",
+    "501-places",
+    "new-york",
+    "out-to-africa-life-cruiser",
+    "wandering-educators",
+    "france-in-6-days",
+];
+---
+
+<BaseLayout
+    title="Backpack Traveler | Categories list"
+    headerType={EHeader.TRANSPARENT}
+    footerType={EFooter.FULL}
+>
+    <section class="section-header">
+        <Image
+            class="img"
+            width={1900}
+            height={300}
+            src="/images/get-in-touch-bg.jpg"
+            alt="Woman walking near a lake"
+        />
+        <h1 class="title">Get in touch</h1>
+    </section>
+    <section class="section-content">
+        <div class="container">
+            <div class="box">
+                <div class="col">
+                    <div class="parallax">
+                        <Image
+                            class="parallax-1"
+                            width={450}
+                            height={450}
+                            src="/images/mellisa.png"
+                            alt="Melisa"
+                        />
+                        <Image
+                            class="parallax-2"
+                            width={118}
+                            height={118}
+                            src="/images/mellisa-2.png"
+                            alt="Melisa"
+                        />
+                        <Image
+                            class="parallax-3"
+                            width={118}
+                            height={118}
+                            src="/images/mellisa-3.png"
+                            alt="Melisa"
+                        />
+                        <Image
+                            class="parallax-4"
+                            width={342}
+                            height={81}
+                            src="/images/mellisa-4.png"
+                            alt="Melisa"
+                        />
+                    </div>
+                </div>
+                <div class="col">
+                    <GetInTouchForm />
+                </div>
+            </div>
+        </div>
+    </section>
+    <TravelGuides
+        title="Our Travel Guides"
+        subTitle="Read about your favorite travel destinations & our adventures"
+        booksList={booksList}
+    />
+</BaseLayout>
+
+<style>
+    .section-header {
+        position: relative;
+    }
+    .title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        font-size: 40px;
+        color: var(--color-white);
+    }
+    .section-content {
+        padding: 70px 0 40px;
+    }
+    .box {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        padding: 20px 0 80px;
+    }
+    .parallax {
+        position: relative;
+        overflow: visible;
+        text-align: center;
+    }
+    .parallax-2,
+    .parallax-3,
+    .parallax-4 {
+        position: absolute;
+        content: "";
+    }
+    .parallax-2,
+    .parallax-3 {
+        will-change: transform;
+        transition: transform 0.15s ease-out;
+    }
+
+    @keyframes levitateSlow {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        50% {
+            transform: translate3d(0, -10px, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes levitateFast {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        50% {
+            transform: translate3d(0, -16px, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .parallax-3 {
+        animation: levitateSlow 6s ease-in-out infinite;
+    }
+    .parallax-2 {
+        animation: levitateFast 4.5s ease-in-out infinite;
+    }
+    .parallax-2 {
+        bottom: 34%;
+        right: 9%;
+    }
+    .parallax-3 {
+        top: 8%;
+        left: 14%;
+    }
+    .parallax-4 {
+        top: -32px;
+        left: 50%;
+        translate: -47% 0;
+    }
+</style>
+
+<script>
+    const parallax = document.querySelector(
+        ".parallax",
+    ) as HTMLDivElement | null;
+    const p2 = parallax?.querySelector(".parallax-2") as HTMLElement | null;
+    const p3 = parallax?.querySelector(".parallax-3") as HTMLElement | null;
+
+    if (parallax && p2 && p3) {
+        let rect: DOMRect;
+        let cx = 0;
+        let cy = 0;
+
+        const MAX_DISTANCE = 300; // px
+        const clamp = (v: number, min: number, max: number) =>
+            Math.min(max, Math.max(min, v));
+
+        const apply = (
+            el: HTMLElement,
+            dx: number,
+            dy: number,
+            strength: number,
+        ) => {
+            el.style.transform = `translate3d(${dx * strength}px, ${dy * strength}px, 0)`;
+        };
+
+        const onMove = (e: MouseEvent) => {
+            const mx = e.clientX;
+            const my = e.clientY;
+
+            const dx = mx - cx;
+            const dy = my - cy;
+
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const influence = 1 - clamp(dist / MAX_DISTANCE, 0, 1);
+
+            const nx = dx / rect.width;
+            const ny = dy / rect.height;
+
+            // Move TOWARDS mouse, but each layer reacts opposite
+            apply(p2, nx, ny, influence * 35); // faster
+            apply(p3, -nx, -ny, influence * 22); // opposite + slower
+        };
+
+        parallax.addEventListener("mouseenter", () => {
+            rect = parallax.getBoundingClientRect();
+            cx = rect.left + rect.width / 2;
+            cy = rect.top + rect.height / 2;
+            parallax.classList.add("is-active");
+        });
+
+        parallax.addEventListener("mousemove", onMove);
+
+        parallax.addEventListener("mouseleave", () => {
+            parallax.classList.remove("is-active");
+            p2.style.transform = "";
+            p3.style.transform = "";
+        });
+    }
+</script>

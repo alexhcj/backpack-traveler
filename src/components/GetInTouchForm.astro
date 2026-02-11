@@ -1,0 +1,265 @@
+<form id="contact-form">
+    <h3 class="title">Get in touch</h3>
+    <p class="info">
+        For business enquiries:
+        <a class="mail" href="mailto:backpacktraveler@example.com">
+            backpacktraveler@example.com
+        </a>
+        <br />
+        For other enquiries, use the form below 🙂
+    </p>
+    <fieldset class="fields">
+        <div class="field-wrapper">
+            <input
+                class="field"
+                type="text"
+                name="name"
+                placeholder="Name"
+                required
+            />
+        </div>
+        <div class="field-wrapper">
+            <input
+                class="field"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+            />
+        </div>
+        <div class="field-wrapper">
+            <textarea
+                class="field"
+                name="message"
+                rows="5"
+                placeholder="Your message…"
+                required></textarea>
+        </div>
+    </fieldset>
+    <button class="button" type="submit">Submit</button>
+    <div id="success-block">✅ Your message has been sent successfully.</div>
+    <div id="error-block"></div>
+</form>
+
+<style>
+    .form {
+        padding-bottom: 40px;
+    }
+    .title {
+        margin: 20px 0;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        font-size: 24px;
+        font-weight: var(--weight-regular);
+    }
+    .info {
+        margin-bottom: 30px;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+    .mail {
+        color: var(--color-accent);
+    }
+    .fields {
+        display: grid;
+        gap: 18px;
+        margin-bottom: 18px;
+    }
+    .field-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .field {
+        width: 100%;
+        padding: 9px 16px;
+        line-height: 28px;
+        font-size: 12px;
+        font-style: italic;
+        color: var(--color-grey-2);
+        border: 1px solid var(--color-dark-3);
+        transition: border-color 0.2s ease;
+
+        &::placeholder {
+            text-transform: capitalize;
+        }
+    }
+
+    .field-wrapper :global(.field.error) {
+        border-color: var(--color-error);
+    }
+
+    .field-wrapper :global(.error-message) {
+        margin-top: 4px;
+        font-size: 12px;
+        font-style: normal;
+        color: var(--color-error);
+    }
+
+    #success-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-color: var(--color-success-light);
+        border: 1px solid var(--color-success);
+        color: var(--color-green);
+
+        &.visible {
+            display: block;
+        }
+    }
+    #error-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-collor: var(--color-error-light);
+        border: 1px solid var(--color-error);
+        color: var(--color-error-dark);
+
+        &.visible {
+            display: block;
+        }
+    }
+    .button {
+        padding: 9px 41px 10px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 2em;
+        font-size: 12px;
+        color: var(--color-white);
+        background-color: var(--color-black);
+        cursor: pointer;
+        transition: var(--transition-default);
+        border: none;
+
+        &:hover {
+            background-color: var(--color-dark-4);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+</style>
+
+<script>
+    import { actions, isInputError } from "astro:actions";
+
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+    const successBlock =
+        document.querySelector<HTMLDivElement>("#success-block");
+    const errorBlock = document.querySelector<HTMLDivElement>("#error-block");
+    const submitButton = form?.querySelector<HTMLButtonElement>(
+        "button[type='submit']",
+    );
+
+    if (!form) throw new Error("Form not found");
+
+    const clearErrors = () => {
+        // Remove error class from all fields
+        form.querySelectorAll(".field").forEach((el) => {
+            el.classList.remove("error");
+        });
+
+        // Remove all error messages
+        form.querySelectorAll(".error-message").forEach((el) => {
+            el.remove();
+        });
+
+        // Hide error block
+        errorBlock?.classList.remove("visible");
+        if (errorBlock) errorBlock.textContent = "";
+    };
+
+    const showFieldError = (field: string, message: string) => {
+        const input = form.querySelector<
+            HTMLInputElement | HTMLTextAreaElement
+        >(`[name="${field}"]`);
+        if (!input) return;
+
+        // Add error class to highlight the field
+        input.classList.add("error");
+
+        // Create and insert error message
+        const errorEl = document.createElement("div");
+        errorEl.className = "error-message";
+        errorEl.textContent = message;
+
+        // Insert after the input field in its wrapper
+        input.parentElement?.appendChild(errorEl);
+    };
+
+    const showGeneralError = (message: string) => {
+        if (!errorBlock) return;
+        errorBlock.textContent = message;
+        errorBlock.classList.add("visible");
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Clear previous errors and success messages
+        clearErrors();
+        successBlock?.classList.remove("visible");
+
+        // Disable submit button to prevent double submission
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+        }
+
+        try {
+            const formData = new FormData(form);
+
+            const { data, error } = await actions.form.sendGetInTouch(formData);
+
+            if (error) {
+                // Use isInputError() to check for validation errors
+                if (isInputError(error)) {
+                    // Handle input validation errors
+                    // error.fields is a Record<string, string[]>
+                    Object.entries(error.fields).forEach(
+                        ([field, messages]) => {
+                            // messages is an array of error strings
+                            if (messages && messages.length > 0) {
+                                showFieldError(field, messages[0]);
+                            }
+                        },
+                    );
+                    return;
+                }
+
+                // Handle ActionError (server errors)
+                showGeneralError(
+                    error.message ||
+                        "An unexpected error occurred. Please try again.",
+                );
+                return;
+            }
+
+            // Success
+            if (data?.success) {
+                form.reset();
+                successBlock?.classList.add("visible");
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    successBlock?.classList.remove("visible");
+                }, 5000);
+            }
+        } catch (err) {
+            console.error("Form submission error:", err);
+            showGeneralError("An unexpected error occurred. Please try again.");
+        } finally {
+            // Re-enable submit button
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit";
+            }
+        }
+    });
+</script>
