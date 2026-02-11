@@ -19,19 +19,22 @@ const { type } = Astro.props;
         { "base-compact": type === "base-compact" },
         { transparent: type === "transparent" },
         { centered: type === "centered" },
-        { full: type === "full" },
+        { full: type === "full" || type === "full-minimal" },
     ]}
 >
     <div
         class:list={[
             "container",
-            { xl: type === "transparent", full: type === "full" },
+            {
+                xl: type === "transparent",
+                full: type === "full" || type === "full-minimal",
+            },
         ]}
     >
-        <div class="box">
+        <div class:list={["box", { "full-minimal": type === "full-minimal" }]}>
             <HeaderDestination type={type} />
             <HeaderNav type={type} />
-            <HeaderRight type={type} />
+            {type !== "full-minimal" && <HeaderRight type={type} />}
         </div>
     </div>
 
@@ -72,6 +75,11 @@ const { type } = Astro.props;
             grid-template: auto / 350px 1fr 350px;
             align-items: center;
             height: 100%;
+
+            &.full-minimal {
+                grid-template-columns: max-content max-content;
+                justify-content: space-between;
+            }
         }
     </style>
 </header>

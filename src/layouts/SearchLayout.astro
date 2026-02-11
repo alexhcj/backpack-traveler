@@ -1,0 +1,329 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "./Layout.astro";
+
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../types/post";
+
+// import ArrowSVG from "../assets/svg/arrow.svg";
+import ArrowSVG from "../assets/svg/chevron-right.svg";
+
+const query = Astro.url.searchParams.get("s") ?? "";
+const normalized = query.toLowerCase();
+const currentPage = parseInt(Astro.url.searchParams.get("page") ?? "1");
+const postsPerPage = 10;
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("/src/pages/posts/**/*.md", {
+        eager: true,
+    }),
+);
+
+// Filter posts based on search query, or show all if query is empty
+const results = normalized
+    ? posts.filter(({ frontmatter }) =>
+          frontmatter.title.toLowerCase().includes(normalized),
+      )
+    : posts;
+
+// Calculate pagination
+const totalPosts = results.length;
+const totalPages = Math.ceil(totalPosts / postsPerPage);
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+
+// Get paginated results
+const paginatedResults = results.slice(startIndex, endIndex);
+
+const normalizedResults = paginatedResults.map(({ frontmatter }) => ({
+    title: frontmatter.title,
+    slug: frontmatter.slug,
+    image: frontmatter.image,
+    description: frontmatter.description,
+}));
+---
+
+<BaseLayout
+    title="Search Page"
+    headerType={EHeader.FULL_MINIMAL}
+    footerType={EFooter.FULL}
+>
+    <section class="breadcrumbs-section">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <a href="/">Home</a>
+                <span>&#62;</span>
+                <span class="breadcrumbs-results">
+                    Search results for {query.length > 0 ? query : 'All Posts'}
+                </span>
+            </nav>
+        </div>
+    </section>
+    <div class="container">
+        <div class="content">
+            <h2 class="title">New search:</h2>
+            <form class="form" action="/search" method="get">
+                <input
+                    class="input"
+                    type="text"
+                    id="s"
+                    name="s"
+                    placeholder="Type here"
+                />
+                <button class="button" type="submit">
+                    <Image
+                        class="icon"
+                        src="/svg/magnifier.svg"
+                        width={22}
+                        height={22}
+                        alt="Magnifier serach icon"
+                    />
+                </button>
+                <span class="warning"
+                    >If you are not happy with the results below please do
+                    another search</span
+                >
+            </form>
+            {
+                results.length === 0 ? (
+                    <p class="not-found">No posts were found.</p>
+                ) : (
+                    <>
+                        <ul class="grid">
+                            {normalizedResults.map(
+                                ({ title, slug, image, description }) => (
+                                    <li class="post">
+                                        <a href={`/posts/${slug}`}>
+                                            <Image
+                                                class="post-img"
+                                                src={`/${image.url}`}
+                                                alt={image.alt}
+                                                width={130}
+                                                height={130}
+                                            />
+                                        </a>
+                                        <div class="post-info">
+                                            <a href={`/posts/${slug}`}>
+                                                <h5 class="post-title">
+                                                    {title}
+                                                </h5>
+                                            </a>
+                                            <p class="post-description">
+                                                {description}
+                                            </p>
+                                        </div>
+                                    </li>
+                                ),
+                            )}
+                        </ul>
+                        {totalPages > 1 && (
+                            <nav class="pagination">
+                                {currentPage > 1 && (
+                                    <a
+                                        href={`/search?s=${query}&page=${currentPage - 1}`}
+                                        class="pagination-btn prev"
+                                    >
+                                        <ArrowSVG class="arrow-icon" width={24} height={24} />
+                                    </a>
+                                )}
+                                <div class="pagination-pages">
+                                    {Array.from(
+                                        { length: totalPages },
+                                        (_, i) => i + 1,
+                                    ).map((page) => (
+                                        <a
+                                            href={`/search?s=${query}&page=${page}`}
+                                            class={`pagination-page ${page === currentPage ? "active" : ""}`}
+                                        >
+                                            {page}
+                                        </a>
+                                    ))}
+                                </div>
+                                {currentPage < totalPages && (
+                                    <a
+                                        href={`/search?s=${query}&page=${currentPage + 1}`}
+                                        class="pagination-btn next"
+                                    >
+                                        <!-- <ArrowSVG class="arrow-icon" width={13} height={13} /> -->
+                                        <ArrowSVG class="arrow-icon" width={24} height={24} />
+                                    </a>
+                                )}
+                            </nav>
+                        )}
+                    </>
+                )
+            }
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .breadcrumbs-section {
+        height: 80px;
+        background-color: var(--color-primary);
+    }
+    .breadcrumbs {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+        gap: 8px;
+        font-size: 14px;
+        font-family: var(--family-lora);
+    }
+    .breadcrumbs-results {
+        text-transform: capitalize;
+    }
+    .content {
+        padding: 70px 0 40px;
+    }
+    .title {
+        margin-top: 0;
+    }
+    .form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+    .input {
+        margin-bottom: 10px;
+        padding: 0 20px 0 3px;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-family: var(--family-lora);
+        font-style: italic;
+        color: var(--color-dark);
+        background-color: transparent;
+        border-bottom: 1px solid var(--color-border-2);
+    }
+    .button {
+        position: absolute;
+        right: 0;
+        top: 9px;
+        display: flex;
+        border: none;
+        cursor: pointer;
+    }
+    .icon {
+        transform: rotate(90deg);
+    }
+    .warning {
+        font-size: 13px;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+    .not-found {
+        margin: 10px 0;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+    .post {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        padding: 30px 0;
+        gap: 20px;
+        border-bottom: 1px solid var(--color-border-2);
+    }
+    .post-img {
+        object-fit: cover;
+    }
+    .post-title {
+        margin: 0;
+    }
+    .post-description {
+        margin: 7px 0 0;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 5px;
+        margin-top: 40px;
+    }
+    .pagination-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        rotate: -90deg;
+
+        &.next {
+            transform: rotate(90deg);
+        }
+
+        &.prev {
+            transform: rotate(-90deg);
+        }
+
+        &:hover {
+            .arrow-icon {
+                path {
+                    stroke: var(--color-black);
+                }
+            }
+        }
+    }
+    .arrow-icon {
+        path {
+            transition: stroke 0.3s ease;
+        }
+
+        path {
+            stroke: var(--color-grey-2);
+            /*stroke-width: 5px;*/
+        }
+    }
+    .pagination-pages {
+        display: flex;
+        gap: 2px;
+    }
+    .pagination-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 27px;
+        height: 27px;
+        font-size: 14px;
+        font-family: var(--family-lora);
+        color: var(--color-grey-2);
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &.active {
+            color: var(--color-black);
+        }
+
+        &:hover {
+            color: var(--color-black);
+        }
+    }
+</style>
+
+<script>
+    const input = document.querySelector<HTMLInputElement>(".input");
+    const button = document.querySelector<HTMLButtonElement>(".button");
+
+    const redirectToSearch = (query: string): void => {
+        const encoded = encodeURIComponent(query.trim());
+
+        window.location.href = `/search?s=${encoded}`;
+    };
+
+    const handleSearch = (): void => {
+        if (!input) return;
+        const q = input.value.trim();
+        if (!q) return close();
+
+        redirectToSearch(q);
+    };
+
+    button?.addEventListener("click", (): void => {
+        handleSearch();
+    });
+</script>

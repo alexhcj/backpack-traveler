@@ -97,8 +97,10 @@ interface ISocial {
 
     .search-input {
         padding-left: 7px;
-        max-width: 164px;
-        width: 0;
+        max-width: 0;
+        opacity: 0;
+        transform: translateX(6px);
+        overflow: hidden;
         line-height: 43px;
         font-size: 14px;
         color: var(--color-grey-3);
@@ -113,7 +115,9 @@ interface ISocial {
         }
 
         &.active {
-            width: 100%;
+            max-width: 164px;
+            opacity: 1;
+            transform: translateX(0);
         }
     }
 
@@ -129,39 +133,47 @@ interface ISocial {
 </style>
 
 <script>
+    const input = document.querySelector<HTMLInputElement>(".search-input");
     const button = document.querySelector<HTMLButtonElement>(".search-button");
-    const searchInput =
-        document.querySelector<HTMLInputElement>(".search-input");
 
-    const handleSearchToggle = (e: MouseEvent) => {
-        searchInput?.classList.toggle("active");
+    const open = (): void => {
+        input?.classList.add("active");
+        input?.focus();
     };
 
-    const handleOutsideClick = (e: MouseEvent) => {
-        if (!searchInput?.classList.contains("active")) return;
-
-        const target = e.target as HTMLElement;
-        if (
-            !target.closest(".search-button") &&
-            !target.closest(".search-input")
-        ) {
-            searchInput.classList.remove("active");
-        }
+    const close = (): void => {
+        if (!input) return;
+        input.value = "";
+        input.classList.remove("active");
     };
 
-    const handleSearchClose = (e: KeyboardEvent) => {
-        if (e.key === "Escape" || e.key === "Esc") {
-            searchInput?.classList.remove("active");
-        }
+    const redirectToSearch = (query: string): void => {
+        // encode for safe URL
+        const encoded = encodeURIComponent(query.trim());
+        if (!encoded) return close();
+
+        // redirect to /search with query
+        window.location.href = `/search?s=${encoded}`;
     };
 
-    button?.addEventListener("click", handleSearchToggle);
-    document.addEventListener("click", handleOutsideClick);
-    document.addEventListener("keyup", handleSearchClose);
+    const handleSearch = (): void => {
+        if (!input) return;
+        const q = input.value.trim();
+        if (!q) return close();
 
-    document.addEventListener("astro:before-unmount", () => {
-        button?.removeEventListener("click", handleSearchToggle);
-        document.removeEventListener("click", handleOutsideClick);
-        document.removeEventListener("keyup", handleSearchClose);
+        redirectToSearch(q);
+    };
+
+    button?.addEventListener("click", (): void => {
+        input?.classList.contains("active") ? handleSearch() : open();
+    });
+
+    input?.addEventListener("keydown", (e: KeyboardEvent): void => {
+        if (e.key === "Enter") handleSearch();
+        if (e.key === "Escape") close();
+    });
+
+    document.addEventListener("click", (e: MouseEvent): void => {
+        if (!(e.target as HTMLElement).closest(".search")) close();
     });
 </script>
