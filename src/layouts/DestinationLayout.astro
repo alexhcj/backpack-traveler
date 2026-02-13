@@ -7,7 +7,7 @@ import { Image } from "astro:assets";
 
 import BaseLayout from "./Layout.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
-import PostMeta from "../components/PostMeta.astro";
+import DestinationMeta from "../components/DestinationMeta.astro";
 import DestinationSlider from "../components/DestinationSlider/DestinationSlider.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const {
-    frontmatter: { image, title, slug, destination, author, socials, pubDate },
+    frontmatter: { image, title, slug, destination, socials },
 } = Astro.props;
 
 const posts = Object.values(
@@ -71,10 +71,8 @@ const categoriesRelatedSet = [
                         <slot />
                     </div>
                     <div class="footer">
-                        <PostMeta
-                            author={author}
+                        <DestinationMeta
                             socials={socials ?? []}
-                            pubDate={pubDate}
                             categories={categoriesRelatedSet}
                             commentsCount={0}
                             slug={slug}

@@ -3,7 +3,7 @@ import type { ISocial } from "./social";
 export interface Destination {
   title: string;
   slug: string;
-  pubDate: Date;
+  pubDate?: Date;
   destination: string;
   description: string;
   likesCount?: number;

@@ -9,22 +9,27 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export type ContentType = "post" | "destination";
+
 export type Database = {
   public: {
     Tables: {
-      likes: {
+      engagement: {
         Row: {
           id: number;
-          post_slug: string;
+          slug: string;
+          type: ContentType;
           ip_hash: string;
           created_at: string;
         };
         Insert: {
-          post_slug: string;
+          slug: string;
+          type: ContentType;
           ip_hash: string;
         };
         Update: {
-          post_slug?: string;
+          slug?: string;
+          type?: ContentType;
           ip_hash?: string;
         };
       };
