@@ -5,6 +5,7 @@ slug: costa-rica
 pubDate: 2025-03-13
 destination: Costa Rica
 description: Explore Costa Rica’s lush rainforests, hike through misty cloud forests, and spot exotic wildlife in national parks. Discover budget tips, must-see trails, and eco-friendly adventures in this tropical paradise!
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

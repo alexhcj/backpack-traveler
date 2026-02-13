@@ -16,11 +16,11 @@ interface Props {
     pubDate: Date;
     socials: ISocial[];
     categories: ECategory[];
-    likesCount: number;
     commentsCount: number;
+    slug: string;
 }
 
-const { author, socials, pubDate, categories, likesCount, commentsCount } = Astro.props;
+const { author, socials, pubDate, categories, commentsCount, slug } = Astro.props;
 
 const socialSvgs: IImageMetadata = {
     facebook: "/svg/facebook-circle.svg",
@@ -52,15 +52,19 @@ const socialSvgs: IImageMetadata = {
                 </div>
             )
         }
-        <div class="likes">
-            <Image
-                src={HeartSVG}
-                alt="Heart icon"
+        <button
+            class="likes"
+            id="like-button"
+            data-slug={slug}
+            aria-label="Like this post"
+        >
+            <HeartSVG
+                id="heart-icon"
                 width="15"
                 height="15"
             />
-            <span class="count">{likesCount ?? 0}</span>
-        </div>
+            <span class="count" id="likes-count">0</span>
+        </button>
         <div class="comments">
             <Image
                 src={CommentSVG}
@@ -112,6 +116,7 @@ const socialSvgs: IImageMetadata = {
     }
     .category {
         .category-link {
+            text-transform: capitalize;
             font-size: 15px;
             font-family: var(--family-lora);
             font-style: italic;
@@ -141,6 +146,32 @@ const socialSvgs: IImageMetadata = {
             color: var(--color-grey-2);
             font-family: var(--family-lora);
             font-style: italic;
+            transition: var(--trasition-default);
+        }
+    }
+    .likes {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+
+        &:hover {
+            .count {
+                color: var(--color-black);
+            }
+        }
+
+        #heart-icon g path {
+            fill: var(--color-black);
+        }
+
+        &.liked #heart-icon {
+            filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(3489%) hue-rotate(338deg) brightness(91%) contrast(96%);
+        }
+
+        &.loading {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     }
     .author {
@@ -164,3 +195,86 @@ const socialSvgs: IImageMetadata = {
         color: var(--color-grey-2);
     }
 </style>
+
+<script>
+  // Client-side like functionality
+  const likeButton = document.getElementById('like-button') as HTMLButtonElement;
+  const likesCountElement = document.getElementById('likes-count') as HTMLSpanElement;
+
+  if (likeButton) {
+    const slug = likeButton.dataset.slug;
+    const STORAGE_KEY = `liked-${slug}`;
+
+    async function initializeLikes() {
+      try {
+        const apiUrl = `/api/likes/get?slug=${encodeURIComponent(slug!)}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (response.ok) {
+          likesCountElement.textContent = data.count.toString();
+
+          // Use server state as source of truth
+          if (data.hasLiked) {
+            likeButton.classList.add('liked');
+            localStorage.setItem(STORAGE_KEY, 'true');
+          } else {
+            likeButton.classList.remove('liked');
+            localStorage.removeItem(STORAGE_KEY);
+          }
+        } else {
+          console.error('Failed to fetch likes:', data);
+        }
+      } catch (error) {
+        console.error('Failed to initialize likes:', error);
+      }
+    }
+
+    // Toggle like
+    async function toggleLike() {
+      if (likeButton.classList.contains('loading')) {
+        return; // Prevent double-clicks
+      }
+
+      likeButton.classList.add('loading');
+
+      try {
+        const response = await fetch('/api/likes/toggle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ slug }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Update UI
+          likesCountElement.textContent = data.count.toString();
+
+          if (data.hasLiked) {
+            likeButton.classList.add('liked');
+            localStorage.setItem(STORAGE_KEY, 'true');
+          } else {
+            likeButton.classList.remove('liked');
+            localStorage.removeItem(STORAGE_KEY);
+          }
+        } else {
+          console.error('Failed to toggle like:', data.error);
+        }
+      } catch (error) {
+        console.error('Failed to toggle like:', error);
+      } finally {
+        likeButton.classList.remove('loading');
+      }
+    }
+
+    likeButton.addEventListener('click', toggleLike);
+
+    initializeLikes();
+  } else {
+    console.error('Like button element not found!');
+  }
+</script>

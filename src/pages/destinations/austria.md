@@ -5,6 +5,7 @@ slug: austria
 pubDate: 2024-10-29
 destination: Austria
 description: Alpine landscapes, imperial cities, and classical culture.
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

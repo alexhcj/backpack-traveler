@@ -5,6 +5,7 @@ slug: canada
 pubDate: 2024-09-27
 destination: Canada
 description: Some post description
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

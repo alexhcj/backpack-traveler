@@ -5,6 +5,7 @@ slug: united-states
 pubDate: 2025-03-03
 destination: United States
 description: Some post description
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

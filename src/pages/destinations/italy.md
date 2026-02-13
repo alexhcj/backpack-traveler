@@ -5,6 +5,7 @@ slug: italy
 pubDate: 2024-09-03
 destination: Italy
 description: Some post description
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

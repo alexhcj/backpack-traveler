@@ -5,6 +5,7 @@ slug: united-kingdom
 pubDate: 2024-10-29
 destination: United Kingdom
 description: Some post description
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

@@ -5,6 +5,7 @@ slug: ireland
 pubDate: 2024-10-29
 destination: Ireland
 description: Lush landscapes, historic towns, and legendary hospitality.
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png

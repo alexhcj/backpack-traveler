@@ -14,7 +14,7 @@ export interface Post {
   slug: string;
   pubDate: Date;
   description: string;
-  likesCount: number;
+  likesCount?: number;
   author: {
     name: string;
     avatar: string;

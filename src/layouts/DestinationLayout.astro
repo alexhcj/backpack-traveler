@@ -17,7 +17,7 @@ interface Props {
 }
 
 const {
-    frontmatter: { image, title, destination, author, socials, pubDate },
+    frontmatter: { image, title, slug, destination, author, socials, pubDate },
 } = Astro.props;
 
 const posts = Object.values(
@@ -76,8 +76,8 @@ const categoriesRelatedSet = [
                             socials={socials ?? []}
                             pubDate={pubDate}
                             categories={categoriesRelatedSet}
-                            likesCount={0}
                             commentsCount={0}
+                            slug={slug}
                         />
                     </div>
                 </article>

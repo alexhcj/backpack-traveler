@@ -6,6 +6,7 @@ export interface Destination {
   pubDate: Date;
   destination: string;
   description: string;
+  likesCount?: number;
   author: {
     name: string;
     avatar: string;

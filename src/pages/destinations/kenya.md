@@ -5,6 +5,7 @@ slug: kenya
 pubDate: 2024-10-29
 destination: Kenya
 description: From vast savannahs to vibrant cities and coastal beaches.
+likesCount: 0
 author:
   name: Murphy Cooper
   avatar: author/avatar.png
