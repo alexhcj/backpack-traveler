@@ -35,8 +35,7 @@ const socialSvgs: IImageMetadata = {
     twitter: "/svg/twitter-circle.svg",
 };
 ---
-
-  title="Backpack Traveler – Modern Travel Blog" headerType={EHeader.BASE} footerType={EFooter.FULL}>
+<BaseLayout title="Backpack Traveler – Modern Travel Blog" headerType={EHeader.BASE} footerType={EFooter.FULL}>
     <HeroHeader type={EHeader.BASE} />
     <div class="container">
         <div class="row">
@@ -116,7 +115,7 @@ const socialSvgs: IImageMetadata = {
                     }
                 </ul>
                 {latestPostList.length > limit + 1 && (
-                    <button class="btn-show-more">Show more</button>
+                    <button class="ui-button-outline">Show more</button>
                 )}
             </div>
             <div class="col-aside">
@@ -202,31 +201,13 @@ const socialSvgs: IImageMetadata = {
     .blog-posts-list-rest {
         display: none;
     }
-    .btn-show-more {
-        display: flex;
-        justify-self: center;
-        text-transform: uppercase;
-        margin: 20px 0;
-        padding: 13px 19px 11px;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 2em;
-        font-size: 10px;
-        font-family: var(--family-montserrat);
-        font-weight: var(--weight-medium);
-        border: 1px solid var(--color-dark-3);
-        transition: var(--transition-default-4);
-        cursor: pointer;
-
-        &:hover {
-            border-color: var(--color-black);
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
+    .ui-button-outline {
+        margin-top: 40px;
     }
 </style>
 
 <script>
-  const button = document.querySelector('.btn-show-more') as HTMLElement;
+  const button = document.querySelector('.ui-button-outline') as HTMLElement;
   const posts = document.querySelector('.blog-posts-list');
   const restPosts = document.querySelector('.blog-posts-list-rest');
 

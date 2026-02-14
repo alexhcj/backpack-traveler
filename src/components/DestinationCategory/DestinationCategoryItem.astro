@@ -55,8 +55,9 @@ const { destination, categories } = Astro.props;
                 ))
             }
         </ul>
-        <a class="btn" href={`/destinations/${normalizeStrToSlug(destination)}`}
-            >Explore</a
+        <a
+            class="ui-button-outline big"
+            href={`/destinations/${normalizeStrToSlug(destination)}`}>Explore</a
         >
     </div>
 </article>
@@ -113,23 +114,7 @@ const { destination, categories } = Astro.props;
     .img-map {
         padding: 0 50px;
     }
-    .btn {
-        text-transform: uppercase;
+    .ui-button-outline {
         margin-top: auto;
-        padding: 9px 41px 10px;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 2em;
-        font-size: 12px;
-        font-family: var(--family-montserrat);
-        font-weight: var(--weight-medium);
-        border: 1px solid var(--color-dark-3);
-        transition: var(--transition-default-4);
-        cursor: pointer;
-
-        &:hover {
-            border-color: var(--color-black);
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
     }
 </style>

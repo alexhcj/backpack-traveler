@@ -15,7 +15,7 @@ import { EHeader } from "../types/header";
                 Oops! The page you are looking for does not exist. It might have
                 been moved or deleted.
             </p>
-            <a class="link" href="/">Back to home</a>
+            <a class="ui-button-primary" href="/">Back to home</a>
         </div>
     </section>
 </Layout>
@@ -49,21 +49,7 @@ import { EHeader } from "../types/header";
         color: var(--color-dark);
         font-family: var(--family-lora);
     }
-    .link {
+    .ui-button-primary {
         margin-top: 30px;
-        padding: 9px 41px 10px;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 2em;
-        font-size: 12px;
-        color: var(--color-white);
-        background-color: var(--color-black);
-        outline: none;
-        border: 1px solid transparent;
-        transition: var(--transition-default-4);
-
-        &:hover {
-            background-color: var(--color-dark-4);
-        }
     }
 </style>

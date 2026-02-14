@@ -290,11 +290,58 @@
     font-family: var(--family-montserrat);
     font-weight: var(--weight-medium);
     color: var(--color-black);
+    cursor: pointer;
+    transition: var(--transition-default);
 
     &:hover {
         color: var(--color-black-0);
     }
 }
+
+.ui-button-outline {
+    display: flex;
+    justify-self: center;
+    text-transform: uppercase;
+    padding: 13px 19px 11px;
+    letter-spacing: var(--letter-spacing-m);
+    line-height: 2em;
+    font-size: 10px;
+    font-family: var(--family-montserrat);
+    font-weight: var(--weight-medium);
+    border: 1px solid var(--color-dark-3);
+    transition: var(--transition-default-4);
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--color-black);
+        background-color: var(--color-black);
+        color: var(--color-white);
+    }
+
+    &.big {
+        padding: 9px 41px 10px;
+        font-size: 12px;
+        font-weight: var(--weight-regular);
+    }
+}
+.ui-button-primary {
+    text-transform: uppercase;
+    padding: 9px 41px 10px;
+    letter-spacing: var(--letter-spacing-m);
+    line-height: 2em;
+    font-size: 12px;
+    font-family: var(--family-montserrat);
+    font-weight: var(--weight-regular);
+    color: var(--color-white);
+    background-color: var(--color-black);
+    cursor: pointer;
+    transition: var(--transition-default-4);
+
+    &:hover {
+        background-color: var(--color-dark-4);
+    }
+}
+/* accent text highlight */
 
 /* UI POST */
 .ui-post-destination {

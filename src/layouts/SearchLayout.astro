@@ -124,7 +124,7 @@ const normalizedResults = paginatedResults.map(({ frontmatter }) => ({
                                 {currentPage > 1 && (
                                     <a
                                         href={`/search?s=${query}&page=${currentPage - 1}`}
-                                        class="pagination-btn prev"
+                                        class="pagination-button prev"
                                     >
                                         <ArrowSVG class="arrow-icon" width={24} height={24} />
                                     </a>
@@ -145,7 +145,7 @@ const normalizedResults = paginatedResults.map(({ frontmatter }) => ({
                                 {currentPage < totalPages && (
                                     <a
                                         href={`/search?s=${query}&page=${currentPage + 1}`}
-                                        class="pagination-btn next"
+                                        class="pagination-button next"
                                     >
                                         <!-- <ArrowSVG class="arrow-icon" width={13} height={13} /> -->
                                         <ArrowSVG class="arrow-icon" width={24} height={24} />
@@ -247,7 +247,7 @@ const normalizedResults = paginatedResults.map(({ frontmatter }) => ({
         gap: 5px;
         margin-top: 40px;
     }
-    .pagination-btn {
+    .pagination-button {
         display: flex;
         align-items: center;
         justify-content: center;

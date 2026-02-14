@@ -88,7 +88,7 @@ const usePublicAvatar = avatar && avatar !== "";
         </div>
 
         <div class="actions">
-            <button class="btn-reply" data-action="show-reply">
+            <button class="ui-button-text" data-action="show-reply">
                 Reply...
             </button>
 
@@ -97,7 +97,7 @@ const usePublicAvatar = avatar && avatar !== "";
                 showToggleButton && (
                     <div class="thread-toggle">
                         <button
-                            class="btn-toggle-thread"
+                            class="button-toggle-thread"
                             data-action="toggle-thread"
                             data-target={id}
                             data-count={childrenCount}
@@ -119,7 +119,7 @@ const usePublicAvatar = avatar && avatar !== "";
         <div class="reply-form-container" data-reply-form>
             <div class="form-header">
                 <h3 class="title">Reply to {name}</h3>
-                <button class="btn-cancel" data-action="cancel">
+                <button class="button-cancel" data-action="cancel">
                     Cancel reply
                 </button>
             </div>
@@ -222,23 +222,15 @@ const usePublicAvatar = avatar && avatar !== "";
         margin-left: auto;
     }
 
-    .btn-reply {
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 12px;
-        font-weight: var(--weight-medium);
-        color: var(--color-black);
-        cursor: pointer;
-        transition: var(--transition-default);
-        border: none;
-        background: none;
+    .ui-button-text {
+        line-height: 1.69;
 
         &:hover {
             color: var(--color-grey-2);
         }
     }
 
-    .btn-toggle-thread {
+    .button-toggle-thread {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -280,7 +272,7 @@ const usePublicAvatar = avatar && avatar !== "";
         margin: 0;
     }
 
-    .btn-cancel {
+    .button-cancel {
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-m);
         font-size: 12px;

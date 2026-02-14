@@ -21,7 +21,7 @@ const relatedPosts = posts.filter(
         height={230}
         alt={`${destination} map with destinations marks`}
     />
-    <h3 class="title">{destination}</h3>
+    <h3 class="destination">{destination}</h3>
     <span class="related-articles"
         >{
             relatedPosts.length !== 0
@@ -30,7 +30,7 @@ const relatedPosts = posts.filter(
         }</span
     >
     <a
-        class="btn"
+        class="ui-button-outline"
         href={`/destination-related-posts/${destination.replace(" ", "-").toLowerCase()}`}
         >{
             relatedPosts.length !== 0 ? `See articles` : "Another destinations"
@@ -45,11 +45,13 @@ const relatedPosts = posts.filter(
         border: 1px solid var(--color-border-3);
     }
 
-    .title {
-        margin-bottom: 2px;
-        font-family: var(--family-epic-ride);
-        font-size: 44px;
+    .destination {
+        margin: 0 0 2px;
+        text-transform: capitalize;
+        letter-spacing: 0;
         line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
         color: var(--color-dark);
     }
 
@@ -61,24 +63,5 @@ const relatedPosts = posts.filter(
         font-size: 10px;
         color: var(--color-grey-2);
         font-family: var(--family-montserrat);
-    }
-
-    .btn {
-        text-transform: uppercase;
-        padding: 13px 19px 11px;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 2em;
-        font-size: 10px;
-        font-family: var(--family-montserrat);
-        font-weight: var(--weight-medium);
-        border: 1px solid var(--color-dark-3);
-        transition: var(--transition-default-4);
-        cursor: pointer;
-
-        &:hover {
-            border-color: var(--color-black);
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
     }
 </style>

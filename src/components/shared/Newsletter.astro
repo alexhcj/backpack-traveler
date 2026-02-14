@@ -18,7 +18,7 @@ const { type } = Astro.props;
             name="email"
             placeholder="Email address"
         />
-        <button class="btn">Subscribe</button>
+        <button class="ui-button-primary">Subscribe</button>
     </form>
 </div>
 
@@ -65,23 +65,6 @@ const { type } = Astro.props;
         &:focus {
             color: var(--color-dark);
             border-color: var(--color-black);
-        }
-    }
-    .btn {
-        padding: 9px 41px 9px;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-m);
-        font-size: 12px;
-        line-height: 2em;
-        font-weight: var(--weight-regular);
-        color: var(--color-white);
-        font-family: var(--family-montserrat);
-        background-color: var(--color-black);
-        cursor: pointer;
-        transition: var(--transition-default-4);
-
-        &:hover {
-            background-color: var(--color-dark-4);
         }
     }
 </style>

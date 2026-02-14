@@ -36,7 +36,7 @@
                 required></textarea>
         </div>
     </fieldset>
-    <button class="button" type="submit">Submit</button>
+    <button class="ui-button-primary" type="submit">Submit</button>
     <div id="success-block">✅ Your message has been sent successfully.</div>
     <div id="error-block"></div>
 </form>
@@ -123,22 +123,7 @@
             display: block;
         }
     }
-    .button {
-        padding: 9px 41px 10px;
-        text-transform: uppercase;
-        letter-spacing: var(--letter-spacing-m);
-        line-height: 2em;
-        font-size: 12px;
-        color: var(--color-white);
-        background-color: var(--color-black);
-        cursor: pointer;
-        transition: var(--transition-default);
-        border: none;
-
-        &:hover {
-            background-color: var(--color-dark-4);
-        }
-
+    .ui-button-primary {
         &:disabled {
             opacity: 0.6;
             cursor: not-allowed;

@@ -109,7 +109,7 @@ const commentHierarchy = buildCommentHierarchy(postComments);
     const handleSubmit = async (data: ICommentFormData) => {
         try {
             const submitBtn = document.querySelector(
-                ".form .btn-submit",
+                ".form .ui-button-primary",
             ) as HTMLButtonElement;
 
             if (submitBtn) {
@@ -157,7 +157,7 @@ const commentHierarchy = buildCommentHierarchy(postComments);
             );
         } finally {
             const submitBtn = document.querySelector(
-                ".form .btn-submit",
+                ".form .ui-button-primary",
             ) as HTMLButtonElement;
             if (submitBtn) {
                 submitBtn.disabled = false;
@@ -209,7 +209,7 @@ const commentHierarchy = buildCommentHierarchy(postComments);
                 commentAuthorEmail === currentUserEmail
             ) {
                 const replyButton = comment.querySelector(
-                    ".btn-reply",
+                    ".button-reply",
                 ) as HTMLElement;
                 const actionsDiv = comment.querySelector(".actions");
 

@@ -1,7 +1,7 @@
-<button class="btn-scroll" aria-label="scroll to top">Top</button>
+<button class="button-scroll" aria-label="scroll to top">Top</button>
 
 <style>
-    .btn-scroll {
+    .button-scroll {
         position: fixed;
         right: 37px;
         bottom: 35px;
@@ -37,7 +37,9 @@
 <script>
     import { throttle } from "../utils/utils";
 
-    const button = document.querySelector(".btn-scroll") as HTMLButtonElement;
+    const button = document.querySelector(
+        ".button-scroll",
+    ) as HTMLButtonElement;
     const rootElement = document.documentElement;
 
     const handleScroll = (): void => {
