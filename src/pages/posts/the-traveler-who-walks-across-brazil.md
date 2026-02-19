@@ -14,6 +14,9 @@ author:
 image:
   url: posts/the-traveler-who-walks-across-brazil/title.jpg
   alt: Traveler walking along a dusty road in Brazil
+coordinates:
+  lat: -7.9922577801369785
+  lng: -34.843262457483476
 ---
 
 <p class="md-paragraph">

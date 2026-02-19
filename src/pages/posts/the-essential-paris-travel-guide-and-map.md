@@ -17,6 +17,9 @@ image:
 previewImage:
   url: posts/the-essential-paris-travel-guide-and-map/preview.jpg
   alt: A morning view over the Paris skyline
+coordinates:
+  lat: 48.85724437667656
+  lng: 2.347718201359292
 ---
 
 <p class="md-paragraph">

@@ -30,6 +30,7 @@
     --color-grey-3: #888888;
     --color-grey-4: #838383;
     --color-grey-5: #999999;
+    --color-grey-6: #838282;
     --color-border: #f3f3f3;
     --color-border-2: #f2f2f2;
     --color-border-3: #ededed;
@@ -50,6 +51,8 @@
     --z-index-1: 1;
     --z-index-10: 10;
     --z-index-100: 100;
+    --z-index-500: 500;
+    --z-index-1000: 1000;
 
     --transition-default: all 0.2s ease-out;
     --transition-default-2: all 0.2s ease;

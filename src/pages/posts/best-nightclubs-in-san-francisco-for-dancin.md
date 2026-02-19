@@ -25,6 +25,9 @@ masonry:
 previewImage:
   url: posts/best-nightclubs-in-san-francisco-for-dancin/preview.jpg
   alt: Night view of San Francisco streets with neon lights
+coordinates:
+  lat: 37.77175062612587
+  lng: -122.41326153527014
 ---
 
 <p class="md-paragraph">

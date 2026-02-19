@@ -17,6 +17,29 @@ image:
 previewImage:
   url: posts/5-types-of-nature-travelers/preview.jpg
   alt: Rolling green hills of the UK countryside
+coordinates:
+  [
+    {
+      lat: 56.79727918847965,
+      lng: -5.003722195921483
+    },
+    {
+      lat: 57.15012783729066,
+      lng: -4.717807597407155
+    },
+    {
+      lat: 50.60843487744112,
+      lng: -3.9734256605237093
+    },
+    {
+      lat: 54.1474756505129,
+      lng: -0.16862175820910388
+    },
+    {
+      lat: 54.99146948544803,
+      lng: -2.601521430183784
+    }
+  ]
 ---
 
 <div class="md-space"></div>

@@ -17,6 +17,9 @@ image:
 previewImage:
   url: posts/the-worlds-best-drinks/preview.jpg
   alt: Variety of colorful Brazilian drinks on a wooden counter
+coordinates:
+  lat: -22.97350872861752
+  lng: -43.18645216393047
 ---
 
 <p class="md-paragraph">

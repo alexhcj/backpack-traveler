@@ -19,6 +19,9 @@ socials: [
 image:
   url: posts/a-guide-for-budget-travel-with-pets/title.jpg
   alt: Dog sitting on the beach
+coordinates:
+  lat: -23.544395715990643
+  lng: -46.66863977864591
 ---
 
 <div class="md-space"></div>

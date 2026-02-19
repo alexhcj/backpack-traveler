@@ -14,6 +14,9 @@ author:
 image:
   url: posts/how-to-spend-a-week-in-vienna/title.jpg
   alt: Vienna city view with St. Stephen’s Cathedral
+coordinates:
+  lat: 48.20846503721378
+  lng: 16.36738561012273
 ---
 
 <div class="md-space"></div>

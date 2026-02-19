@@ -22,6 +22,9 @@ image:
 masonry:
   height: 320
   description: true
+coordinates:
+  lat: 34.04502980053959
+  lng: -118.24954078968969
 ---
 
 <p class="md-paragraph"><span class="md-first-letter">L</span>os Angeles may be known for its sunny rooftop lounges, but some of the city’s best bars are hidden below the surface. Tucked behind unmarked doors and neon-lit basements, these underground gems offer craft cocktails, moody lighting, and that irresistible speakeasy allure.</p>

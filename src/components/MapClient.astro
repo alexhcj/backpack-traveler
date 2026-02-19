@@ -1,0 +1,312 @@
+---
+import type { Marker } from "../types/map";
+
+interface Props {
+    markers: Marker[];
+}
+
+const { markers } = Astro.props;
+---
+
+<div id="map"></div>
+
+<!-- Pass data using a global variable approach -->
+<script is:inline define:vars={{ markers }}>
+    // Store markers in window object so the module script can access it
+    window.__MAP_MARKERS__ = markers;
+</script>
+
+<script>
+    // Now import modules normally
+    import L from "leaflet";
+    import "leaflet/dist/leaflet.css";
+    import Supercluster from "supercluster";
+
+    // Fix for default marker icons in Leaflet with bundlers
+    import iconUrl from "../assets/svg/marker.svg";
+    import iconRetinaUrl from "../assets/svg/marker.svg";
+    import type { GeoJSONPoint } from "../types/map";
+
+    const DefaultIcon = L.icon({
+        iconUrl: iconUrl.src,
+        iconRetinaUrl: iconRetinaUrl.src,
+        iconSize: [20, 34],
+        iconAnchor: [12, 34],
+        popupAnchor: [1, -34],
+    });
+
+    L.Marker.prototype.options.icon = DefaultIcon;
+
+    function initMap() {
+        const mapElement = document.getElementById("map");
+
+        if (!mapElement) {
+            console.error("Map container not found");
+            return;
+        }
+
+        // Get markers from window object
+        const markers = window.__MAP_MARKERS__ || [];
+
+        // Initialize map
+        const map = L.map("map").setView([20, 0], 2);
+
+        // Add tile layer
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Convert markers to GeoJSON format for Supercluster
+        const points: GeoJSONPoint[] = markers.map((marker) => ({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [marker.lng, marker.lat],
+            },
+            properties: {
+                destination: marker.destination,
+                description: marker.description,
+                slug: marker.slug,
+                image: marker.image,
+            },
+        }));
+
+        // Initialize Supercluster
+        const index = new Supercluster({
+            radius: 60,
+            maxZoom: 16,
+            minZoom: 0,
+            extent: 256,
+            nodeSize: 64,
+        });
+
+        index.load(points);
+
+        let currentLayers: L.Marker[] = [];
+
+        function renderClusters() {
+            currentLayers.forEach((layer) => map.removeLayer(layer));
+            currentLayers = [];
+
+            const bounds = map.getBounds();
+            const zoom = Math.floor(map.getZoom());
+
+            const clusters = index.getClusters(
+                [
+                    bounds.getWest(),
+                    bounds.getSouth(),
+                    bounds.getEast(),
+                    bounds.getNorth(),
+                ],
+                zoom,
+            );
+
+            clusters.forEach((cluster) => {
+                const [lng, lat] = cluster.geometry.coordinates;
+
+                if (cluster.properties.cluster) {
+                    const count = cluster.properties.point_count;
+                    const clusterId = cluster.properties.cluster_id;
+                    const size = count < 100 ? 47 : 67;
+
+                    const divIcon = L.divIcon({
+                        html: `<div class="cluster-inner"><div class="cluster-spinner"></div><div class="cluster-count">${count}</div></div>`,
+                        className: "cluster-marker",
+                        iconSize: [size, size],
+                    });
+
+                    const clusterMarker = L.marker([lat, lng], {
+                        icon: divIcon,
+                    });
+
+                    clusterMarker.on("click", () => {
+                        const expansionZoom = Math.min(
+                            index.getClusterExpansionZoom(clusterId),
+                            16,
+                        );
+                        map.setView([lat, lng], expansionZoom, {
+                            animate: true,
+                        });
+                    });
+
+                    clusterMarker.addTo(map);
+                    currentLayers.push(clusterMarker);
+                } else {
+                    const marker = L.marker([lat, lng]);
+
+                    if (lat && lng) {
+                        const { destination, description, slug, image } =
+                            cluster.properties;
+                        const popupContent = `
+                          <a class="popup-link" href="/posts/${slug}">
+                            <img class="popup-image" src="${image.url}" alt="${image.alt}" />
+                            <div class="popup-info">
+                              <h6 class="popup-destination">${destination}</h6>
+                              <p class="popup-description">${description}</p>
+                            </div>
+                          </a>
+            `;
+                        marker.bindPopup(popupContent);
+                    }
+
+                    marker.addTo(map);
+                    currentLayers.push(marker);
+                }
+            });
+        }
+
+        map.on("moveend", renderClusters);
+        map.on("zoomend", renderClusters);
+
+        renderClusters();
+
+        if (markers.length > 0) {
+            const group = L.featureGroup(
+                markers.map((m) => L.marker([m.lat, m.lng])),
+            );
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initMap);
+    } else {
+        initMap();
+    }
+</script>
+
+<style>
+    #map {
+        margin: 70px 0 40px;
+        width: 100%;
+        height: 600px;
+    }
+
+    @keyframes map-cluster-scaling {
+        0% {
+            transform: scale(1.05);
+        }
+        50% {
+            transform: scale(0.95);
+        }
+        100% {
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes map-rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    :global(.leaflet-top) {
+        z-index: var(--z-index-500);
+    }
+
+    :global(.count-wrapper) {
+        height: 100%;
+    }
+
+    :global(.cluster-inner) {
+        position: relative;
+        height: 100%;
+    }
+
+    :global(.cluster-spinner) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: map-rotate 10s infinite linear;
+    }
+
+    :global(.cluster-spinner::after) {
+        position: absolute;
+        content: "";
+        top: -15%;
+        left: -15%;
+        width: 130%;
+        height: 130%;
+        border-radius: 50%;
+        border: 2px dotted #f2756a;
+        animation: map-cluster-scaling 2s infinite linear;
+    }
+
+    :global(.cluster-count) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 27px;
+        font-weight: var(--weight-regular);
+        color: var(--color-white);
+        border-radius: 50%;
+        background-color: #f2756a;
+    }
+
+    :global(.leaflet-popup-content-wrapper) {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    :global(.leaflet-popup-content) {
+        margin: 0;
+        padding: 8px 15px 8px 8px;
+        min-width: 335px;
+        width: 100% !important;
+        overflow: hidden;
+    }
+
+    :global(.leaflet-popup-content .popup-link) {
+        display: flex;
+        gap: 16px;
+    }
+
+    :global(.leaflet-popup-content .popup-image) {
+        display: block;
+        min-width: 100px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    :global(.leaflet-popup-content .popup-info) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    :global(.leaflet-popup-content .popup-destination) {
+        margin: 0;
+        text-transform: capitalize;
+        width: max-content;
+        letter-spacing: 0;
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+
+    :global(.leaflet-popup-content .popup-description) {
+        margin: 5px 0 0;
+        max-width: 300px;
+        font-weight: 400;
+        font-size: 13px;
+        color: var(--color-grey-6);
+        font-family: var(--family-lora);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+</style>

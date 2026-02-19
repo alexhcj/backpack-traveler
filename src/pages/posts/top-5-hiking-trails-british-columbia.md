@@ -17,6 +17,9 @@ image:
 masonry:
   height: 415
   description: true
+coordinates:
+  lat: 49.944156496199405
+  lng: -123.05911019291841
 ---
 
 <div class="md-space"></div>

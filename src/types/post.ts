@@ -1,6 +1,7 @@
 import type { ISocial } from "./social";
 import type { ECategory } from "./category";
 import type { IMasonryHeights } from "./masonry";
+import type { Coordinates } from "./map";
 
 export interface Post {
   title: string;
@@ -28,4 +29,5 @@ export interface Post {
     url: string;
     alt: string;
   };
+  coordinates: Coordinates | Coordinates[]; // array if multiple places in post
 }

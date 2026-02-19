@@ -17,6 +17,9 @@ image:
 previewImage:
   url: posts/the-traveler-who-walks-around-britain/preview.jpg
   alt: A man walking near a burgundy brick wall of a British building
+coordinates:
+  lat: 50.527831301408455
+  lng: -3.5063706782368436
 ---
 
 <p class="md-paragraph">

@@ -17,6 +17,9 @@ image:
 previewImage:
   url: posts/eating-food-tour/preview.jpg
   alt: French market stall with bread and cheese
+coordinates:
+  lat: 46.56604600352835
+  lng: 2.3645134105004844
 ---
 
 <div class="md-space"></div>

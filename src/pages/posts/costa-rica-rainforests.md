@@ -14,6 +14,9 @@ author:
 image:
     url: posts/costa-rica-rainforests/title.jpg
     alt: La Fortuna Waterfall - Arenal, Costa Rica
+coordinates:
+  lat: 10.300611597938524
+  lng: -84.76568148392477
 ---
 
 <p class="md-paragraph">

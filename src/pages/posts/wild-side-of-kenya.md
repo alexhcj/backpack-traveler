@@ -14,6 +14,9 @@ author:
 image:
     url: posts/wild-side-of-kenya/title.jpg
     alt: Green leaf tree near mountain covered by snow at daytime
+coordinates:
+  lat: -1.4818857178153864
+  lng: 35.13081571669001
 ---
 
 <div class="md-space"></div>

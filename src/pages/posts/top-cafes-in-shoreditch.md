@@ -14,6 +14,9 @@ author:
 image:
   url: posts/top-cafes-in-shoreditch/title.jpg
   alt: Narrow london alley with union jack flag and shops.
+coordinates:
+  lat: 51.52455602662526
+  lng: -0.07704811045610604
 ---
 
 <div class="md-space"></div>

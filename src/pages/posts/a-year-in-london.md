@@ -19,6 +19,9 @@ socials: [
 image:
     url: posts/a-year-in-london/title.jpg
     alt: London from bird view
+coordinates:
+  lat: 51.50515478780454
+  lng: -0.12431894128084373
 ---
 
 <div class="md-space"></div>

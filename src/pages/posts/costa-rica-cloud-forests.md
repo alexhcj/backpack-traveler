@@ -23,6 +23,9 @@ previewImage: {
     url: posts/costa-rica-cloud-forests/preview.jpg,
     alt: Misty cloud forest canopy in Costa Rica
 }
+coordinates:
+  lat: 10.364258200712385
+  lng: -84.31833240470492
 ---
 
 <div class="md-space"></div>

@@ -13,11 +13,15 @@
     "@astrojs/node": "^9.5.2",
     "@supabase/supabase-js": "^2.95.3",
     "astro": "^5.17.1",
+    "leaflet": "^1.9.4",
     "masonry-layout": "^4.2.2",
+    "supercluster": "^8.0.1",
     "swiper": "^11.2.6"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.21",
     "@types/masonry-layout": "^4.2.8",
-    "@types/node": "^25.2.3"
+    "@types/node": "^25.2.3",
+    "@types/supercluster": "^7.1.3"
   }
 }

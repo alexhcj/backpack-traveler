@@ -17,6 +17,9 @@ image:
 previewImage:
   url: posts/top-10-popular-sports-on-the-world/preview.jpg
   alt: Multiple big balloons in the sky
+coordinates:
+  lat: -33.89156140191837
+  lng: 151.22524395050203
 ---
 
 <p class="md-paragraph">

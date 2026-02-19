@@ -14,6 +14,9 @@ author:
 image:
   url: posts/venice-city-tour-with-river-cruise/title.jpg
   alt: Venice streets
+coordinates:
+  lat: 45.439124759644216
+  lng: 12.321404157146223
 ---
 
 <div class="md-space"></div>

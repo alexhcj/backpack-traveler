@@ -19,6 +19,9 @@ socials: [
 image:
   url: posts/top-villages-in-brazil/title.jpg
   alt: Brown and white concrete building under blue sky
+coordinates:
+  lat: -10.288728495145055
+  lng: -36.58306789677858
 ---
 
 <div class="md-space"></div>

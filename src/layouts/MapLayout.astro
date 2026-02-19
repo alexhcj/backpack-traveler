@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+import type { MarkdownInstance } from "astro";
+import "leaflet/dist/leaflet.css";
+
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import BaseLayout from "./Layout.astro";
+import MapClient from "../components/MapClient.astro";
+import type { Post } from "../types/post";
+import type { Marker } from "../types/map";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const markers = posts
+    .map(({ frontmatter }) => ({
+        destination: frontmatter.destination,
+        description: frontmatter.description,
+        slug: frontmatter.slug,
+        image: frontmatter.previewImage ?? frontmatter.image,
+        lat: Array.isArray(frontmatter.coordinates)
+            ? frontmatter.coordinates[0].lat
+            : frontmatter.coordinates.lat,
+        lng: Array.isArray(frontmatter.coordinates)
+            ? frontmatter.coordinates[0].lng
+            : frontmatter.coordinates.lng,
+    }))
+    .filter(Boolean) as Marker[];
+---
+
+<BaseLayout
+    title="Map With Destinations - Backpack Traveler"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <section class="hero">
+        <Image
+            class="hero-img"
+            src="/images/map-bg.jpg"
+            width={1900}
+            height={300}
+            alt="Map Hero"
+        />
+        <h1 class="hero-title">Map With Destinations</h1>
+    </section>
+    <div class="container">
+        <MapClient markers={markers} />
+    </div>
+</BaseLayout>
+
+<style>
+    .hero {
+        position: relative;
+        margin-bottom: 50px;
+    }
+
+    .hero-img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .hero-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-transform: uppercase;
+        margin: 0;
+        color: var(--color-white);
+    }
+</style>

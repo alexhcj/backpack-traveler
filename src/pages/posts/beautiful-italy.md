@@ -14,6 +14,9 @@ author:
 image:
   url: posts/beautiful-italy/title.jpg
   alt: Rolling hills of Tuscany under sunset light
+coordinates:
+  lat: 42.94797753405148
+  lng: 12.548799428898825
 ---
 
 <div class="md-space"></div>

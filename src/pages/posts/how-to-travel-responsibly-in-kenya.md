@@ -22,6 +22,9 @@ image:
 previewImage:
   url: posts/how-to-travel-responsibly-in-kenya/preview.jpg
   alt: Elephants walking across savannah
+coordinates:
+  lat: -1.5409566207228478
+  lng: 36.56414087115288
 ---
 
 <div class="md-space"></div>
