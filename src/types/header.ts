@@ -5,4 +5,5 @@ export enum EHeader {
   CENTERED = "centered", // (top, transparent back) - dest | nav + logo | social + search
   FULL = "full", // (top, white backg, full width) - dest | nav + logo | social + search
   FULL_MINIMAL = "full-minimal", // (top, white backg, full width) - logo | nav
+  FULL_TRANSPARENT = "full-transparent", // (top, transparent backg, full width) - logo | nav | social + search
 }

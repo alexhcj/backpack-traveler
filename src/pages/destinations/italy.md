@@ -4,7 +4,7 @@ title: What can I expect from Italy?
 slug: italy
 pubDate: 2024-09-03
 destination: Italy
-description: Some post description
+description: Immerse yourself in Renaissance art, ancient Roman history, and exquisite cuisine. From Venice's canals to Tuscany's vineyards and the Amalfi Coast's cliffs, Italy is a timeless celebration of beauty and tradition.
 likesCount: 0
 author:
   name: Murphy Cooper

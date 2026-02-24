@@ -4,7 +4,7 @@ title: What can I expect from Brazil?
 slug: brazil
 pubDate: 2024-10-29
 destination: Brazil
-description: Some post description
+description: Experience the rhythm of samba, pristine Amazon rainforest, and spectacular beaches. From Rio's carnival energy to Iguazu Falls' thundering waters, Brazil captivates with its passion, natural beauty, and cultural diversity.
 likesCount: 0
 author:
   name: Murphy Cooper

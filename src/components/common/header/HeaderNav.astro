@@ -81,6 +81,7 @@ const travelSubList = [
                                         link: item.type === "link",
                                         submenu: item.type === "submenu",
                                         "size-sm": type === "transparent",
+                                        white: type === "full-transparent",
                                         active:
                                             (item.url === "/pages" &&
                                                 pagesSubList.some((route) =>
@@ -139,7 +140,14 @@ const travelSubList = [
                                     {travelSubList.map((item) => (
                                         <li class="ui-popup-item">
                                             <a
-                                                class="ui-popup-link"
+                                                class:list={[
+                                                    "ui-popup-link",
+                                                    {
+                                                        active:
+                                                            item.url ===
+                                                            pathname,
+                                                    },
+                                                ]}
                                                 href={item.url}
                                             >
                                                 {item.text}
@@ -218,6 +226,21 @@ const travelSubList = [
 
         &:hover {
             color: var(--color-grey);
+        }
+
+        &.white {
+            font-size: 10px;
+            color: var(--color-white);
+
+            &.active {
+                color: var(--color-white);
+                opacity: 0.7;
+            }
+
+            &:hover {
+                color: var(--color-white);
+                opacity: 0.7;
+            }
         }
 
         &.size-sm {

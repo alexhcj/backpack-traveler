@@ -31,10 +31,10 @@ const destinations = destinationsSet.map((country) => {
 
 <div class="destinations">
     {
-        type === "transparent" || type === "full" || type === "full-minimal" ? (
+        type === "transparent" || type === "full" || type === "full-minimal" || type === "full-transparent" ? (
             <a href="/">
                 <Image
-                    src="/images/logo-short-dark.webp"
+                    src={type === "full-transparent" ? "/images/logo-short-light.png" : "/images/logo-short-dark.webp"}
                     width={209}
                     height={45}
                     alt="Logo image"

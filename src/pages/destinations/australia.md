@@ -4,7 +4,7 @@ title: What can I expect from Australia
 slug: australia
 pubDate: 2024-10-29
 destination: Australia
-description: Some post description
+description: Discover stunning beaches, the iconic Great Barrier Reef, and unique wildlife like kangaroos and koalas. From Sydney's harbor to the Outback's red deserts, experience diverse landscapes and vibrant cities Down Under.
 likesCount: 0
 author:
   name: Murphy Cooper

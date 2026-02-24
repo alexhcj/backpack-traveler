@@ -1,3 +1,4 @@
+import type { ECategory } from "./category";
 import type { ISocial } from "./social";
 
 export interface Destination {
@@ -20,4 +21,8 @@ export interface Destination {
     url: string;
     alt: string;
   };
+}
+
+export interface DestinationData extends Destination {
+  categories: ECategory[];
 }

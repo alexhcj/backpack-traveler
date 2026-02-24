@@ -4,7 +4,7 @@ title: What can I expect from USA?
 slug: united-states
 pubDate: 2025-03-03
 destination: United States
-description: Some post description
+description: Experience boundless diversity across 50 states. From New York's skyline to California's beaches, national parks, and cultural melting pots, the USA offers endless possibilities for adventure, innovation, and discovery.
 likesCount: 0
 author:
   name: Murphy Cooper

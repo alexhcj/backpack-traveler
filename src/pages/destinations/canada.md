@@ -4,7 +4,7 @@ title: Welcome to Canada travel guide
 slug: canada
 pubDate: 2024-09-27
 destination: Canada
-description: Some post description
+description: Explore vast wilderness, cosmopolitan cities, and breathtaking Rocky Mountains. From Niagara Falls to pristine lakes and forests, Canada offers outdoor adventures, multicultural experiences, and friendly hospitality year-round.
 likesCount: 0
 author:
   name: Murphy Cooper

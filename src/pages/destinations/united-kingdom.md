@@ -4,7 +4,7 @@ title: What can I expect from London?
 slug: united-kingdom
 pubDate: 2024-10-29
 destination: United Kingdom
-description: Some post description
+description: Discover royal heritage, literary landmarks, and charming countryside. From London's iconic Big Ben to Scotland's highlands and England's historic castles, the UK blends tradition with modern creativity and cultural depth.
 likesCount: 0
 author:
   name: Murphy Cooper

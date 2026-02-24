@@ -1,13 +1,13 @@
 ---
-import type { EHeader } from "../../../types/header";
+import type { ISocialLink } from "../../../types/social";
 
-import { Image } from "astro:assets";
-
+import { EHeader } from "../../../types/header";
 import InstagramSVG from "../../../../public/svg/instagram.svg";
 import TwitterSVG from "../../../../public/svg/twitter.svg";
 import FacebookSVG from "../../../../public/svg/facebook.svg";
 import PinterestSVG from "../../../../public/svg/pinterest.svg";
 import YoutubeSVG from "../../../../public/svg/youtube.svg";
+import MagnifierSVG from "../../../../public/svg/magnifier.svg";
 
 interface Props {
     type: EHeader;
@@ -15,33 +15,22 @@ interface Props {
 
 const { type } = Astro.props;
 
-const socialsList = [
-    { url: "/", icon: InstagramSVG, alt: "Instagram link" },
-    { url: "/", icon: TwitterSVG, alt: "Twitter link" },
-    { url: "/", icon: FacebookSVG, alt: "Facebook link" },
-    { url: "/", icon: PinterestSVG, alt: "Pinterest link" },
-    { url: "/", icon: YoutubeSVG, alt: "Youtube link" },
+const socialsList: ISocialLink[] = [
+    { url: "/", icon: InstagramSVG, text: "Instagram link" },
+    { url: "/", icon: TwitterSVG, text: "Twitter link" },
+    { url: "/", icon: FacebookSVG, text: "Facebook link" },
+    { url: "/", icon: PinterestSVG, text: "Pinterest link" },
+    { url: "/", icon: YoutubeSVG, text: "Youtube link" },
 ];
-
-interface ISocial {
-    url: string;
-    icon: ImageMetadata;
-    alt: string;
-}
 ---
 
-<div class="right">
+<div class:list={["right", { light: type === EHeader.FULL_TRANSPARENT }]}>
     <ul class="socials">
         {
-            socialsList.map((social: ISocial) => (
+            socialsList.map(({ url, icon: Icon, text }) => (
                 <li>
-                    <a href={social.url}>
-                        <Image
-                            src={social.icon}
-                            width={13}
-                            height={13}
-                            alt={social.alt}
-                        />
+                    <a class="social-link" href={url} aria-label={text}>
+                        <Icon class="social-icon" />
                     </a>
                 </li>
             ))
@@ -51,13 +40,7 @@ interface ISocial {
         <span class="search-divider"></span>
         <input class="search-input" placeholder="Search..." type="text" />
         <button class="search-button">
-            <Image
-                class="search-magnifier"
-                src="/svg/magnifier.svg"
-                width={19}
-                height={20}
-                alt="Search for posts"
-            />
+            <MagnifierSVG class="search-magnifier" />
         </button>
     </div>
 </div>
@@ -69,12 +52,53 @@ interface ISocial {
         justify-content: end;
         align-items: center;
         gap: 18px;
+
+        &.light {
+            .social-link:hover {
+                .social-icon path {
+                    opacity: 0.7;
+                }
+            }
+
+            .social-icon path {
+                fill: var(--color-white);
+            }
+
+            .search-divider {
+                background-color: var(--color-white);
+            }
+
+            .search-magnifier {
+                path {
+                    fill: var(--color-white);
+                }
+            }
+
+            .search-button:hover {
+                .search-magnifier {
+                    opacity: 0.7;
+                }
+            }
+        }
     }
 
     .socials {
         display: grid;
         grid-auto-flow: column;
         gap: 13px;
+    }
+
+    .social-link {
+        display: flex;
+    }
+
+    .social-icon {
+        width: 13px;
+        height: 13px;
+
+        path {
+            transition: var(--transition-default);
+        }
     }
 
     .search {
@@ -127,8 +151,11 @@ interface ISocial {
 
     .search-magnifier {
         margin: 10px 7px;
+        width: 19px;
+        height: 20px;
         transform: scaleX(-1);
         cursor: pointer;
+        transition: var(--transition-default);
     }
 </style>
 

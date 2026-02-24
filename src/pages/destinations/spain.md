@@ -4,7 +4,7 @@ title: Welcome to Spain travel guide
 slug: spain
 pubDate: 2024-10-29
 destination: Spain
-description: Some post description
+description: Savor tapas, flamenco passion, and architectural wonders. From Barcelona's Gaudí masterpieces to Madrid's museums and Andalusia's Moorish palaces, Spain dazzles with vibrant culture, sunny beaches, and rich history.
 likesCount: 0
 author:
   name: Murphy Cooper

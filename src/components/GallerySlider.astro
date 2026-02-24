@@ -1,0 +1,407 @@
+---
+import type { DestinationData } from "../types/destination";
+
+import { Image } from "astro:assets";
+
+import ArrowSVG from "../../public/svg/arrow.svg";
+import ArrowExpandSVG from "../../public/svg/arrow-expand.svg";
+import { normalizeStrToAmpersand } from "../utils/utils";
+
+interface Props {
+    destinationsData: DestinationData[];
+}
+
+const { destinationsData } = Astro.props;
+---
+
+<section class="section">
+    <div class="swiper-container">
+        <ul class="swiper-wrapper">
+            {
+                destinationsData.map(
+                    ({ slug, destination, image, categories, description, likesCount }) => (
+                        <li class="swiper-slide">
+                            <Image
+                                class="gallery-image"
+                                src={`/${image.url}`}
+                                alt={image.alt}
+                                width={1920}
+                                height={1080}
+                            />
+                            <div class="info">
+                                <button class="button-expand" aria-label="Expand destination info">
+                                    <ArrowExpandSVG class="icon-arrow-expand" />
+                                </button>
+                                <div class="content">
+                                    <a
+                                        class="link"
+                                        href={`/destinations/${slug}`}
+                                    >
+                                        <h2 class="country">
+                                            {destination}
+                                        </h2>
+                                    </a>
+                                    <div class="meta">
+                                        <ul class="categories">
+                                            {categories.slice(0, 2).map((category, idx) => (
+                                                <li>
+                                                    <a
+                                                        class="ui-post-category"
+                                                        href={`/category/${category}`}
+                                                    >
+                                                        {normalizeStrToAmpersand(
+                                                            idx < 1
+                                                                ? category + ","
+                                                                : category,
+                                                        )}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <!-- Expanded content (hidden by default) -->
+                                    <div class="expanded-content">
+                                        <div class="left">
+                                            <div class="meta">
+                                                <ul class="categories">
+                                                    {categories.map((category, idx) => (
+                                                        <li>
+                                                            <a
+                                                                class="ui-post-category"
+                                                                href={`/category/${category}`}
+                                                            >
+                                                                {normalizeStrToAmpersand(
+                                                                    idx !==
+                                                                        categories.length -
+                                                                            1
+                                                                        ? category + ","
+                                                                        : category,
+                                                                )}
+                                                            </a>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <div class="user-interactions">
+                                                    <div class="comments">
+                                                        <span>|</span>
+                                                        <span>0 Comments</span>
+                                                    </div>
+                                                    <div class="likes">
+                                                        <span>|</span>
+                                                        <span>{likesCount} Likes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="description">
+                                                {description}
+                                            </p>
+                                            <a class="ui-button-outline big" href={`/destinations/${slug}`} >Explore</a>
+                                        </div>
+                                        <div class="right">
+                                            <Image
+                                                src={`/destinations-maps/${destination.replace(" ", "-").toLowerCase()}-map.png`}
+                                                width={290}
+                                                height={290}
+                                                alt={`${destination} map with destinations marks`}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    ),
+                )
+            }
+        </ul>
+        <button class="swiper-button-prev control control-prev" type="button">
+            <ArrowSVG class="svg" />
+        </button>
+        <button class="swiper-button-next control control-next" type="button">
+            <ArrowSVG class="svg" />
+        </button>
+    </div>
+</section>
+
+<style>
+    .section {
+        height: 100vh;
+    }
+
+    .swiper-container {
+        overflow: hidden;
+    }
+
+    .swiper-slide {
+        position: relative;
+    }
+
+    .gallery-image {
+        display: block;
+        max-height: 100vh;
+        object-fit: cover;
+    }
+
+    .control {
+        top: 50%;
+        width: 62px;
+        height: 47px;
+        padding: 10px;
+        background-color: var(--color-white);
+        z-index: 10;
+
+        &::after {
+            display: none;
+        }
+
+        &.control-prev {
+            left: 0;
+        }
+
+        &.control-next {
+            right: 0;
+            transform: scaleX(-1);
+        }
+
+        .svg g > * {
+            transition: var(--transition-svg);
+        }
+
+        &:hover {
+            &.control .svg {
+                line {
+                    transform: scaleX(0.7);
+                    transform-origin: 55% 0;
+                }
+
+                polyline {
+                    translate: 5px 0;
+                }
+            }
+        }
+    }
+
+    .info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 380px;
+        min-height: 130px;
+        background-color: var(--color-white);
+        z-index: var(--z-index-100);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.expanded {
+            width: 50%;
+            min-height: 420px;
+
+            .content {
+                padding-top: 62px;
+
+                & > .meta {
+                    display: none;
+                }
+            }
+
+            .country {
+                font-size: 80px;
+            }
+
+            .expanded-content {
+                max-height: 500px;
+                opacity: 1;
+            }
+
+            .button-expand .icon-arrow-expand {
+                transform: rotate(180deg);
+            }
+
+            .user-interactions {
+                opacity: 1;
+            }
+        }
+    }
+
+    .content {
+        position: relative;
+        padding: 18px 55px 43px;
+    }
+
+    .button-expand {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-primary);
+        cursor: pointer;
+        transition: var(--transition-default-5);
+        z-index: var(--z-index-10);
+
+        .icon-arrow-expand {
+            width: 30px;
+            height: 30px;
+            transition: var(--transition-default-5);
+        }
+    }
+
+    .country {
+        margin: 0;
+        text-transform: capitalize;
+        letter-spacing: 0;
+        line-height: 1em;
+        font-size: 58px;
+        font-family: var(--family-epic-ride);
+        transition: var(--transition-default);
+    }
+
+    .meta {
+        display: flex;
+        align-items: start;
+        gap: 20px;
+        margin-top: 12px;
+    }
+
+    .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 5px;
+    }
+
+    .user-interactions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .likes,
+        .comments {
+            width: max-content;
+
+            span:first-child {
+                margin-right: 20px;
+            }
+        }
+
+        span {
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-default);
+            font-size: 10px;
+            color: var(--color-grey-2);
+        }
+    }
+
+    /* Expanded content styles */
+    .expanded-content {
+        display: grid;
+        grid-template-columns: 1fr 290px;
+        gap: 30px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.3s ease 0.1s;
+    }
+
+    .description {
+        margin-top: 20px;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+
+    .ui-button-outline {
+        margin-top: 32px;
+        justify-self: start;
+    }
+</style>
+
+<script>
+    import "swiper/css";
+    import "swiper/css/navigation";
+
+    import Swiper from "swiper";
+    import { Navigation, Mousewheel } from "swiper/modules";
+
+    const swiper = new Swiper(".swiper-container", {
+        modules: [Navigation, Mousewheel],
+        loop: true,
+        autoplay: true,
+        slidesPerView: 1,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        speed: 1000,
+        mousewheel: {
+            sensitivity: 1,
+            releaseOnEdges: false,
+        },
+    });
+
+    // Expand/Collapse functionality
+    function initExpandButtons() {
+        const expandButtons = document.querySelectorAll('.button-expand');
+
+        expandButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const infoPanel = button.closest('.info');
+
+                // Close other expanded panels
+                const allPanels = document.querySelectorAll('.info');
+                allPanels.forEach(panel => {
+                    if (panel !== infoPanel && panel.classList.contains('expanded')) {
+                        panel.classList.remove('expanded');
+                    }
+                });
+
+                // Toggle current panel
+                infoPanel?.classList.toggle('expanded');
+
+                // Pause autoplay when expanded, resume when collapsed
+                if (infoPanel?.classList.contains('expanded')) {
+                    swiper.autoplay.stop();
+                } else {
+                    swiper.autoplay.start();
+                }
+            });
+        });
+    }
+
+    // Initialize on load
+    initExpandButtons();
+
+    // Re-initialize after slide change (for dynamically added slides)
+    swiper.on('slideChange', () => {
+        // Close all expanded panels when sliding
+        const allPanels = document.querySelectorAll('.info.expanded');
+        allPanels.forEach(panel => {
+            panel.classList.remove('expanded');
+        });
+
+        // Resume autoplay
+        if (swiper.autoplay && !swiper.autoplay.running) {
+            swiper.autoplay.start();
+        }
+    });
+
+    // Optional: Close expanded panel when clicking outside
+    document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.info') && !target.closest('.button-expand')) {
+            const expandedPanels = document.querySelectorAll('.info.expanded');
+            expandedPanels.forEach(panel => {
+                panel.classList.remove('expanded');
+            });
+
+            if (swiper.autoplay && !swiper.autoplay.running) {
+                swiper.autoplay.start();
+            }
+        }
+    });
+</script>

@@ -4,7 +4,7 @@ title: Welcome to France travel guide
 slug: france
 pubDate: 2024-09-27
 destination: France
-description: Some post description
+description: Indulge in world-class cuisine, art, and romance. From Paris's Eiffel Tower to Provence's lavender fields and the French Riviera's beaches, France blends historic charm with sophisticated culture and stunning landscapes.
 likesCount: 0
 author:
   name: Murphy Cooper

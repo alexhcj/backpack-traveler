@@ -1,6 +1,6 @@
 ---
 import type { EHeader } from "../types/header";
-import type { EFooter } from "../types/footer";
+import { EFooter } from "../types/footer";
 
 import Header from "../components/common/header/Header.astro";
 import Footer from "../components/common/footer/Footer.astro";
@@ -43,7 +43,7 @@ const { title, headerType, footerType } = Astro.props;
             <slot />
         </main>
         <ScrollTop />
-        <Footer type={footerType} />
+        {footerType && <Footer type={footerType} />}
     </body>
 </html>
 

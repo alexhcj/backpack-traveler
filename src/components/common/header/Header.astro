@@ -19,7 +19,12 @@ const { type } = Astro.props;
         { "base-compact": type === "base-compact" },
         { transparent: type === "transparent" },
         { centered: type === "centered" },
-        { full: type === "full" || type === "full-minimal" },
+        {
+            full: type === "full" || type === "full-minimal",
+        },
+        {
+            "full-transparent": type === "full-transparent",
+        },
     ]}
 >
     <div
@@ -27,7 +32,10 @@ const { type } = Astro.props;
             "container",
             {
                 xl: type === "transparent",
-                full: type === "full" || type === "full-minimal",
+                full:
+                    type === "full" ||
+                    type === "full-minimal" ||
+                    type === "full-transparent",
             },
         ]}
     >
@@ -67,6 +75,21 @@ const { type } = Astro.props;
                 padding: 0 40px;
                 height: 100px;
                 background-color: var(--color-white);
+            }
+
+            &.full-transparent {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 0 40px;
+                height: 100px;
+                background-color: transparent;
+                z-index: var(--z-index-100);
+
+                &.sticky {
+                    border-bottom: none;
+                }
             }
         }
 

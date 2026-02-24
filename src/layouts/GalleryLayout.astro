@@ -1,0 +1,61 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Destination } from "../types/destination";
+import type { Post } from "../types/post";
+import type { ECategory } from "../types/category";
+
+import BaseLayout from "./Layout.astro";
+import GallerySlider from "../components/GallerySlider.astro";
+import { EHeader } from "../types/header";
+import { getAllDestinationLikes } from "../lib/services/engagement";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+);
+
+const destinationCategoriesMap: Record<string, Set<ECategory>> = {};
+
+posts.forEach(({ frontmatter }) => {
+    const destination = frontmatter.country;
+    if (!destination) return;
+
+    if (!destinationCategoriesMap[destination]) {
+        destinationCategoriesMap[destination] = new Set();
+    }
+
+    frontmatter.categories?.forEach((category) => {
+        destinationCategoriesMap[destination].add(category);
+    });
+});
+
+const destinations = Object.values(
+    import.meta.glob<MarkdownInstance<Destination>>(
+        "../pages/destinations/*.md",
+        { eager: true },
+    ),
+);
+
+const destinationLikes = await getAllDestinationLikes();
+
+const destinationsData = destinations
+    .filter(
+        ({ frontmatter }) =>
+            destinationCategoriesMap[frontmatter.destination]?.size,
+    )
+    .map(({ frontmatter }) => ({
+        ...frontmatter,
+        categories: Array.from(
+            destinationCategoriesMap[frontmatter.destination],
+        ),
+        likesCount:
+            destinationLikes.find(
+                (item) => item.destination === frontmatter.slug,
+            )?.count || 0,
+    }));
+---
+
+<BaseLayout title="FAQ Page" headerType={EHeader.FULL_TRANSPARENT}>
+    <GallerySlider destinationsData={destinationsData} />
+</BaseLayout>
