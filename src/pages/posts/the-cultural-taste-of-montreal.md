@@ -14,9 +14,11 @@ author:
 image:
   url: posts/the-cultural-taste-of-montreal/title.jpg
   alt: Montreal Cityscape
+video:
+  url: video/the-cultural-taste-of-montreal.mp4
+  format: mp4
 masonry:
-  height: 280
-  description: true
+  height: 230
 coordinates:
   lat: 45.50753895645063
   lng: -73.5563845252563

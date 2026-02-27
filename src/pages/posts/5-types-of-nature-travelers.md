@@ -17,6 +17,11 @@ image:
 previewImage:
   url: posts/5-types-of-nature-travelers/preview.jpg
   alt: Rolling green hills of the UK countryside
+video:
+  url: video/5-types-of-nature-travelers.mp4
+  format: mp4
+masonry:
+  height: 230
 coordinates:
   [
     {

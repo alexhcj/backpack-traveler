@@ -21,7 +21,6 @@ image:
   alt: Dimly lit cocktail bar with vintage decor
 masonry:
   height: 320
-  description: true
 coordinates:
   lat: 34.04502980053959
   lng: -118.24954078968969

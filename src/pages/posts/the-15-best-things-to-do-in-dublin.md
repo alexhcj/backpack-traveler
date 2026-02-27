@@ -16,7 +16,6 @@ image:
   alt: Dublin city center with river Liffey
 masonry:
   height: 415
-  description: true
 coordinates:
   lat: 53.35372527973084
   lng: -6.250519828616834

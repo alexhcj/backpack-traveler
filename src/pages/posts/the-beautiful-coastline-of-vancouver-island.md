@@ -16,7 +16,6 @@ image:
   alt: Aerial view of Vancouver Island coastline
 masonry:
   height: 535
-  description: true
 coordinates:
   lat: 49.669872300236335
   lng: -125.4517308228259

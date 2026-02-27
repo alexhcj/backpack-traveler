@@ -21,7 +21,6 @@ image:
   alt: Woman standing near a brick wall outside a club
 masonry:
   height: 280
-  description: true
 previewImage:
   url: posts/best-nightclubs-in-san-francisco-for-dancin/preview.jpg
   alt: Night view of San Francisco streets with neon lights

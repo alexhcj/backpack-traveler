@@ -14,6 +14,11 @@ author:
 image:
   url: posts/explore-the-finest-beaches-in-brazil/title.jpg
   alt: Palm trees and blue ocean under sunny sky
+video:
+  url: video/explore-the-finest-beaches-in-brazil.mp4
+  format: mp4
+masonry:
+  height: 230
 coordinates:
   lat: -12.574709848530961
   lng: -38.00437760272133

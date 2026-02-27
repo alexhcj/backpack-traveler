@@ -16,7 +16,6 @@ image:
   alt: Finding peace over a lake
 masonry:
   height: 415
-  description: true
 coordinates:
   lat: 49.944156496199405
   lng: -123.05911019291841

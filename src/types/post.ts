@@ -23,11 +23,14 @@ export interface Post {
   socials?: ISocial[];
   masonry?: {
     height: IMasonryHeights;
-    description?: boolean;
   };
   previewImage?: {
     url: string;
     alt: string;
+  };
+  video?: {
+    url: string;
+    format: string;
   };
   coordinates: Coordinates | Coordinates[]; // array if multiple places in post
 }
