@@ -10,7 +10,10 @@ interface Props {
 const { posts } = Astro.props;
 
 const mostRatedPostList = posts
-    .sort((a, b) => b.frontmatter.likesCount - a.frontmatter.likesCount)
+    .sort(
+        (a, b) =>
+            b.frontmatter.likesCount ?? 0 - (a.frontmatter.likesCount ?? 0),
+    )
     .slice(0, 6);
 ---
 

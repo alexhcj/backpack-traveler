@@ -41,7 +41,7 @@ const categories = categoriesSet
             }, 0),
             totalLikes: posts.reduce((acc, cur) => {
                 if (cur.frontmatter.categories.includes(category)) {
-                    acc += cur.frontmatter.likesCount;
+                    acc += cur.frontmatter.likesCount ?? 0;
                 }
                 return acc;
             }, 0),
