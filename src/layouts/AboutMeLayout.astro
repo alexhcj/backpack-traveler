@@ -1,0 +1,248 @@
+---
+import { Image } from "astro:assets";
+
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import BaseLayout from "./Layout.astro";
+import Socials from "../components/Socials.astro";
+import SubscribeSection from "../components/SubscribeSection.astro";
+import ReadersTestimonials from "../components/ReadersTestimonials.astro";
+---
+
+<BaseLayout
+    title="Backpack Traveler – Modern Travel Blog"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <section class="preview">
+        <Image
+            class="img"
+            src="/images/about-me-bg.jpg"
+            width={1900}
+            height={300}
+            alt="Girl eating cookies near mini van"
+        />
+        <h1 class="preview-title">About me</h1>
+    </section>
+    <section>
+        <div class="container">
+            <div class="grid">
+                <div class="col">
+                    <h2 class="title">
+                        Hi!I’m Melissa:) <br />Let’s go travel
+                    </h2>
+                    <p class="text">
+                        Every journey begins with a spark — a quiet desire to
+                        see what’s beyond the horizon. I travel to collect
+                        stories, flavors, and fleeting moments that turn into
+                        lifelong memories. From hidden coastal villages to
+                        vibrant city streets, I’m always searching for places
+                        that feel authentic and alive.
+                    </p>
+                    <p class="text">
+                        Travel, for me, is not about ticking destinations off a
+                        list. It’s about slow mornings with ocean air,
+                        unexpected conversations with locals, and sunsets that
+                        make you pause a little longer. Each trip shapes the way
+                        I see the world — and myself.
+                    </p>
+                    <p class="text">
+                        Curious where to start? Explore my <a
+                            class="link"
+                            href="/">most loved routes</a
+                        >, favorite stays, and honest tips to help you plan your
+                        own unforgettable escape.
+                    </p>
+                    <Socials />
+                </div>
+                <div class="col">
+                    <div class="video-wrapper">
+                        <div class="video-box">
+                            <video
+                                class="video-preview"
+                                muted
+                                loop
+                                playsinline
+                                preload="metadata"
+                            >
+                                <source src="/video/about.mp4" />
+                                {/* Fallback image if video fails */}
+                                <img
+                                    class="img"
+                                    src="/images/about-video-preview.jpg"
+                                    alt="Girl on the rock"
+                                />
+                            </video>
+                            <Image
+                                class="play-button"
+                                src="/images/play-button.png"
+                                width={100}
+                                height={100}
+                                alt="Play button"
+                            />
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <Image
+                            src="/images/about-star.png"
+                            width={60}
+                            height={49}
+                            alt="Comment icon with char star"
+                        />
+                        <p class="caption-text">
+                            Travel far enough to meet yourself — somewhere
+                            between the waves, the wind, and the wonder of a new
+                            place.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <SubscribeSection />
+    <ReadersTestimonials />
+</BaseLayout>
+
+<style>
+    .preview {
+        position: relative;
+        height: 300px;
+    }
+
+    .preview-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        color: var(--color-white);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 30px;
+        padding: 70px 0 130px;
+    }
+
+    .title {
+        margin-bottom: 30px;
+    }
+
+    .text {
+        margin-bottom: 30px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+
+        &:last-of-type {
+            margin-bottom: 40px;
+        }
+    }
+
+    .link {
+        color: var(--color-accent);
+    }
+
+    .video-wrapper {
+        margin-bottom: 30px;
+        max-height: 400px;
+        height: 100%;
+        width: 100%;
+        padding: 15px;
+        border: 1px solid var(--color-border);
+
+        &:hover {
+            .video-preview {
+                scale: 1.03;
+            }
+
+            .video-box::before {
+                opacity: 1;
+                z-index: var(--z-index-10);
+            }
+        }
+    }
+
+    .video-box {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+
+        &::before {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            content: "";
+            background-color: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            cursor: pointer;
+            z-index: var(--z-index--1);
+            transition: var(--transition-default-3);
+        }
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+    }
+
+    .video-preview {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        cursor: pointer;
+        transition: var(--transition-image);
+    }
+
+    .video-preview {
+        width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .caption {
+        display: flex;
+        gap: 50px;
+    }
+
+    .caption-text {
+        letter-spacing: var(--letter-spacing-xxs);
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+</style>
+
+<script>
+    // Video play on click
+    document.addEventListener("DOMContentLoaded", () => {
+        const videoBox = document.querySelector(".video-box") as HTMLDivElement;
+        const video = document.querySelector(
+            ".video-preview",
+        ) as HTMLVideoElement;
+        const playButton = document.querySelector(
+            ".play-button",
+        ) as HTMLImageElement;
+
+        videoBox.addEventListener("click", () => {
+            if (video.currentTime <= 0) {
+                video.play().catch((err) => {
+                    console.log("Video autoplay failed:", err);
+                });
+                video.controls = true;
+                playButton.style.display = "none";
+            } else {
+                video.pause();
+                video.currentTime = 0; // Reset to start
+                playButton.style.display = "block";
+            }
+        });
+    });
+</script>

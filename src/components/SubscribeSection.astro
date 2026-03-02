@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import SubscribeForm from "./SubscribeForm.astro";
+---
+
+<section class="section">
+    <Image
+        class="img-section-bg"
+        src="/images/subscribe-bg.png"
+        alt="Subscribe Section Image"
+        width={1250}
+        height={630}
+    />
+    <div class="container">
+        <div class="grid">
+            <div class="col">
+                <Image
+                    class="img-book-1"
+                    src="/images/subscribe-book-1.png"
+                    width={311}
+                    height={434}
+                    alt="Landscapes: Almost fearless book"
+                />
+                <Image
+                    class="img-book-2"
+                    src="/images/subscribe-book-2.png"
+                    width={308}
+                    height={421}
+                    alt="501 places book"
+                />
+            </div>
+            <div class="col">
+                <div class="content">
+                    <h3 class="title">Best money - saving travel tips!</h3>
+                    <p class="description">
+                        See how I helped real readers plan, save and <span
+                            class="underline"
+                            >go on the trip of a lifetime.</span
+                        > And get <span class="accent"
+                            >actionable steps you can use to travel anywhere</span
+                        > — no matter your income or where you're from!
+                    </p>
+                    <SubscribeForm />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        position: relative;
+        height: 670px;
+        background-color: var(--color-primary);
+    }
+
+    .img-section-bg {
+        position: absolute;
+        top: 0;
+        left: -14%;
+        object-fit: cover;
+        z-index: var(--z-index-1);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
+        align-items: center;
+        height: 100%;
+    }
+
+    .col {
+        position: relative;
+        z-index: var(--z-index-10);
+    }
+
+    .img-book-1 {
+        position: relative;
+        transform: translate(11%, 9%);
+        z-index: var(--z-index-30);
+    }
+
+    .img-book-2 {
+        position: relative;
+        transform: translate(-16%, 1%);
+        z-index: var(--z-index-20);
+    }
+
+    .title {
+        height: auto;
+        max-width: 590px;
+        line-height: 43px;
+        letter-spacing: var(--letter-spacing-xm);
+        font-size: 33px;
+    }
+
+    .description {
+        margin-bottom: 30px;
+        max-width: 617px;
+        line-height: 30px;
+        font-size: 18px;
+        color: var(--color-grey-7);
+        font-family: var(--family-lora);
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+    .accent {
+        color: var(--color-accent);
+    }
+</style>

@@ -33,6 +33,29 @@ export type Database = {
           ip_hash?: string;
         };
       };
+      subscriptions: {
+        Row: {
+          id: number;
+          name: string;
+          email: string;
+          country: string;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          name: string;
+          email: string;
+          country: string;
+          is_active?: boolean;
+        };
+        Update: {
+          name?: string;
+          email?: string;
+          country?: string;
+          is_active?: boolean;
+        };
+      };
     };
   };
 };

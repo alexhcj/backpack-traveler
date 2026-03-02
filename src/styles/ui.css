@@ -1,4 +1,5 @@
 /* GRID */
+/* GRID */
 .container {
     margin: 0 auto;
     max-width: 1300px;
@@ -338,6 +339,10 @@
     transition: var(--transition-default-4);
 
     &:hover {
+        background-color: var(--color-dark-4);
+    }
+
+    &:focus {
         background-color: var(--color-dark-4);
     }
 }

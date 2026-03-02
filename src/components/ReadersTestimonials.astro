@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+import type { ITestimonial } from "../types/testimonials";
+
+const testimonials: ITestimonial[] = [
+    {
+        image: "/images/testimonials/testimonial-1.jpg",
+        text: "We planned a short getaway, but it turned into one of the most meaningful trips we’ve ever taken. Every recommendation was spot on — from the cozy seaside stay to the hidden café with the best sunset view. It felt personal, thoughtful, and perfectly paced. We came home refreshed and already dreaming about the next adventure.",
+        author: "Sara & Tom",
+    },
+    {
+        image: "/images/testimonials/testimonial-2.jpg",
+        text: "I usually overplan everything, but this time I trusted the guide — and I’m so glad I did. The itinerary balanced iconic spots with local gems I would’ve never found on my own",
+        author: "Adriana B",
+    },
+    {
+        image: "/images/testimonials/testimonial-3.jpg",
+        text: "What I appreciated most was the attention to detail. From practical travel tips to the little cultural insights, everything helped me feel confident exploring solo. I discovered places that weren’t just beautiful — they had a story. This wasn’t just a trip, it was an experience.",
+        author: "Erica",
+    },
+    {
+        image: "/images/testimonials/testimonial-4.jpg",
+        text: "I’ve traveled a lot, but this journey stood out. The mix of relaxation and exploration was perfect, and every suggestion felt carefully curated. I loved how easy everything was — no stress, just pure enjoyment. It reminded me why I fell in love with traveling in the first place.",
+        author: "Laetitia C",
+    },
+    {
+        image: "/images/testimonials/testimonial-5.jpg",
+        text: "I’ve taken plenty of trips over the years, but this one genuinely surprised me. The recommendations were practical, well-timed, and never overwhelming. I appreciated how everything felt intentional — from the local food spots to the quiet viewpoints away from the crowds. It was the kind of experience that makes you slow down and actually enjoy where you are.",
+        author: "Daniel R",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="title">What readers say about me</h2>
+            <p class="sub-title">
+                See how I’ve helped others save money and plan trips of their
+                lifetime
+            </p>
+        </div>
+        <div class="swiper-container">
+            <ul class="swiper-wrapper">
+                {
+                    testimonials.map(({ image, text, author }) => (
+                        <li class="swiper-slide">
+                            <Image
+                                class="img"
+                                src={image}
+                                width={285}
+                                height={220}
+                                sizes="(max-width: 800px) 100vw, 800px"
+                                alt={"Testimonial by " + author}
+                            />
+                            <div class="content">
+                                <p class="testimonial">
+                                    {text}
+                                    <span class="testimonial-author">
+                                        {author}
+                                    </span>
+                                </p>
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 100px 0 20px;
+    }
+
+    .header {
+        margin-bottom: 70px;
+    }
+
+    .title,
+    .sub-title {
+        text-align: center;
+    }
+
+    .title {
+        margin-top: 0;
+    }
+
+    .sub-title {
+        line-height: 30px;
+        font-size: 18px;
+        color: var(--color-grey-4);
+        font-family: var(--family-lora);
+    }
+
+    .swiper-container {
+        overflow: hidden;
+    }
+
+    .swiper-wrapper {
+        cursor: grab;
+    }
+
+    .img {
+        max-height: 220px;
+    }
+
+    .content {
+        padding: 26px 26px 29px 27px;
+        border: 1px solid var(--color-border-2);
+        border-top: none;
+    }
+
+    .testimonial {
+        text-align: left;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .testimonial-author {
+        font-weight: var(--weight-bold);
+
+        &::before {
+            content: " — ";
+            font-weight: var(--weight-bold);
+        }
+    }
+</style>
+
+<script>
+    import "swiper/css";
+
+    import Swiper from "swiper";
+
+    const swiper = new Swiper(".swiper-container", {
+        loop: true,
+        slidesPerView: 4,
+        spaceBetween: 20,
+    });
+</script>

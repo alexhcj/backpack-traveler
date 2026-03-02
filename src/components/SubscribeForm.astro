@@ -1,0 +1,216 @@
+<form id="subscribe-form">
+    <fieldset class="fields">
+        <div class="field-wrapper">
+            <input
+                class="field"
+                type="text"
+                name="name"
+                placeholder="Name"
+                required
+            />
+        </div>
+        <div class="field-wrapper">
+            <input
+                class="field"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+            />
+        </div>
+        <div class="field-wrapper">
+            <input
+                class="field"
+                type="text"
+                name="country"
+                placeholder="Country"
+                required
+            />
+        </div>
+        <button class="ui-button-primary" type="submit">Subscribe</button>
+    </fieldset>
+    <div id="success-block">✅ Your message has been sent successfully.</div>
+    <div id="error-block"></div>
+</form>
+
+<style>
+    .fields {
+        display: grid;
+        grid-template-columns: repeat(4, calc(25% - 10px));
+        align-items: center;
+        gap: 10px;
+    }
+
+    .field {
+        padding: 11px 16px 12px;
+        width: 100%;
+        line-height: calc(50px - (9px * 2) - 2px);
+        font-size: 12px;
+        color: var(--color-grey-2);
+        font-style: italic;
+        border: 1px solid var(--color-border-3);
+        background-color: var(--color-white);
+        transition: var(--transition-default-4);
+
+        &:focus {
+            color: var(--color-black);
+            border-color: var(--color-dark-3);
+        }
+
+        &:placeholder {
+            font-size: 12px;
+            transition: var(--transition-default-4);
+        }
+    }
+
+    .ui-button-primary {
+        padding: 15px 16px 16px;
+        text-align: center;
+    }
+
+    #success-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-color: var(--color-success-light);
+        border: 1px solid var(--color-success);
+        color: var(--color-green);
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    #error-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-collor: var(--color-error-light);
+        border: 1px solid var(--color-error);
+        color: var(--color-error-dark);
+
+        &.visible {
+            display: block;
+        }
+    }
+</style>
+
+<script>
+    import { actions, isInputError } from "astro:actions";
+
+    const form = document.querySelector<HTMLFormElement>("#subscribe-form");
+    const successBlock =
+        document.querySelector<HTMLDivElement>("#success-block");
+    const errorBlock = document.querySelector<HTMLDivElement>("#error-block");
+    const submitButton = form?.querySelector<HTMLButtonElement>(
+        "button[type='submit']",
+    );
+
+    if (!form) throw new Error("Form not found");
+
+    const clearErrors = () => {
+        // Remove error class from all fields
+        form.querySelectorAll(".field").forEach((el) => {
+            el.classList.remove("error");
+        });
+
+        // Remove all error messages
+        form.querySelectorAll(".error-message").forEach((el) => {
+            el.remove();
+        });
+
+        // Hide error block
+        errorBlock?.classList.remove("visible");
+        if (errorBlock) errorBlock.textContent = "";
+    };
+
+    const showFieldError = (field: string, message: string) => {
+        const input = form.querySelector<HTMLInputElement>(`[name="${field}"]`);
+        if (!input) return;
+
+        // Add error class to highlight the field
+        input.classList.add("error");
+
+        // Create and insert error message
+        const errorEl = document.createElement("div");
+        errorEl.className = "error-message";
+        errorEl.textContent = message;
+
+        // Insert after the input field in its wrapper
+        input.parentElement?.appendChild(errorEl);
+    };
+
+    const showGeneralError = (message: string) => {
+        if (!errorBlock) return;
+        errorBlock.textContent = message;
+        errorBlock.classList.add("visible");
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Clear previous errors and success messages
+        clearErrors();
+        successBlock?.classList.remove("visible");
+
+        // Disable submit button to prevent double submission
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+        }
+
+        try {
+            const formData = new FormData(form);
+
+            const { data, error } = await actions.form.sendSubscribe(formData);
+
+            if (error) {
+                // Use isInputError() to check for validation errors
+                if (isInputError(error)) {
+                    // Handle input validation errors
+                    // error.fields is a Record<string, string[]>
+                    Object.entries(error.fields).forEach(
+                        ([field, messages]) => {
+                            // messages is an array of error strings
+                            if (messages && messages.length > 0) {
+                                showFieldError(field, messages[0]);
+                            }
+                        },
+                    );
+                    return;
+                }
+
+                // Handle ActionError (server errors)
+                showGeneralError(
+                    error.message ||
+                        "An unexpected error occurred. Please try again.",
+                );
+                return;
+            }
+
+            // Success
+            if (data?.success) {
+                form.reset();
+                successBlock?.classList.add("visible");
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    successBlock?.classList.remove("visible");
+                }, 5000);
+            }
+        } catch (err) {
+            console.error("Form submission error:", err);
+            showGeneralError("An unexpected error occurred. Please try again.");
+        } finally {
+            // Re-enable submit button
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit";
+            }
+        }
+    });
+</script>

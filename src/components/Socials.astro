@@ -1,0 +1,51 @@
+---
+import FacebookSVG from "../../public/svg/facebook-circle.svg";
+import PinterestSVG from "../../public/svg/pinterest-circle.svg";
+import TwitterSVG from "../../public/svg/twitter-circle.svg";
+
+const socials = [
+    {
+        name: "Facebook",
+        icon: FacebookSVG,
+        url: "https://www.facebook.com/",
+    },
+    {
+        name: "Pinterest",
+        icon: PinterestSVG,
+        url: "https://www.pinterest.com/",
+    },
+    {
+        name: "Twitter",
+        icon: TwitterSVG,
+        url: "https://www.twitter.com/",
+    },
+];
+---
+
+<ul class="list">
+    {
+        socials.map((social) => (
+            <li>
+                <a
+                    class="link"
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <social.icon width="25" height="25" />
+                </a>
+            </li>
+        ))
+    }
+</ul>
+
+<style>
+    .list {
+        display: flex;
+        gap: 16px;
+    }
+
+    .link {
+        display: flex;
+    }
+</style>
