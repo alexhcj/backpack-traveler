@@ -11,7 +11,7 @@ import CategoriesList from "../components/CategoriesList.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
 import SubscribeSection from "../components/SubscribeSection.astro";
-import Sponsors from "../components/Sponsors.astro";
+import SponsorsSlider from "../components/SponsorsSlider.astro";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -73,7 +73,7 @@ const categories = categoriesSet
             </div>
         </div>
     </section>
-    <Sponsors />
+    <SponsorsSlider />
     <!-- <Reviews /> -->
 </Layout>
 
