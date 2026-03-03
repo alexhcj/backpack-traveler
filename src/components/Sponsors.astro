@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+import type { ISponsor } from "../types/sponsors";
+
+const sponsors: ISponsor[] = [
+    {
+        image: "/images/sponsors/national-adventures.png",
+        hoverImage: "/images/sponsors/national-adventures-hover.png",
+        company: "National Adventures",
+    },
+    {
+        image: "/images/sponsors/the-new-york-times.png",
+        hoverImage: "/images/sponsors/the-new-york-times-hover.png",
+        company: "The New York Times",
+    },
+    {
+        image: "/images/sponsors/mikado-themes.png",
+        hoverImage: "/images/sponsors/mikado-themes-hover.png",
+        company: "Mikado Themes",
+    },
+    {
+        image: "/images/sponsors/bbg.png",
+        hoverImage: "/images/sponsors/bbg-hover.png",
+        company: "BBG",
+    },
+    {
+        image: "/images/sponsors/time.png",
+        hoverImage: "/images/sponsors/time-hover.png",
+        company: "Time",
+    },
+    {
+        image: "/images/sponsors/the-backpacker.png",
+        hoverImage: "/images/sponsors/the-backpacker-hover.png",
+        company: "The Backpacker",
+    },
+    {
+        image: "/images/sponsors/cnn.png",
+        hoverImage: "/images/sponsors/cnn-hover.png",
+        company: "CNN",
+    },
+    {
+        image: "/images/sponsors/the-news-channel.png",
+        hoverImage: "/images/sponsors/the-news-channel-hover.png",
+        company: "The News Channel",
+    },
+    {
+        image: "/images/sponsors/wjq.png",
+        hoverImage: "/images/sponsors/wjq-hover.png",
+        company: "WJQ",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h3 class="title">Our sponsors</h3>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                {
+                    [...sponsors, ...sponsors].map(
+                        ({ image, hoverImage, company }) => (
+                            <div class="swiper-slide">
+                                <Image
+                                    class="img img-hover"
+                                    src={hoverImage}
+                                    width={135}
+                                    height={48}
+                                    alt={company}
+                                />
+                                <Image
+                                    class="img"
+                                    src={image}
+                                    width={135}
+                                    height={48}
+                                    alt={company}
+                                />
+                            </div>
+                        ),
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 118px 0 43px;
+    }
+
+    .title {
+        margin: 0 auto 28px;
+        text-align: center;
+    }
+
+    .swiper-slide {
+        &:hover {
+            .img {
+                opacity: 0;
+            }
+            .img-hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .img {
+        transition: var(--transition-sponsor-hover);
+    }
+
+    .img-hover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+</style>
+
+<script>
+    import "swiper/css";
+
+    import Swiper from "swiper";
+
+    const swiper = new Swiper(".swiper", {
+        loop: true,
+        slidesPerView: 9,
+    });
+</script>

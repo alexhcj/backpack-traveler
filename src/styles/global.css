@@ -71,6 +71,7 @@
     --transition-gallery-info:
         transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.5s,
         min-height 0.4s, width 0.4s;
+    --transition-sponsor-hover: opacity 0.15s ease-out;
 
     --animation-comment-toggle: fadeIn 0.3s ease-in-out;
 
