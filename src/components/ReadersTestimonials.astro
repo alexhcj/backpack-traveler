@@ -40,7 +40,7 @@ const testimonials: ITestimonial[] = [
                 lifetime
             </p>
         </div>
-        <div class="swiper-container">
+        <li class="swiper-testimonials">
             <ul class="swiper-wrapper">
                 {
                     testimonials.map(({ image, text, author }) => (
@@ -65,7 +65,7 @@ const testimonials: ITestimonial[] = [
                     ))
                 }
             </ul>
-        </div>
+        </li>
     </div>
 </section>
 
@@ -94,12 +94,8 @@ const testimonials: ITestimonial[] = [
         font-family: var(--family-lora);
     }
 
-    .swiper-container {
+    .swiper-testimonials {
         overflow: hidden;
-    }
-
-    .swiper-wrapper {
-        cursor: grab;
     }
 
     .img {
@@ -133,9 +129,10 @@ const testimonials: ITestimonial[] = [
 
     import Swiper from "swiper";
 
-    const swiper = new Swiper(".swiper-container", {
+    const swiper = new Swiper(".swiper-testimonials", {
         loop: true,
         slidesPerView: 4,
         spaceBetween: 20,
+        grabCursor: true,
     });
 </script>

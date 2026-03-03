@@ -12,7 +12,7 @@ const { posts } = Astro.props;
 ---
 
 <section class="section">
-    <div class="swiper-container">
+    <div class="swiper-destination">
         <ul class="swiper-wrapper">
             {
                 posts.map(({ frontmatter }) => (
@@ -37,13 +37,16 @@ const { posts } = Astro.props;
     .section {
         margin-bottom: 60px;
     }
-    .swiper-container {
+
+    .swiper-destination {
         overflow: hidden;
     }
+
     .link {
         display: flex;
         height: 100%;
     }
+
     .slider-img {
         display: block;
         width: 100%;
@@ -57,7 +60,7 @@ const { posts } = Astro.props;
 
     import Swiper from "swiper";
 
-    const swiper = new Swiper(".swiper-container", {
+    const swiper = new Swiper(".swiper-destination", {
         loop: true,
         slidesPerView: 3,
         height: 400,

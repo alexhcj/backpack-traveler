@@ -54,7 +54,7 @@ const sponsors: ISponsor[] = [
 <section class="section">
     <div class="container">
         <h3 class="title">Our sponsors</h3>
-        <div class="swiper">
+        <div class="swiper-sponsors">
             <div class="swiper-wrapper">
                 {
                     [...sponsors, ...sponsors].map(
@@ -121,7 +121,7 @@ const sponsors: ISponsor[] = [
 
     import Swiper from "swiper";
 
-    const swiper = new Swiper(".swiper", {
+    const swiper = new Swiper(".swiper-sponsors", {
         loop: true,
         slidesPerView: 9,
     });

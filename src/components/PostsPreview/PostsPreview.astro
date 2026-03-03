@@ -20,10 +20,10 @@ const postsList = posts
 ---
 
 <section>
-    <div class="swiper-container">
+    <div class="swiper-posts-preview">
         <div class="swiper-wrapper">
             {
-                postsList.map(({ frontmatter }, index) => (
+                postsList.map(({ frontmatter }) => (
                     <li class="swiper-slide">
                         <PostPreviewItem
                             title={frontmatter.title}
@@ -45,10 +45,10 @@ const postsList = posts
                 ))
             }
         </div>
-        <button class="swiper-button-prev control control-next" type="button">
+        <button class="swiper-button-prev control" type="button">
             <ArrowSVG class="svg" />
         </button>
-        <button class="swiper-button-next control control-next" type="button">
+        <button class="swiper-button-next control" type="button">
             <ArrowSVG class="svg" />
         </button>
     </div>
@@ -57,12 +57,14 @@ const postsList = posts
 <style>
     section {
         position: relative;
-        margin: 0 40px;
-        padding-bottom: 100px;
+        margin-bottom: 100px;
+        padding: 0 93px;
     }
-    .swiper-container {
+
+    .swiper-posts-preview {
         overflow: hidden;
     }
+
     .control {
         top: 200px;
         width: 62px;
@@ -74,42 +76,29 @@ const postsList = posts
             display: none;
         }
 
-        & + .control-next {
+        &.swiper-button-prev {
+            left: 55px;
+        }
+
+        &.swiper-button-next {
             transform: scaleX(-1);
+            right: 55px;
+        }
+
+        &:hover .svg {
+            line {
+                transform: scaleX(0.7);
+                transform-origin: 55% 0;
+            }
+
+            polyline {
+                translate: 5px 0;
+            }
         }
 
         .svg g > * {
             transition: var(--transition-svg);
         }
-
-        &:hover {
-            &.control-next .svg {
-                line {
-                    transform: scaleX(0.7);
-                    transform-origin: 55% 0;
-                }
-
-                polyline {
-                    translate: 5px 0;
-                }
-            }
-            &.control-prev .svg {
-                line {
-                    transform: scaleX(0.7);
-                    transform-origin: 55% 0;
-                }
-
-                polyline {
-                    translate: 0 -5px;
-                }
-            }
-        }
-    }
-    .swiper-button-prev {
-        left: -40px;
-    }
-    .swiper-button-next {
-        right: -40px;
     }
 </style>
 
@@ -120,7 +109,7 @@ const postsList = posts
     import Swiper from "swiper";
     import { Navigation } from "swiper/modules";
 
-    const swiper = new Swiper(".swiper-container", {
+    const swiper = new Swiper(".swiper-posts-preview", {
         modules: [Navigation],
         loop: true,
         slidesPerView: 5,
