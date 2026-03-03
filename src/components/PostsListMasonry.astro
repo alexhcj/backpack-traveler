@@ -20,6 +20,7 @@ const { posts } = Astro.props;
                 frontmatter: {
                     title,
                     image,
+                    previewImage,
                     video,
                     country,
                     slug,
@@ -51,16 +52,16 @@ const { posts } = Astro.props;
                                 {/* Fallback image if video fails */}
                                 <img
                                     class="img"
-                                    src={`/${image.url}`}
-                                    alt={image.alt}
+                                    src={`/${previewImage?.url ?? image.url}`}
+                                    alt={previewImage?.alt ?? image.alt}
                                 />
                             </video>
                         ) : (
                             <img
                                 class="img"
-                                src={`/${image.url}`}
+                                src={`/${previewImage?.url ?? image.url}`}
                                 height={`${masonry?.height ?? 400}px`}
-                                alt={image.alt}
+                                alt={previewImage?.alt ?? image.alt}
                             />
                         )}
                     </a>
@@ -143,6 +144,10 @@ const { posts } = Astro.props;
         object-fit: cover;
         object-position: top;
         transition: var(--transition-image);
+    }
+
+    .img {
+        object-position: center;
     }
 
     .video-preview {

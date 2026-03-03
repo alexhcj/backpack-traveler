@@ -19,9 +19,6 @@ socials: [
 image:
   url: posts/what-to-eat-for-breakfast/title.jpg
   alt: Food on the table
-previewImage:
-  url: posts/what-to-eat-for-breakfast/preview.jpg
-  alt: Full English breakfast served with coffee
 coordinates:
   lat: 51.514842475044176
   lng: -0.13511762820847245
