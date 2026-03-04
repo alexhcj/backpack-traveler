@@ -10,6 +10,7 @@ import Layout from "../layouts/Layout.astro";
 import CategoriesList from "../components/CategoriesList.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
+import AroundWorldSection from "../components/AroundWorldSection.astro";
 import SubscribeSection from "../components/SubscribeSection.astro";
 import SponsorsSlider from "../components/SponsorsSlider.astro";
 
@@ -61,6 +62,7 @@ const categories = categoriesSet
     <HeroHeader type={EHeader.BASE} />
     <PostsPreview />
     <TravelEssentials />
+    <AroundWorldSection />
     <SubscribeSection />
     <section class="ui-post-guides">
         <div class="container">

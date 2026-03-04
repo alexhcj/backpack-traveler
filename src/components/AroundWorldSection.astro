@@ -1,0 +1,129 @@
+---
+import { Image } from "astro:assets";
+
+import Socials from "./Socials.astro";
+---
+
+<section class="section">
+    <div class="container">
+        <div class="grid">
+            <div class="col">
+                <h2 class="title">Around the World in 10 days</h2>
+                <p class="text">
+                    Travel has always been my way of reconnecting with what
+                    truly matters. There’s something powerful about stepping
+                    into the unknown — discovering quiet coastal towns, meeting
+                    locals with stories to tell, and watching the sun set over
+                    landscapes you’ve only seen in photos. Each destination
+                    leaves a mark, shaping memories that last far beyond the
+                    journey itself.
+                </p>
+                <p class="text">
+                    From early morning walks along palm-lined beaches to
+                    spontaneous detours down hidden roads, every day brings a
+                    new perspective. It’s not just about ticking places off a
+                    list — it’s about immersing yourself in the culture, tasting
+                    unfamiliar flavors, and finding beauty in simple, unplanned
+                    moments.
+                </p>
+                <p class="text">
+                    Travel reminds us that the world is vast, vibrant, and
+                    endlessly inspiring — and that sometimes the best
+                    experiences are the ones we never expected.
+                </p>
+                <Socials />
+            </div>
+            <div class="col">
+                <Image
+                    class="img-1"
+                    src="/images/around-world-1.jpg"
+                    width={527}
+                    height={351}
+                    alt="Brazil beach"
+                />
+                <Image
+                    class="img-2"
+                    src="/images/around-world-2.jpg"
+                    width={374}
+                    height={249}
+                    alt="Girl on the road surrounded by palms"
+                />
+                <Image
+                    class="img-comment"
+                    src="/images/comment-star.png"
+                    width={60}
+                    height={49}
+                    alt="Comment icon with star inside"
+                />
+                <p class="caption-text">
+                    Travel far enough to meet yourself — somewhere between the
+                    waves, the wind, and the wonder of a new place.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 100px 0 20px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 41% 59%;
+        gap: 30px;
+    }
+
+    .col {
+        &:first-of-type {
+            padding: 60px 0 150px;
+        }
+
+        &:last-of-type {
+            position: relative;
+        }
+    }
+
+    .title {
+        margin-bottom: 30px;
+    }
+
+    .text {
+        margin-bottom: 30px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+
+        &:last-of-type {
+            margin-bottom: 40px;
+        }
+    }
+
+    .img-1 {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .img-2 {
+        position: absolute;
+        top: 29%;
+        left: 10%;
+    }
+
+    .img-comment {
+        position: absolute;
+        top: 20%;
+        left: 17%;
+    }
+
+    .caption-text {
+        position: absolute;
+        top: 38%;
+        right: 0%;
+        max-width: 300px;
+        letter-spacing: var(--letter-spacing-xxs);
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+</style>
