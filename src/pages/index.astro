@@ -14,6 +14,7 @@ import AroundWorldSection from "../components/AroundWorldSection.astro";
 import SubscribeSection from "../components/SubscribeSection.astro";
 import SponsorsSlider from "../components/SponsorsSlider.astro";
 import TimelineSlider from "../components/TimelineSlider.astro";
+import TagSection from "../components/TagSection.astro";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -63,6 +64,7 @@ const categories = categoriesSet
     <HeroHeader type={EHeader.BASE} />
     <PostsPreview />
     <TravelEssentials />
+    <TagSection />
     <div class="timeline-wrapper">
         <TimelineSlider />
         <AroundWorldSection />

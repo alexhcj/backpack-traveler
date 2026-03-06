@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+
+const photos: string[] = [
+    "/images/tags/tag-1.jpg",
+    "/images/tags/tag-2.jpg",
+    "/images/tags/tag-3.jpg",
+    "/images/tags/tag-4.jpg",
+    "/images/tags/tag-5.jpg",
+    "/images/tags/tag-6.jpg",
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="title"><span>#</span>Backpacktraveler</h2>
+            <p class="text">
+                Tag your photos #thatbackbacker to get featured on our <span
+                    class="link">community feed.</span
+                >
+            </p>
+        </div>
+        <ul class="list">
+            {
+                photos.map((photo) => (
+                    <li class="item">
+                        <Image
+                            class="img"
+                            src={photo}
+                            width={200}
+                            height={200}
+                            alt="Community photo"
+                        />
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding-top: 90px;
+    }
+
+    .title {
+        margin-bottom: 10px;
+
+        span {
+            color: var(--color-accent);
+        }
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 46px;
+    }
+
+    .link {
+        color: var(--color-accent);
+    }
+
+    .text {
+        line-height: 30px;
+        font-size: 18px;
+        color: var(--color-grey-4);
+        font-family: var(--family-lora);
+    }
+
+    .list {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 20px;
+    }
+
+    .item {
+        overflow: hidden;
+
+        &:hover {
+            .img {
+                scale: var(--img-hover-scale);
+            }
+        }
+    }
+</style>
