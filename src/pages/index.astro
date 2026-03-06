@@ -13,6 +13,7 @@ import { EFooter } from "../types/footer";
 import AroundWorldSection from "../components/AroundWorldSection.astro";
 import SubscribeSection from "../components/SubscribeSection.astro";
 import SponsorsSlider from "../components/SponsorsSlider.astro";
+import TimelineSlider from "../components/TimelineSlider.astro";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -62,7 +63,10 @@ const categories = categoriesSet
     <HeroHeader type={EHeader.BASE} />
     <PostsPreview />
     <TravelEssentials />
-    <AroundWorldSection />
+    <div class="timeline-wrapper">
+        <TimelineSlider />
+        <AroundWorldSection />
+    </div>
     <SubscribeSection />
     <section class="ui-post-guides">
         <div class="container">
@@ -85,13 +89,20 @@ const categories = categoriesSet
         padding: 112px 0 0;
         background-color: var(--color-white);
     }
+
     .ui-post-title {
         margin-top: 0;
     }
+
     .ui-post-guides-subtitle {
         margin-top: 13px;
     }
+
     .list {
         padding: 50px 0 30px;
+    }
+
+    .timeline-wrapper {
+        background-image: url("/images/timeline-bg.jpg");
     }
 </style>

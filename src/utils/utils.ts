@@ -1,4 +1,5 @@
 import { ECountryShortcut, type TCountryShortcutKeys } from "../types/country";
+import type { TDateFormat } from "../types/date";
 
 /**
  * Creates a throttled function that only invokes the provided function at most once
@@ -59,13 +60,22 @@ export const normalizeStrToSlug = (str: string) => {
   return str.toLowerCase().replace(" ", "-");
 };
 
-export const convertISODate = (date: Date, type = "digit", locale = "en") => {
+export const convertISODate = (
+  date: Date | string,
+  type: TDateFormat = "digit",
+  locale = "en",
+) => {
   const convertedDate = new Date(date);
+
   const year = convertedDate.getFullYear();
   const month = convertedDate.toLocaleString(locale || "default", {
     month: "long",
   });
   const day = convertedDate.getDate();
+
+  if (type === "month-year") {
+    return `${month} ${year}`;
+  }
 
   return `${month} ${day}, ${year}`;
 };

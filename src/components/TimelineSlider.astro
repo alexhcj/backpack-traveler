@@ -1,0 +1,245 @@
+---
+import type { MarkdownInstance } from "astro";
+import { Image } from "astro:assets";
+import type { Destination } from "../types/destination";
+import type { ITimeline } from "../types/timeline";
+import { convertISODate, normalizeStrToSlug } from "../utils/utils";
+
+const destinations = Object.values(
+    import.meta.glob<MarkdownInstance<Destination>>(
+        "../pages/destinations/*.md",
+        { eager: true },
+    ),
+);
+
+const timelineData: ITimeline[] = destinations.map(({ frontmatter }) => ({
+    destination: frontmatter.destination,
+    pubDate: frontmatter.pubDate,
+}));
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="title">Never ending footsteps</h2>
+            <p class="description">
+                Every journey leaves a trace — a moment, a memory, a story worth
+                telling. Follow the path that shaped our adventures across
+                continents and cultures.
+            </p>
+        </div>
+    </div>
+    <div class="swiper-timeline">
+        <div class="swiper-wrapper">
+            {
+                timelineData.map(({ destination, pubDate }) => (
+                    <div class="swiper-slide">
+                        <a
+                            class="link"
+                            href={`/destinations/${normalizeStrToSlug(destination)}`}
+                        >
+                            <Image
+                                class="img-timeline-pin"
+                                src="/images/timeline-pin.png"
+                                width={22}
+                                height={31}
+                                alt="Timeline pin"
+                            />
+                            <div class="content">
+                                <Image
+                                    src={`/images/country-flags/${normalizeStrToSlug(destination)}-flag.png`}
+                                    width={45}
+                                    height={45}
+                                    alt={`${destination} flag`}
+                                />
+                                <div class="box">
+                                    <h6 class="destination">{destination}</h6>
+                                    <span class="date">
+                                        {convertISODate(pubDate, "month-year")}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                ))
+            }
+            <div class="swiper-slide"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding-top: 108px;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .title {
+        margin-bottom: 13px;
+    }
+
+    .description {
+        margin: 0 auto;
+        max-width: 760px;
+        line-height: 30px;
+        font-size: 18px;
+        color: var(--color-grey-4);
+        font-family: var(--family-lora);
+    }
+
+    .swiper-timeline {
+        padding: 100px 0 80px;
+        overflow: hidden;
+        user-select: none;
+    }
+
+    .swiper-wrapper {
+        padding: 0 131px;
+        height: 207px;
+        position: relative;
+        --translate-x: 0px;
+
+        /* Create a repeating background that's much wider than the viewport */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 130px;
+            width: 8000px;
+            height: 100%;
+            background: url("svg/timeline.svg") top left repeat-x;
+            pointer-events: none;
+            z-index: 0;
+            transform: translateX(var(--translate-x));
+        }
+    }
+
+    .swiper-slide {
+        position: relative;
+        display: flex;
+        align-items: end;
+        z-index: 1;
+
+        &:nth-child(even) {
+            .content {
+                order: -1;
+            }
+        }
+
+        &:nth-of-type(2) .link {
+            translate: -75px -52px;
+        }
+
+        &:nth-of-type(3) .link {
+            translate: -10px 28px;
+        }
+
+        &:nth-of-type(4) .link {
+            translate: 15px -40px;
+        }
+
+        &:nth-of-type(5) .link {
+            translate: 55px 5px;
+        }
+
+        &:nth-of-type(6) .link {
+            translate: 110px -65px;
+        }
+
+        &:nth-of-type(7) .link {
+            translate: 150px 30px;
+        }
+
+        &:nth-of-type(8) .link {
+            translate: 195px -45px;
+        }
+
+        &:nth-of-type(9) .link {
+            translate: 180px 10px;
+        }
+
+        &:nth-of-type(10) .link {
+            translate: 250px -50px;
+        }
+
+        &:nth-of-type(11) .link {
+            translate: 310px 25px;
+        }
+
+        &:nth-of-type(12) .link {
+            translate: 370px -55px;
+        }
+    }
+
+    .link {
+        display: inline-grid;
+        justify-items: center;
+        gap: 20px;
+        translate: -85px 0;
+    }
+
+    .img-timeline-pin {
+        order: 1;
+    }
+
+    .content {
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        order: 2;
+        pointer-events: none;
+    }
+
+    .box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .destination {
+        margin: 0;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+    }
+
+    .date {
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        font-size: 10px;
+        color: var(--color-grey-2);
+        font-weight: var(--weight-medium);
+    }
+</style>
+
+<script>
+    import "swiper/css";
+
+    import Swiper from "swiper";
+    import { FreeMode } from "swiper/modules";
+
+    const swiper = new Swiper(".swiper-timeline", {
+        modules: [FreeMode],
+        slidesPerView: 5,
+        grabCursor: true,
+        freeMode: {
+            enabled: true,
+            sticky: false,
+            momentum: true,
+            momentumRatio: 1,
+            momentumVelocityRatio: 1,
+        },
+    });
+
+    // Sync background movement with slider
+    const wrapper = document.querySelector(".swiper-wrapper") as HTMLElement;
+
+    swiper.on("setTranslate", (swiper, translate) => {
+        if (wrapper) {
+            const bg = wrapper.querySelector("::before") as HTMLElement;
+            // Move background in sync with slider translate
+            wrapper.style.setProperty("--translate-x", `${translate}px`);
+        }
+    });
+</script>
