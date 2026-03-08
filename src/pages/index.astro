@@ -15,6 +15,7 @@ import SubscribeSection from "../components/SubscribeSection.astro";
 import SponsorsSlider from "../components/SponsorsSlider.astro";
 import TimelineSlider from "../components/TimelineSlider.astro";
 import TagSection from "../components/TagSection.astro";
+import PostsSlider from "../components/PostsSlider.astro";
 
 const posts = Object.values(
     import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
@@ -81,6 +82,7 @@ const categories = categoriesSet
             </div>
         </div>
     </section>
+    <PostsSlider />
     <SponsorsSlider />
     <!-- <Reviews /> -->
 </Layout>

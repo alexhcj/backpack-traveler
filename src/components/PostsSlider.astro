@@ -1,0 +1,220 @@
+---
+import { Image } from "astro:assets";
+import type { MarkdownInstance } from "astro";
+import type { Post } from "../types/post";
+import Socials from "./Socials.astro";
+import ArrowSVG from "../../public/svg/arrow.svg";
+import { normalizeStrToAmpersand } from "../utils/utils";
+
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Post>>("../pages/posts/*.md", {
+        eager: true,
+    }),
+).slice(0, 6);
+---
+
+<section class="section">
+    <div class="container">
+        <div class="swiper-posts">
+            <div class="swiper-wrapper">
+                {
+                    posts.map(
+                        ({
+                            frontmatter: {
+                                slug,
+                                title,
+                                country,
+                                description,
+                                categories,
+                                image,
+                            },
+                        }) => (
+                            <div class="swiper-slide">
+                                <article class="article">
+                                    <div class="content">
+                                        <a class="link" href={`/posts/${slug}`}>
+                                            <span class="country">
+                                                {country}
+                                            </span>
+                                        </a>
+                                        <a class="link" href={`/posts/${slug}`}>
+                                            <h3 class="title">{title}</h3>
+                                        </a>
+                                        <ul class="ui-post-categories">
+                                            {categories
+                                                .slice(0, 3)
+                                                .map((category) => (
+                                                    <li>
+                                                        <a
+                                                            class="ui-post-category"
+                                                            href={`/destination-category/${category}`}
+                                                        >
+                                                            {normalizeStrToAmpersand(
+                                                                category,
+                                                            )}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                        <p class="description">{description}</p>
+                                        <a
+                                            href={`/posts/${slug}`}
+                                            class="ui-button-text"
+                                        >
+                                            Keep reading...
+                                        </a>
+                                        <Socials />
+                                    </div>
+                                    <a class="link" href={`/posts/${slug}`}>
+                                        <Image
+                                            class="article-img"
+                                            src={`/${image.url}`}
+                                            width={769}
+                                            height={513}
+                                            alt={image.alt}
+                                        />
+                                    </a>
+                                </article>
+                            </div>
+                        ),
+                    )
+                }
+            </div>
+            <button class="swiper-button-prev control" type="button">
+                <ArrowSVG class="svg" />
+            </button>
+            <button class="swiper-button-next control" type="button">
+                <ArrowSVG class="svg" />
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding-top: 60px;
+    }
+
+    .container {
+        position: relative;
+    }
+
+    .swiper-posts {
+        overflow: hidden;
+    }
+
+    .swiper-slide {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 82%;
+            height: 100%;
+            background-color: var(--color-grey-8);
+            z-index: -1;
+        }
+    }
+
+    .article {
+        display: grid;
+        grid-template-columns: 40% 1fr;
+        align-items: center;
+        min-height: 600px;
+    }
+
+    .content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 70px 16% 105px;
+    }
+
+    .country {
+        letter-spacing: 0;
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+        font-weight: 400;
+    }
+
+    .title {
+        margin: 16px 0 5px;
+    }
+
+    .description {
+        margin: 10px 0 37px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .ui-button-text {
+        margin-bottom: 32px;
+    }
+
+    .article-img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .control {
+        top: 50%;
+        width: 62px;
+        height: 47px;
+        padding: 10px;
+        background-color: var(--color-white);
+        translate: 0 -5px;
+        z-index: 100;
+
+        &::after {
+            display: none;
+        }
+
+        &.swiper-button-prev {
+            left: -38px;
+        }
+
+        &.swiper-button-next {
+            transform: scaleX(-1);
+            right: -38px;
+        }
+
+        &:hover .svg {
+            line {
+                transform: scaleX(0.7);
+                transform-origin: 55% 0;
+            }
+
+            polyline {
+                translate: 5px 0;
+            }
+        }
+
+        .svg g > * {
+            transition: var(--transition-svg);
+        }
+    }
+</style>
+
+<script>
+    import "swiper/css";
+    import "swiper/css/navigation";
+
+    import Swiper from "swiper";
+    import { Navigation } from "swiper/modules";
+
+    const swiper = new Swiper(".swiper-posts", {
+        modules: [Navigation],
+        loop: true,
+        slidesPerView: 1,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
