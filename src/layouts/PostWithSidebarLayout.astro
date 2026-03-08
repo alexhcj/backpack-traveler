@@ -43,7 +43,6 @@ const prevPost =
         ? sortedPosts[currentIndex + 1]
         : null;
 const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
-console.log(nextPost);
 
 const prevPostData = prevPost
     ? {
@@ -51,15 +50,12 @@ const prevPostData = prevPost
           image: prevPost.data.image.url,
       }
     : null;
-
 const nextPostData = nextPost
     ? {
           slug: nextPost.data.slug,
           image: nextPost.data.image.url,
       }
     : null;
-console.log(prevPost);
-console.log(nextPost);
 ---
 
 <BaseLayout
