@@ -148,7 +148,7 @@ const socialSvgs: IImageMetadata = {
             color: var(--color-grey-2);
             font-family: var(--family-lora);
             font-style: italic;
-            transition: var(--trasition-default);
+            transition: var(--transition-default);
         }
     }
     .likes {
@@ -163,12 +163,16 @@ const socialSvgs: IImageMetadata = {
             }
         }
 
-        #heart-icon g path {
-            fill: var(--color-black);
+        #heart-icon path {
+            fill: none;
+            stroke: var(--color-black);
+            stroke-width: 3;
         }
 
         &.liked #heart-icon {
-            filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(3489%) hue-rotate(338deg) brightness(91%) contrast(96%);
+            path {
+                fill: var(--color-dark);
+            }
         }
 
         &.loading {
