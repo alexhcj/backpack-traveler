@@ -24,35 +24,7 @@ const postsCollection = defineCollection({
     country: z.string(),
     destination: z.string(),
     // ECategory enum - array of valid category values
-    categories: z.array(
-      z.enum([
-        "CAMPING",
-        "BEACHES",
-        "DOG_FRIENDLY",
-        "RESTAURANTS",
-        "OVERNIGHT",
-        "LOW_BUDGET",
-        "EXPLORE",
-        "DRINKS",
-        "FLIGHTS",
-        "SHOPPING",
-        "PHOTOGRAPHY",
-        "VACATION",
-        "ADVENTURE",
-        "CULTURAL",
-        "ECO",
-        "LUXURY",
-        "FOOD",
-        "WELLNESS_AND_SPA",
-        "ROAD_TRIPS",
-        "WILDLIFE_AND_SAFARI",
-        "URBAN_AND_CITY",
-        "RELIGIOUS_AND_SPIRITUAL",
-        "SPORTS",
-        "FESTIVAL_AND_EVENT",
-        "TRAIN_AND_SCENIC_RAILWAY",
-      ]),
-    ),
+    categories: z.array(z.string()),
     pubDate: z.date(),
     likesCount: z.number().default(0),
     description: z.string(),
@@ -65,23 +37,25 @@ const postsCollection = defineCollection({
       .array(
         z.object({
           social: z.string(),
-          url: z.string().url(),
+          url: z.string(),
         }),
       )
       .optional(),
     // IMasonryHeights - specific allowed heights
-    masonry: z.object({
-      height: z
-        .union([
+    masonry: z
+      .object({
+        height: z.union([
+          z.literal(230),
           z.literal(275),
           z.literal(280),
+          z.literal(320),
           z.literal(405),
           z.literal(415),
           z.literal(450),
           z.literal(535),
-        ])
-        .optional(),
-    }),
+        ]),
+      })
+      .optional(),
     image: z.object({
       url: z.string(),
       alt: z.string(),

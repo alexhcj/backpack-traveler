@@ -1,3 +1,3 @@
 export interface IMasonryHeights {
-  height: 275 | 280 | 405 | 415 | 450 | 535;
+  height: 230 | 275 | 280 | 320 | 405 | 415 | 450 | 535;
 }
