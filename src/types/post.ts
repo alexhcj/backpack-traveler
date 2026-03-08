@@ -5,17 +5,13 @@ import type { Coordinates } from "./map";
 
 export interface Post {
   title: string;
-  image: {
-    url: string;
-    alt: string;
-  };
+  slug: string;
   country: string;
   destination: string;
   categories: ECategory[];
-  slug: string;
   pubDate: Date;
   description: string;
-  likesCount?: number;
+  likesCount: number;
   author: {
     name: string;
     avatar: string;
@@ -23,6 +19,10 @@ export interface Post {
   socials?: ISocial[];
   masonry?: {
     height: IMasonryHeights;
+  };
+  image: {
+    url: string;
+    alt: string;
   };
   previewImage?: {
     url: string;
