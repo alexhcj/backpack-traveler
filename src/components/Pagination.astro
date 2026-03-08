@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    prevPost: {
+        slug: string;
+        image: string;
+    } | null;
+    nextPost: {
+        slug: string;
+        image: string;
+    } | null;
+}
+
+const { prevPost, nextPost } = Astro.props;
+---
+
+<div class="pagination">
+    {
+        prevPost && (
+            <a class="control prev" href={`/posts/${prevPost.slug}`}>
+                <Image
+                    class="control-img"
+                    src={`/${prevPost.image}`}
+                    width={53}
+                    height={35}
+                    alt="Previous post"
+                />
+                <h5 class="control-text">Previous post</h5>
+            </a>
+        )
+    }
+    {
+        nextPost && (
+            <a class="control next" href={`/posts/${nextPost.slug}`}>
+                <h5 class="control-text">Next post</h5>
+                <Image
+                    class="control-img"
+                    src={`/${nextPost.image}`}
+                    width={53}
+                    height={35}
+                    alt="Next post"
+                />
+            </a>
+        )
+    }
+</div>
+
+<style>
+    .pagination {
+        margin-top: 30px;
+        padding: 7px 0 30px;
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-between;
+    }
+
+    .control {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        &.prev {
+            grid-column: 1;
+        }
+
+        &.next {
+            grid-column: 2;
+        }
+    }
+
+    .control-text {
+        font-size: 12px;
+    }
+
+    .control-img {
+        object-fit: cover;
+    }
+</style>

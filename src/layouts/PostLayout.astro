@@ -2,12 +2,14 @@
 import type { Post } from "../types/post";
 
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
 import BaseLayout from "./Layout.astro";
 import PostMeta from "../components/PostMeta.astro";
 import { EHeader } from "../types/header";
 import { normalizeStrToAmpersand } from "../utils/utils";
 import Comments from "../components/Comments/Comments.astro";
+import Pagination from "../components/Pagination.astro";
 
 interface Props {
     frontmatter: Post;
@@ -23,9 +25,35 @@ const {
         author,
         socials,
         pubDate,
-        previewImage,
     },
 } = Astro.props;
+
+const allPosts = await getCollection("posts");
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const currentIndex = sortedPosts.findIndex((post) => post.data.slug === slug);
+const prevPost =
+    currentIndex < sortedPosts.length - 1
+        ? sortedPosts[currentIndex + 1]
+        : null;
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+console.log(nextPost);
+
+const prevPostData = prevPost
+    ? {
+          slug: prevPost.data.slug,
+          image: prevPost.data.image.url,
+      }
+    : null;
+
+const nextPostData = nextPost
+    ? {
+          slug: nextPost.data.slug,
+          image: nextPost.data.image.url,
+      }
+    : null;
 ---
 
 <BaseLayout title={title} headerType={EHeader.CENTERED}>
@@ -68,13 +96,10 @@ const {
                     commentsCount={0}
                     slug={slug}
                 />
+                <Pagination prevPost={prevPostData} nextPost={nextPostData} />
             </div>
             <Comments postSlug={slug} />
         </article>
-        <!-- <div class="pagination">
-                    <div class="prev-post">Prev</div>
-                    <div class="next-post">Next</div>
-                </div> -->
     </div>
 </BaseLayout>
 
