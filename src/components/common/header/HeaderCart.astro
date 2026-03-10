@@ -1,0 +1,206 @@
+---
+import { Image } from "astro:assets";
+import ShoppingBagSVG from "../../../../public/svg/shopping-bag.svg";
+import CloseSVG from "../../../../public/svg/close.svg";
+---
+
+<div class="cart">
+    <ShoppingBagSVG class="icon cart-icon" />
+    <span class="badge">0</span>
+    <div class="dropdown">
+        <div class="box">
+            <ul class="list">
+                <li class="card">
+                    <a href="/">
+                        <Image
+                            class="item-img"
+                            src="/books/501-places.webp"
+                            width={84}
+                            height={84}
+                            alt=""
+                        />
+                    </a>
+                    <div class="details">
+                        <h6 class="title">
+                            <a class="link" href="/">Wandering educators</a>
+                        </h6>
+                        <div class="price">
+                            <span>1</span>
+                            <span>x</span>
+                            <span>$29.00</span>
+                        </div>
+                    </div>
+                    <button class="button-remove">
+                        <CloseSVG class="icon-close" />
+                    </button>
+                </li>
+            </ul>
+            <div class="bottom">
+                <div class="total">
+                    <span>Total:</span>
+                    <span>$29.00</span>
+                </div>
+                <div class="actions">
+                    <a class="ui-button-primary alt" href="/cart">View cart</a>
+                    <a class="ui-button-primary" href="/checkout">Checkout</a>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="empty">
+            <span>No products in the cart.</span>
+        </div> -->
+    </div>
+</div>
+
+<style>
+    .cart {
+        position: relative;
+        margin-left: 11px;
+
+        &:hover {
+            .dropdown {
+                top: calc(100% + 38px);
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    .icon {
+        display: flex;
+        cursor: pointer;
+
+        path {
+            fill: var(--color-grey-2);
+            transition: var(--transition-default);
+        }
+    }
+
+    .cart-icon {
+        width: 23px;
+        height: 23px;
+        translate: 0 -2px;
+    }
+
+    .badge {
+        position: absolute;
+        top: -2px;
+        right: -4px;
+        width: 12px;
+        height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 12px;
+        font-size: 9px;
+        border-radius: 50%;
+        background-color: var(--color-accent);
+        color: var(--color-white);
+    }
+
+    .dropdown {
+        position: absolute;
+        top: calc(100% + 70px);
+        left: auto;
+        right: -18px;
+        padding: 20px 17px 15px 17px;
+        width: 240px;
+        background-color: var(--color-white);
+        border: 1px solid #f3f3f3;
+        text-align: left;
+        z-index: var(--z-index-30);
+        opacity: 0;
+        visibility: hidden;
+        box-sizing: border-box;
+        transition: var(--transition-dropdown);
+    }
+
+    .list {
+        padding-bottom: 3px;
+    }
+
+    .card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 84px 1fr;
+    }
+
+    .title {
+        margin: 0;
+        padding: 0 15px 5px 0;
+    }
+
+    .button-remove {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+
+        &:hover {
+            .icon-close path {
+                fill: var(--color-black);
+            }
+        }
+    }
+
+    .icon-close {
+        width: 13px;
+        height: 13px;
+
+        path {
+            fill: var(--color-accent);
+            transition: var(--transition-default);
+        }
+    }
+
+    .price {
+        display: flex;
+        gap: 5px;
+        margin-top: 2px;
+        font-size: 12px;
+        font-family: var(--family-lora);
+        font-style: italic;
+    }
+
+    .bottom {
+        padding-top: 10px;
+        border-top: 1px solid #f3f3f3;
+    }
+
+    .total {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 11px;
+
+        span {
+            line-height: 20px;
+        }
+
+        span:first-child {
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-m);
+            font-size: 12px;
+        }
+
+        span:last-child {
+            font-size: 14px;
+            font-family: var(--family-lora);
+            font-style: italic;
+        }
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ui-button-primary {
+        padding: 9px 14px 8px;
+        font-size: 8px;
+    }
+</style>

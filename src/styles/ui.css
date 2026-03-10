@@ -345,6 +345,18 @@
     &:focus {
         background-color: var(--color-dark-4);
     }
+
+    &.alt {
+        background-color: var(--color-accent);
+
+        &:hover {
+            background-color: var(--color-secondary);
+        }
+
+        &:focus {
+            background-color: var(--color-secondary);
+        }
+    }
 }
 /* accent text highlight */
 

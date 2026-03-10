@@ -8,6 +8,9 @@ import FacebookSVG from "../../../../public/svg/facebook.svg";
 import PinterestSVG from "../../../../public/svg/pinterest.svg";
 import YoutubeSVG from "../../../../public/svg/youtube.svg";
 import MagnifierSVG from "../../../../public/svg/magnifier.svg";
+import HeaderCart from "./HeaderCart.astro";
+
+const pathname = Astro.url.pathname;
 
 interface Props {
     type: EHeader;
@@ -36,6 +39,7 @@ const socialsList: ISocialLink[] = [
             ))
         }
     </ul>
+    {pathname === "/shop" && <HeaderCart />}
     <div class="search">
         <span class="search-divider"></span>
         <input class="search-input" placeholder="Search..." type="text" />
@@ -51,7 +55,6 @@ const socialsList: ISocialLink[] = [
         grid-auto-flow: column;
         justify-content: end;
         align-items: center;
-        gap: 18px;
 
         &.light {
             .social-link:hover {
@@ -106,6 +109,7 @@ const socialsList: ISocialLink[] = [
         display: grid;
         grid-auto-flow: column;
         align-items: center;
+        margin-left: 18px;
     }
 
     .search-divider {
