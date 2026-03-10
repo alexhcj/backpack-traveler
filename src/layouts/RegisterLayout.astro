@@ -1,0 +1,31 @@
+---
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import RegisterForm from "../components/RegisterForm.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import BaseLayout from "./Layout.astro";
+---
+
+<BaseLayout
+    title="Backpack Traveler | Registration"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <Breadcrumbs />
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Register</h2>
+            <RegisterForm />
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding: 70px 0 40px;
+    }
+
+    .title {
+        margin: 16px 0 25px;
+    }
+</style>

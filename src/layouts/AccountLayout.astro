@@ -1,0 +1,17 @@
+---
+import BaseLayout from "./Layout.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+---
+
+<BaseLayout
+    title="Backpack Traveler | Account"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <div class="container">
+        <form action="/api/auth/signout">
+            <button type="submit">Sign out</button>
+        </form>
+    </div>
+</BaseLayout>; ---

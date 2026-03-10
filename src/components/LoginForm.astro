@@ -1,0 +1,168 @@
+<div class="box">
+    <form id="login-form" action="/api/auth/signin" method="post">
+        <div class="field email">
+            <label for="email">Email address</label>
+            <input type="email" name="email" id="email" />
+        </div>
+        <div class="field password">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" />
+        </div>
+        <div class="field checkbox">
+            <input type="checkbox" name="rememberMe" id="rememberMe" />
+            <label for="rememberMe">Remember me</label>
+        </div>
+        <button class="ui-button-primary" type="submit">Log in</button>
+        <!-- <div id="success-block">✅ You have been logged in successfully.</div>
+        <div id="error-block"></div> -->
+    </form>
+</div>
+
+<style>
+    .box {
+        max-width: 600px;
+    }
+
+    #login-form {
+        display: grid;
+        grid-template-areas:
+            "email email"
+            "password password"
+            "rememberMe login";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .field {
+        label {
+            font-family: var(--family-lora);
+            color: var(--color-dark);
+        }
+        input {
+            width: 100%;
+            padding: 9px 16px;
+            line-height: calc(50px - (9px * 2) - 2px);
+            font-size: 12px;
+            color: var(--color-grey-2);
+            border: 1px solid var(--color-dark-3);
+            transition: var(--transition-default-4);
+
+            &:not(:placeholder-shown) {
+                color: var(--color-dark-4);
+            }
+
+            &:focus {
+                color: var(--color-black);
+                border-color: var(--color-dark);
+            }
+
+            &::placeholder {
+                font-style: italic;
+            }
+        }
+
+        input {
+            &::placeholder {
+                text-transform: capitalize;
+            }
+        }
+
+        &.email {
+            grid-area: email;
+        }
+
+        &.password {
+            grid-area: password;
+        }
+
+        &.checkbox {
+            position: relative;
+            grid-area: rememberMe;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+
+            label {
+                font-size: 13px;
+                font-family: var(--family-lora);
+                color: var(--color-grey-2);
+            }
+
+            input {
+                margin: 0px 3px 0px 4px;
+                padding: 0;
+                width: 13px;
+                height: 13px;
+                border-radius: 2px;
+                border-color: var(--color-dark);
+                cursor: pointer;
+
+                &:hover {
+                    border-color: var(--color-black);
+                }
+
+                &:checked {
+                    border-color: var(--color-dark);
+                    background-color: var(--color-dark);
+                }
+
+                &:checked + .icon {
+                    display: block;
+                }
+            }
+
+            .icon {
+                position: absolute;
+                top: 12px;
+                left: 6px;
+                display: none;
+                width: 9px;
+                height: 9px;
+                pointer-events: none;
+                transform: translate(0, -50%);
+
+                path {
+                    fill: var(--color-white);
+                }
+            }
+        }
+    }
+
+    .ui-button-primary {
+        grid-area: login;
+        justify-self: end;
+        width: fit-content;
+    }
+
+    /*#success-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-color: var(--color-success-light);
+        border: 1px solid var(--color-success);
+        color: var(--color-green);
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    #error-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-collor: var(--color-error-light);
+        border: 1px solid var(--color-error);
+        color: var(--color-error-dark);
+
+        &.visible {
+            display: block;
+        }
+    }*/
+</style>

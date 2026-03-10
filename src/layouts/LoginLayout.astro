@@ -1,0 +1,43 @@
+---
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import LoginForm from "../components/LoginForm.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import BaseLayout from "./Layout.astro";
+---
+
+<BaseLayout
+    title="Backpack Traveler | Login"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+>
+    <Breadcrumbs />
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Login</h2>
+            <LoginForm />
+            <a class="register-link" href="/register">Don't have an account?</a>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .section {
+        padding: 70px 0 40px;
+    }
+
+    .title {
+        margin: 16px 0 25px;
+    }
+
+    .register-link {
+        margin-top: 15px;
+        font-size: 13px;
+        color: var(--color-grey-2);
+        font-family: var(--family-lora);
+
+        &:hover {
+            color: var(--color-black);
+        }
+    }
+</style>
