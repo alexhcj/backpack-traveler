@@ -2,9 +2,11 @@
 import { EHeader } from "../types/header";
 
 import BaseLayout from "./Layout.astro";
+
+const { title } = Astro.params;
 ---
 
 <BaseLayout
-    title={category || "book desc. TOTO replace"}
+    title={`Backpack Traveler – ${title}`}
     headerType={EHeader.TRANSPARENT}
 />

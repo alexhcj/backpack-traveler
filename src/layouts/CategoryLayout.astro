@@ -5,7 +5,7 @@ interface Props {
     category: ECategory;
 }
 
-const category = Astro.params.category ?? "Backpack Traveler Category";
+const category = Astro.params.category;
 const { category: categoryProps } = Astro.props;
 
 if (!category || !categoryProps) {
@@ -17,9 +17,13 @@ import PostsCategoryPreview from "../components/PostsCategoryPreview/PostsCatego
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import Sidebar from "../components/Sidebar/Sidebar.astro";
 import { EHeader } from "../types/header";
+import { capitalizeStr } from "../utils/utils";
 ---
 
-<BaseLayout title={category} headerType={EHeader.TRANSPARENT}>
+<BaseLayout
+    title={`Backpack Traveler – ${category ? capitalizeStr(category) : "Category"}`}
+    headerType={EHeader.TRANSPARENT}
+>
     <Breadcrumbs />
     <section class="section">
         <div class="container">

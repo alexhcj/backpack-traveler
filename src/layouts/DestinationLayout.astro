@@ -11,6 +11,7 @@ import DestinationMeta from "../components/DestinationMeta.astro";
 import DestinationSlider from "../components/DestinationSlider/DestinationSlider.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
+import { capitalizeStr } from "../utils/utils";
 
 interface Props {
     frontmatter: Destination;
@@ -40,7 +41,7 @@ const categoriesRelatedSet = [
 ---
 
 <BaseLayout
-    title={title}
+    title={`Backpack Traveler – ${capitalizeStr(title)}`}
     headerType={EHeader.TRANSPARENT}
     footerType={EFooter.FULL}
 >

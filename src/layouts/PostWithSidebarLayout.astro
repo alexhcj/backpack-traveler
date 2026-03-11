@@ -10,7 +10,7 @@ import PostMeta from "../components/PostMeta.astro";
 import Comments from "../components/Comments/Comments.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
-import { normalizeStrToAmpersand } from "../utils/utils";
+import { capitalizeStr, normalizeStrToAmpersand } from "../utils/utils";
 import Pagination from "../components/Pagination.astro";
 import { getCollection } from "astro:content";
 
@@ -59,7 +59,7 @@ const nextPostData = nextPost
 ---
 
 <BaseLayout
-    title={title}
+    title={`Backpack Traveler – ${capitalizeStr(title)}`}
     headerType={EHeader.BASE}
     footerType={EFooter.SHORT_BORDER}
 >

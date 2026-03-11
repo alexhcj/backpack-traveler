@@ -17,10 +17,11 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import DestinationCategoryList from "../components/DestinationCategory/DestinationCategoryList.astro";
 import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
+import { capitalizeStr } from "../utils/utils";
 ---
 
 <BaseLayout
-    title={category}
+    title={`Backpack Traveler – ${category ? capitalizeStr(category) : "Category"}`}
     headerType={EHeader.TRANSPARENT}
     footerType={EFooter.FULL}
 >
