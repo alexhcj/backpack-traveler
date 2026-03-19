@@ -1,5 +1,5 @@
 ---
-import type { EHeader } from "../types/header";
+import { EHeader } from "../types/header";
 import { EFooter } from "../types/footer";
 
 import Header from "../components/common/header/Header.astro";
@@ -12,11 +12,15 @@ import "../styles/ui.css";
 
 interface Props {
     title: string;
-    footerType?: EFooter;
     headerType: EHeader;
+    footerType?: EFooter;
 }
 
-const { title, headerType, footerType } = Astro.props;
+const {
+    title,
+    headerType = EHeader.BASE,
+    footerType = EFooter.FULL,
+} = Astro.props;
 ---
 
 <!doctype html>
