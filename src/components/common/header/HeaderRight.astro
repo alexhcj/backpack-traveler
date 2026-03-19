@@ -25,6 +25,8 @@ const socialsList: ISocialLink[] = [
     { url: "/", icon: PinterestSVG, text: "Pinterest link" },
     { url: "/", icon: YoutubeSVG, text: "Youtube link" },
 ];
+
+const showCart = pathname === "/shop" || pathname.includes("/books");
 ---
 
 <div class:list={["right", { light: type === EHeader.FULL_TRANSPARENT }]}>
@@ -39,7 +41,7 @@ const socialsList: ISocialLink[] = [
             ))
         }
     </ul>
-    {pathname === "/shop" && <HeaderCart />}
+    {showCart && <HeaderCart />}
     <div class="search">
         <span class="search-divider"></span>
         <input class="search-input" placeholder="Search..." type="text" />
