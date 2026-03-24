@@ -1,0 +1,299 @@
+---
+import ArrowSVG from "../assets/svg/chevron-right.svg";
+
+interface Props {
+    bookId: string;
+    initialQuantity?: number;
+    min?: number;
+    max?: number;
+    availableStock?: number;
+}
+
+const {
+    bookId,
+    initialQuantity = 1,
+    min = 1,
+    max,
+    availableStock,
+} = Astro.props;
+
+const maxQuantity = max ?? availableStock ?? 99;
+---
+
+<form class="form" method="POST" action="/api/cart/add">
+    <input type="hidden" name="bookId" value={bookId} />
+
+    <div class="quantity-container">
+        <label class="screen-reader-text" for={`quantity-${bookId}`}>
+            Quantity
+        </label>
+
+        <span class="quantity-label">Quantity</span>
+
+        <div class="quantity-buttons">
+            <button
+                type="button"
+                class="quantity-button quantity-minus"
+                aria-label="Decrease quantity"
+            >
+                <ArrowSVG class="icon-arrow" />
+            </button>
+
+            <input
+                type="number"
+                id={`quantity-${bookId}`}
+                class="quantity-input"
+                name="quantity"
+                value={initialQuantity}
+                min={min}
+                max={maxQuantity}
+                step="1"
+                required
+                aria-label="Product quantity"
+            />
+
+            <button
+                type="button"
+                class="quantity-button quantity-plus"
+                aria-label="Increase quantity"
+            >
+                <ArrowSVG class="icon-arrow" />
+            </button>
+        </div>
+    </div>
+
+    <button
+        type="submit"
+        class="ui-button-primary"
+        disabled={availableStock === 0}
+    >
+        {availableStock === 0 ? "OUT OF STOCK" : "ADD TO CART"}
+    </button>
+</form>
+
+{
+    availableStock !== undefined &&
+        availableStock > 0 &&
+        availableStock < 10 && (
+            <p class="stock-warning">Only {availableStock} left in stock</p>
+        )
+}
+
+<style>
+    .form {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 192px;
+    }
+
+    .screen-reader-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .quantity-label {
+        position: absolute;
+        top: 0;
+        left: 15px;
+        line-height: 43px;
+        font-size: 12px;
+        color: var(--color-grey-2);
+        font-family: var(--family-lora);
+        font-style: italic;
+    }
+
+    .quantity-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-right: 20px;
+        width: 100%;
+        border: 1px solid var(--color-border-3);
+    }
+
+    .quantity-button {
+        line-height: 1;
+        font-size: 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &:hover {
+            .icon-arrow path {
+                stroke: var(--color-grey-2);
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+
+            .icon-arrow path {
+                stroke: var(--color-dark-3);
+            }
+        }
+
+        .icon-arrow {
+            width: 16px;
+            height: 16px;
+
+            path {
+                stroke-width: 4px;
+                stroke: var(--color-dark-2);
+                transition: var(--transition-quantity);
+            }
+        }
+
+        &.quantity-minus .icon-arrow {
+            scale: -1;
+        }
+    }
+
+    .quantity-input {
+        width: 26px;
+        text-align: center;
+        line-height: 43px;
+        font-size: 14px;
+        border: none;
+        font-style: italic;
+        color: var(--color-dark);
+        -moz-appearance: textfield;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .quantity-input::-webkit-outer-spin-button,
+    .quantity-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .stock-warning {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--color-warning);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const forms: NodeListOf<HTMLFormElement> =
+            document.querySelectorAll(".form");
+
+        forms.forEach((form) => {
+            const input = form.querySelector(
+                ".quantity-input",
+            ) as HTMLInputElement;
+            const minusBtn = form.querySelector(
+                ".quantity-minus",
+            ) as HTMLButtonElement;
+            const plusBtn = form.querySelector(
+                ".quantity-plus",
+            ) as HTMLButtonElement;
+            const submitBtn = form.querySelector(
+                ".ui-button-primary",
+            ) as HTMLButtonElement;
+
+            if (!input || !minusBtn || !plusBtn) return;
+
+            const min = parseInt(input.min) || 1;
+            const max = parseInt(input.max) || 99;
+
+            const updateButtons = () => {
+                const value = parseInt(input.value) || min;
+                minusBtn.disabled = value <= min;
+                plusBtn.disabled = value >= max;
+            };
+
+            minusBtn.addEventListener("click", () => {
+                const currentValue = parseInt(input.value) || min;
+                if (currentValue > min) {
+                    input.value = String(currentValue - 1);
+                    updateButtons();
+                }
+            });
+
+            plusBtn.addEventListener("click", () => {
+                const currentValue = parseInt(input.value) || min;
+                if (currentValue < max) {
+                    input.value = String(currentValue + 1);
+                    updateButtons();
+                }
+            });
+
+            input.addEventListener("input", updateButtons);
+            input.addEventListener("change", () => {
+                let value = parseInt(input.value) || min;
+                if (value < min) value = min;
+                if (value > max) value = max;
+                input.value = String(value);
+                updateButtons();
+            });
+
+            // Form submission with loading state
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                submitBtn.disabled = true;
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = "ADDING...";
+
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        submitBtn.textContent = "ADDED ✓";
+                        setTimeout(() => {
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }, 2000);
+
+                        // Optionally trigger a cart update event
+                        window.dispatchEvent(
+                            new CustomEvent("cart-updated", {
+                                detail: result,
+                            }),
+                        );
+                    } else {
+                        throw new Error(
+                            result.error || "Failed to add to cart",
+                        );
+                    }
+                } catch (error) {
+                    console.error("Add to cart error:", error);
+                    alert(
+                        error instanceof Error
+                            ? error.message
+                            : "Failed to add to cart",
+                    );
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+
+            updateButtons();
+        });
+    });
+</script>

@@ -1,0 +1,283 @@
+---
+import StarRatingInput from "./StarRatingInput.astro";
+
+interface Props {
+    bookId: string;
+}
+
+const { bookId } = Astro.props;
+---
+
+<div class="form-wrapper">
+    <span class="title">Add a review</span>
+    <p class="notes">
+        Your email address will not be published. Required fields are marked *
+    </p>
+    <form id="review-form">
+        <input type="hidden" name="book_id" value={bookId} />
+        <div class="form-group">
+            <label class="label" for="rating">Your rating *</label>
+            <StarRatingInput name="rating" size={14} required={true} />
+        </div>
+
+        <div class="form-group">
+            <label class="label" for="review">Your review *</label>
+            <textarea
+                id="review"
+                name="review"
+                class="textarea"
+                cols="45"
+                rows="8"
+                required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="label" for="reviewer_name">Name *</label>
+            <input
+                type="text"
+                id="reviewer_name"
+                name="reviewer_name"
+                class="input"
+                required
+            />
+        </div>
+
+        <div class="form-group">
+            <label class="label" for="email">Email *</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="input"
+                required
+            />
+        </div>
+
+        <button class="ui-button-primary" type="submit">Submit</button>
+        <div id="success-block">
+            ✅ Your review has been submitted successfully.
+        </div>
+        <div id="error-block"></div>
+    </form>
+</div>
+
+<style>
+    .form-wrapper {
+        margin-top: 15px;
+    }
+
+    .title {
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.57em;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+    }
+
+    .notes {
+        margin-bottom: 5px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:first-child) {
+            margin-bottom: 25px;
+        }
+
+        &:has(.label[for="rating"]) {
+            margin-bottom: 8px;
+        }
+    }
+
+    .label {
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+
+        &[for="rating"] {
+            margin-bottom: 8px;
+        }
+    }
+
+    .input,
+    .textarea {
+        padding: 9px 16px;
+        line-height: calc(50px - (9px * 2) - 2px);
+        font-size: 12px;
+        color: var(--color-dark);
+        font-style: italic;
+        border: 1px solid var(--color-dark-3);
+    }
+
+    .textarea {
+        min-height: 80px;
+        max-height: 600px;
+        resize: vertical;
+    }
+
+    .field-wrapper :global(.field.error) {
+        border-color: var(--color-error);
+    }
+
+    .form-group :global(.error-message) {
+        margin-top: 4px;
+        font-size: 12px;
+        font-style: normal;
+        color: var(--color-error);
+    }
+
+    #success-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-color: var(--color-success-light);
+        border: 1px solid var(--color-success);
+        color: var(--color-green);
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    #error-block {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        background-color: var(--color-error-light);
+        border: 1px solid var(--color-error);
+        color: var(--color-error-dark);
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    .ui-button-primary {
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+</style>
+
+<script>
+    import { actions, isInputError } from "astro:actions";
+
+    const form = document.querySelector<HTMLFormElement>("#review-form");
+    const successBlock =
+        document.querySelector<HTMLDivElement>("#success-block");
+    const errorBlock = document.querySelector<HTMLDivElement>("#error-block");
+    const submitButton = form?.querySelector<HTMLButtonElement>(
+        "button[type='submit']",
+    );
+
+    if (!form) throw new Error("Form not found");
+
+    const clearErrors = () => {
+        // Remove error class from all fields
+        form.querySelectorAll(".input, .textarea").forEach((el) => {
+            el.classList.remove("error");
+        });
+
+        // Remove all error messages
+        form.querySelectorAll(".error-message").forEach((el) => {
+            el.remove();
+        });
+
+        // Hide error block
+        errorBlock?.classList.remove("visible");
+        if (errorBlock) errorBlock.textContent = "";
+    };
+
+    const showFieldError = (field: string, message: string) => {
+        const input = form.querySelector<
+            HTMLInputElement | HTMLTextAreaElement
+        >(`[name="${field}"]`);
+        if (!input) return;
+
+        // Add error class to highlight the field
+        input.classList.add("error");
+
+        // Create and insert error message
+        const errorEl = document.createElement("div");
+        errorEl.className = "error-message";
+        errorEl.textContent = message;
+
+        // Insert after the input field in its wrapper
+        input.parentElement?.appendChild(errorEl);
+    };
+
+    const showGeneralError = (message: string) => {
+        if (!errorBlock) return;
+        errorBlock.textContent = message;
+        errorBlock.classList.add("visible");
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Clear previous errors and success messages
+        clearErrors();
+        successBlock?.classList.remove("visible");
+
+        // Disable submit button to prevent double submission
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+        }
+
+        try {
+            const formData = new FormData(form);
+
+            const { data, error } = await actions.form.submitReview(formData);
+
+            if (error) {
+                // Check for validation errors
+                if (isInputError(error)) {
+                    // Handle input validation errors
+                    Object.entries(error.fields).forEach(
+                        ([field, messages]) => {
+                            if (messages && messages.length > 0) {
+                                showFieldError(field, messages[0]);
+                            }
+                        },
+                    );
+                    return;
+                }
+
+                // Handle ActionError (server errors)
+                showGeneralError(
+                    error.message ||
+                        "An unexpected error occurred. Please try again.",
+                );
+                return;
+            }
+
+            // Success
+            if (data?.success) {
+                form.reset();
+                successBlock?.classList.add("visible");
+
+                setTimeout(() => {
+                    successBlock?.classList.remove("visible");
+                }, 5000);
+            }
+        } catch (err) {
+            console.error("Form submission error:", err);
+            showGeneralError("An unexpected error occurred. Please try again.");
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit";
+            }
+        }
+    });
+</script>

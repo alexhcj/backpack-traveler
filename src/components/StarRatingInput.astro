@@ -1,0 +1,179 @@
+---
+// Interactive rating input component for forms
+
+import StarOutlineSVG from "/public/svg/star-outline.svg";
+
+interface Props {
+    name?: string;
+    value?: number;
+    maxStars?: number;
+    size?: number;
+    required?: boolean;
+}
+
+const {
+    name = "rating",
+    value = 0,
+    maxStars = 5,
+    size = 32,
+    required = false,
+} = Astro.props;
+
+const stars = Array.from({ length: maxStars }, (_, i) => i + 1);
+---
+
+<div class="star-rating-input" data-max-stars={maxStars}>
+    <input
+        class="rating-value-input"
+        type="hidden"
+        name={name}
+        value={value}
+        required={required}
+    />
+
+    <div class="interactive-stars">
+        {
+            stars.map((starValue) => (
+                <button
+                    type="button"
+                    class="star-button"
+                    data-value={starValue}
+                    style={`width: ${size}px; height: ${size}px;`}
+                    aria-label={`Rate ${starValue} out of ${maxStars}`}
+                >
+                    <StarOutlineSVG
+                        class="star-icon"
+                        width={size}
+                        height={size}
+                    />
+                </button>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .star-rating-input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .interactive-stars {
+        display: flex;
+        gap: 8px;
+    }
+
+    .star-button {
+        position: relative;
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        &.filled .star-icon {
+            fill: var(--color-yellow);
+            stroke: var(--color-yellow);
+        }
+
+        &.half-filled .star-icon {
+            fill: url(#half-fill);
+            stroke: var(--color-yellow);
+        }
+    }
+
+    .star-icon {
+        display: block;
+        pointer-events: none;
+
+        path {
+            stroke-width: 3px;
+        }
+    }
+</style>
+
+<script>
+    // Client-side interaction for star rating input
+    document.addEventListener("DOMContentLoaded", () => {
+        const ratingInputs = document.querySelectorAll(".star-rating-input");
+
+        ratingInputs.forEach((container) => {
+            const input = container.querySelector(
+                ".rating-value-input",
+            ) as HTMLInputElement;
+            const buttons = container.querySelectorAll(".star-button");
+            const maxStars = parseInt(
+                container.getAttribute("data-max-stars") || "5",
+            );
+
+            let currentRating = parseFloat(input.value) || 0;
+            let hoverRating = 0;
+
+            // Update visual state
+            const updateStars = (rating: number) => {
+                buttons.forEach((button, index) => {
+                    const starValue = index + 1;
+                    button.classList.remove("filled", "half-filled");
+
+                    if (rating >= starValue) {
+                        button.classList.add("filled");
+                    } else if (rating > starValue - 1 && rating < starValue) {
+                        button.classList.add("half-filled");
+                    }
+                });
+            };
+
+            // Handle click - set full or half star
+            buttons.forEach((button, index) => {
+                button.addEventListener("click", (e) => {
+                    const starValue = index + 1;
+                    const rect = button.getBoundingClientRect();
+                    const clickX = (e as MouseEvent).clientX - rect.left;
+                    const isLeftHalf = clickX < rect.width / 2;
+
+                    // If clicking same star, toggle between full and half
+                    if (currentRating === starValue) {
+                        currentRating = starValue - 0.5;
+                    } else if (currentRating === starValue - 0.5) {
+                        currentRating = 0;
+                    } else {
+                        currentRating = isLeftHalf
+                            ? starValue - 0.5
+                            : starValue;
+                    }
+
+                    input.value = currentRating.toString();
+                    updateStars(currentRating);
+                });
+
+                // Hover preview
+                button.addEventListener("mouseenter", () => {
+                    hoverRating = index + 1;
+                    updateStars(hoverRating);
+                });
+            });
+
+            // Reset to current rating on mouse leave
+            container.addEventListener("mouseleave", () => {
+                updateStars(currentRating);
+            });
+
+            // Initialize display
+            updateStars(currentRating);
+        });
+    });
+</script>
+
+<svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+    <defs>
+        <linearGradient id="half-fill">
+            <stop offset="50%" stop-color="#e8d931"></stop>
+            <stop offset="50%" stop-color="transparent"></stop>
+        </linearGradient>
+    </defs>
+</svg>

@@ -92,3 +92,31 @@ export const getCountryShortcut = (country: string): string => {
 
   return ECountryShortcut[countryKey] ?? country;
 };
+
+export function formatSku(sku: number | string, length = 3): string {
+  return String(sku).padStart(length, "0");
+}
+
+export function formatPrice(price: number): string {
+  return price.toFixed(2);
+}
+
+export function convertWeightToKg(weight: number): string {
+  return (weight / 1000).toFixed(2);
+}
+
+export function convertMmtoCm(value: number): string {
+  return (value / 10).toString();
+}
+
+export function generateBookSKU(slug: string): string {
+  const prefix = slug
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .substring(0, 3)
+    .toUpperCase()
+    .padEnd(3, "X");
+
+  const randomDigits = Math.floor(1000 + Math.random() * 9000);
+
+  return `BK-${prefix}-${randomDigits}`;
+}

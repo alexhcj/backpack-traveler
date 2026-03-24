@@ -19,6 +19,8 @@
     --color-error-light: #f8d7da;
     --color-success: #28a745;
     --color-success-light: #d4edda;
+    --color-warning: #d97706;
+    --color-yellow: #e8d931;
     --color-green: #155724;
     --color-black-0: #000000e6;
     --color-black: #000000;
@@ -74,6 +76,7 @@
         min-height 0.4s, width 0.4s;
     --transition-sponsor-hover: opacity 0.15s ease-out;
     --transition-dropdown: all 0.35s cubic-bezier(0.53, 0.01, 0.18, 1);
+    --transition-quantity: stroke 0.15s ease-in-out;
 
     --animation-comment-toggle: fadeIn 0.3s ease-in-out;
 

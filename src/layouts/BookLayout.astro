@@ -1,12 +1,544 @@
 ---
+import { Image } from "astro:assets";
 import { EHeader } from "../types/header";
+import { EFooter } from "../types/footer";
 
 import BaseLayout from "./Layout.astro";
+import Rating from "../components/Rating.astro";
+import QuantityInput from "../components/QuantityInput.astro";
+import Socials from "../components/Socials.astro";
+import ReviewForm from "../components/ReviewForm.astro";
+import { convertISODate, formatPrice, formatSku } from "../utils/utils";
 
-const { title } = Astro.params;
+import defaultAvatar from "../assets/images/avatars/default-avatar.webp";
+import type { IBook } from "../types/book";
+
+interface Props {
+    book: IBook;
+}
+
+const {
+    book: {
+        id,
+        title,
+        image,
+        price,
+        discount,
+        excerpt,
+        description,
+        chapters,
+        sku,
+        parameters,
+        tags,
+        reviews,
+    },
+} = Astro.props;
+
+const rating = reviews.length > 0
+    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+    : 0;
+const discountedPrice = discount
+    ? price - (price * discount) / 100
+    : price;
+
 ---
 
 <BaseLayout
     title={`Backpack Traveler – ${title}`}
     headerType={EHeader.TRANSPARENT}
-/>
+    footerType={EFooter.SHORT}
+>
+    <section class="preview">
+        <Image
+            class="img"
+            src="/images/shop-bg.jpg"
+            width={1900}
+            height={300}
+            alt="Travel accessories laing on the bad"
+        />
+        <h1 class="preview-title">Shop</h1>
+    </section>
+    <section class="section-book">
+        <div class="container">
+            <div class="box">
+                <Image
+                    class="book-img"
+                    src={`/books/${image.url}`}
+                    width={422}
+                    height={422}
+                    alt={`${image.alt}`}
+                />
+                <div class="content">
+                    <div class="rating">
+                        <Rating value={rating} size={14} />
+                        <span class="rating-text"
+                            >({reviews.length} customer review{
+                                reviews.length !== 1 ? "s" : ""
+                            })</span
+                        >
+                    </div>
+                    <h3 class="title">{title}</h3>
+                    <span class="price">Buy for <span class="value">${price} </span><span class="discounted-price">- ${formatPrice(discountedPrice)}</span></span>
+                    <p class="excerpt">{excerpt}</p>
+                    <div class="actions">
+                        <QuantityInput bookId={id} />
+                    </div>
+                    <div class="info">
+                        <span>SKU: {formatSku(sku)}</span>
+                        <span
+                            >Category: <a
+                                class="category-link"
+                                href="/shop">Books</a
+                            ></span
+                        >
+                        <div class="categories">
+                            <span>Tags:</span>
+                            <ul class="categories-list">
+                                {
+                                    tags && tags.map((category, idx) => (
+                                        <li>
+                                            <a
+                                                class="tag-link"
+                                                href={`/category/${category}`}
+                                            >
+                                                {category}
+                                                {idx !== tags.length - 1
+                                                    ? ", "
+                                                    : ""}
+                                            </a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        <Socials />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-tabs">
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="description"
+                        >Description</button
+                    >
+                    <button class="tab-button" data-tab="additional"
+                        >Additional information</button
+                    >
+                    <button class="tab-button" data-tab="reviews"
+                        >Reviews ({reviews.length})</button
+                    >
+                </div>
+
+                <div class="tabs-content">
+                    <div class="tab-panel active" id="description">
+                        <p class="description-text">
+                            {description}
+                        </p>
+
+                        <div class="chapters">
+                            <h6 class="chapters-title">What's inside?</h6>
+                            <ul class="chapters-list">
+                                {chapters && chapters.map((chapter) => <li>{chapter}</li>)}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="additional">
+                        <ul>
+                            {
+                                Object.entries(parameters).map(
+                                    ([key, value]) => (
+                                        <li class="info-card">
+                                            <strong>{key}</strong>
+                                            <span>{value}</span>
+                                        </li>
+                                    ),
+                                )
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="tab-panel" id="reviews">
+                        <div class="reviews-header">
+                            {reviews.length} review{reviews.length !== 1 ? 's' : ''} for {title}
+                        </div>
+                        <div class="reviews">
+                        {
+                            reviews.map((review) => (
+                                <div class="review-item">
+                                        <Image
+                                            class="avatar"
+                                            src={defaultAvatar}
+                                            alt="Default user avatar"
+                                            width={70}
+                                            height={70}
+                                            onerror="this.src='/defaults/default-avatar.webp'"
+                                        />
+                                        <!-- TODO: add avatar handling -->
+                                        <!-- <Image
+                                            class="avatar"
+                                            src={
+                                                review.avatar
+                                                    ? `/user-uploads/${review.avatar}`
+                                                    : defaultAvatar
+                                            }
+                                            alt={
+                                                review.avatar
+                                                    ? `${review.author}'s avatar`
+                                                    : "Default user avatar"
+                                            }
+                                            width={70}
+                                            height={70}
+                                            onerror="this.src='/defaults/default-avatar.webp'"
+                                        /> -->
+                                    <div class="review-content">
+                                        <Rating value={review.rating} size={14} />
+                                        <div class="review-meta">
+                                            <span class="review-author">
+                                                {review.reviewer_name}
+                                            </span>
+                                            –
+                                            <span class="review-date">
+                                                {convertISODate(review.created_at)}
+                                            </span>
+                                        </div>
+                                        <p class="review-text">{review.review}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        </div>
+                        <ReviewForm bookId={id} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .preview {
+        position: relative;
+        height: 300px;
+    }
+
+    .preview-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        color: var(--color-white);
+    }
+
+    .section-book {
+        padding: 70px 0 40px;
+    }
+
+    .box {
+        display: flex;
+    }
+
+    .book-img {
+        padding: 21px 10px 0;
+    }
+
+    .content {
+        padding-top: 10px;
+    }
+
+    .rating {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 5px;
+    }
+
+    .rating-stars {
+        color: #ffc107;
+    }
+
+    .rating-text {
+        color: var(--color-grey);
+        font-family: var(--family-lora);
+    }
+
+    .title {
+        margin: 10px 0 14px;
+        line-height: 1em;
+    }
+
+    .price {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        line-height: 1em;
+        font-size: 15px;
+        font-family: var(--family-lora);
+        font-style: italic;
+
+        .value {
+            display: inline-block;
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
+        .discounted-price {
+            display: inline-block;
+            color: var(--color-accent);
+        }
+    }
+
+    .excerpt {
+        margin-top: 30px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .actions {
+        margin-top: 38px;
+    }
+
+    .info {
+        margin-top: 28px;
+        display: flex;
+        flex-direction: column;
+
+        & * {
+            color: var(--color-dark);
+            font-family: var(--family-lora);
+        }
+    }
+
+    .category-link,
+    .tag-link {
+        text-transform: capitalize;
+
+        &:hover {
+            color: var(--color-black);
+        }
+    }
+
+    .categories {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 33px;
+    }
+
+    .categories-list {
+        display: flex;
+        gap: 5px;
+    }
+
+    /* tabs */
+    .section-tabs {
+        margin-top: 17px;
+    }
+
+    .tabs-container {
+        overflow: hidden;
+    }
+
+    .tabs-header {
+        display: flex;
+        gap: 37px;
+        border-bottom: 1px solid var(--color-border-2);
+    }
+
+    .tab-button {
+        line-height: 60px;
+        font-family: var(--family-lora);
+        font-style: italic;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        transition: var(--transition-default);
+
+        &:hover {
+            color: var(--color-black-0);
+
+            &::after {
+                background-color: var(--color-secondary);
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: transparent;
+            transition: var(--transition-default);
+        }
+
+        &.active {
+            color: var(--color-black);
+
+            &::after {
+                background-color: var(--color-secondary);
+            }
+        }
+    }
+
+    .tabs-content {
+        padding: 33px 0 20px;
+    }
+
+    .tab-panel {
+        display: none;
+        animation: fadeIn 0.4s ease;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .description-text {
+        margin-bottom: 13px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .chapters {
+        margin-top: 33px;
+
+        .chapters-title {
+            margin-bottom: 0;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 16px;
+            color: var(--color-dark);
+            font-family: var(--family-lora);
+            font-weight: var(--weight-bold);
+        }
+    }
+
+    .chapters-list {
+        list-style: none;
+
+        li {
+            position: relative;
+            padding-left: 12px;
+            color: var(--color-dark);
+            font-family: var(--family-lora);
+
+            &::before {
+                content: "−";
+                position: absolute;
+                left: 0;
+                color: var(--color-dark);
+                font-family: var(--family-lora);
+            }
+        }
+    }
+
+    .info-card {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(max-content, 100px));
+        gap: 10px;
+
+        strong {
+            text-transform: capitalize;
+            font-weight: var(--weight-bold);
+        }
+
+        span {
+            color: var(--color-dark);
+        }
+
+        strong,
+        span {
+            font-family: var(--family-lora);
+        }
+    }
+
+    #reviews {
+        max-width: 650px;
+    }
+
+    .reviews {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .reviews-header {
+        margin: 8px 0 24px;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-m);
+        line-height: 1.57em;
+        font-size: 14px;
+        font-weight: var(--weight-medium);
+    }
+
+    .review-item {
+        display: flex;
+        gap: 20px;
+    }
+
+    .review-content {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-bottom: 12px;
+    }
+
+    .review-rating {
+        margin-bottom: 15px;
+        line-height: 12px;
+        color: #ffa500;
+    }
+
+    .review-meta {
+        margin-top: 14px;
+    }
+
+    .review-meta,
+    .review-text {
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+    }
+
+    .review-author {
+        font-weight: var(--weight-bold);
+    }
+</style>
+
+<script>
+    const tabButtons: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".tab-button");
+    const tabPanels: NodeListOf<HTMLElement> = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const targetTab = button.dataset.tab;
+
+            if (!targetTab) return;
+
+            // Remove active class from all buttons and panels
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            tabPanels.forEach((panel) => panel.classList.remove("active"));
+
+            // Add active class to clicked button and corresponding panel
+            button.classList.add("active");
+
+            const panel = document.getElementById(targetTab);
+            panel?.classList.add("active");
+        });
+    });
+</script>

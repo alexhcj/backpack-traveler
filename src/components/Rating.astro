@@ -1,0 +1,102 @@
+---
+// Server-side component for displaying star ratings
+
+import StarFilledSVG from "/public/svg/star-filled.svg";
+import StarOutlineSVG from "/public/svg/star-outline.svg";
+
+interface Props {
+    value: number;
+    maxStars?: number;
+    size?: number;
+    showValue?: boolean;
+}
+
+const { value, maxStars = 5, size = 24, showValue = true } = Astro.props;
+
+// Generate stars array with fill percentages
+const stars = Array.from({ length: maxStars }, (_, i) => {
+    const starIndex = i + 1;
+    let fillPercentage = 0;
+
+    if (value >= starIndex) {
+        fillPercentage = 100;
+    } else if (value > starIndex - 1) {
+        fillPercentage = (value - (starIndex - 1)) * 100;
+    }
+
+    return { index: i, fillPercentage };
+});
+---
+
+<div class="star-rating">
+    <div class="stars-container">
+        {
+            stars.map(({ index, fillPercentage }) => (
+                <div
+                    class="star-wrapper"
+                    style={`width: ${size}px; height: ${size}px;`}
+                >
+                    {/* Empty star background */}
+                    <StarOutlineSVG
+                        class="star-empty"
+                        width={size}
+                        height={size}
+                    />
+
+                    {/* Filled star with clip path */}
+                    <StarFilledSVG
+                        class="star-filled"
+                        width={size}
+                        height={size}
+                        style={`clip-path: inset(0 ${100 - fillPercentage}% 0 0);`}
+                    />
+                </div>
+            ))
+        }
+    </div>
+    {showValue && <span class="rating-value">{value.toFixed(2)}</span>}
+</div>
+
+<style>
+    .star-rating {
+        position: relative;
+        display: inline-flex;
+
+        &:hover {
+            .rating-value {
+                opacity: 1;
+                translate: -50% 0;
+            }
+        }
+    }
+
+    .stars-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .star-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .star-empty,
+    .star-filled {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .rating-value {
+        position: absolute;
+        top: -27px;
+        left: 50%;
+        font-size: 14px;
+        color: var(--color-dark);
+        font-family: var(--family-lora);
+        opacity: 0;
+        transition: var(--transition-default);
+        translate: -50% 10px;
+    }
+</style>
