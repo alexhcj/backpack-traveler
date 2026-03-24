@@ -47,7 +47,7 @@ const bookData: IBook = {
     discount: book.discount ?? 0,
     quantity: book.quantity,
     image: {
-        url: book.cover_image_url || "/images/default-book.jpg",
+        url: book.cover_image || "/images/default-book.jpg",
         alt: `${book.title} cover`,
     },
     tags: book.tags || [],

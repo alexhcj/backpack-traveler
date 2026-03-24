@@ -19,7 +19,7 @@ export interface IBookFormData {
   discount?: number;
   quantity: number;
   published_date?: string;
-  cover_image_url?: string;
+  cover_image?: string;
   tags?: string[];
   weight_g?: number;
   width_mm?: number;

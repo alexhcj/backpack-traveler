@@ -98,7 +98,7 @@ export type Database = {
           discount: number | null;
           quantity: number; // Available stock
           published_date: string | null;
-          cover_image_url: string | null;
+          cover_image: string | null;
           tags: string[] | null;
           weight_g: number | null;
           width_mm: number | null;
@@ -121,7 +121,7 @@ export type Database = {
           discount?: number | null;
           quantity: number;
           published_date?: string | null;
-          cover_image_url?: string | null;
+          cover_image?: string | null;
           tags?: string[] | null;
           weight_g?: number | null;
           width_mm?: number | null;
@@ -144,7 +144,7 @@ export type Database = {
           discount?: number | null;
           quantity?: number;
           published_date?: string | null;
-          cover_image_url?: string | null;
+          cover_image?: string | null;
           tags?: string[] | null;
           weight_g?: number | null;
           width_mm?: number | null;
