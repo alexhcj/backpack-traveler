@@ -1,8 +1,8 @@
 ---
-import BookLayout from "../../layouts/BookLayout.astro";
-import { BookReviewsService } from "../../lib/services/book-reviews";
-import { BooksService } from "../../lib/services/books";
 import type { IBook } from "../../types/book";
+
+import BookLayout from "../../layouts/BookLayout.astro";
+import { BooksService } from "../../lib/services/books";
 import { convertMmtoCm, convertWeightToKg } from "../../utils/utils";
 
 export async function getStaticPaths() {
@@ -25,15 +25,12 @@ interface Props {
 
 const { bookId } = Astro.props;
 
-const { data: book, error } = await BooksService.getById(bookId);
+const { data: book, error } = await BooksService.getByIdWithReviews(bookId);
 
 if (error || !book) {
     console.error("Error fetching book:", error);
     return Astro.redirect("/404");
 }
-
-const { data: reviews, error: reviewsError } =
-    await BookReviewsService.getBookReviews(bookId);
 
 const bookData: IBook = {
     id: book.id,
@@ -60,7 +57,9 @@ const bookData: IBook = {
                 ? `${convertMmtoCm(book.width_mm)} × ${convertMmtoCm(book.height_mm)} × ${convertMmtoCm(book.length_mm)} cm`
                 : "N/A",
     },
-    reviews: reviews || [],
+    rating: book.rating || 0,
+    book_reviews: book.book_reviews,
+    review_count: book.review_count || 0,
 };
 ---
 

@@ -92,6 +92,42 @@ export class BooksService {
   }
 
   /**
+   * Get book by id with reviews
+   */
+  static async getByIdWithReviews(
+    id: string,
+  ): Promise<IBookServiceRO<TBookWithRating>> {
+    try {
+      const { data, error } = await supabase
+        .from("books_with_ratings")
+        .select("*, book_reviews(*)")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("Supabase error:", error);
+        throw error;
+      }
+
+      if (!data) {
+        throw new Error("No data returned from select");
+      }
+
+      return {
+        data,
+        error: null,
+      };
+    } catch (error) {
+      console.error("BooksService.getByIdWithReviews error:", error);
+
+      return {
+        data: null,
+        error: error instanceof Error ? error : new Error("Unknown error"),
+      };
+    }
+  }
+
+  /**
    * Get all books
    */
   static async getAll(): Promise<IBookListRO> {

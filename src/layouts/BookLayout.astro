@@ -8,7 +8,7 @@ import Rating from "../components/Rating.astro";
 import QuantityInput from "../components/QuantityInput.astro";
 import Socials from "../components/Socials.astro";
 import ReviewForm from "../components/ReviewForm.astro";
-import { convertISODate, formatPrice, formatSku } from "../utils/utils";
+import { calcDiscountPrice, convertISODate, formatSku } from "../utils/utils";
 
 import defaultAvatar from "../assets/images/avatars/default-avatar.webp";
 import type { IBook } from "../types/book";
@@ -30,17 +30,11 @@ const {
         sku,
         parameters,
         tags,
-        reviews,
+        rating,
+        review_count,
+        book_reviews,
     },
 } = Astro.props;
-
-const rating = reviews.length > 0
-    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
-    : 0;
-const discountedPrice = discount
-    ? price - (price * discount) / 100
-    : price;
-
 ---
 
 <BaseLayout
@@ -72,13 +66,13 @@ const discountedPrice = discount
                     <div class="rating">
                         <Rating value={rating} size={14} />
                         <span class="rating-text"
-                            >({reviews.length} customer review{
-                                reviews.length !== 1 ? "s" : ""
+                            >({review_count} customer review{
+                                review_count !== 1 ? "s" : ""
                             })</span
                         >
                     </div>
                     <h3 class="title">{title}</h3>
-                    <span class="price">Buy for <span class="value">${price} </span><span class="discounted-price">- ${formatPrice(discountedPrice)}</span></span>
+                    <span class="price">Buy for <span class="value">${price.toFixed(2)} </span><span class="discounted-price">- ${calcDiscountPrice(price, discount)}</span></span>
                     <p class="excerpt">{excerpt}</p>
                     <div class="actions">
                         <QuantityInput bookId={id} />
@@ -128,7 +122,7 @@ const discountedPrice = discount
                         >Additional information</button
                     >
                     <button class="tab-button" data-tab="reviews"
-                        >Reviews ({reviews.length})</button
+                        >Reviews ({review_count})</button
                     >
                 </div>
 
@@ -163,11 +157,11 @@ const discountedPrice = discount
 
                     <div class="tab-panel" id="reviews">
                         <div class="reviews-header">
-                            {reviews.length} review{reviews.length !== 1 ? 's' : ''} for {title}
+                            {review_count} review{review_count !== 1 ? 's' : ''} for {title}
                         </div>
                         <div class="reviews">
                         {
-                            reviews.map((review) => (
+                            book_reviews.map((review) => (
                                 <div class="review-item">
                                         <Image
                                             class="avatar"
@@ -541,4 +535,22 @@ const discountedPrice = discount
             panel?.classList.add("active");
         });
     });
+</script>
+
+<script define:vars={{ bookId: id }}>
+  // Track view when page loads
+  let sessionId = localStorage.getItem('sessionId');
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem('sessionId', sessionId);
+  }
+
+  fetch('/api/track/book-view', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Session-Id': sessionId
+    },
+    body: JSON.stringify({ bookId })
+  });
 </script>
