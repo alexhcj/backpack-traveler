@@ -1,0 +1,217 @@
+---
+import ArrowSVG from "../assets/svg/chevron-right.svg";
+
+interface Props {
+    booksLength?: number;
+}
+
+const { booksLength = 0 } = Astro.props;
+
+const filtersData = [
+    { name: "Default sorting", value: "default" },
+    { name: "Sort by popularity", value: "popularity" },
+    { name: "Sort by average rating", value: "rating" },
+    { name: "Sort by latest", value: "latest" },
+    { name: "Sort by price: low to high", value: "price-low" },
+    { name: "Sort by price: high to low", value: "price-high" },
+];
+---
+
+<div class="box">
+    <span class="result-count"
+        >{
+            booksLength === 0
+                ? "Showing 0 results"
+                : booksLength === 1
+                  ? `Showing 1 result`
+                  : `Showing all ${booksLength} results`
+        }</span
+    >
+    <div id="sort-select">
+        <div class="sort-item current-sort" id="current-sort-display">
+            {filtersData[0].name}
+            <ArrowSVG class="dropdown-icon" />
+        </div>
+        <ul class="sort-list" id="sort-list">
+            {
+                filtersData.map((filter) => (
+                    <li
+                        class="sort-item"
+                        data-value={filter.value}
+                        data-name={filter.name}
+                    >
+                        {filter.name}
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<style>
+    .box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        background-color: var(--color-primary);
+    }
+
+    .result-count {
+        padding-left: 18px;
+        line-height: 50px;
+        font-size: 13px;
+        font-family: var(--family-lora);
+        font-style: italic;
+    }
+
+    #sort-select {
+        position: relative;
+        padding: 0 34px 0 16px;
+        user-select: none;
+    }
+
+    .sort-item {
+        padding: 7px 0;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: var(--letter-spacing-default);
+        font-weight: var(--weight-medium);
+        color: var(--color-dark);
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &.active {
+            color: var(--color-black);
+        }
+
+        &:hover {
+            color: var(--color-black);
+        }
+    }
+
+    .current-sort {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--color-black);
+
+        &.open .dropdown-icon {
+            rotate: 270deg;
+        }
+    }
+
+    .dropdown-icon {
+        width: 15px;
+        transition: var(--transition-default-5);
+        rotate: 90deg;
+
+        path {
+            stroke-width: 3px;
+        }
+    }
+
+    .sort-list {
+        position: absolute;
+        bottom: -9px;
+        right: 0;
+        width: 250px;
+        max-height: 200px;
+        margin: 5px 0;
+        padding: 2px 5px 2px 17px;
+        overflow-y: auto;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-dark-3);
+        border-top: none;
+        opacity: 0;
+        visibility: hidden;
+        translate: 0 100%;
+        transition: var(--transition-default);
+        z-index: var(--z-index-10);
+
+        &.open {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+</style>
+
+<script>
+    // Handle dropdown toggle and sort selection
+    const sortSelect = document.getElementById("sort-select") as HTMLElement;
+    const currentSortDisplay = document.getElementById(
+        "current-sort-display",
+    ) as HTMLElement;
+    const sortList = document.getElementById("sort-list") as HTMLElement;
+    const sortItems = sortList.querySelectorAll(".sort-item");
+
+    let isOpen = false;
+
+    // Toggle dropdown
+    function toggleDropdown() {
+        isOpen = !isOpen;
+        currentSortDisplay.classList.toggle("open", isOpen);
+        sortList.classList.toggle("open", isOpen);
+    }
+
+    // Close dropdown
+    function closeDropdown() {
+        isOpen = false;
+        currentSortDisplay.classList.remove("open");
+        sortList.classList.remove("open");
+    }
+
+    // Click on current sort display
+    currentSortDisplay.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+    });
+
+    // Click on sort items
+    sortItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const target = e.currentTarget as HTMLElement;
+            const value = target.dataset.value;
+            const name = target.dataset.name;
+
+            // Update current display
+            const textNode = Array.from(currentSortDisplay.childNodes).find(
+                (node) => node.nodeType === Node.TEXT_NODE,
+            );
+            if (textNode) {
+                textNode.textContent = name || "";
+            }
+
+            // Update active state
+            sortItems.forEach((si) => si.classList.remove("active"));
+            target.classList.add("active");
+
+            // Dispatch custom event for BookList to listen to
+            const event = new CustomEvent("sortchange", {
+                detail: { value, name },
+            });
+            document.dispatchEvent(event);
+
+            // Close dropdown
+            closeDropdown();
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!sortSelect.contains(e.target as Node)) {
+            closeDropdown();
+        }
+    });
+
+    // Close dropdown on escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isOpen) {
+            closeDropdown();
+        }
+    });
+
+    // Set initial active state
+    sortItems[0]?.classList.add("active");
+</script>

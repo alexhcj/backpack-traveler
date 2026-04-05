@@ -104,9 +104,12 @@ export type Database = {
           width_mm: number | null;
           height_mm: number | null;
           length_mm: number | null;
-          review_ids: number[] | null;
           created_at: string;
           updated_at: string;
+          view_count?: number;
+          purchase_count?: number;
+          cart_add_count?: number;
+          popularity_score?: number;
         };
         Insert: {
           id?: string;
@@ -127,9 +130,12 @@ export type Database = {
           width_mm?: number | null;
           height_mm?: number | null;
           length_mm?: number | null;
-          review_ids?: number[] | null;
           created_at?: string;
           updated_at?: string;
+          view_count?: number;
+          purchase_count?: number;
+          cart_add_count?: number;
+          popularity_score?: number;
         };
         Update: {
           id?: string;
@@ -150,9 +156,12 @@ export type Database = {
           width_mm?: number | null;
           height_mm?: number | null;
           length_mm?: number | null;
-          review_ids?: number[] | null;
           created_at?: string;
           updated_at?: string;
+          view_count?: number;
+          purchase_count?: number;
+          cart_add_count?: number;
+          popularity_score?: number;
         };
         Relationships: [];
       };

@@ -3,6 +3,11 @@ import type { InsertTables, Tables, UpdateTables } from "./database";
 import type { TBookReview } from "./review";
 
 export type TBook = Tables<"books">;
+export type TBookWithRating = TBook & {
+  rating: number;
+  review_count: number;
+  book_reviews: TBookReview[] | [];
+};
 export type TBookInsert = InsertTables<"books">;
 export type TBookUpdate = UpdateTables<"books">;
 
@@ -25,7 +30,6 @@ export interface IBookFormData {
   width_mm?: number;
   height_mm?: number;
   length_mm?: number;
-  review_ids?: number[];
 }
 
 export interface IBookServiceRO<T = TBook> {
@@ -33,8 +37,8 @@ export interface IBookServiceRO<T = TBook> {
   error: Error | null;
 }
 
-export interface IBookListRO {
-  data: TBook[] | null;
+export interface IBookListRO<T = TBook> {
+  data: T[] | null;
   error: Error | null;
 }
 
@@ -47,7 +51,7 @@ export interface IBook {
   excerpt: string;
   chapters: string[];
   price: number;
-  discount?: number;
+  discount: number;
   quantity: number;
   image: {
     url: string;
@@ -58,5 +62,7 @@ export interface IBook {
     weight: string;
     dimensions: string;
   };
-  reviews: TBookReview[];
+  book_reviews: TBookReview[];
+  rating: number;
+  review_count: number;
 }

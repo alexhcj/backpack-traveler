@@ -1,0 +1,390 @@
+---
+import type { TBookWithRating } from "../types/book";
+
+import { Image } from "astro:assets";
+
+import Rating from "./Rating.astro";
+import { calcDiscountPrice, isBookNew } from "../utils/utils";
+
+interface Props {
+    books: TBookWithRating[] | null;
+}
+
+const { books = [] } = Astro.props;
+---
+
+<div class="box">
+    <div id="book-grid" class="grid">
+        {books?.length === 0 && <p>No books available.</p>}
+        {
+            books?.map((book, idx) => (
+                <div
+                    class="book"
+                    data-price={
+                        book.discount
+                            ? calcDiscountPrice(book.price, book.discount)
+                            : book.price
+                    }
+                    data-rating={book.rating}
+                    data-category={book.tags}
+                    data-date={book.created_at}
+                    data-original-index={idx}
+                    data-popularity={book.popularity_score || 0}
+                >
+                    {book.discount && <div class="tag">Sale</div>}
+                    {isBookNew(book.published_date ?? book.created_at) && (
+                        <div class="tag">New</div>
+                    )}
+                    <a href={`/books/${book.slug}`}>
+                        <Image
+                            class="book-img"
+                            src={`/books/${book.cover_image}`}
+                            width={268}
+                            height={309}
+                            alt={book.title}
+                        />
+                    </a>
+                    <div class="price">
+                        Buy for
+                        <span
+                            class:list={[
+                                "normal-price",
+                                book.discount ? "discounted" : null,
+                            ]}
+                        >
+                            ${book.price.toFixed(2)}
+                        </span>
+                        {book.discount && (
+                            <span class="discount-price">
+                                -{" "}
+                                {`$${calcDiscountPrice(book.price, book.discount)}`}
+                            </span>
+                        )}
+                    </div>
+                    <Rating value={book.rating} size={13} />
+                    <h4 class="title">
+                        <a href={`/books/${book.slug}`}>{book.title}</a>
+                    </h4>
+                    <button class="button">Add to cart</button>
+                </div>
+            ))
+        }
+    </div>
+    <div id="no-results" class="no-results" style="display: none;">
+        <p>No books found matching your filters.</p>
+        <button class="clear-filters-btn">Clear All Filters</button>
+    </div>
+</div>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px 0;
+    }
+
+    .book {
+        position: relative;
+        text-align: center;
+        padding: 30px 40px 38px;
+
+        &:not(:nth-child(3n)) {
+            border-right: 1px solid var(--color-border-2);
+        }
+
+        &:hover {
+            .book-img {
+                translate: 0 -13px;
+            }
+
+            .price {
+                opacity: 1;
+            }
+        }
+    }
+
+    .book-img {
+        display: block;
+        object-fit: cover;
+        transition: var(--transition-default-2);
+    }
+
+    .price {
+        position: absolute;
+        top: 215px;
+        left: 50px;
+        padding: 10px 9px 11px 12px;
+        line-height: 1em;
+        font-size: 15px;
+        font-family: var(--family-lora);
+        font-style: italic;
+        color: var(--color-black);
+        background-color: var(--color-white);
+        opacity: 0;
+        z-index: var(--z-index-10);
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.09);
+        transition: var(--transition-default-2);
+    }
+
+    .normal-price {
+        &.discounted {
+            display: inline-block;
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+    }
+
+    .discount-price {
+        color: var(--color-accent);
+    }
+
+    .tag {
+        position: absolute;
+        top: 28px;
+        left: 17px;
+        letter-spacing: 0;
+        line-height: 1em;
+        font-size: 44px;
+        font-family: var(--family-epic-ride);
+    }
+
+    .title {
+        margin: 12px 0 2px;
+    }
+
+    .button {
+        font-size: 15px;
+        font-family: var(--family-lora);
+        font-style: italic;
+        cursor: pointer;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .no-results p {
+        font-size: 16px;
+        color: var(--color-dark);
+        margin-bottom: 20px;
+    }
+
+    .clear-filters-btn {
+        padding: 12px 24px;
+        font-size: 12px;
+        font-weight: var(--weight-medium);
+        letter-spacing: var(--letter-spacing-default-2);
+        text-transform: uppercase;
+        border: 1px solid var(--color-black);
+        background-color: var(--color-black);
+        color: var(--color-white);
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &:hover {
+            background-color: var(--color-white);
+            color: var(--color-black);
+        }
+    }
+</style>
+
+<script>
+    const bookGrid = document.getElementById("book-grid") as HTMLElement;
+    const noResults = document.getElementById("no-results") as HTMLElement;
+    const clearFiltersBtn = document.querySelector(
+        ".clear-filters-btn",
+    ) as HTMLButtonElement;
+
+    // Filter state
+    let currentCategory = "all";
+    let currentSort = "default";
+    let currentMinPrice = 0;
+    let currentMaxPrice = Infinity;
+
+    /**
+     * Main function to filter and sort books
+     */
+    function filterAndSort() {
+        const books = Array.from(bookGrid.children) as HTMLElement[];
+        let visibleCount = 0;
+
+        // Filter by category and price
+        books.forEach((book) => {
+            const category = book.dataset.category;
+            const price = parseFloat(book.dataset.price!);
+
+            // Check category filter
+            const categoryMatch =
+                currentCategory === "all" || category === currentCategory;
+
+            // Check price filter
+            const priceMatch =
+                price >= currentMinPrice && price <= currentMaxPrice;
+
+            // Show book only if it matches both filters
+            if (categoryMatch && priceMatch) {
+                book.style.display = "block";
+                visibleCount++;
+            } else {
+                book.style.display = "none";
+            }
+        });
+
+        // Show/hide no results message
+        if (visibleCount === 0) {
+            bookGrid.style.display = "none";
+            noResults.style.display = "block";
+        } else {
+            bookGrid.style.display = "grid";
+            noResults.style.display = "none";
+        }
+
+        // Get visible books for sorting
+        const visibleBooks = books.filter((b) => b.style.display !== "none");
+
+        // Sort books based on current sort value
+        visibleBooks.sort((a, b) => {
+            switch (currentSort) {
+                case "price-high":
+                    return (
+                        parseFloat(b.dataset.price!) -
+                        parseFloat(a.dataset.price!)
+                    );
+                case "price-low":
+                    return (
+                        parseFloat(a.dataset.price!) -
+                        parseFloat(b.dataset.price!)
+                    );
+                case "rating":
+                    return (
+                        parseFloat(b.dataset.rating!) -
+                        parseFloat(a.dataset.rating!)
+                    );
+                case "latest":
+                    return (
+                        +new Date(b.dataset.date!) - +new Date(a.dataset.date!)
+                    );
+                case "popularity":
+                    return (
+                        parseFloat(b.dataset.popularity!) -
+                        parseFloat(a.dataset.popularity!)
+                    );
+                case "default":
+                    return (
+                        parseInt(a.dataset.originalIndex!) -
+                        parseInt(b.dataset.originalIndex!)
+                    );
+                default:
+                    return 0;
+            }
+        });
+
+        // Reorder DOM elements
+        visibleBooks.forEach((book) => bookGrid.appendChild(book));
+
+        // Update result count if BookFilters component exists
+        updateResultCount(visibleCount);
+    }
+
+    /**
+     * Update the result count display in BookFilters
+     */
+    function updateResultCount(count: number) {
+        const resultCountElement = document.querySelector(".result-count");
+        if (resultCountElement) {
+            if (count === 0) {
+                resultCountElement.textContent = "Showing 0 results";
+            } else if (count === 1) {
+                resultCountElement.textContent = "Showing 1 result";
+            } else {
+                resultCountElement.textContent = `Showing all ${count} results`;
+            }
+        }
+    }
+
+    /**
+     * Listen to custom sort change event from BookFilters
+     */
+    document.addEventListener("sortchange", (e: Event) => {
+        const customEvent = e as CustomEvent<{ value: string; name: string }>;
+        currentSort = customEvent.detail.value;
+
+        console.log(
+            `Sort changed to: ${customEvent.detail.name} (${customEvent.detail.value})`,
+        );
+
+        filterAndSort();
+    });
+
+    /**
+     * Listen to category filter event from ShopSidebar
+     */
+    document.addEventListener("categoryfilter", (e: Event) => {
+        const customEvent = e as CustomEvent<{ category: string }>;
+        currentCategory = customEvent.detail.category;
+
+        console.log(`Category filter: ${currentCategory}`);
+
+        filterAndSort();
+    });
+
+    /**
+     * Listen to price filter event from ShopSidebar
+     */
+    document.addEventListener("pricefilter", (e: Event) => {
+        const customEvent = e as CustomEvent<{ min: number; max: number }>;
+        currentMinPrice = customEvent.detail.min;
+        currentMaxPrice = customEvent.detail.max;
+
+        console.log(`Price filter: $${currentMinPrice} - $${currentMaxPrice}`);
+
+        filterAndSort();
+    });
+
+    /**
+     * Clear all filters button
+     */
+    clearFiltersBtn?.addEventListener("click", () => {
+        // Reset all filters
+        currentCategory = "all";
+        currentSort = "default";
+
+        // Dispatch events to reset UI
+        const categoryEvent = new CustomEvent("categoryfilter", {
+            detail: { category: "all" },
+        });
+        document.dispatchEvent(categoryEvent);
+
+        const resetPriceEvent = new CustomEvent("resetallfilters");
+        document.dispatchEvent(resetPriceEvent);
+
+        // Reset category active state
+        const categoryTags = document.querySelectorAll(".tag");
+        categoryTags.forEach((tag) => {
+            if ((tag as HTMLElement).dataset.category === "all") {
+                tag.classList.add("active");
+            } else {
+                tag.classList.remove("active");
+            }
+        });
+
+        // Trigger filter
+        filterAndSort();
+
+        console.log("All filters cleared");
+    });
+
+    /**
+     * Listen to reset all filters event
+     */
+    document.addEventListener("resetallfilters", () => {
+        const resetBtn = document.querySelector(
+            ".reset-price-btn",
+        ) as HTMLButtonElement;
+        resetBtn?.click();
+    });
+
+    // Initialize - run filter on page load to set correct count
+    filterAndSort();
+</script>

@@ -5,6 +5,7 @@ import type {
   IBookServiceRO,
   TBookInsert,
   TBookUpdate,
+  TBookWithRating,
 } from "../../types/book";
 
 export class BooksService {
@@ -101,6 +102,32 @@ export class BooksService {
         .order("created_at", { ascending: false });
 
       if (error) {
+        throw error;
+      }
+
+      return {
+        data,
+        error: null,
+      };
+    } catch (error) {
+      return {
+        data: null,
+        error: error instanceof Error ? error : new Error("Unknown error"),
+      };
+    }
+  }
+
+  /**
+   * Get all books with rating
+   */
+  static async getAllWithRating(): Promise<IBookListRO<TBookWithRating>> {
+    try {
+      const { data, error } = await supabase
+        .from("books_with_ratings")
+        .select("*");
+
+      if (error) {
+        console.error("Supabase error:", error);
         throw error;
       }
 

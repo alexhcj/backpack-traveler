@@ -1,0 +1,403 @@
+---
+interface Props {
+    categories: Set<string>;
+    minPrice?: number;
+    maxPrice?: number;
+}
+
+const { categories, minPrice = 0, maxPrice = 100 } = Astro.props;
+---
+
+<aside class="sidebar">
+    <div class="filter">
+        <h6 class="title">Categories</h6>
+    </div>
+    <ul class="tags">
+        <li class="tag active" data-category="all">All Books</li>
+        {
+            [...categories].map((tag) => (
+                <li class="tag" data-category={tag}>
+                    {tag}
+                </li>
+            ))
+        }
+    </ul>
+    <div class="filter">
+        <h6 class="title">Price Filter</h6>
+    </div>
+    <div class="price-filter">
+        <div class="price-range-slider">
+            <input
+                type="range"
+                id="min-price"
+                class="range-input"
+                min={minPrice}
+                max={maxPrice}
+                value={minPrice}
+                step="1"
+            />
+            <input
+                type="range"
+                id="max-price"
+                class="range-input"
+                min={minPrice}
+                max={maxPrice}
+                value={maxPrice}
+                step="1"
+            />
+            <div class="slider-track"></div>
+            <div class="slider-range"></div>
+        </div>
+
+        <div class="price-bottom">
+            <div class="price-display">
+                <span class="price-value">${minPrice}</span>
+                <span class="price-separator">—</span>
+                <span class="price-value">${maxPrice}</span>
+            </div>
+
+            <div class="price-actions">
+                <button class="reset-price-btn" style="display: none;"
+                    >Reset</button
+                >
+                <button class="apply-price-btn">Apply</button>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<style>
+    .sidebar {
+        position: sticky;
+        top: 100px;
+    }
+
+    .filter {
+        position: relative;
+        margin-bottom: 9px;
+        text-align: center;
+
+        &::after {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: var(--color-border-2);
+        }
+    }
+
+    .title {
+        position: relative;
+        display: inline-block;
+        margin: 0 0 3px;
+        padding: 0 12px;
+        width: auto;
+        letter-spacing: var(--letter-spacing-default-2);
+        font-weight: var(--weight-semi-bold);
+        color: var(--color-dark);
+        background-color: var(--color-white);
+        z-index: var(--z-index-10);
+    }
+
+    .tags {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        margin-bottom: 37px;
+    }
+
+    .tag {
+        position: relative;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 9px 0 9px 16px;
+        letter-spacing: var(--letter-spacing-default-2);
+        line-height: 1.8em;
+        font-size: 10px;
+        font-weight: var(--weight-medium);
+        color: var(--color-grey-2);
+        cursor: pointer;
+        transition: var(--transition-default-2);
+
+        &::before {
+            position: absolute;
+            left: 0;
+            top: 13px;
+            content: "";
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-accent);
+        }
+
+        &:hover {
+            color: var(--color-black);
+        }
+
+        &.active {
+            color: var(--color-black);
+        }
+    }
+
+    /* Price Filter Styles */
+    .price-range-slider {
+        position: relative;
+        height: 5px;
+        margin: 15px 0 7px;
+    }
+
+    .range-input {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 3px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        z-index: var(--z-index-10);
+
+        &::-webkit-slider-thumb {
+            height: 10px;
+            width: 10px;
+            background-color: var(--color-black);
+            pointer-events: auto;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        &::-moz-range-thumb {
+            height: 10px;
+            width: 10px;
+            background-color: var(--color-black);
+            pointer-events: auto;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+    }
+
+    .slider-track {
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background-color: var(--color-dark);
+        opacity: 0.2;
+    }
+
+    .slider-range {
+        position: absolute;
+        height: 3px;
+        background-color: var(--color-black);
+    }
+
+    .price-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price-display {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+    }
+
+    .price-value {
+        letter-spacing: 1px;
+        line-height: 38px;
+        color: var(--color-grey-2);
+    }
+
+    .price-separator {
+        letter-spacing: 1px;
+        line-height: 38px;
+        color: var(--color-grey-2);
+    }
+
+    .price-actions {
+        display: flex;
+        gap: 16px;
+    }
+
+    .apply-price-btn,
+    .reset-price-btn {
+        flex: 1;
+        text-transform: uppercase;
+        letter-spacing: var(--letter-spacing-default);
+        line-height: 2.7em;
+        font-size: 12px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    // Get DOM elements
+    const minPriceInput = document.getElementById(
+        "min-price",
+    ) as HTMLInputElement;
+    const maxPriceInput = document.getElementById(
+        "max-price",
+    ) as HTMLInputElement;
+    const priceValues = document.querySelectorAll(".price-value");
+    const sliderRange = document.querySelector(".slider-range") as HTMLElement;
+    const applyBtn = document.querySelector(
+        ".apply-price-btn",
+    ) as HTMLButtonElement;
+    const resetBtn = document.querySelector(
+        ".reset-price-btn",
+    ) as HTMLButtonElement;
+    const categoryTags = document.querySelectorAll(
+        ".tag",
+    ) as NodeListOf<HTMLElement>;
+
+    // Store initial values
+    const initialMinPrice = parseInt(minPriceInput.min);
+    const initialMaxPrice = parseInt(minPriceInput.max);
+    let currentMinPrice = parseInt(minPriceInput.value);
+    let currentMaxPrice = parseInt(maxPriceInput.value);
+
+    /**
+     * Update the visual slider range
+     */
+    function updateSliderRange() {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+        const range = parseInt(maxPriceInput.max) - parseInt(minPriceInput.min);
+
+        const minPercent =
+            ((minVal - parseInt(minPriceInput.min)) / range) * 100;
+        const maxPercent =
+            ((maxVal - parseInt(minPriceInput.min)) / range) * 100;
+
+        sliderRange.style.left = `${minPercent}%`;
+        sliderRange.style.width = `${maxPercent - minPercent}%`;
+    }
+
+    /**
+     * Update price display values
+     */
+    function updatePriceDisplay() {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+
+        priceValues[0].textContent = `$${minVal}`;
+        priceValues[1].textContent = `$${maxVal}`;
+    }
+
+    /**
+     * Check if values have changed from initial and toggle reset button
+     */
+    function toggleResetButton() {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+
+        if (minVal !== initialMinPrice || maxVal !== initialMaxPrice) {
+            resetBtn.style.display = "block";
+        } else {
+            resetBtn.style.display = "none";
+        }
+    }
+
+    /**
+     * Handle min price input
+     */
+    minPriceInput?.addEventListener("input", () => {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+
+        // Prevent overlap
+        if (minVal >= maxVal - 1) {
+            minPriceInput.value = (maxVal - 1).toString();
+        }
+
+        updateSliderRange();
+        updatePriceDisplay();
+        toggleResetButton();
+    });
+
+    /**
+     * Handle max price input
+     */
+    maxPriceInput?.addEventListener("input", () => {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+
+        // Prevent overlap
+        if (maxVal <= minVal + 1) {
+            maxPriceInput.value = (minVal + 1).toString();
+        }
+
+        updateSliderRange();
+        updatePriceDisplay();
+        toggleResetButton();
+    });
+
+    /**
+     * Apply price filter
+     */
+    applyBtn?.addEventListener("click", () => {
+        const minVal = parseInt(minPriceInput.value);
+        const maxVal = parseInt(maxPriceInput.value);
+
+        currentMinPrice = minVal;
+        currentMaxPrice = maxVal;
+
+        // Dispatch custom event for BookList to listen to
+        const priceFilterEvent = new CustomEvent("pricefilter", {
+            detail: { min: minVal, max: maxVal },
+        });
+        document.dispatchEvent(priceFilterEvent);
+
+        console.log(`Price filter applied: $${minVal} - $${maxVal}`);
+    });
+
+    /**
+     * Reset price filter
+     */
+    resetBtn?.addEventListener("click", () => {
+        minPriceInput.value = initialMinPrice.toString();
+        maxPriceInput.value = initialMaxPrice.toString();
+
+        currentMinPrice = initialMinPrice;
+        currentMaxPrice = initialMaxPrice;
+
+        updateSliderRange();
+        updatePriceDisplay();
+        toggleResetButton();
+
+        // Dispatch reset event
+        const priceFilterEvent = new CustomEvent("pricefilter", {
+            detail: { min: initialMinPrice, max: initialMaxPrice },
+        });
+        document.dispatchEvent(priceFilterEvent);
+
+        console.log("Price filter reset");
+    });
+
+    /**
+     * Handle category tag clicks
+     */
+    categoryTags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+            const category = tag.dataset.category;
+
+            // Update active state
+            categoryTags.forEach((t) => t.classList.remove("active"));
+            tag.classList.add("active");
+
+            // Dispatch custom event for BookList to listen to
+            const categoryFilterEvent = new CustomEvent("categoryfilter", {
+                detail: { category },
+            });
+            document.dispatchEvent(categoryFilterEvent);
+
+            console.log(`Category filter: ${category}`);
+        });
+    });
+
+    // Initialize slider range on page load
+    updateSliderRange();
+</script>

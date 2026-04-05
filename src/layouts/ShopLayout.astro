@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "./Layout.astro";
+import { BooksService } from "../lib/services/books";
+import BookFilters from "../components/BookFilters.astro";
+import BookList from "../components/BookList.astro";
+import ShopSidebar from "../components/ShopSidebar.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+
+const { data: books, error } = await BooksService.getAllWithRating();
+
+const categories = new Set(books?.flatMap((book) => book.tags ?? []) ?? []);
+const prices = books?.map((b) => b.price) ?? [];
+const minPrice = prices.length ? Math.min(...prices) : 0;
+const maxPrice = prices.length ? Math.max(...prices) : 100;
+---
+
+<BaseLayout
+    title="Backpack Traveler – Shop"
+    headerType={EHeader.FULL}
+    footerType={EFooter.SHORT}
+>
+    <section class="preview">
+        <Image
+            class="img"
+            src="/images/shop-bg.jpg"
+            width={1900}
+            height={300}
+            alt="Travel accessories laing on the bad"
+        />
+        <h1 class="preview-title">Shop</h1>
+    </section>
+    <div class="box">
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <BookFilters booksLength={books?.length} />
+                    <BookList books={books} />
+                </div>
+                <ShopSidebar
+                    categories={categories}
+                    minPrice={minPrice}
+                    maxPrice={maxPrice}
+                />
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .box {
+        padding: 70px 0 40px;
+    }
+
+    .preview {
+        position: relative;
+        height: 300px;
+    }
+
+    .preview-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        color: var(--color-white);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 75% 25%;
+        gap: 30px;
+    }
+</style>

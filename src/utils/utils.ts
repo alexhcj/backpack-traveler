@@ -120,3 +120,11 @@ export function generateBookSKU(slug: string): string {
 
   return `BK-${prefix}-${randomDigits}`;
 }
+
+export function calcDiscountPrice(price: number, discount: number): string {
+  return (price - price * (discount / 100)).toFixed(2);
+}
+
+export function isBookNew(date: string): boolean {
+  return new Date(date) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+}
