@@ -12,7 +12,7 @@ export const form = {
         .string()
         .min(2, { message: "Name must be at least 2 characters long" })
         .max(100, { message: "Name must be at most 100 characters long" }),
-      email: z.string().email({ message: "Invalid email address" }),
+      email: z.email({ message: "Invalid email address" }),
       message: z
         .string()
         .min(10, { message: "Message must be at least 10 characters long" })
@@ -52,7 +52,7 @@ export const form = {
         .string()
         .min(2, { message: "Name must be at least 2 characters long" })
         .max(100, { message: "Name must be at most 100 characters long" }),
-      email: z.string().email({ message: "Invalid email address" }),
+      email: z.email({ message: "Invalid email address" }),
       country: z
         .string()
         .min(2, { message: "Country must be at least 2 characters long" })
@@ -101,7 +101,7 @@ export const form = {
         .string()
         .min(2, { message: "Name must be at least 2 characters long" })
         .max(100, { message: "Name must be at most 100 characters long" }),
-      email: z.string().email({ message: "Invalid email address" }),
+      email: z.email({ message: "Invalid email address" }),
     }),
     handler: async ({ book_id, rating, review, reviewer_name, email }) => {
       const { data, error } = await BookReviewsService.create({
