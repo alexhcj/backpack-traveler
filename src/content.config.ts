@@ -1,11 +1,12 @@
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { z, defineCollection } from "astro:content";
+import { z } from "astro/zod";
 
 const commentsCollection = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/comments" }),
   schema: z.object({
     name: z.string(),
-    email: z.string().email(),
+    email: z.email(),
     date: z.date(),
     postSlug: z.string(),
     parentId: z.string().optional(),
