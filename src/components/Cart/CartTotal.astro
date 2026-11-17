@@ -1,0 +1,76 @@
+---
+import { formatPrice } from "../../utils/utils";
+
+interface Props {
+    subtotal: number;
+    shipping: number;
+    total: number;
+}
+
+const { subtotal, shipping, total } = Astro.props;
+---
+
+<div class="totals">
+    <h2 class="title">Cart totals</h2>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Subtotal</th>
+                <td>${formatPrice(subtotal)}</td>
+            </tr>
+            <tr>
+                <th>Shipping</th>
+                <td>
+                    <span>Flat rate: ${formatPrice(shipping)}</span>
+                </td>
+            </tr>
+            <tr class="total">
+                <th>Total</th>
+                <td>${formatPrice(total)}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="ui-button-primary" href="/checkout">Proceed to checkout</a>
+</div>
+
+<style>
+    .title {
+        margin-bottom: 24px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-regular);
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-black);
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 30px;
+        border-collapse: collapse;
+        text-align: left;
+
+        th,
+        td {
+            padding: 14px 0;
+            font-family: var(--family-lora);
+            color: var(--color-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        th {
+            width: 190px;
+            padding-right: 5px;
+            font-weight: var(--weight-bold);
+        }
+    }
+
+    .total td {
+        font-weight: var(--weight-bold);
+    }
+
+    .ui-button-primary {
+        display: inline-block;
+    }
+</style>

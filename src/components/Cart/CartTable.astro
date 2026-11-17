@@ -1,0 +1,299 @@
+---
+import { actions } from "astro:actions";
+import CloseSVG from "../../../public/svg/close.svg";
+import Preloader from "../Preloader.astro";
+import QuantityField from "../QuantityField.astro";
+import type { TCartLine } from "../../types/cart";
+import { formatPrice } from "../../utils/utils";
+
+interface Props {
+    items: TCartLine[];
+}
+
+const { items } = Astro.props;
+---
+
+<form
+    id="cart-form"
+    method="POST"
+    action={"/cart" + actions.cart.update}
+    data-cart-form
+>
+    <!-- Default submit (Enter key) must be "Update cart", not the first remove button -->
+    <button type="submit" class="default-submit" tabindex="-1" aria-hidden="true">
+        Update cart
+    </button>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-remove">
+                        <span class="hint">Remove item</span>
+                    </th>
+                    <th class="col-thumb">
+                        <span class="hint">Thumbnail image</span>
+                    </th>
+                    <th>Product</th>
+                    <th class="col-price">Price</th>
+                    <th class="col-qty">Quantity</th>
+                    <th class="col-subtotal">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    items.map((item) => (
+                        <tr>
+                            <td class="col-remove">
+                                <button
+                                    type="submit"
+                                    class="remove"
+                                    formaction={"/cart" + actions.cart.remove}
+                                    formnovalidate
+                                    name="itemId"
+                                    value={item.id}
+                                    aria-label={`Remove ${item.title}`}
+                                >
+                                    <CloseSVG class="icon-close" />
+                                </button>
+                            </td>
+                            <td class="col-thumb">
+                                <a href={`/books/${item.slug}`}>
+                                    <img
+                                        src={`/books/${item.cover_image}`}
+                                        width="89"
+                                        height="89"
+                                        alt=""
+                                    />
+                                </a>
+                            </td>
+                            <td>
+                                <a class="title" href={`/books/${item.slug}`}>
+                                    {item.title}
+                                </a>
+                            </td>
+                            <td class="col-price">
+                                ${formatPrice(item.unit_price)}
+                            </td>
+                            <td class="col-qty">
+                                <input
+                                    type="hidden"
+                                    name="lineId"
+                                    value={item.id}
+                                />
+                                <QuantityField
+                                    id={`qty-${item.id}`}
+                                    value={item.quantity}
+                                    min={0}
+                                    max={item.stock}
+                                />
+                            </td>
+                            <td class="col-subtotal">
+                                ${formatPrice(item.line_total)}
+                            </td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions">
+        <div class="coupon">
+            <input
+                class="coupon-input"
+                type="text"
+                name="couponCode"
+                placeholder="Coupon code"
+                aria-label="Coupon code"
+            />
+            <button
+                type="submit"
+                class="ui-button-primary apply"
+                formaction={"/cart" + actions.cart.applyCoupon}
+                formnovalidate
+            >
+                <Preloader class="spinner" />
+                <span class="label">Apply coupon</span>
+            </button>
+        </div>
+        <button type="submit" class="ui-button-outline big update">
+            <Preloader class="spinner" />
+            <span class="label">Update cart</span>
+        </button>
+    </div>
+</form>
+
+<script>
+    // Progressive enhancement: the form posts normally (SSR re-render);
+    // the submitter only shows the preloader while the request is in flight.
+    document
+        .querySelector<HTMLFormElement>("[data-cart-form]")
+        ?.addEventListener("submit", (e) => {
+            const btn = (e as SubmitEvent).submitter as HTMLButtonElement | null;
+            if (!btn || btn.classList.contains("remove")) return;
+            btn.dataset.loading = "";
+            const label = btn.querySelector(".label");
+            if (label) {
+                label.textContent = btn.classList.contains("apply")
+                    ? "Applying coupon"
+                    : "Updating cart";
+            }
+            // disable only after the submit has been dispatched
+            setTimeout(() => (btn.disabled = true));
+        });
+</script>
+
+<style>
+    .default-submit {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+
+        th {
+            padding: 10px 0;
+            vertical-align: bottom;
+            font-family: var(--family-montserrat);
+            font-weight: var(--weight-medium);
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-black);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        td {
+            padding: 25px 0;
+            vertical-align: middle;
+            font-family: var(--family-lora);
+            color: var(--color-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+    }
+
+    .hint {
+        font-family: var(--family-lora);
+        font-style: italic;
+        font-size: 11px;
+        font-weight: var(--weight-regular);
+        color: var(--color-grey-2);
+    }
+
+    .col-remove {
+        width: 140px;
+        padding-left: 10px;
+    }
+
+    .col-thumb {
+        width: 100px;
+    }
+
+    .col-price {
+        width: 120px;
+    }
+
+    .col-qty {
+        width: 230px;
+    }
+
+    .col-subtotal {
+        width: 150px;
+    }
+
+    .title {
+        color: inherit;
+    }
+
+    .remove {
+        display: flex;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .remove :global(.icon-close) {
+        width: 9px;
+        height: 9px;
+    }
+
+    .remove :global(.icon-close path) {
+        fill: var(--color-grey-2);
+        transition: var(--transition-default);
+    }
+
+    .remove:hover :global(.icon-close path) {
+        fill: var(--color-black);
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 30px 0 50px;
+    }
+
+    .coupon {
+        display: flex;
+    }
+
+    .coupon-input {
+        width: 200px;
+        padding: 9px 16px;
+        font-family: var(--family-montserrat);
+        font-size: 12px;
+        line-height: 25px;
+        color: var(--color-grey-2);
+        background-color: var(--color-white);
+        border: 1px solid var(--color-dark-3);
+        transition: var(--transition-default-4);
+
+        &:focus {
+            outline: none;
+            color: var(--color-black);
+            border-color: var(--color-dark);
+        }
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    .apply,
+    .update {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .apply {
+        --preloader-color: var(--color-white);
+    }
+
+    .update:hover {
+        --preloader-color: var(--color-white);
+    }
+
+    .actions :global(.spinner) {
+        display: none;
+    }
+
+    .actions button[data-loading] {
+        cursor: progress;
+    }
+
+    .actions button[data-loading] :global(.spinner) {
+        display: block;
+    }
+</style>

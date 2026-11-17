@@ -1,0 +1,75 @@
+---
+import BaseLayout from "./Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Notice from "../components/Notice.astro";
+import CartTable from "../components/Cart/CartTable.astro";
+import CartTotal from "../components/Cart/CartTotal.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import type { TCart } from "../types/cart";
+
+interface Props {
+    cart: TCart | null;
+    notice: { type: "error" | "success"; text: string } | null;
+}
+
+const { cart, notice } = Astro.props;
+const hasItems = !!cart && cart.items.length > 0;
+---
+
+<BaseLayout
+    title="Backpack Traveler – Cart"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+    fixedHeader
+>
+    <Breadcrumbs narrow />
+    <section class="section">
+        <div class="container narrow">
+            <div class="box">
+                {notice && <Notice type={notice.type}>{notice.text}</Notice>}
+                {
+                    !cart ? (
+                        <div class="empty-cart">
+                            <Notice>
+                                Unable to load your cart. Please try again
+                                later.
+                            </Notice>
+                            <a href="/shop" class="ui-button-primary">
+                                Return to shop
+                            </a>
+                        </div>
+                    ) : !hasItems ? (
+                        <div class="empty-cart">
+                            <Notice>Your cart is currently empty.</Notice>
+                            <a href="/shop" class="ui-button-primary">
+                                Return to shop
+                            </a>
+                        </div>
+                    ) : (
+                        <div class="cart-content">
+                            <CartTable items={cart.items} />
+                            <CartTotal
+                                subtotal={cart.subtotal}
+                                shipping={cart.shipping}
+                                total={cart.total}
+                            />
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .box {
+        padding: 50px 0 90px;
+    }
+
+    .empty-cart {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+</style>

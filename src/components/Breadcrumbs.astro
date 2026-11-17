@@ -1,11 +1,17 @@
 ---
 import { normalizeBreadcrumbs } from "../utils/utils";
 
+interface Props {
+    /** 1100px grid used by shop pages */
+    narrow?: boolean;
+}
+
+const { narrow = false } = Astro.props;
 const breadcrumbs = normalizeBreadcrumbs(Astro.url.pathname);
 ---
 
 <section class="section">
-    <div class="container">
+    <div class:list={["container", { narrow }]}>
         <div class="wrapper">
             <div class="breadcrumbs">
                 <a href="/">Home</a>

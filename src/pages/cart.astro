@@ -1,0 +1,32 @@
+---
+export const prerender = false;
+
+import { actions } from "astro:actions";
+import CartLayout from "../layouts/CartLayout.astro";
+import { CartService } from "../lib/services/cart";
+
+// Results of POSTs handled by Astro actions (works without JS too)
+const added = Astro.getActionResult(actions.cart.add);
+const updated = Astro.getActionResult(actions.cart.update);
+const removed = Astro.getActionResult(actions.cart.remove);
+const coupon = Astro.getActionResult(actions.cart.applyCoupon);
+const result = added ?? updated ?? removed ?? coupon;
+
+// Fresh cart data on every request; action results already carry it.
+const cart =
+    result?.data ??
+    (await CartService.get(Astro.locals.supabase, Astro.locals.cartSessionId))
+        .data;
+
+const notice = result?.error
+    ? { type: "error" as const, text: result.error.message }
+    : added?.data
+      ? { type: "success" as const, text: "The item has been added to your cart." }
+      : updated?.data
+        ? { type: "success" as const, text: "Cart updated." }
+        : removed?.data
+          ? { type: "success" as const, text: "Item removed from your cart." }
+          : null;
+---
+
+<CartLayout cart={cart} notice={notice} />
