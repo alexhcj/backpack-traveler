@@ -114,7 +114,7 @@ export class BooksService {
       }
 
       return {
-        data,
+        data: data as unknown as TBookWithRating,
         error: null,
       };
     } catch (error) {
@@ -168,7 +168,7 @@ export class BooksService {
       }
 
       return {
-        data,
+        data: data as unknown as TBookWithRating[],
         error: null,
       };
     } catch (error) {
@@ -215,7 +215,7 @@ export class BooksService {
    * Update Book details
    */
   static async updateBook(
-    id: number,
+    id: string,
     updates: TBookUpdate,
   ): Promise<IBookServiceRO> {
     try {

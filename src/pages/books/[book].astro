@@ -34,12 +34,12 @@ if (error || !book) {
 
 const bookData: IBook = {
     id: book.id,
-    sku: book.sku,
+    sku: book.sku ?? "",
     title: book.title,
     destination: book.destination,
     description: book.description,
     excerpt: book.excerpt,
-    chapters: book.chapters,
+    chapters: book.chapters ?? [],
     price: book.price,
     discount: book.discount ?? 0,
     quantity: book.quantity,

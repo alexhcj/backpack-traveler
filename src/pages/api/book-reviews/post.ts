@@ -40,7 +40,13 @@ export const POST: APIRoute = async ({ request }) => {
     // Insert into Supabase
     const { data, error } = await supabase
       .from("book_reviews")
-      .insert([reviewData])
+      .insert([
+        {
+          rating: reviewData.rating,
+          review: reviewData.review,
+          reviewer_name: reviewData.reviewer_name,
+        },
+      ])
       .select()
       .single();
 

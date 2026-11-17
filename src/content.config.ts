@@ -1,9 +1,34 @@
 import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
+import { glob, type Loader } from "astro/loaders";
+import { existsSync, readdirSync } from "node:fs";
 import { z } from "astro/zod";
 
+const COMMENTS_DIR = "./src/content/comments";
+
+/**
+ * Comments are written at runtime by /api/comments, so the folder is
+ * legitimately empty on a fresh checkout. The stock glob loader warns about
+ * that on every build; skip it silently when there is nothing to load.
+ */
+const commentsLoader = (): Loader => {
+  const inner = glob({ pattern: "**/*.md", base: COMMENTS_DIR });
+  return {
+    name: "comments-loader",
+    load: async (context) => {
+      const hasFiles =
+        existsSync(COMMENTS_DIR) &&
+        readdirSync(COMMENTS_DIR).some((f) => f.endsWith(".md"));
+      if (!hasFiles) {
+        context.store.clear();
+        return;
+      }
+      return inner.load(context);
+    },
+  };
+};
+
 const commentsCollection = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/comments" }),
+  loader: commentsLoader(),
   schema: z.object({
     name: z.string(),
     email: z.email(),

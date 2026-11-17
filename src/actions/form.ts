@@ -32,12 +32,6 @@ export const form = {
         });
       }
 
-      // TODO: explore what it triggers
-      await supabase.from("events").insert({
-        type: "contact.created",
-        entity_id: data.id,
-        payload: { name, email },
-      });
 
       return {
         success: true,
@@ -72,12 +66,6 @@ export const form = {
         });
       }
 
-      // TODO: explore what it triggers
-      await supabase.from("events").insert({
-        type: "subscription.created",
-        entity_id: data?.id,
-        payload: { name, email },
-      });
 
       return {
         success: true,
