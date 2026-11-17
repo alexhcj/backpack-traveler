@@ -1,0 +1,17 @@
+---
+export const prerender = false;
+
+import OrderReceivedLayout from "../../layouts/OrderReceivedLayout.astro";
+import { CartService } from "../../lib/services/cart";
+
+const key = Astro.url.searchParams.get("key") ?? "";
+const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key);
+
+const { data: order } = isUuid
+    ? await CartService.getOrder(Astro.locals.supabase, key)
+    : { data: null };
+
+if (!order) return Astro.redirect("/shop");
+---
+
+<OrderReceivedLayout order={order} />

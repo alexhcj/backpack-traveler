@@ -1,0 +1,49 @@
+---
+export const prerender = false;
+
+import { actions, isInputError } from "astro:actions";
+import CheckoutLayout from "../layouts/CheckoutLayout.astro";
+import { CartService } from "../lib/services/cart";
+
+const result = Astro.getActionResult(actions.checkout.placeOrder);
+if (result?.data) {
+    return Astro.redirect(
+        `/checkout/order-received?key=${result.data.orderKey}`,
+    );
+}
+
+const { data: cart } = await CartService.get(
+    Astro.locals.supabase,
+    Astro.locals.cartSessionId,
+);
+if (!cart || cart.items.length === 0) return Astro.redirect("/cart");
+
+// Re-fill the form after a failed submit (or prefill the user's email)
+const values: Record<string, string> = {};
+if (result?.error) {
+    try {
+        const form = await Astro.request.clone().formData();
+        form.forEach((v, k) => {
+            if (typeof v === "string") values[k] = v;
+        });
+    } catch {
+        // body already consumed: fields stay empty
+    }
+} else if (Astro.locals.user?.email) {
+    values.email = Astro.locals.user.email;
+}
+
+const errors: Record<string, string | undefined> = {};
+let error: string | undefined;
+if (result?.error) {
+    if (isInputError(result.error)) {
+        for (const [field, msgs] of Object.entries(result.error.fields)) {
+            errors[field] = msgs?.[0];
+        }
+    } else {
+        error = result.error.message;
+    }
+}
+---
+
+<CheckoutLayout cart={cart} values={values} errors={errors} error={error} />

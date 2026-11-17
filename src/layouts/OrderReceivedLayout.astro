@@ -1,0 +1,197 @@
+---
+import BaseLayout from "./Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Notice from "../components/Notice.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+import type { TOrderReceived } from "../types/cart";
+import { formatPrice } from "../utils/utils";
+import { countryName } from "../utils/countries";
+import { paymentLabel } from "../utils/payment";
+
+interface Props {
+    order: TOrderReceived;
+}
+
+const { order } = Astro.props;
+const b = order.billing_address;
+const date = new Date(order.created_at).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+const addressLines = [
+    [b.first_name, b.last_name].filter(Boolean).join(" "),
+    b.company,
+    b.address_1,
+    b.address_2,
+    [b.postcode, b.city].filter(Boolean).join(" "),
+    b.state,
+    countryName(b.country),
+    b.phone,
+].filter(Boolean);
+---
+
+<BaseLayout
+    title="Backpack Traveler – Order received"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+    fixedHeader
+>
+    <Breadcrumbs narrow />
+    <section class="section">
+        <div class="container narrow">
+            <div class="box">
+                <Notice>Thank you. Your order has been received.</Notice>
+
+                <ul class="overview">
+                    <li>
+                        <span class="label">Order number</span>
+                        <strong>{order.order_number}</strong>
+                    </li>
+                    <li>
+                        <span class="label">Date</span>
+                        <strong>{date}</strong>
+                    </li>
+                    <li>
+                        <span class="label">Email</span>
+                        <strong>{order.email}</strong>
+                    </li>
+                    <li>
+                        <span class="label">Total</span>
+                        <strong>${formatPrice(order.total)}</strong>
+                    </li>
+                    <li>
+                        <span class="label">Payment method</span>
+                        <strong>{paymentLabel(order.payment_method)}</strong>
+                    </li>
+                </ul>
+
+                <h2 class="heading">Order details</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            order.items.map((item) => (
+                                <tr>
+                                    <td>
+                                        {item.title}
+                                        <strong>× {item.quantity}</strong>
+                                    </td>
+                                    <td>${formatPrice(item.line_total)}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Subtotal</th>
+                            <td>${formatPrice(order.subtotal)}</td>
+                        </tr>
+                        <tr>
+                            <th>Shipping</th>
+                            <td>Flat rate: ${formatPrice(order.shipping_total)}</td>
+                        </tr>
+                        <tr>
+                            <th>Payment method</th>
+                            <td>{paymentLabel(order.payment_method)}</td>
+                        </tr>
+                        <tr class="total">
+                            <th>Total</th>
+                            <td>${formatPrice(order.total)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h2 class="heading">Billing address</h2>
+                <address class="address">
+                    {addressLines.map((line) => <span>{line}</span>)}
+                </address>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .box {
+        padding: 50px 0 90px;
+    }
+
+    .overview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px 50px;
+        margin-bottom: 50px;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+
+        li {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .label {
+            font-family: var(--family-montserrat);
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-grey-2);
+        }
+    }
+
+    .heading {
+        margin: 40px 0 24px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-regular);
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-black);
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+
+        th,
+        td {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        th {
+            width: 50%;
+            font-family: var(--family-montserrat);
+            font-weight: var(--weight-regular);
+            font-size: 12px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-black);
+        }
+
+        td {
+            font-family: var(--family-lora);
+            color: var(--color-dark);
+        }
+    }
+
+    .total td {
+        font-weight: var(--weight-bold);
+    }
+
+    .address {
+        display: flex;
+        flex-direction: column;
+        font-family: var(--family-lora);
+        font-style: normal;
+        color: var(--color-dark);
+    }
+</style>

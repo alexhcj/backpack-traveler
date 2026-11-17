@@ -1,0 +1,140 @@
+---
+import { COUNTRIES } from "../../utils/countries";
+
+interface Props {
+    label: string;
+    name: string;
+    type?: "text" | "email" | "tel" | "select" | "textarea";
+    required?: boolean;
+    value?: string;
+    placeholder?: string;
+    autocomplete?: string;
+    error?: string;
+    class?: string;
+}
+
+const {
+    label,
+    name,
+    type = "text",
+    required = false,
+    value = "",
+    placeholder,
+    autocomplete,
+    error,
+    class: className,
+} = Astro.props;
+
+const id = `field-${name}`;
+---
+
+<div class:list={["field", className, { invalid: !!error }]}>
+    <label for={id}>
+        {label}
+        {required ? <abbr title="required">*</abbr> : <span>(optional)</span>}
+    </label>
+    {
+        type === "select" ? (
+            <select
+                id={id}
+                name={name}
+                required={required}
+                autocomplete={autocomplete}
+            >
+                <option value="">Select a country / region…</option>
+                {COUNTRIES.map((c) => (
+                    <option value={c.code} selected={c.code === value}>
+                        {c.name}
+                    </option>
+                ))}
+            </select>
+        ) : type === "textarea" ? (
+            <textarea
+                id={id}
+                name={name}
+                rows="4"
+                placeholder={placeholder}>{value}</textarea>
+        ) : (
+            <input
+                id={id}
+                type={type}
+                name={name}
+                value={value}
+                required={required}
+                placeholder={placeholder}
+                autocomplete={autocomplete}
+            />
+        )
+    }
+    {error && <p class="error" role="alert">{error}</p>}
+</div>
+
+<style>
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    label {
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+
+        abbr {
+            text-decoration: none;
+        }
+
+        span {
+            font-size: inherit;
+        }
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 9px 16px;
+        font-family: var(--family-montserrat);
+        font-size: 12px;
+        line-height: 25px;
+        color: var(--color-dark-4);
+        background-color: var(--color-white);
+        border: 1px solid var(--color-dark-3);
+        border-radius: 0;
+        transition: var(--transition-default-4);
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-black);
+        }
+
+        &::placeholder {
+            font-style: italic;
+            color: var(--color-grey-2);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    select {
+        letter-spacing: 3px;
+        background-color: var(--color-grey-8);
+        border-color: transparent;
+        cursor: pointer;
+    }
+
+    .invalid {
+        input,
+        textarea,
+        select {
+            border-color: var(--color-error);
+        }
+    }
+
+    .error {
+        font-size: 12px;
+        color: var(--color-error-dark);
+    }
+</style>

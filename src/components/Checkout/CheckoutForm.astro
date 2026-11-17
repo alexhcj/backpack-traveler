@@ -1,0 +1,300 @@
+---
+import { actions } from "astro:actions";
+import Preloader from "../Preloader.astro";
+import Field from "./Field.astro";
+import type { TCart } from "../../types/cart";
+import { formatPrice } from "../../utils/utils";
+import { PAYMENT_METHODS } from "../../utils/payment";
+
+interface Props {
+    cart: TCart;
+    values: Record<string, string>;
+    errors: Record<string, string | undefined>;
+}
+
+const { cart, values, errors } = Astro.props;
+const method = values.paymentMethod ?? "bacs";
+---
+
+<form
+    method="POST"
+    action={"/checkout" + actions.checkout.placeOrder}
+    data-checkout-form
+>
+    <div class="columns">
+        <section class="billing">
+            <h2 class="heading">Billing details</h2>
+            <div class="row">
+                <Field label="First name" name="firstName" required value={values.firstName} error={errors.firstName} autocomplete="given-name" />
+                <Field label="Last name" name="lastName" required value={values.lastName} error={errors.lastName} autocomplete="family-name" />
+            </div>
+            <Field label="Company name" name="company" value={values.company} autocomplete="organization" />
+            <Field label="Country / Region" name="country" type="select" required value={values.country} error={errors.country} autocomplete="country" />
+            <div class="stack">
+                <Field label="Street address" name="address1" required value={values.address1} error={errors.address1} placeholder="House number and street name" autocomplete="address-line1" />
+                <Field label="Apartment, suite, unit, etc." name="address2" value={values.address2} placeholder="Apartment, suite, unit, etc. (optional)" autocomplete="address-line2" class="sub" />
+            </div>
+            <Field label="Postcode / ZIP" name="postcode" required value={values.postcode} error={errors.postcode} autocomplete="postal-code" />
+            <Field label="Town / City" name="city" required value={values.city} error={errors.city} autocomplete="address-level2" />
+            <Field label="State / County" name="state" value={values.state} autocomplete="address-level1" />
+            <Field label="Phone" name="phone" type="tel" required value={values.phone} error={errors.phone} autocomplete="tel" />
+            <Field label="Email address" name="email" type="email" required value={values.email} error={errors.email} autocomplete="email" />
+        </section>
+
+        <section class="additional">
+            <h2 class="heading">Additional information</h2>
+            <Field
+                label="Order notes"
+                name="notes"
+                type="textarea"
+                value={values.notes}
+                placeholder="Notes about your order, e.g. special notes for delivery."
+            />
+        </section>
+    </div>
+
+    <section class="order">
+        <h2 class="heading">Your order</h2>
+        <table class="review">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    cart.items.map((item) => (
+                        <tr>
+                            <td>
+                                {item.title}
+                                <strong class="qty">× {item.quantity}</strong>
+                            </td>
+                            <td>${formatPrice(item.line_total)}</td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Subtotal</th>
+                    <td>${formatPrice(cart.subtotal)}</td>
+                </tr>
+                <tr>
+                    <th>Shipping</th>
+                    <td>Flat rate: ${formatPrice(cart.shipping)}</td>
+                </tr>
+                <tr class="total">
+                    <th>Total</th>
+                    <td>${formatPrice(cart.total)}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <ul class="payments">
+            {
+                PAYMENT_METHODS.map((pm) => (
+                    <li class="payment">
+                        <input
+                            id={`pm-${pm.id}`}
+                            type="radio"
+                            name="paymentMethod"
+                            value={pm.id}
+                            checked={pm.id === method}
+                            required
+                        />
+                        <label for={`pm-${pm.id}`}>{pm.label}</label>
+                        <p class="description">{pm.description}</p>
+                    </li>
+                ))
+            }
+        </ul>
+        {errors.paymentMethod && <p class="error" role="alert">{errors.paymentMethod}</p>}
+
+        <p class="privacy">
+            Your personal data will be used to process your order, support your
+            experience throughout this website, and for other purposes described
+            in our privacy policy.
+        </p>
+        <button type="submit" class="ui-button-primary place-order">
+            <Preloader class="spinner" />
+            <span class="label">Place order</span>
+        </button>
+    </section>
+</form>
+
+<script>
+    document
+        .querySelector<HTMLFormElement>("[data-checkout-form]")
+        ?.addEventListener("submit", (e) => {
+            const form = e.currentTarget as HTMLFormElement;
+            if (!form.checkValidity()) return;
+            const btn = form.querySelector<HTMLButtonElement>(".place-order")!;
+            btn.dataset.loading = "";
+            btn.querySelector(".label")!.textContent = "Placing order";
+            // disable only after the submit has been dispatched
+            setTimeout(() => (btn.disabled = true));
+        });
+</script>
+
+<style>
+    .columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .billing,
+    .additional {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .stack :global(.sub label) {
+        display: none;
+    }
+
+    .heading {
+        margin-bottom: 4px;
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-regular);
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-black);
+    }
+
+    .order {
+        margin-top: 50px;
+    }
+
+    .review {
+        width: 100%;
+        margin-top: 24px;
+        border-collapse: collapse;
+        text-align: left;
+
+        th,
+        td {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        th {
+            width: 50%;
+            font-family: var(--family-montserrat);
+            font-weight: var(--weight-regular);
+            font-size: 12px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-black);
+        }
+
+        td {
+            font-family: var(--family-lora);
+            color: var(--color-dark);
+        }
+    }
+
+    .qty {
+        margin-left: 4px;
+        font-size: 13px;
+    }
+
+    .total td {
+        font-weight: var(--weight-bold);
+    }
+
+    .payments {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .payment {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        align-items: center;
+        column-gap: 12px;
+
+        input {
+            margin: 0;
+            accent-color: var(--color-black);
+        }
+
+        label {
+            font-family: var(--family-lora);
+            color: var(--color-black);
+            cursor: pointer;
+        }
+
+        .description {
+            display: none;
+            grid-column: 1 / -1;
+            margin-top: 14px;
+            padding: 14px 30px;
+            font-family: var(--family-lora);
+            font-style: italic;
+            color: var(--color-dark);
+            background-color: var(--color-primary);
+        }
+
+        input:checked ~ .description {
+            display: block;
+        }
+    }
+
+    .privacy {
+        margin: 20px 0 22px;
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+
+    .error {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--color-error-dark);
+    }
+
+    .place-order {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        --preloader-color: var(--color-white);
+
+        :global(.spinner) {
+            display: none;
+        }
+
+        &[data-loading] {
+            cursor: progress;
+
+            :global(.spinner) {
+                display: block;
+            }
+        }
+    }
+
+    @media (max-width: 800px) {
+        .columns {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+</style>
