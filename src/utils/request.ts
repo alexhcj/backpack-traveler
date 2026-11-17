@@ -1,9 +1,10 @@
 import crypto from "crypto";
+import { IP_SALT } from "astro:env/server";
 
 export function hashIP(ip: string): string {
   return crypto
     .createHash("sha256")
-    .update(ip + import.meta.env.IP_SALT)
+    .update(ip + IP_SALT)
     .digest("hex");
 }
 

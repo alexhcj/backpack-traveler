@@ -1,12 +1,14 @@
 /// <reference types="astro/client" />
 
-interface ImportMetaEnv {
-  readonly SUPABASE_URL: string;
-  readonly SUPABASE_ANON_KEY: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
+declare namespace App {
+  interface Locals {
+    supabase: import("@supabase/supabase-js").SupabaseClient<
+      import("./types/supabase").Database
+    >;
+    user: import("@supabase/supabase-js").User | null;
+    /** Guest cart cookie (`bt_cart`), null when absent. */
+    cartSessionId: string | null;
+  }
 }
 
 interface Window {

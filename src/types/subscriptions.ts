@@ -1,4 +1,4 @@
-import type { Database } from "../lib/supabase";
+import type { Database } from "./supabase";
 
 export type TSubscription =
   Database["public"]["Tables"]["subscriptions"]["Row"];

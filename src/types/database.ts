@@ -1,12 +1,6 @@
-import type { Database } from "../lib/supabase";
+import type { Database } from "./supabase";
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+export type { Json, Database } from "./supabase";
 
 // Helper type exports
 export type Tables<T extends keyof Database["public"]["Tables"]> =
@@ -18,7 +12,5 @@ export type InsertTables<T extends keyof Database["public"]["Tables"]> =
 export type UpdateTables<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Update"];
 
-// Specific type exports
-export type TCart = Tables<"carts">;
-export type TCartItem = Tables<"cart_items">;
 export type TOrder = Tables<"orders">;
+export type TOrderItem = Tables<"order_items">;
