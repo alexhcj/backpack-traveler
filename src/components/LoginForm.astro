@@ -1,5 +1,12 @@
+---
+import { actions, isInputError } from "astro:actions";
+
+const result = Astro.getActionResult(actions.auth.signIn);
+const error = result?.error;
+const fieldErrors = error && isInputError(error) ? error.fields : {};
+---
 <div class="box">
-    <form id="login-form" action="/api/auth/signin" method="post">
+    <form id="login-form" action={"/login" + actions.auth.signIn} method="post">
         <div class="field email">
             <label for="email">Email address</label>
             <input type="email" name="email" id="email" />
@@ -13,12 +20,19 @@
             <label for="rememberMe">Remember me</label>
         </div>
         <button class="ui-button-primary" type="submit">Log in</button>
+        {error && <p class="form-error" role="alert">{fieldErrors.email?.[0] ?? fieldErrors.password?.[0] ?? error.message}</p>}
         <!-- <div id="success-block">✅ You have been logged in successfully.</div>
         <div id="error-block"></div> -->
     </form>
 </div>
 
 <style>
+    .form-error {
+        grid-column: 1 / -1;
+        font-size: 13px;
+        color: var(--color-error-dark);
+    }
+
     .box {
         max-width: 600px;
     }

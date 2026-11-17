@@ -1,5 +1,12 @@
+---
+import { actions, isInputError } from "astro:actions";
+
+const result = Astro.getActionResult(actions.auth.register);
+const error = result?.error;
+const fieldErrors = error && isInputError(error) ? error.fields : {};
+---
 <div class="box">
-    <form id="register-form" action="/api/auth/register" method="post">
+    <form id="register-form" action={"/register" + actions.auth.register} method="post">
         <div class="field email">
             <label for="email">Email address <span>*</span></label>
             <input type="email" name="email" id="email" />
@@ -9,10 +16,17 @@
             <input type="password" name="password" id="password" />
         </div>
         <button class="ui-button-primary" type="submit">Register</button>
+        {error && <p class="form-error" role="alert">{fieldErrors.email?.[0] ?? fieldErrors.password?.[0] ?? error.message}</p>}
     </form>
 </div>
 
 <style>
+    .form-error {
+        grid-column: 1 / -1;
+        font-size: 13px;
+        color: var(--color-error-dark);
+    }
+
     .box {
         max-width: 600px;
     }

@@ -1,5 +1,12 @@
 ---
+export const prerender = false;
+
+import { actions } from "astro:actions";
 import LoginLayout from "../layouts/LoginLayout.astro";
+
+const result = Astro.getActionResult(actions.auth.signIn);
+if (result && !result.error) return Astro.redirect("/account");
+if (Astro.locals.user) return Astro.redirect("/account");
 ---
 
 <LoginLayout />

@@ -1,5 +1,12 @@
 ---
+export const prerender = false;
+
+import { actions } from "astro:actions";
 import RegisterLayout from "../layouts/RegisterLayout.astro";
+
+const result = Astro.getActionResult(actions.auth.register);
+if (result && !result.error) return Astro.redirect("/login");
+if (Astro.locals.user) return Astro.redirect("/account");
 ---
 
 <RegisterLayout />
