@@ -9,6 +9,7 @@ import PinterestSVG from "../../../../public/svg/pinterest.svg";
 import YoutubeSVG from "../../../../public/svg/youtube.svg";
 import MagnifierSVG from "../../../../public/svg/magnifier.svg";
 import HeaderCart from "./HeaderCart.astro";
+import HeaderCartFallback from "./HeaderCartFallback.astro";
 
 const pathname = Astro.url.pathname;
 
@@ -26,7 +27,9 @@ const socialsList: ISocialLink[] = [
     { url: "/", icon: YoutubeSVG, text: "Youtube link" },
 ];
 
-const showCart = pathname === "/shop" || pathname.includes("/books");
+const showCart = ["/shop", "/books", "/cart", "/checkout"].some((p) =>
+    pathname.startsWith(p),
+);
 ---
 
 <div class:list={["right", { light: type === EHeader.FULL_TRANSPARENT }]}>
@@ -41,7 +44,13 @@ const showCart = pathname === "/shop" || pathname.includes("/books");
             ))
         }
     </ul>
-    {showCart && <HeaderCart />}
+    {
+        showCart && (
+            <HeaderCart server:defer>
+                <HeaderCartFallback slot="fallback" />
+            </HeaderCart>
+        )
+    }
     <div class="search">
         <span class="search-divider"></span>
         <input class="search-input" placeholder="Search..." type="text" />

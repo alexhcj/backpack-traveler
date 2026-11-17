@@ -7,14 +7,17 @@ import HeaderRight from "./HeaderRight.astro";
 
 interface Props {
     type: EHeader;
+    /** Pinned to the top of the viewport at any scroll position */
+    fixed?: boolean;
 }
 
-const { type } = Astro.props;
+const { type, fixed = false } = Astro.props;
 ---
 
 <header
     class:list={[
         "header",
+        { fixed },
         { base: type === "base" },
         { "base-compact": type === "base-compact" },
         { transparent: type === "transparent" },
@@ -47,6 +50,10 @@ const { type } = Astro.props;
     </div>
 
     <style>
+        .header-spacer {
+            height: 100px;
+        }
+
         .header {
             background-color: var(--color-primary);
             height: 60px;
@@ -75,6 +82,16 @@ const { type } = Astro.props;
                 padding: 0 40px;
                 height: 100px;
                 background-color: var(--color-white);
+            }
+
+            &.fixed {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-white);
+                border-bottom: 1px solid var(--color-border-2);
+                z-index: var(--z-index-1000);
             }
 
             &.full-transparent {
@@ -106,6 +123,7 @@ const { type } = Astro.props;
         }
     </style>
 </header>
+{fixed && <div class="header-spacer" aria-hidden="true"></div>}
 
 <script>
     import { throttle } from "../../../utils/utils";

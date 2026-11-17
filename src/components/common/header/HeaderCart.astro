@@ -1,44 +1,63 @@
 ---
-import { Image } from "astro:assets";
+import { actions } from "astro:actions";
 import ShoppingBagSVG from "../../../../public/svg/shopping-bag.svg";
 import CloseSVG from "../../../../public/svg/close.svg";
+import { CartService } from "../../../lib/services/cart";
+import { formatPrice } from "../../../utils/utils";
+
+// Server island: rendered per request from the visitor's cart.
+const { data: cart } = await CartService.get(
+    Astro.locals.supabase,
+    Astro.locals.cartSessionId,
+);
+const items = cart?.items ?? [];
 ---
 
-<div class="cart">
+<div class="cart" data-cart>
     <ShoppingBagSVG class="icon cart-icon" />
-    <span class="badge">0</span>
+    <span class="badge" data-cart-count>{cart?.count ?? 0}</span>
     <div class="dropdown">
-        <div class="box">
-            <ul class="list">
-                <li class="card">
-                    <a href="/">
-                        <Image
-                            class="item-img"
-                            src="/books/501-places.webp"
-                            width={84}
-                            height={84}
-                            alt=""
-                        />
-                    </a>
-                    <div class="details">
-                        <h6 class="title">
-                            <a class="link" href="/">Wandering educators</a>
-                        </h6>
-                        <div class="price">
-                            <span>1</span>
-                            <span>x</span>
-                            <span>$29.00</span>
-                        </div>
-                    </div>
-                    <button class="button-remove">
-                        <CloseSVG class="icon-close" />
-                    </button>
-                </li>
+        <div class="box" data-cart-box hidden={items.length === 0}>
+            <ul class="list" data-cart-list>
+                {
+                    items.map((item) => (
+                        <li class="card" data-item-id={item.id}>
+                            <a href={`/books/${item.slug}`}>
+                                <img
+                                    class="item-img"
+                                    src={`/books/${item.cover_image}`}
+                                    width={84}
+                                    height={84}
+                                    alt=""
+                                />
+                            </a>
+                            <div class="details">
+                                <h6 class="title">
+                                    <a class="link" href={`/books/${item.slug}`}>
+                                        {item.title}
+                                    </a>
+                                </h6>
+                                <div class="price">
+                                    <span>{item.quantity}</span>
+                                    <span>x</span>
+                                    <span>${formatPrice(item.unit_price)}</span>
+                                </div>
+                            </div>
+                            <button
+                                class="button-remove"
+                                type="button"
+                                aria-label={`Remove ${item.title}`}
+                            >
+                                <CloseSVG class="icon-close" />
+                            </button>
+                        </li>
+                    ))
+                }
             </ul>
             <div class="bottom">
                 <div class="total">
                     <span>Total:</span>
-                    <span>$29.00</span>
+                    <span data-cart-total>${formatPrice(cart?.subtotal ?? 0)}</span>
                 </div>
                 <div class="actions">
                     <a class="ui-button-primary alt" href="/cart">View cart</a>
@@ -46,11 +65,22 @@ import CloseSVG from "../../../../public/svg/close.svg";
                 </div>
             </div>
         </div>
-        <!-- <div class="empty">
+        <div class="empty" data-cart-empty hidden={items.length > 0}>
             <span>No products in the cart.</span>
-        </div> -->
+        </div>
     </div>
 </div>
+
+<template data-cart-item-template>
+    <li class="card">
+        <a data-link-img href="/"><img class="item-img" width="84" height="84" alt="" /></a>
+        <div class="details">
+            <h6 class="title"><a class="link" data-link href="/"></a></h6>
+            <div class="price"><span data-qty></span><span>x</span><span data-price></span></div>
+        </div>
+        <button class="button-remove" type="button" aria-label="Remove"><CloseSVG class="icon-close" /></button>
+    </li>
+</template>
 
 <style>
     .cart {
@@ -115,6 +145,12 @@ import CloseSVG from "../../../../public/svg/close.svg";
         transition: var(--transition-dropdown);
     }
 
+    .empty {
+        font-size: 12px;
+        font-family: var(--family-lora);
+        font-style: italic;
+    }
+
     .list {
         padding-bottom: 3px;
     }
@@ -131,6 +167,9 @@ import CloseSVG from "../../../../public/svg/close.svg";
     }
 
     .button-remove {
+        padding: 0;
+        border: 0;
+        background: none;
         position: absolute;
         top: 0;
         right: 0;
@@ -204,3 +243,61 @@ import CloseSVG from "../../../../public/svg/close.svg";
         font-size: 8px;
     }
 </style>
+
+<script>
+    import { actions } from "astro:actions";
+    import type { TCart } from "../../../types/cart";
+
+    const money = (n: number) => `$${n.toFixed(2)}`;
+
+    function render(root: HTMLElement, cart: TCart) {
+        const list = root.querySelector<HTMLElement>("[data-cart-list]")!;
+        const tpl = root.parentElement!.querySelector<HTMLTemplateElement>(
+            "[data-cart-item-template]",
+        )!;
+
+        list.replaceChildren(
+            ...cart.items.map((item) => {
+                const li = (tpl.content.cloneNode(true) as DocumentFragment)
+                    .firstElementChild as HTMLElement;
+                li.dataset.itemId = item.id;
+                li.querySelectorAll<HTMLAnchorElement>("a").forEach(
+                    (a) => (a.href = `/books/${item.slug}`),
+                );
+                li.querySelector<HTMLAnchorElement>("[data-link]")!.textContent = item.title;
+                const img = li.querySelector("img")!;
+                img.src = `/books/${item.cover_image}`;
+                li.querySelector("[data-qty]")!.textContent = String(item.quantity);
+                li.querySelector("[data-price]")!.textContent = money(item.unit_price);
+                li.querySelector("button")!.setAttribute("aria-label", `Remove ${item.title}`);
+                return li;
+            }),
+        );
+        root.querySelector("[data-cart-count]")!.textContent = String(cart.count);
+        root.querySelector("[data-cart-total]")!.textContent = money(cart.subtotal);
+        root.querySelector<HTMLElement>("[data-cart-box]")!.hidden = cart.items.length === 0;
+        root.querySelector<HTMLElement>("[data-cart-empty]")!.hidden = cart.items.length > 0;
+    }
+
+    window.addEventListener("cart:updated", (e) => {
+        const root = document.querySelector<HTMLElement>("[data-cart]");
+        if (root) render(root, (e as CustomEvent<TCart>).detail);
+    });
+
+    // Event delegation: items are re-rendered from JSON
+    document.addEventListener("click", async (e) => {
+        const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
+            "[data-cart] .button-remove",
+        );
+        if (!button) return;
+        const itemId = button.closest<HTMLElement>("[data-item-id]")?.dataset.itemId;
+        if (!itemId) return;
+
+        button.disabled = true;
+        const form = new FormData();
+        form.set("itemId", itemId);
+        const { data } = await actions.cart.remove(form);
+        if (data) window.dispatchEvent(new CustomEvent("cart:updated", { detail: data }));
+        else button.disabled = false;
+    });
+</script>

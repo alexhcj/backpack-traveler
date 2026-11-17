@@ -14,12 +14,14 @@ interface Props {
     title: string;
     headerType: EHeader;
     footerType?: EFooter;
+    fixedHeader?: boolean;
 }
 
 const {
     title,
     headerType = EHeader.BASE,
     footerType = EFooter.FULL,
+    fixedHeader = false,
 } = Astro.props;
 ---
 
@@ -42,7 +44,7 @@ const {
         />
     </head>
     <body>
-        <Header type={headerType} />
+        <Header type={headerType} fixed={fixedHeader} />
         <main class="layout">
             <slot />
         </main>
