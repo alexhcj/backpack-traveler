@@ -1,0 +1,189 @@
+---
+import ArrowSVG from "../assets/svg/chevron-right.svg";
+
+interface Props {
+    id: string;
+    name?: string;
+    value?: number;
+    min?: number;
+    max?: number;
+}
+
+const { id, name = "quantity", value = 1, min = 1, max = 99 } = Astro.props;
+---
+
+<div class="quantity-container" data-quantity>
+    <label class="screen-reader-text" for={id}>Quantity</label>
+
+    <span class="quantity-label">Quantity</span>
+
+    <div class="quantity-buttons">
+        <button
+            type="button"
+            class="quantity-button quantity-minus"
+            aria-label="Decrease quantity"
+        >
+            <ArrowSVG class="icon-arrow" />
+        </button>
+
+        <input
+            type="number"
+            id={id}
+            class="quantity-input"
+            name={name}
+            value={value}
+            min={min}
+            max={max}
+            step="1"
+            required
+            aria-label="Product quantity"
+        />
+
+        <button
+            type="button"
+            class="quantity-button quantity-plus"
+            aria-label="Increase quantity"
+        >
+            <ArrowSVG class="icon-arrow" />
+        </button>
+    </div>
+</div>
+
+<style>
+    .quantity-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 192px;
+    }
+
+    .screen-reader-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .quantity-label {
+        position: absolute;
+        top: 0;
+        left: 15px;
+        line-height: 43px;
+        font-size: 12px;
+        color: var(--color-grey-2);
+        font-family: var(--family-lora);
+        font-style: italic;
+    }
+
+    .quantity-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-right: 20px;
+        width: 100%;
+        border: 1px solid var(--color-border-3);
+    }
+
+    .quantity-button {
+        line-height: 1;
+        font-size: 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition-default);
+
+        &:hover {
+            .icon-arrow path {
+                stroke: var(--color-grey-2);
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+
+            .icon-arrow path {
+                stroke: var(--color-dark-3);
+            }
+        }
+
+        .icon-arrow {
+            width: 16px;
+            height: 16px;
+
+            path {
+                stroke-width: 4px;
+                stroke: var(--color-dark-2);
+                transition: var(--transition-quantity);
+            }
+        }
+
+        &.quantity-minus .icon-arrow {
+            scale: -1;
+        }
+    }
+
+    .quantity-input {
+        width: 26px;
+        text-align: center;
+        line-height: 43px;
+        font-size: 14px;
+        border: none;
+        font-style: italic;
+        color: var(--color-dark);
+        -moz-appearance: textfield;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .quantity-input::-webkit-outer-spin-button,
+    .quantity-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-quantity]").forEach((box) => {
+        const input = box.querySelector<HTMLInputElement>(".quantity-input");
+        const minusBtn = box.querySelector<HTMLButtonElement>(".quantity-minus");
+        const plusBtn = box.querySelector<HTMLButtonElement>(".quantity-plus");
+        if (!input || !minusBtn || !plusBtn) return;
+
+        const min = parseInt(input.min) || 0;
+        const max = parseInt(input.max) || 99;
+
+        const clamp = () => {
+            let value = parseInt(input.value);
+            if (isNaN(value)) value = min;
+            input.value = String(Math.min(Math.max(value, min), max));
+        };
+        const update = () => {
+            const value = parseInt(input.value) || min;
+            minusBtn.disabled = value <= min;
+            plusBtn.disabled = value >= max;
+        };
+        const step = (delta: number) => {
+            clamp();
+            input.value = String(Number(input.value) + delta);
+            clamp();
+            update();
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+        };
+
+        minusBtn.addEventListener("click", () => step(-1));
+        plusBtn.addEventListener("click", () => step(1));
+        input.addEventListener("input", update);
+        input.addEventListener("change", () => {
+            clamp();
+            update();
+        });
+        update();
+    });
+</script>

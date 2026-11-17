@@ -1,0 +1,22 @@
+---
+interface Props {
+    type?: "success" | "error" | "info";
+    action?: { href: string; label: string };
+}
+
+const { type = "success", action } = Astro.props;
+---
+
+<div
+    class:list={["ui-notice", { error: type === "error" }]}
+    role={type === "error" ? "alert" : "status"}
+>
+    <span><slot /></span>
+    {
+        action && (
+            <a class="ui-button-primary ui-notice-action" href={action.href}>
+                {action.label}
+            </a>
+        )
+    }
+</div>

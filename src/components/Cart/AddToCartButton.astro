@@ -1,0 +1,66 @@
+---
+import Preloader from "../Preloader.astro";
+
+interface Props {
+    /** link: text-only (shop grid) · button: black primary (book page) */
+    variant?: "link" | "button";
+    soldOut?: boolean;
+}
+
+const { variant = "link", soldOut = false } = Astro.props;
+---
+
+<button
+    type="submit"
+    data-add-btn
+    data-state="default"
+    data-sold-out={soldOut ? "" : undefined}
+    disabled={soldOut}
+    class:list={["add-btn", variant, { "ui-button-primary": variant === "button" }]}
+>
+    <Preloader class="spinner" />
+    <span class="label">{soldOut ? "Out of stock" : "Add to cart"}</span>
+</button>
+
+<script>
+    import "../../scripts/cart-ui";
+</script>
+
+<style>
+    .add-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        &.link {
+            font-family: var(--family-lora);
+            font-size: 15px;
+            font-style: italic;
+            line-height: 30px;
+            color: var(--color-black);
+            cursor: pointer;
+        }
+
+        &.button {
+            gap: 10px;
+            --preloader-color: var(--color-white);
+        }
+
+        &:disabled {
+            cursor: default;
+        }
+
+        &[data-state="loading"] {
+            cursor: progress;
+        }
+    }
+
+    .add-btn :global(.spinner) {
+        display: none;
+    }
+
+    .add-btn[data-state="loading"] :global(.spinner) {
+        display: block;
+    }
+</style>

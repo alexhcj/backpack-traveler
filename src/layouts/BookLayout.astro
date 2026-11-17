@@ -41,6 +41,7 @@ const {
     title={`Backpack Traveler – ${title}`}
     headerType={EHeader.TRANSPARENT}
     footerType={EFooter.SHORT}
+    fixedHeader
 >
     <section class="preview">
         <Image
@@ -54,6 +55,7 @@ const {
     </section>
     <section class="section-book">
         <div class="container">
+            <div data-notices class="notices"></div>
             <div class="box">
                 <Image
                     class="book-img"
@@ -75,7 +77,7 @@ const {
                     <span class="price">Buy for <span class="value">${price.toFixed(2)} </span><span class="discounted-price">- ${calcDiscountPrice(price, discount)}</span></span>
                     <p class="excerpt">{excerpt}</p>
                     <div class="actions">
-                        <QuantityInput bookId={id} />
+                        <QuantityInput bookId={id} title={title} />
                     </div>
                     <div class="info">
                         <span>SKU: {formatSku(sku)}</span>
@@ -196,7 +198,7 @@ const {
                                             </span>
                                             –
                                             <span class="review-date">
-                                                {convertISODate(review.created_at)}
+                                                {convertISODate(review.created_at ?? "")}
                                             </span>
                                         </div>
                                         <p class="review-text">{review.review}</p>
@@ -230,6 +232,10 @@ const {
 
     .section-book {
         padding: 70px 0 40px;
+    }
+
+    .notices:not(:empty) {
+        padding-top: 40px;
     }
 
     .box {

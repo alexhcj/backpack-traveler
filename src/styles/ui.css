@@ -675,3 +675,38 @@
     object-fit: cover;
     transition: var(--transition-image);
 }
+
+/* NOTICE (WooCommerce-style message bar) */
+.ui-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 30px;
+    padding: 7px 30px;
+    line-height: 39px;
+    font-size: 15px;
+    font-family: var(--family-lora);
+    font-style: italic;
+    color: var(--color-dark);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border-2);
+
+    &.error {
+        background-color: var(--color-error-light);
+        border-color: var(--color-error);
+        color: var(--color-error-dark);
+    }
+
+    .ui-notice-action {
+        flex: none;
+        padding: 7px 15px;
+        line-height: 24px;
+        font-style: normal;
+    }
+}
+
+/* Shop-related pages use the narrower 1100px grid of the reference site */
+.container.narrow {
+    max-width: 1100px;
+}

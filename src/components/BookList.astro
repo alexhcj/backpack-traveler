@@ -2,8 +2,10 @@
 import type { TBookWithRating } from "../types/book";
 
 import { Image } from "astro:assets";
+import { actions } from "astro:actions";
 
 import Rating from "./Rating.astro";
+import AddToCartButton from "./Cart/AddToCartButton.astro";
 import { calcDiscountPrice, isBookNew } from "../utils/utils";
 
 interface Props {
@@ -32,7 +34,7 @@ const { books = [] } = Astro.props;
                     data-popularity={book.popularity_score || 0}
                 >
                     {book.discount && <div class="tag">Sale</div>}
-                    {isBookNew(book.published_date ?? book.created_at) && (
+                    {isBookNew(book.published_date ?? book.created_at ?? "") && (
                         <div class="tag">New</div>
                     )}
                     <a href={`/books/${book.slug}`}>
@@ -65,7 +67,17 @@ const { books = [] } = Astro.props;
                     <h4 class="title">
                         <a href={`/books/${book.slug}`}>{book.title}</a>
                     </h4>
-                    <button class="button">Add to cart</button>
+                    <form
+                        class="add-to-cart"
+                        method="POST"
+                        action={"/cart" + actions.cart.add}
+                        data-add-to-cart
+                        data-book-id={book.id}
+                    >
+                        <input type="hidden" name="bookId" value={book.id} />
+                        <input type="hidden" name="quantity" value="1" />
+                        <AddToCartButton variant="link" soldOut={book.quantity === 0} />
+                    </form>
                 </div>
             ))
         }
@@ -188,6 +200,8 @@ const { books = [] } = Astro.props;
         }
     }
 </style>
+
+
 
 <script>
     const bookGrid = document.getElementById("book-grid") as HTMLElement;
