@@ -28,10 +28,7 @@ const { items } = Astro.props;
             <thead>
                 <tr>
                     <th class="col-remove">
-                        <span class="hint">Remove item</span>
-                    </th>
-                    <th class="col-thumb">
-                        <span class="hint">Thumbnail image</span>
+                        <span class="visually-hidden">Remove item</span>
                     </th>
                     <th>Product</th>
                     <th class="col-price">Price</th>
@@ -56,20 +53,20 @@ const { items } = Astro.props;
                                     <CloseSVG class="icon-close" />
                                 </button>
                             </td>
-                            <td class="col-thumb">
-                                <a href={`/books/${item.slug}`}>
-                                    <img
-                                        src={`/books/${item.cover_image}`}
-                                        width="89"
-                                        height="89"
-                                        alt=""
-                                    />
-                                </a>
-                            </td>
                             <td>
-                                <a class="title" href={`/books/${item.slug}`}>
-                                    {item.title}
-                                </a>
+                                <div class="product">
+                                    <a href={`/books/${item.slug}`}>
+                                        <img
+                                            src={`/books/${item.cover_image}`}
+                                            width="89"
+                                            height="89"
+                                            alt=""
+                                        />
+                                    </a>
+                                    <a class="title" href={`/books/${item.slug}`}>
+                                        {item.title}
+                                    </a>
+                                </div>
                             </td>
                             <td class="col-price">
                                 ${formatPrice(item.unit_price)}
@@ -182,21 +179,29 @@ const { items } = Astro.props;
         }
     }
 
-    .hint {
-        font-family: var(--family-lora);
-        font-style: italic;
-        font-size: 11px;
-        font-weight: var(--weight-regular);
-        color: var(--color-grey-2);
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
     }
 
     .table .col-remove {
-        width: 140px;
+        width: 60px;
         padding-left: 10px;
     }
 
-    .col-thumb {
-        width: 100px;
+    .product {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .product img {
+        display: block;
+        flex: none;
     }
 
     .col-price {
