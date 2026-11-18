@@ -10,6 +10,8 @@ import YoutubeSVG from "../../../../public/svg/youtube.svg";
 import MagnifierSVG from "../../../../public/svg/magnifier.svg";
 import HeaderCart from "./HeaderCart.astro";
 import HeaderCartFallback from "./HeaderCartFallback.astro";
+import HeaderAuth from "./HeaderAuth.astro";
+import HeaderAuthFallback from "./HeaderAuthFallback.astro";
 
 const pathname = Astro.url.pathname;
 
@@ -27,6 +29,8 @@ const socialsList: ISocialLink[] = [
     { url: "/", icon: YoutubeSVG, text: "Youtube link" },
 ];
 
+// no auth icon on the auth pages themselves
+const showAuth = pathname !== "/login" && pathname !== "/register";
 const showCart = ["/shop", "/books", "/cart", "/checkout"].some((p) =>
     pathname.startsWith(p),
 );
@@ -49,6 +53,13 @@ const showCart = ["/shop", "/books", "/cart", "/checkout"].some((p) =>
             <HeaderCart server:defer>
                 <HeaderCartFallback slot="fallback" />
             </HeaderCart>
+        )
+    }
+    {
+        showAuth && (
+            <HeaderAuth server:defer active={pathname.startsWith("/account")}>
+                <HeaderAuthFallback slot="fallback" />
+            </HeaderAuth>
         )
     }
     <div class="search">

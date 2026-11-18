@@ -1,0 +1,119 @@
+---
+import { actions } from "astro:actions";
+import AccountSVG from "../../../../public/svg/account.svg";
+import LoginSVG from "../../../../public/svg/login.svg";
+
+// Server island: needs the visitor's session (Figma: "Header (fixed)" Auth=In/Out).
+interface Props {
+    /** current page is under /account */
+    active?: boolean;
+}
+
+const { active = false } = Astro.props;
+const user = Astro.locals.user;
+---
+
+{
+    user ? (
+        <div class:list={["auth", { active }]}>
+            <a class="icon-link" href="/account" aria-label="My account">
+                <AccountSVG class="icon" />
+            </a>
+            <div class="menu">
+                <p class="who">Signed in as {user.email}</p>
+                <a class="item" href="/account">
+                    Dashboard
+                </a>
+                <form method="POST" action={"/account" + actions.auth.signOut}>
+                    <button class="item" type="submit">
+                        Log out
+                    </button>
+                </form>
+            </div>
+        </div>
+    ) : (
+        <div class="auth">
+            <a class="icon-link" href="/login" aria-label="Log in">
+                <LoginSVG class="icon" />
+            </a>
+        </div>
+    )
+}
+
+<style>
+    .auth {
+        position: relative;
+        margin-left: 11px;
+
+        &:hover .menu,
+        &:focus-within .menu {
+            top: calc(100% + 38px);
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    .icon-link {
+        display: flex;
+    }
+
+    .icon {
+        width: 23px;
+        height: 23px;
+        translate: 0 -2px;
+
+        path {
+            fill: var(--color-grey-2);
+            transition: var(--transition-default);
+        }
+    }
+
+    .icon-link:hover .icon path,
+    .active .icon path {
+        fill: var(--color-black);
+    }
+
+    .menu {
+        position: absolute;
+        top: calc(100% + 70px);
+        right: -18px;
+        width: 220px;
+        padding: 20px 17px 18px;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-border);
+        z-index: var(--z-index-30);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition-dropdown);
+    }
+
+    .who {
+        margin-bottom: 14px;
+        font-family: var(--family-lora);
+        font-style: italic;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--color-grey-2);
+        word-break: break-all;
+    }
+
+    .item {
+        display: block;
+        width: 100%;
+        padding: 10px 0 0;
+        margin-top: 14px;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-family: var(--family-montserrat);
+        font-size: 11px;
+        line-height: 20px;
+        color: var(--color-black);
+        border-top: 1px solid var(--color-border);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--color-grey-2);
+        }
+    }
+</style>

@@ -1,0 +1,30 @@
+---
+import LoginSVG from "../../../../public/svg/login.svg";
+---
+
+<!-- Shown while the <HeaderAuth server:defer> island loads (signed-out look) -->
+<div class="auth">
+    <a class="icon-link" href="/login" aria-label="Log in">
+        <LoginSVG class="icon" />
+    </a>
+</div>
+
+<style>
+    .auth {
+        margin-left: 11px;
+    }
+
+    .icon-link {
+        display: flex;
+    }
+
+    .icon {
+        width: 23px;
+        height: 23px;
+        translate: 0 -2px;
+
+        path {
+            fill: var(--color-grey-2);
+        }
+    }
+</style>
