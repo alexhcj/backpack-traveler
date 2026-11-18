@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import ParallaxHero from "../components/ParallaxHero.astro";
 
 import BaseLayout from "./Layout.astro";
 import { BooksService } from "../lib/services/books";
@@ -23,16 +23,11 @@ const maxPrice = prices.length ? Math.max(...prices) : 100;
     footerType={EFooter.SHORT}
     fixedHeader
 >
-    <section class="preview">
-        <Image
-            class="img"
-            src="/images/shop-bg.jpg"
-            width={1900}
-            height={300}
-            alt="Travel accessories laing on the bad"
-        />
-        <h1 class="preview-title">Shop</h1>
-    </section>
+    <ParallaxHero
+        title="Shop"
+        src="/images/shop-bg.jpg"
+        alt="Travel accessories laying on the bed"
+    />
     <div class="box">
         <div class="container narrow">
             <div class="grid">
@@ -54,20 +49,6 @@ const maxPrice = prices.length ? Math.max(...prices) : 100;
 <style>
     .box {
         padding: 70px 0 40px;
-    }
-
-    .preview {
-        position: relative;
-        height: 300px;
-    }
-
-    .preview-title {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
-        color: var(--color-white);
     }
 
     .grid {

@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    title: string;
+    src: string;
+    alt: string;
+}
+
+const { title, src, alt } = Astro.props;
+---
+
+<!--
+  Parallax hero (Figma: "Hero banner"). The image layer is taller than the box
+  and moves down at ~0.5x of the scroll distance, so it appears to scroll at
+  half speed. The title does not move. Pure CSS (scroll-driven animation);
+  browsers without support just show the static image.
+-->
+<section class="hero">
+    <Image class="img" src={src} width={1900} height={450} alt={alt} />
+    <h1 class="title">{title}</h1>
+</section>
+
+<style>
+    .hero {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .img {
+        position: absolute;
+        top: -150px;
+        left: 0;
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+    }
+
+    .title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        color: var(--color-white);
+    }
+
+    @supports (animation-timeline: scroll()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .img {
+                animation: hero-parallax linear both;
+                animation-timeline: scroll(root block);
+                animation-range: 0 300px;
+            }
+        }
+    }
+
+    @keyframes hero-parallax {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(150px);
+        }
+    }
+</style>
