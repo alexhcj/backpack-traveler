@@ -1,0 +1,131 @@
+---
+interface Props {
+    name?: string;
+    length?: number;
+    invalid?: boolean;
+}
+
+const { name = "token", length = 6, invalid = false } = Astro.props;
+---
+
+<!--
+  Without JS: one plain numeric field. With JS: `length` boxes (auto-advance,
+  paste fills all, auto-submit on the last digit) writing into the same field.
+-->
+<div class:list={["otp", { invalid }]} data-otp data-length={length}>
+    <input
+        class="plain"
+        type="text"
+        name={name}
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        pattern={`\\d{${length}}`}
+        maxlength={length}
+        placeholder={"•".repeat(length)}
+        aria-label={`${length}-digit code`}
+        required
+    />
+    <div class="boxes" hidden>
+        {
+            Array.from({ length }).map((_, i) => (
+                <input
+                    class="box"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="1"
+                    autocomplete={i === 0 ? "one-time-code" : "off"}
+                    aria-label={`Digit ${i + 1}`}
+                />
+            ))
+        }
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-otp]").forEach((root) => {
+        const plain = root.querySelector<HTMLInputElement>(".plain")!;
+        const boxesWrap = root.querySelector<HTMLElement>(".boxes")!;
+        const boxes = [...root.querySelectorAll<HTMLInputElement>(".box")];
+        const form = root.closest("form");
+
+        plain.hidden = true;
+        plain.required = false; // the boxes drive the value now
+        boxesWrap.hidden = false;
+
+        const sync = () => {
+            plain.value = boxes.map((b) => b.value).join("");
+            if (plain.value.length === boxes.length) form?.requestSubmit();
+        };
+        const fill = (digits: string, from = 0) => {
+            digits
+                .replace(/\D/g, "")
+                .split("")
+                .slice(0, boxes.length - from)
+                .forEach((d, i) => (boxes[from + i].value = d));
+            const next = boxes.findIndex((b) => !b.value);
+            boxes[next === -1 ? boxes.length - 1 : next].focus();
+            sync();
+        };
+
+        boxes.forEach((box, i) => {
+            box.addEventListener("input", () => {
+                const digits = box.value.replace(/\D/g, "");
+                box.value = "";
+                if (digits) fill(digits, i);
+            });
+            box.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !box.value && i > 0) {
+                    boxes[i - 1].value = "";
+                    boxes[i - 1].focus();
+                    sync();
+                }
+            });
+            box.addEventListener("paste", (e) => {
+                e.preventDefault();
+                fill(e.clipboardData?.getData("text") ?? "", 0);
+            });
+        });
+        boxes[0].focus();
+    });
+</script>
+
+<style>
+    .boxes {
+        display: flex;
+        gap: 10px;
+    }
+
+    .box,
+    .plain {
+        height: 60px;
+        font-family: var(--family-montserrat);
+        font-size: 22px;
+        text-align: center;
+        color: var(--color-black);
+        background-color: var(--color-white);
+        border: 1px solid var(--color-dark-3);
+        border-radius: 0;
+        transition: var(--transition-default-4);
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-black);
+        }
+    }
+
+    .box {
+        width: 52px;
+        padding: 0;
+    }
+
+    .plain {
+        width: 100%;
+        max-width: 320px;
+        letter-spacing: 0.5em;
+    }
+
+    .invalid .box,
+    .invalid .plain {
+        border-color: var(--color-error);
+    }
+</style>

@@ -1,0 +1,231 @@
+---
+import { actions } from "astro:actions";
+import BaseLayout from "./Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Notice from "../components/Notice.astro";
+import OtpInput from "../components/OtpInput.astro";
+import Preloader from "../components/Preloader.astro";
+import { EFooter } from "../types/footer";
+import { EHeader } from "../types/header";
+
+interface Props {
+    state: "wait" | "done";
+    email?: string;
+    error?: string;
+    info?: string;
+}
+
+const { state, email = "", error, info } = Astro.props;
+---
+
+<BaseLayout
+    title="Backpack Traveler – Verify email"
+    headerType={EHeader.FULL}
+    footerType={EFooter.FULL}
+    fixedHeader
+>
+    <Breadcrumbs narrow />
+    <section class="section">
+        <div class="container narrow">
+            <div class="box">
+                {
+                    state === "done" ? (
+                        <>
+                            <h2 class="heading">Email verified</h2>
+                            <Notice type="success">
+                                Your email address has been confirmed. You are
+                                signed in.
+                            </Notice>
+                            <a class="ui-button-primary" href="/account">
+                                Go to my account
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <h2 class="heading">Check your email</h2>
+                            {error && <Notice type="error">{error}</Notice>}
+                            {info && <Notice type="success">{info}</Notice>}
+                            <p class="text">
+                                {email
+                                    ? `We sent a 6-digit code to ${email}. Enter it below, or click the link in the email.`
+                                    : "Enter your email address and the 6-digit code we sent you."}
+                            </p>
+                            <form
+                                method="POST"
+                                action={"/verify-email" + actions.auth.verifyOtp}
+                                data-verify-form
+                            >
+                                {email ? (
+                                    <input type="hidden" name="email" value={email} />
+                                ) : (
+                                    <label class="field">
+                                        <span>Email address *</span>
+                                        <input type="email" name="email" required />
+                                    </label>
+                                )}
+                                <OtpInput invalid={!!error} />
+                                <div class="actions">
+                                    <button type="submit" class="ui-button-primary verify">
+                                        <Preloader class="spinner" />
+                                        <span class="label">Verify email</span>
+                                    </button>
+                                </div>
+                            </form>
+                            {email && (
+                                <form
+                                    class="resend"
+                                    method="POST"
+                                    action={"/verify-email" + actions.auth.resendCode}
+                                >
+                                    <input type="hidden" name="email" value={email} />
+                                    <button
+                                        type="submit"
+                                        class="link"
+                                        data-resend
+                                        data-cooldown={info ? 30 : 0}
+                                    >
+                                        Resend code
+                                    </button>
+                                    <a class="muted" href="/register">
+                                        Wrong email? Change it
+                                    </a>
+                                </form>
+                            )}
+                        </>
+                    )
+                }
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    // 30s cooldown on "Resend code" after a code was just sent
+    document.querySelectorAll<HTMLButtonElement>("[data-resend]").forEach((btn) => {
+        let left = Number(btn.dataset.cooldown) || 0;
+        if (!left) return;
+        const idle = btn.textContent;
+        btn.disabled = true;
+        const tick = () => {
+            btn.textContent = `Resend code in ${left}s`;
+            if (left-- <= 0) {
+                btn.textContent = idle;
+                btn.disabled = false;
+                return;
+            }
+            setTimeout(tick, 1000);
+        };
+        tick();
+    });
+
+    // preloader on the verify button while the request is in flight
+    document
+        .querySelector<HTMLFormElement>("[data-verify-form]")
+        ?.addEventListener("submit", () => {
+            const btn = document.querySelector<HTMLButtonElement>(".verify")!;
+            btn.dataset.loading = "";
+            btn.querySelector(".label")!.textContent = "Verifying";
+            setTimeout(() => (btn.disabled = true));
+        });
+</script>
+
+<style>
+    .box {
+        max-width: 600px;
+        padding: 70px 0 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .heading {
+        font-family: var(--family-montserrat);
+        font-weight: var(--weight-regular);
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-black);
+    }
+
+    .box :global(.ui-notice) {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .text {
+        font-family: var(--family-lora);
+        color: var(--color-dark);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        font-family: var(--family-lora);
+
+        input {
+            padding: 9px 16px;
+            font-family: var(--family-montserrat);
+            font-size: 12px;
+            line-height: 25px;
+            border: 1px solid var(--color-dark-3);
+        }
+    }
+
+    .verify {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        --preloader-color: var(--color-white);
+
+        :global(.spinner) {
+            display: none;
+        }
+
+        &[data-loading] {
+            cursor: progress;
+
+            :global(.spinner) {
+                display: block;
+            }
+        }
+    }
+
+    .resend {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .link {
+        font-family: var(--family-lora);
+        font-style: italic;
+        font-size: 14px;
+        text-decoration: underline;
+        color: var(--color-black);
+        cursor: pointer;
+
+        &:disabled {
+            text-decoration: none;
+            color: var(--color-dark);
+            cursor: default;
+        }
+    }
+
+    .muted {
+        font-family: var(--family-lora);
+        font-style: italic;
+        font-size: 12px;
+        color: var(--color-grey-2);
+    }
+</style>

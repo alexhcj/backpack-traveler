@@ -4,6 +4,7 @@ import { actions, isInputError } from "astro:actions";
 const result = Astro.getActionResult(actions.auth.signIn);
 const error = result?.error;
 const fieldErrors = error && isInputError(error) ? error.fields : {};
+const unconfirmed = error?.message === "Email not confirmed";
 ---
 <div class="box">
     <form id="login-form" action={"/login" + actions.auth.signIn} method="post">
@@ -20,7 +21,20 @@ const fieldErrors = error && isInputError(error) ? error.fields : {};
             <label for="rememberMe">Remember me</label>
         </div>
         <button class="ui-button-primary" type="submit">Log in</button>
-        {error && <p class="form-error" role="alert">{fieldErrors.email?.[0] ?? fieldErrors.password?.[0] ?? error.message}</p>}
+        {
+            error && (
+                <p class="form-error" role="alert">
+                    {unconfirmed ? (
+                        <>
+                            Email not confirmed.{" "}
+                            <a href="/verify-email">Enter your code or resend it</a>
+                        </>
+                    ) : (
+                        (fieldErrors.email?.[0] ?? fieldErrors.password?.[0] ?? error.message)
+                    )}
+                </p>
+            )
+        }
         <!-- <div id="success-block">✅ You have been logged in successfully.</div>
         <div id="error-block"></div> -->
     </form>

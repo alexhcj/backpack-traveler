@@ -1,0 +1,10 @@
+---
+export const prerender = false;
+
+import VerifyEmailLayout from "../layouts/VerifyEmailLayout.astro";
+
+// Only meaningful right after verification (the user is signed in then)
+if (!Astro.locals.user) return Astro.redirect("/login");
+---
+
+<VerifyEmailLayout state="done" />

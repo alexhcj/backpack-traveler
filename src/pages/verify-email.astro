@@ -1,0 +1,31 @@
+---
+export const prerender = false;
+
+import { actions } from "astro:actions";
+import VerifyEmailLayout from "../layouts/VerifyEmailLayout.astro";
+
+const verified = Astro.getActionResult(actions.auth.verifyOtp);
+if (verified?.data) return Astro.redirect("/email-verified");
+const resent = Astro.getActionResult(actions.auth.resendCode);
+
+// email comes from the URL (after register) or from the posted form
+let email = Astro.url.searchParams.get("email") ?? "";
+if (!email && (verified || resent)) {
+    try {
+        const form = await Astro.request.clone().formData();
+        email = String(form.get("email") ?? "");
+    } catch {
+        // body already consumed
+    }
+}
+
+const error =
+    verified?.error?.message ??
+    resent?.error?.message ??
+    (Astro.url.searchParams.has("error")
+        ? "This link is invalid or has expired. Enter the code from the email instead."
+        : undefined);
+const info = resent?.data ? "A new code has been sent to your email." : undefined;
+---
+
+<VerifyEmailLayout state="wait" email={email} error={error} info={info} />
