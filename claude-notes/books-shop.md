@@ -111,3 +111,16 @@ Figma: file `Jg63Lpovr5sGHDamyywA0w`, page **Shop** (components + 7 page frames)
 - Coupons table, real shipping rules.
 - Email confirmation: dashboard setting (user decision).
 - Pre-existing, unrelated type errors: `TravelGuides.astro`, `index.astro` (Reviews.astro missing), `ui-preview`, `destination-related-posts`; `/categories` + `/get-in-touch` build failure (`TravelGuides` globs missing `pages/books/*.md`).
+
+---
+
+## Status update (2026-11-18)
+
+Done (Figma frames approved first): parallax hero (`ParallaxHero.astro`, CSS scroll-driven, 0.5x), cart Subtotal spacing, order-received CTAs, header auth icon + account menu (`HeaderAuth` server island), email verification by Supabase email OTP (`/verify-email`, `/email-verified`, `/auth/confirm`, actions `auth.verifyOtp` / `auth.resendCode`), `TravelGuides` reads books from Supabase (fixes the `/categories` and `/get-in-touch` build failure).
+
+Supabase dashboard (user): Authentication → Email: "Confirm email" ON; confirm-signup template must contain `{{ .Token }}` (code) and may link `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email`; set Site URL = http://localhost:4321 and add redirect URLs; custom SMTP before launch.
+
+Deviations from Figma / open:
+- Account menu has Dashboard + Log out only (no Orders until the account page exists); order-received signed-in CTA is "My account" -> /account until `/account/orders` exists.
+- Parallax overscan is 150px (0.5x ratio needs more than the 40px noted in Figma).
+- Not built (no design / own tasks): coupons table, shipping rules, nav parity with ref, account page, Supabase hardening.
