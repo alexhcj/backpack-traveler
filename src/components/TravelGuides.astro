@@ -1,20 +1,14 @@
 ---
-import type { MarkdownInstance } from "astro";
-import type { Book } from "../types/book";
-
 import { Image } from "astro:assets";
+import { BooksService } from "../lib/services/books";
+import { calcDiscountPrice, isBookNew } from "../utils/utils";
 
 interface Props {
     title?: string;
     subTitle?: string;
+    /** book slugs, in display order */
     booksList: string[];
 }
-
-const books = Object.values(
-    import.meta.glob<MarkdownInstance<Book>>("../pages/books/*.md", {
-        eager: true,
-    }),
-);
 
 const {
     booksList,
@@ -22,19 +16,23 @@ const {
     subTitle = "We are That Backpacker, Melissa and Johnatan (that’s us!)",
 } = Astro.props;
 
-const booksToShow = booksList.map((book) => {
-    const {
-        frontmatter: { slug, image, discount, tag, price },
-    } = books.find(({ frontmatter: { slug } }) => slug.includes(book))!;
+const { data: books } = await BooksService.getBySlugs(booksList);
 
-    return {
-        image,
-        slug,
-        discount,
-        tag,
-        price,
-    };
-});
+const booksToShow = (books ?? []).map((book) => ({
+    slug: book.slug,
+    title: book.title,
+    image: `/books/${book.cover_image}`,
+    price: book.price,
+    discount: book.discount,
+    discountPrice: book.discount
+        ? calcDiscountPrice(book.price, book.discount)
+        : null,
+    tag: book.discount
+        ? "Sale"
+        : isBookNew(book.published_date ?? book.created_at ?? "")
+          ? "New"
+          : "",
+}));
 ---
 
 <section class="ui-post-guides">
@@ -46,29 +44,37 @@ const booksToShow = booksList.map((book) => {
         <ul class="ui-post-guides-list">
             {
                 booksToShow.map(
-                    ({ image: { url, alt }, slug, tag, price, discount }) => (
+                    ({
+                        image,
+                        title,
+                        slug,
+                        tag,
+                        price,
+                        discount,
+                        discountPrice,
+                    }) => (
                         <li class="ui-post-guides-list-item">
-                            <a class="link" href={`/shop/books/${slug}`}>
+                            <a class="link" href={`/books/${slug}`}>
                                 <span class="ui-post-guides-list-item-tag">
                                     {tag}
                                 </span>
                                 <Image
                                     class="ui-post-guides-list-item-image"
-                                    src={`/${url}`}
+                                    src={image}
                                     width={220}
                                     height={270}
-                                    alt={alt}
+                                    alt={`${title} cover`}
                                 />
                                 <div class="ui-post-guides-list-item-sell">
                                     Buy for
                                     <span
                                         class={`ui-post-guides-list-item-price ${discount && "discount"}`}
                                     >
-                                        ${price}
+                                        ${price.toFixed(2)}
                                     </span>
-                                    {discount && (
+                                    {discountPrice && (
                                         <span class="ui-post-guides-list-item-discount">
-                                            - ${price - discount}
+                                            - ${discountPrice}
                                         </span>
                                     )}
                                 </div>

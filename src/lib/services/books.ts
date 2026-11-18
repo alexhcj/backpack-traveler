@@ -180,6 +180,29 @@ export class BooksService {
   }
 
   /**
+   * Get books by slugs, in the order of the given slugs
+   */
+  static async getBySlugs(slugs: string[]): Promise<IBookListRO<TBookWithRating>> {
+    try {
+      const { data, error } = await supabase
+        .from("books_with_ratings")
+        .select("*")
+        .in("slug", slugs);
+      if (error) throw error;
+
+      const rows = (data as unknown as TBookWithRating[]) ?? [];
+      rows.sort((a, b) => slugs.indexOf(a.slug) - slugs.indexOf(b.slug));
+      return { data: rows, error: null };
+    } catch (error) {
+      console.error("BooksService.getBySlugs error:", error);
+      return {
+        data: null,
+        error: error instanceof Error ? error : new Error("Unknown error"),
+      };
+    }
+  }
+
+  /**
    * Get books data for generating static paths
    */
   static async getForStaticPaths(): Promise<
