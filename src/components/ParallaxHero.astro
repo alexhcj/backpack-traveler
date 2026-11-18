@@ -11,13 +11,14 @@ const { title, src, alt } = Astro.props;
 ---
 
 <!--
-  Parallax hero (Figma: "Hero banner"). The image layer is taller than the box
-  and moves down at ~0.5x of the scroll distance, so it appears to scroll at
-  half speed. The title does not move. Pure CSS (scroll-driven animation);
-  browsers without support just show the static image.
+  Parallax hero (Figma: "Hero banner"). The box and the image are both exactly
+  300px tall. The image (1920x600, cropped by object-fit: cover) is panned from
+  its bottom edge to its top edge while the page scrolls the first 300px, which
+  reads as ~0.5x scroll speed. The title does not move. Pure CSS
+  (scroll-driven animation); browsers without support show the static image.
 -->
 <section class="hero">
-    <Image class="img" src={src} width={1900} height={450} alt={alt} />
+    <Image class="img" src={src} width={1920} height={600} alt={alt} />
     <h1 class="title">{title}</h1>
 </section>
 
@@ -30,11 +31,11 @@ const { title, src, alt } = Astro.props;
 
     .img {
         position: absolute;
-        top: -150px;
-        left: 0;
+        inset: 0;
         width: 100%;
-        height: 450px;
+        height: 300px;
         object-fit: cover;
+        object-position: 50% 100%;
     }
 
     .title {
@@ -58,10 +59,10 @@ const { title, src, alt } = Astro.props;
 
     @keyframes hero-parallax {
         from {
-            transform: translateY(0);
+            object-position: 50% 100%;
         }
         to {
-            transform: translateY(150px);
+            object-position: 50% 0%;
         }
     }
 </style>
