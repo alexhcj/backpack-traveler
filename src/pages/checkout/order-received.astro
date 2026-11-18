@@ -14,4 +14,4 @@ const { data: order } = isUuid
 if (!order) return Astro.redirect("/shop");
 ---
 
-<OrderReceivedLayout order={order} />
+<OrderReceivedLayout order={order} signedIn={!!Astro.locals.user} />

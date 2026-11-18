@@ -11,9 +11,11 @@ import { paymentLabel } from "../utils/payment";
 
 interface Props {
     order: TOrderReceived;
+    signedIn?: boolean;
 }
 
-const { order } = Astro.props;
+// TODO: signed-in CTA becomes "View my orders" -> /account/orders once the account page exists
+const { order, signedIn = false } = Astro.props;
 const b = order.billing_address;
 const date = new Date(order.created_at).toLocaleDateString("en-US", {
     year: "numeric",
@@ -112,6 +114,21 @@ const addressLines = [
                 <address class="address">
                     {addressLines.map((line) => <span>{line}</span>)}
                 </address>
+
+                <div class="actions">
+                    <a class="ui-button-primary" href="/shop">Back to shop</a>
+                    {
+                        signedIn ? (
+                            <a class="ui-button-outline big" href="/account">
+                                My account
+                            </a>
+                        ) : (
+                            <a class="ui-button-outline big" href="/register">
+                                Create an account
+                            </a>
+                        )
+                    }
+                </div>
             </div>
         </div>
     </section>
@@ -185,6 +202,13 @@ const addressLines = [
 
     .total td {
         font-weight: var(--weight-bold);
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 50px;
     }
 
     .address {
