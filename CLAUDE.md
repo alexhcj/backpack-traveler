@@ -11,6 +11,12 @@ Travel blog + small books shop, rebuilt from a WordPress theme with Astro (nativ
   - Rule: design must match the ref site exactly. Anything new/different (e.g. header account/login icon, account page) gets a frame in Figma.
 - Plane (lightweight to-do notes, user updates them by hand): https://app.plane.so/awakened-eternity/projects/cee864ca-54ce-4610-86ab-aafcc7936667/issues
 
+### Plane API (use this instead of the browser — the pane isn't signed in)
+- Credentials live in `.env` (gitignored): `PLANE_API_BASE_URL`, `PLANE_API_KEY`, `PLANE_WORKSPACE_SLUG`, `PLANE_PROJECT_ID`. Never print the key.
+- Task by identifier (e.g. BACKPACKTR-81), from bash:
+  `set -a; . ./.env; set +a; curl -s -H "X-API-Key: $PLANE_API_KEY" "$PLANE_API_BASE_URL/api/v1/workspaces/$PLANE_WORKSPACE_SLUG/work-items/BACKPACKTR-81/"` → JSON, `description_html` holds the checklist.
+- Python isn't installed; parse JSON with `node -e`.
+
 ## Stack
 - Astro 6 (`output: "static"`, `@astrojs/node` standalone; SSR pages opt in with `export const prerender = false`)
 - Supabase: books, book_reviews, engagement, subscriptions, carts, cart_items, orders, auth
